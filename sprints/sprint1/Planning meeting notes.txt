@@ -1,1 +1,56 @@
-We could put some notes in here...
+SE Project Notes
+
+•	Food Item
+	o	Description/Name *
+	o	Quantity/Weight/Serving Size *
+	o	Calories *
+	o	Food Items (For food items made of ingredients/food items)
+	o	Protein - grams
+	o	Fat - grams
+	o	Sugar - grams
+	o	Carbs - grams
+	o	Sodium - grams
+	
+•	Meal Item - Nutritional values are the sum of the food items nutritional values.
+	o	Description/Name *
+	o	Added food items - Min of 2 food items *
+			Quantity/Weight/Serving Size of each food item *
+		
+•	Diet (All values set for a single day/ grouped together for analytics)
+	o	Primary Goal - Select a specific goal from the goals below. *
+	o	Calorie goal *
+	o	Protein Goal
+	o	Fat Goal
+	o	Sugar Goal
+	o	Sodium Goal
+	o	Carbs Goal
+	o	Other Goals (More fruit/Vegan)
+	
+•	Daily Intake - User pulls up page and selects a date. That then generates a list of what has been eaten that day broken down by Breakfast/Lunch/Dinner/Snacks and the user selects a time and then selects the food to add to that time.
+	o	Date
+	o	Breakfast - Collection of food items.
+	o	Lunch - Collection of food items.
+	o	Dinner - Collection of food items.
+	o	Snacks - Collection of food items.
+	
+•	Calculated Goal Results
+	o	Date
+	o	Total Calorie Ate / Goal * 100 = percentage value
+	o	Total Protin Ate / Goal * 100 = percentage value
+	o	....
+
+•	Reports
+	o	Landing Dashboard
+			Progress bar with drop down to select goal to display progress of.
+			List of foods eaten
+			Recommendations
+	o	Reports Page
+			Select a date range.
+			Line graph with drop down to select which diet goals to display(Calories, Protein, Fat…) Based on time frame selected
+			•	Will determin later how many points fits on the graph and is still legible and then will devide date range into that many or less points.
+			•	Once we get to a date range where daily points are not possible to display we generalize by week/month/year average percentage values.
+
+•	Recommendations
+	o	Recommendations based on snack vs meal.
+	o	Recommendations based on ingredients on hand
+	o	Recommendations of meal plan for full day not just single meal
