@@ -1,4 +1,4 @@
-package CS3212Group5.NutritionTracker;
+package edu.westga.cs3212.group5.nutritiontracker;
 
 /**
  * Hello world!
