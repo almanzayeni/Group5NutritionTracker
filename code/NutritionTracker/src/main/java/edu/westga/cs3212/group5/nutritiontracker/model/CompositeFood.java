@@ -1,5 +1,6 @@
 package edu.westga.cs3212.group5.nutritiontracker.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,40 +13,43 @@ import java.util.Map;
 public class CompositeFood implements FoodItem {
 	private String Description;
 	private QuantityCategory quantityCategory;
-	private double quantityValue;
+	private double portionSize;
 	private double calories;
-	private double protein = 0.0;
-	private double fat = 0.0;
-	private double sugar = 0.0;
-	private double carbohydrates = 0.0;
-	private double sodium = 0.0;
+	private double protein;
+	private double fat;
+	private double sugar;
+	private double carbohydrates;
+	private double sodium;
 	private Map<String, FoodItem> ingredients;
-	
 	
 	/**
 	 * Instantiates a new composite food.
 	 *
-	 * @precondition description != null && !description.isBlank() && quantityCategory != null && quantityValue >= 0 && ingredients != null && !ingredients.isEmpty() && no duplicate descriptions in ingredients
+	 * @precondition description != null && !description.isBlank() && quantityCategory != null && ingredients != null && !ingredients.isEmpty() && no duplicate descriptions in ingredients
 	 *
 	 * @param description the description
 	 * @param quantityCategory the quantity category
-	 * @param quantityValue the quantity value
+	 * @param portionSize portion size
 	 * @param ingredients the ingredients
-	 * @throws IllegalArgumentException if description is null or blank, quantity category is null, quantity value is negative, or ingredients is null or empty or contains duplicate descriptions
+	 * @throws IllegalArgumentException if description is null or blank, quantity category is null, or ingredients is null or empty or contains duplicate descriptions
 	 */
-	public CompositeFood(String description, QuantityCategory quantityCategory, double quantityValue, List<FoodItem> ingredients) {
+	public CompositeFood(String description, QuantityCategory quantityCategory, List<FoodItem> ingredients) {
 		if (ingredients == null || ingredients.isEmpty()) {
 			throw new IllegalArgumentException("Ingredients cannot be null or empty");
 		}
+		
+		this.ingredients = new HashMap<String, FoodItem>();
 		this.setDescription(description);
 		this.setQuantityCategory(quantityCategory);
-		this.setQuantityValue(quantityValue);
+		this.setPortionSize(1.0);
+		
 		double calories = 0.0;
 		double protein = 0.0;
 		double fat = 0.0;
 		double sugar = 0.0;
 		double carbohydrates = 0.0;
 		double sodium = 0.0;
+		
 		for (FoodItem ingredient : ingredients) {
 			if (this.ingredients.containsKey(ingredient.getDescription())) {
 				throw new IllegalArgumentException("Duplicate ingredients not allowed in composit foods: " + ingredient.getDescription());
@@ -58,6 +62,56 @@ public class CompositeFood implements FoodItem {
 			carbohydrates += ingredient.getCarbohydrates();
 			sodium += ingredient.getSodium();
 		}
+		
+		this.setCalories(calories);
+		this.setProtein(protein);
+		this.setFat(fat);
+		this.setSugar(sugar);
+		this.setCarbohydrates(carbohydrates);
+		this.setSodium(sodium);
+	}
+	
+	/**
+	 * Instantiates a new composite food.
+	 *
+	 * @precondition description != null && !description.isBlank() && quantityCategory != null && portionSize >= 1 && ingredients != null && !ingredients.isEmpty() && no duplicate descriptions in ingredients
+	 *
+	 * @param description the description
+	 * @param quantityCategory the quantity category
+	 * @param portionSize portion size
+	 * @param ingredients the ingredients
+	 * @throws IllegalArgumentException if description is null or blank, quantity category is null, portionSize is less than 1, or ingredients is null or empty or contains duplicate descriptions
+	 */
+	public CompositeFood(String description, QuantityCategory quantityCategory, double portionSize, List<FoodItem> ingredients) {
+		if (ingredients == null || ingredients.isEmpty()) {
+			throw new IllegalArgumentException("Ingredients cannot be null or empty");
+		}
+		
+		this.ingredients = new HashMap<String, FoodItem>();
+		this.setDescription(description);
+		this.setQuantityCategory(quantityCategory);
+		this.setPortionSize(portionSize);
+		
+		double calories = 0.0;
+		double protein = 0.0;
+		double fat = 0.0;
+		double sugar = 0.0;
+		double carbohydrates = 0.0;
+		double sodium = 0.0;
+		
+		for (FoodItem ingredient : ingredients) {
+			if (this.ingredients.containsKey(ingredient.getDescription())) {
+				throw new IllegalArgumentException("Duplicate ingredients not allowed in composit foods: " + ingredient.getDescription());
+			}
+			this.ingredients.put(ingredient.getDescription(), ingredient);
+			calories += ingredient.getCalories();
+			protein += ingredient.getProtein();
+			fat += ingredient.getFat();
+			sugar += ingredient.getSugar();
+			carbohydrates += ingredient.getCarbohydrates();
+			sodium += ingredient.getSodium();
+		}
+		
 		this.setCalories(calories);
 		this.setProtein(protein);
 		this.setFat(fat);
@@ -81,7 +135,7 @@ public class CompositeFood implements FoodItem {
 	 * 
 	 * @precondition ingredient != null && !ingredients.containsKey(ingredient.getDescription())
 	 *
-	 * @param ingredient the ingredient
+	 * @param ingredient the ingredient to add
 	 * @throws IllegalArgumentException if ingredient is null or already exists in ingredients
 	 */
 	public void addIngredient (FoodItem ingredient) {
@@ -101,19 +155,45 @@ public class CompositeFood implements FoodItem {
 	}
 	
 	/**
-	 * Gets the ingredient.
+	 * Gets the ingredient with the given description.
 	 *
 	 * @precondition description != null && !description.isBlank() && ingredients.containsKey(description)
 	 * 
-	 * @param description the description
-	 * @return the ingredient
+	 * @param description the description of the ingredient to get
+	 * @return the ingredient with the given description or null if no such ingredient exists
 	 * @throws IllegalArgumentException if description is null or blank
 	 */
-	public FoodItem getIngredient(String description) {
+	public FoodItem getIngredientByDescription(String description) {
 		if (description == null || description.isBlank()) {
 			throw new IllegalArgumentException("Description cannot be null or blank");
 		}
 		return this.ingredients.get(description);
+	}
+	
+	/**
+	 * Removes the ingredient with the given description.
+	 *
+	 * @precondition description != null && !description.isBlank()
+	 * 
+	 * @param description the description of the ingredient to remove
+	 * @return true if the ingredient was removed, false if no such ingredient exists
+	 * @throws IllegalArgumentException if description is null or blank
+	 */
+	public boolean removeIngredientByDescription(String description) {
+		if (description == null || description.isBlank()) {
+			throw new IllegalArgumentException("Description cannot be null or blank");
+		}
+		FoodItem ingredient = this.ingredients.remove(description);
+		if (ingredient != null) {
+			this.setCalories(this.getCalories() - ingredient.getCalories());
+			this.setProtein(this.getProtein() - ingredient.getProtein());
+			this.setFat(this.getFat() - ingredient.getFat());
+			this.setSugar(this.getSugar() - ingredient.getSugar());
+			this.setCarbohydrates(this.getCarbohydrates() - ingredient.getCarbohydrates());
+			this.setSodium(this.getSodium() - ingredient.getSodium());
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -167,27 +247,28 @@ public class CompositeFood implements FoodItem {
 	}
 
 	/**
-	 * Gets the quantity value.
+	 * Gets the portion size.
 	 *
-	 * @return the quantity value
+	 * @return the portion size
 	 */
-	public double getQuantityValue() {
-		return this.quantityValue;
+	@Override
+	public double getPortionSize() {
+		return this.portionSize;
 	}
 	
 	/**
-	 * Sets the quantity value.
+	 * Sets the portion size.
 	 * 
-	 * @precondition quantityValue >= 0
+	 * @precondition portionSize >= 1
 	 *
-	 * @param quantityValue the new quantity value
-	 * @throws IllegalArgumentException if quantity value is negative
+	 * @param portionSize the new quantity value
+	 * @throws IllegalArgumentException if quantity value is less than 1
 	 */
-	public void setQuantityValue(double quantityValue) {
-		if ( quantityValue <= 0) {
-			throw new IllegalArgumentException("Quantity value cannot be negative");
+	public void setPortionSize(double portionSize) {
+		if ( portionSize < 1) {
+			throw new IllegalArgumentException("Portion size must be 1 or greater");
 		}
-		this.quantityValue = quantityValue;
+		this.portionSize = portionSize;
 	}
 
 	/**
@@ -197,13 +278,10 @@ public class CompositeFood implements FoodItem {
 	 */
 	@Override
 	public double getCalories() {
-		return this.calories;
+		return this.calories * this.portionSize;
 	}
 
 	private void setCalories(double calories) {
-		if (calories <= 0) {
-			throw new IllegalArgumentException("Calories cannot be negative");
-		}
 		this.calories = calories;
 	}
 
@@ -214,13 +292,10 @@ public class CompositeFood implements FoodItem {
 	 */
 	@Override
 	public double getProtein() {
-		return this.protein;
+		return this.protein * this.portionSize;
 	}
 
 	private void setProtein(double protein) {
-		if (protein < 0) {
-			throw new IllegalArgumentException("Protein cannot be negative");
-		}
 		this.protein = protein;
 	}
 
@@ -231,13 +306,10 @@ public class CompositeFood implements FoodItem {
 	 */
 	@Override
 	public double getFat() {
-		return this.fat;
+		return this.fat * this.portionSize;
 	}
 
 	private void setFat(double fat) {
-		if (fat < 0) {
-			throw new IllegalArgumentException("Fat cannot be negative");
-		}
 		this.fat = fat;
 	}
 
@@ -248,13 +320,10 @@ public class CompositeFood implements FoodItem {
 	 */
 	@Override
 	public double getSugar() {
-		return this.sugar;
+		return this.sugar * this.portionSize;
 	}
 
 	private void setSugar(double sugar) {
-		if (sugar < 0) {
-			throw new IllegalArgumentException("Sugar cannot be negative");
-		}
 		this.sugar = sugar;
 	}
 
@@ -265,13 +334,10 @@ public class CompositeFood implements FoodItem {
 	 */
 	@Override
 	public double getCarbohydrates() {
-		return this.carbohydrates;
+		return this.carbohydrates * this.portionSize;
 	}
 
 	private void setCarbohydrates(double carbohydrates) {
-		if (carbohydrates < 0) {
-			throw new IllegalArgumentException("Carbohydrates cannot be negative");
-		}
 		this.carbohydrates = carbohydrates;
 	}
 
@@ -282,13 +348,10 @@ public class CompositeFood implements FoodItem {
 	 */
 	@Override
 	public double getSodium() {
-		return this.sodium;
+		return this.sodium * this.portionSize;
 	}
 
 	private void setSodium(double sodium) {
-		if (sodium < 0) {
-			throw new IllegalArgumentException("Sodium cannot be negative");
-		}
 		this.sodium = sodium;
 	}
 

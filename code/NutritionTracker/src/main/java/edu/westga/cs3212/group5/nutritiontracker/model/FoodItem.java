@@ -6,6 +6,7 @@ package edu.westga.cs3212.group5.nutritiontracker.model;
 public interface FoodItem {
 	String getDescription();
 	void setDescription(String description);
+	double getPortionSize();
 	double getCalories();
 	double getProtein();
 	double getFat();

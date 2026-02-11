@@ -9,53 +9,57 @@ package edu.westga.cs3212.group5.nutritiontracker.model;
 public class BaseFood implements FoodItem {
 	private String Description;
 	private QuantityCategory quantityCategory;
-	private double quantityValue;
+	private double portionSize;
 	private double calories;
-	private double protein = 0.0;
-	private double fat = 0.0;
-	private double sugar = 0.0;
-	private double carbohydrates = 0.0;
-	private double sodium = 0.0;
+	private double protein;
+	private double fat;
+	private double sugar;
+	private double carbohydrates;
+	private double sodium;
 	
 	/**
 	 * Instantiates a new base food.
 	 *
-	 *@precondition description != null && !description.isBlank() && quantityCategory != null && quantityValue >= 0 && calories >= 0
+	 *@precondition description != null && !description.isBlank() && quantityCategory != null && calories >= 0
 	 *
 	 * @param description the description
 	 * @param quantityCategory the quantity category
 	 * @param quantityValue the quantity value
 	 * @param calories the calories
-	 * @throws IllegalArgumentException if description is null or blank, quantity category is null, quantity value is negative, or calories is negative
+	 * @throws IllegalArgumentException if description is null or blank, quantity category is null, or calories is negative
 	 */
-	public BaseFood(String description, QuantityCategory quantityCategory, double quantityValue, double calories) {
+	public BaseFood(String description, QuantityCategory quantityCategory, double calories) {
 		this.setDescription(description);
 		this.setQuantityCategory(quantityCategory);
-		this.setQuantityValue(quantityValue);
+		this.setPortionSize(1.0);
 		this.setCalories(calories);
+		this.setProtein(0);
+		this.setFat(0);
+		this.setSugar(0);
+		this.setCarbohydrates(0);
+		this.setSodium(0);
 	}
 	
 	/**
 	 * Instantiates a new base food.
 	 * 
-	 * @precondition description != null && !description.isBlank() && quantityCategory != null && quantityValue >= 0 && calories >= 0 && protein >= 0 && fat >= 0 && sugar >= 0 && carbohydrates >= 0 && sodium >= 0
+	 * @precondition description != null && !description.isBlank() && quantityCategory != null && portionSize > 1 && calories >= 0 && protein >= 0 && fat >= 0 && sugar >= 0 && carbohydrates >= 0 && sodium >= 0
 	 *
 	 * @param description the description
 	 * @param quantityCategory the quantity category
-	 * @param quantityValue the quantity value
 	 * @param calories the calories
 	 * @param protein the protein
 	 * @param fat the fat
 	 * @param sugar the sugar
 	 * @param carbohydrates the carbohydrates
 	 * @param sodium the sodium
-	 * @throws IllegalArgumentException if description is null or blank, quantity category is null, quantity value is negative, calories is negative, protein is negative, fat is negative, sugar is negative, carbohydrates is negative, or sodium is negative
+	 * @throws IllegalArgumentException if description is null or blank, quantity category is null, portion size is less than 1, calories is negative, protein is negative, fat is negative, sugar is negative, carbohydrates is negative, or sodium is negative
 	 */
-	public BaseFood(String description, QuantityCategory quantityCategory, double quantityValue, double calories,
+	public BaseFood(String description, QuantityCategory quantityCategory, double portionSize, double calories,
 			double protein, double fat, double sugar, double carbohydrates, double sodium) {
 		this.setDescription(description);
 		this.setQuantityCategory(quantityCategory);
-		this.setQuantityValue(quantityValue);
+		this.setPortionSize(portionSize);
 		this.setCalories(calories);
 		this.setProtein(protein);
 		this.setFat(fat);
@@ -113,29 +117,29 @@ public class BaseFood implements FoodItem {
 		}
 		this.quantityCategory = quantityCategory;
 	}
-
+	
 	/**
-	 * Gets the quantity value.
+	 * Gets the portion size.
 	 *
-	 * @return the quantity value
+	 * @return the portion size
 	 */
-	public double getQuantityValue() {
-		return this.quantityValue;
+	public double getPortionSize() {
+		return this.portionSize;
 	}
-
+	
 	/**
-	 * Sets the quantity value.
+	 * Sets the portion size.
 	 * 
-	 * @precondition quantityValue >= 0
+	 * @precondition portionSize >= 1 
 	 *
-	 * @param quantityValue the new quantity value
-	 * @throws IllegalArgumentException if quantity value is negative
+	 * @param portionSize the new portion size
+	 * @throws IllegalArgumentException if portion size is not positive
 	 */
-	public void setQuantityValue(double quantityValue) {
-		if ( quantityValue <= 0) {
-			throw new IllegalArgumentException("Quantity value cannot be negative");
+	public void setPortionSize(double portionSize) {
+		if (portionSize < 1) {
+			throw new IllegalArgumentException("Portion size must 1 or greater");
 		}
-		this.quantityValue = quantityValue;
+		this.portionSize = portionSize;
 	}
 
 	/**
@@ -145,7 +149,7 @@ public class BaseFood implements FoodItem {
 	 */
 	@Override
 	public double getCalories() {
-		return this.calories;
+		return this.calories * this.portionSize;
 	}
 
 	/**
@@ -170,7 +174,7 @@ public class BaseFood implements FoodItem {
 	 */
 	@Override
 	public double getProtein() {
-		return this.protein;
+		return this.protein * this.portionSize;
 	}
 
 	/**
@@ -195,7 +199,7 @@ public class BaseFood implements FoodItem {
 	 */
 	@Override
 	public double getFat() {
-		return this.fat;
+		return this.fat * this.portionSize;
 	}
 
 	/**
@@ -220,7 +224,7 @@ public class BaseFood implements FoodItem {
 	 */
 	@Override
 	public double getSugar() {
-		return this.sugar;
+		return this.sugar * this.portionSize;
 	}
 
 	/**
@@ -245,7 +249,7 @@ public class BaseFood implements FoodItem {
 	 */
 	@Override
 	public double getCarbohydrates() {
-		return this.carbohydrates;
+		return this.carbohydrates * this.portionSize;
 	}
 
 	/**
@@ -270,7 +274,7 @@ public class BaseFood implements FoodItem {
 	 */
 	@Override
 	public double getSodium() {
-		return this.sodium;
+		return this.sodium * this.portionSize;
 	}
 
 	/**
