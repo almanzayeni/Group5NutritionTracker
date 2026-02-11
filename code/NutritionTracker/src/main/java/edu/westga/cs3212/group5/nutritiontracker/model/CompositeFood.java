@@ -184,7 +184,7 @@ public class CompositeFood implements FoodItem {
 	 * @throws IllegalArgumentException if quantity value is negative
 	 */
 	public void setQuantityValue(double quantityValue) {
-		if ( quantityValue < 0) {
+		if ( quantityValue <= 0) {
 			throw new IllegalArgumentException("Quantity value cannot be negative");
 		}
 		this.quantityValue = quantityValue;
@@ -201,7 +201,7 @@ public class CompositeFood implements FoodItem {
 	}
 
 	private void setCalories(double calories) {
-		if (calories < 0) {
+		if (calories <= 0) {
 			throw new IllegalArgumentException("Calories cannot be negative");
 		}
 		this.calories = calories;
