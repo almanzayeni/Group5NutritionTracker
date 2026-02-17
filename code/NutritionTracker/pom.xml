@@ -60,7 +60,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>edu.westga.cs3211.pirateship.Main</mainClass>
+                            <mainClass>edu.westga.cs3211.pirateship.App</mainClass>
                         </configuration>
                     </execution>
                 </executions>
