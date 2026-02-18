@@ -1,15 +1,16 @@
 SE Project Notes
 
 •	Food Item
-	o	Description/Name *
-	o	Quantity/Weight/Serving Size *
-	o	Calories *
-	o	Food Items (For food items made of ingredients/food items)
-	o	Protein - grams
-	o	Fat - grams
-	o	Sugar - grams
-	o	Carbs - grams
-	o	Sodium - grams
+	o	Description/Name * - TextField
+	o	Quantity/Weight/Serving Size Type* ComboBox
+	o	Portion Size - TextField Defaults to 1
+	o	Calories * TextField
+	o	Food Items (For food items made of ingredients/food items) TextField to search name ListView for results
+	o	Protein - grams TextField
+	o	Fat - grams TextField
+	o	Sugar - grams TextField
+	o	Carbs - grams TextField
+	o	Sodium - grams TextField
 	
 •	Meal Item - Nutritional values are the sum of the food items nutritional values.
 	o	Description/Name *
