@@ -6,13 +6,17 @@ import java.util.List;
 /**
  * The Class UserPreferences.
  * Represents a user's diet plan preferences and macro goals.
- * 
- * @authorYeni Almanza
+ *
+ * The {@code primaryGoal} is one of the known {@link PrimaryGoal} options that
+ * the user has selected as their main focus. Additional, free-form goals may be
+ * stored in {@code otherGoals}.
+ *
+ * @author Yeni Almanza
  * @version spring 2026
  */
 public class UserPreferences {
 
-    private final String primaryGoal;
+    private final PrimaryGoal primaryGoal;
     private final double calorieGoal;
     private final double proteinGoal;
     private final double fatGoal;
@@ -23,8 +27,8 @@ public class UserPreferences {
 
     /**
      * Instantiates a new user preferences.
-     * 
-     * @precondition primaryGoal != null && !primaryGoal.isBlank()
+     *
+     * @precondition primaryGoal != null
      *               && calorieGoal >= 0
      *               && proteinGoal >= 0
      *               && fatGoal >= 0
@@ -32,23 +36,25 @@ public class UserPreferences {
      *               && sodiumGoal >= 0
      *               && carbsGoal >= 0
      *
-     * @param primaryGoal the user's primary goal (e.g., "Lose weight", "Maintain", "Gain muscle")
-     * @param calorieGoal the daily calorie goal
-     * @param proteinGoal the daily protein goal
-     * @param fatGoal the daily fat goal
-     * @param sugarGoal the daily sugar goal 
-     * @param sodiumGoal the daily sodium goal
-     * @param carbsGoal the daily carbohydrates goal
-     * @param otherGoals optional list of additional goals or notes; a null list is treated as empty,
-     *        and a defensive copy is stored
-     * 
-     * @throws IllegalArgumentException if primaryGoal is null or blank, or if any numeric goal is negative
+     * @param primaryGoal the user's primary goal — one of the {@link PrimaryGoal}
+     *        enum values that the user has chosen as their main focus
+     * @param calorieGoal  the daily calorie goal (kcal)
+     * @param proteinGoal  the daily protein goal (grams)
+     * @param fatGoal      the daily fat goal (grams)
+     * @param sugarGoal    the daily sugar goal (grams)
+     * @param sodiumGoal   the daily sodium goal (milligrams)
+     * @param carbsGoal    the daily carbohydrates goal (grams)
+     * @param otherGoals   optional list of additional free-form goals or notes;
+     *        a null list is treated as empty, and a defensive copy is stored
+     *
+     * @throws IllegalArgumentException if primaryGoal is null, or if any numeric
+     *         goal is negative
      */
-    public UserPreferences(String primaryGoal, double calorieGoal, double proteinGoal, double fatGoal,
+    public UserPreferences(PrimaryGoal primaryGoal, double calorieGoal, double proteinGoal, double fatGoal,
             double sugarGoal, double sodiumGoal, double carbsGoal, List<String> otherGoals) {
 
-        if (primaryGoal == null || primaryGoal.isBlank()) {
-            throw new IllegalArgumentException("Primary goal cannot be null or blank");
+        if (primaryGoal == null) {
+            throw new IllegalArgumentException("Primary goal cannot be null");
         }
         if (calorieGoal < 0) {
             throw new IllegalArgumentException("Calorie goal cannot be negative");
@@ -87,12 +93,12 @@ public class UserPreferences {
      *
      * @return the primary goal
      */
-    public String getPrimaryGoal() {
+    public PrimaryGoal getPrimaryGoal() {
         return this.primaryGoal;
     }
 
     /**
-     * Gets the daily calorie goal (kcal).
+     * Gets the daily calorie goal (cal).
      *
      * @return the calorie goal
      */
@@ -146,9 +152,9 @@ public class UserPreferences {
     }
 
     /**
-     * Gets the other (additional) goals.
+     * Gets the otheradditional goals.
      *
-     * @return the other goals
+     * @return an unmodifiable list of additional goals
      */
     public List<String> getOtherGoals() {
         return this.otherGoals;
