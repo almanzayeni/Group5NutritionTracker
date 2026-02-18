@@ -9,11 +9,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * Hello world!
- *
+ * Main Application class.
+ * @author Justin Smith
+ * @version Spring 2026
  */
-public class App extends Application
-{
+public class App extends Application {
 	
 	private static final String WINDOW_TITLE = "Login";
 	private static final String GUI_FXML = "view/CreateFoodItemTypeSelectionPage.fxml";

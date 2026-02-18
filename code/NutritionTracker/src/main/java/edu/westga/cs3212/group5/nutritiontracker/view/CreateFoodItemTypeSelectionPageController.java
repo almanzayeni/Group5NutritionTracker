@@ -51,7 +51,7 @@ public class CreateFoodItemTypeSelectionPageController {
 		//this.setUpListenerForLogoutButton();
 		this.setUpListenerForHomeButton();
 		this.setUpListenerForSelectBaseFoodButton();
-		//this.setUpListenerForSelectCompositeFoodButton();
+		this.setUpListenerForSelectCompositeFoodButton();
 	}
     
     private void handleHamburgerMenuClick() {
@@ -148,27 +148,27 @@ public class CreateFoodItemTypeSelectionPageController {
 		});
     }
     
-//    private void setUpListenerForSelectCompositeFoodButton() {
-//    	this.selectCompositFoodButton.setOnAction((ActionEvent event) -> {
-//    		try {
-//    			FXMLLoader loader = new FXMLLoader();
-//				loader.setLocation(CreateCompositFoodPageController.class.getResource("CreateCompositFoodPage.fxml"));
-//				loader.load();
-//
-//				Parent parent = loader.getRoot();
-//				Scene scene = new Scene(parent);
-//
-//				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-//				stage.setScene(scene);
-//				stage.setTitle("Create Base Food Item");
-//				stage.show();
-//
-//			} catch (Exception ex) {
-//				ex.printStackTrace();
-//				Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to create base food item page.");
-//				alert.showAndWait();
-//			}
-//    	});
-//    }
+    private void setUpListenerForSelectCompositeFoodButton() {
+    	this.selectCompositFoodButton.setOnAction((ActionEvent event) -> {
+    		try {
+    			FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(CreateCompositFoodPageController.class.getResource("CreateCompositFoodPage.fxml"));
+				loader.load();
+
+				Parent parent = loader.getRoot();
+				Scene scene = new Scene(parent);
+
+				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+				stage.setScene(scene);
+				stage.setTitle("Create Base Food Item");
+				stage.show();
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to create base food item page.");
+				alert.showAndWait();
+			}
+    	});
+    }
 
 }
