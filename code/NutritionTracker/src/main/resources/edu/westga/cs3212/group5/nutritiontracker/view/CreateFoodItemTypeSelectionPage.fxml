@@ -32,7 +32,7 @@
       </Button>
       <Pane fx:id="menuPane" prefHeight="640.0" prefWidth="207.0" style="-fx-background-color: #87b442;" visible="false">
          <children>
-            <Button fx:id="homeButton" disable="true" layoutY="55.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Home" textFill="#1f5c33">
+            <Button fx:id="homeButton" layoutY="55.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Home" textFill="#1f5c33">
                <font>
                   <Font name="Bookman Old Style Bold" size="24.0" />
                </font>
