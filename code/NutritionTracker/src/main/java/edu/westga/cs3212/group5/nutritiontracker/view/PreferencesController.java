@@ -96,6 +96,7 @@ public class PreferencesController {
         this.viewModel = new PreferencesVM();
 
         this.primaryGoalComboBox.getItems().setAll(PrimaryGoal.values());
+        this.primaryGoalComboBox.setValue(PrimaryGoal.CALORIE);
 
         NumberStringConverter converter = new NumberStringConverter();
         this.calorieTextField.textProperty().bindBidirectional(this.viewModel.calorieProperty(), converter);

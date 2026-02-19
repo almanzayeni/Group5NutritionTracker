@@ -20,10 +20,10 @@ public class TestUserPreferences {
     @Test
     void testConstructorValidAllGoals() {
         UserPreferences prefs = new UserPreferences(
-                PrimaryGoal.LOSE_WEIGHT, 2000, 150, 65, 50, 2300, 250,
+                PrimaryGoal.CALORIE, 2000, 150, 65, 50, 2300, 250,
                 List.of("Drink more water", "Sleep 8 hours"));
 
-        assertEquals(PrimaryGoal.LOSE_WEIGHT, prefs.getPrimaryGoal());
+        assertEquals(PrimaryGoal.CALORIE, prefs.getPrimaryGoal());
         assertEquals(2000, prefs.getCalorieGoal());
         assertEquals(150,  prefs.getProteinGoal());
         assertEquals(65,   prefs.getFatGoal());
@@ -36,7 +36,7 @@ public class TestUserPreferences {
     @Test
     void testConstructorNullOtherGoalsTreatedAsEmpty() {
         UserPreferences prefs = new UserPreferences(
-                PrimaryGoal.MAINTAIN_WEIGHT, 2200, 100, 70, 40, 1800, 300, null);
+                PrimaryGoal.PROTEIN, 2200, 100, 70, 40, 1800, 300, null);
 
         assertNotNull(prefs.getOtherGoals());
         assertTrue(prefs.getOtherGoals().isEmpty());
@@ -45,13 +45,13 @@ public class TestUserPreferences {
     @Test
     void testConstructorZeroNumericGoalsAllowed() {
         assertDoesNotThrow(() -> new UserPreferences(
-                PrimaryGoal.GAIN_MUSCLE, 0, 0, 0, 0, 0, 0, null));
+                PrimaryGoal.PROTEIN, 0, 0, 0, 0, 0, 0, null));
     }
 
     @Test
     void testOtherGoalsListIsUnmodifiable() {
         UserPreferences prefs = new UserPreferences(
-                PrimaryGoal.LOSE_WEIGHT, 1800, 120, 60, 35, 2000, 220,
+                PrimaryGoal.CALORIE, 1800, 120, 60, 35, 2000, 220,
                 List.of("Goal A"));
 
         assertThrows(UnsupportedOperationException.class,
@@ -67,43 +67,43 @@ public class TestUserPreferences {
     @Test
     void testConstructorNegativeCalorieGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.LOSE_WEIGHT, -1, 150, 65, 50, 2300, 250, null));
+                new UserPreferences(PrimaryGoal.CALORIE, -1, 150, 65, 50, 2300, 250, null));
     }
 
     @Test
     void testConstructorNegativeProteinGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.LOSE_WEIGHT, 2000, -1, 65, 50, 2300, 250, null));
+                new UserPreferences(PrimaryGoal.CALORIE, 2000, -1, 65, 50, 2300, 250, null));
     }
 
     @Test
     void testConstructorNegativeFatGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.LOSE_WEIGHT, 2000, 150, -1, 50, 2300, 250, null));
+                new UserPreferences(PrimaryGoal.CALORIE, 2000, 150, -1, 50, 2300, 250, null));
     }
 
     @Test
     void testConstructorNegativeSugarGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.LOSE_WEIGHT, 2000, 150, 65, -1, 2300, 250, null));
+                new UserPreferences(PrimaryGoal.CALORIE, 2000, 150, 65, -1, 2300, 250, null));
     }
 
     @Test
     void testConstructorNegativeSodiumGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.LOSE_WEIGHT, 2000, 150, 65, 50, -1, 250, null));
+                new UserPreferences(PrimaryGoal.CALORIE, 2000, 150, 65, 50, -1, 250, null));
     }
 
     @Test
     void testConstructorNegativeCarbsGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.LOSE_WEIGHT, 2000, 150, 65, 50, 2300, -1, null));
+                new UserPreferences(PrimaryGoal.CALORIE, 2000, 150, 65, 50, 2300, -1, null));
     }
 
     @Test
     void testGetPrimaryGoalReturnsCorrectEnum() {
         UserPreferences prefs = new UserPreferences(
-                PrimaryGoal.GAIN_MUSCLE, 2500, 180, 80, 45, 2500, 300, null);
-        assertEquals(PrimaryGoal.GAIN_MUSCLE, prefs.getPrimaryGoal());
+                PrimaryGoal.PROTEIN, 2500, 180, 80, 45, 2500, 300, null);
+        assertEquals(PrimaryGoal.PROTEIN, prefs.getPrimaryGoal());
     }
 }
