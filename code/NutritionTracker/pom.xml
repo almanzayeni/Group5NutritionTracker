@@ -1,15 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>CS3212Group5</groupId>
-  <artifactId>NutritionTracker</artifactId>
+  <groupId>edu.westga.cs3212.group5</groupId>
+  <artifactId>nutritiontracker</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
-
-  <name>NutritionTracker</name>
-  <url>http://maven.apache.org</url>
-
   <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
@@ -26,6 +20,13 @@
             <artifactId>javafx-fxml</artifactId>
             <version>19</version>
         </dependency>
+        <!-- Source: https://mvnrepository.com/artifact/com.jfoenix/jfoenix -->
+		<dependency>
+    		<groupId>com.jfoenix</groupId>
+    		<artifactId>jfoenix</artifactId>
+    		<version>9.0.10</version>
+    		<scope>compile</scope>
+		</dependency>
 		<!-- JUnit 5 -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -60,7 +61,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>edu.westga.cs3211.pirateship.Main</mainClass>
+                            <mainClass>edu.westga.cs3212.group5.nutritiontracker.App</mainClass>
                         </configuration>
                     </execution>
                 </executions>
