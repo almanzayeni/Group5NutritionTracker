@@ -9,70 +9,70 @@
 <?import javafx.scene.text.Font?>
 <?xml-model href="AddStockPage.fxml"?>
 
-<AnchorPane prefHeight="646.0" prefWidth="386.0" style="-fx-background-color: #F3EDE4;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.PreferencesController">
+<AnchorPane prefHeight="640.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.PreferencesController">
     <children>
-      <ComboBox fx:id="primaryGoalComboBox" layoutX="215.0" layoutY="113.0" prefHeight="25.0" prefWidth="138.0" />
-        <TextField fx:id="calorieTextField" alignment="CENTER_RIGHT" layoutX="240.0" layoutY="159.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 2000" />
-      <TextField fx:id="proteinTextField" alignment="CENTER_RIGHT" layoutX="240.0" layoutY="199.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 40" />
-      <TextField fx:id="fatTextField" alignment="CENTER_RIGHT" layoutX="240.0" layoutY="233.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 70" />
-      <TextField fx:id="sugarTextField" alignment="CENTER_RIGHT" layoutX="241.0" layoutY="272.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 30" />
-      <TextField fx:id="sodiumTextField" alignment="CENTER_RIGHT" layoutX="240.0" layoutY="311.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 2300" />
-      <TextField fx:id="carbsTextField" alignment="CENTER_RIGHT" layoutX="241.0" layoutY="349.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 250" />
-      <TextField fx:id="otherGoalsTextField" alignment="CENTER_RIGHT" layoutX="169.0" layoutY="387.0" prefHeight="25.0" prefWidth="162.0" promptText="e.g. Vegan, Pescatarian, etc" />
+      <ComboBox fx:id="primaryGoalComboBox" layoutX="196.0" layoutY="115.0" prefHeight="25.0" prefWidth="138.0" />
+        <TextField fx:id="calorieTextField" alignment="CENTER_RIGHT" layoutX="221.0" layoutY="161.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 2000" />
+      <TextField fx:id="proteinTextField" alignment="CENTER_RIGHT" layoutX="221.0" layoutY="201.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 40" />
+      <TextField fx:id="fatTextField" alignment="CENTER_RIGHT" layoutX="221.0" layoutY="235.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 70" />
+      <TextField fx:id="sugarTextField" alignment="CENTER_RIGHT" layoutX="222.0" layoutY="274.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 30" />
+      <TextField fx:id="sodiumTextField" alignment="CENTER_RIGHT" layoutX="221.0" layoutY="313.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 2300" />
+      <TextField fx:id="carbsTextField" alignment="CENTER_RIGHT" layoutX="222.0" layoutY="351.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 250" />
+      <TextField fx:id="otherGoalsTextField" alignment="CENTER_RIGHT" layoutX="150.0" layoutY="389.0" prefHeight="25.0" prefWidth="162.0" promptText="e.g. Vegan, Pescatarian, etc" />
 
-        <Button fx:id="createAccountButton" layoutX="100.0" layoutY="459.0" onAction="#handleCreateAccount" prefHeight="29.0" prefWidth="186.0" style="-fx-background-color: #b8d5a3;" text="Create Account" textAlignment="CENTER">
+        <Button fx:id="createAccountButton" layoutX="87.0" layoutY="460.0" onAction="#handleCreateAccount" prefHeight="29.0" prefWidth="186.0" style="-fx-background-color: #b8d5a3;" text="Create Account" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Button>
-      <Line endX="70.99996948242188" endY="7.62939453125E-6" layoutX="214.0" layoutY="76.0" startX="-100.0" />
+      <Line endX="70.99996948242188" endY="7.62939453125E-6" layoutX="194.0" layoutY="82.0" startX="-100.0" />
 
-        <Label layoutX="127.0" layoutY="39.0" text="Preferences" textFill="#1f5c33">
+        <Label layoutX="107.0" layoutY="45.0" text="Preferences" textFill="#1f5c33">
             <font>
                 <Font name="Bookman Old Style Bold" size="24.0" />
             </font>
         </Label>
 
-        <Label layoutX="39.0" layoutY="116.0" text="What is your primary goal?" textFill="#6e2316">
+        <Label layoutX="20.0" layoutY="118.0" text="What is your primary goal?" textFill="#6e2316">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <Label layoutX="38.0" layoutY="162.0" text="What is you daily calorie goal?" textFill="#6e2316">
+      <Label layoutX="19.0" layoutY="164.0" text="What is you daily calorie goal?" textFill="#6e2316">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="202.0" text="What is you daily protein goal?" textFill="#6e2316">
+      <Label layoutX="19.0" layoutY="204.0" text="What is you daily protein goal?" textFill="#6e2316">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="236.0" text="What is you daily fat goal?" textFill="#6e2316">
+      <Label layoutX="19.0" layoutY="238.0" text="What is you daily fat goal?" textFill="#6e2316">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="275.0" prefHeight="19.0" prefWidth="190.0" text="What is you daily sugar goal?" textFill="#6e2316">
+      <Label layoutX="19.0" layoutY="277.0" prefHeight="19.0" prefWidth="190.0" text="What is you daily sugar goal?" textFill="#6e2316">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="314.0" text="What is you daily sodium goal?" textFill="#6e2316">
+      <Label layoutX="19.0" layoutY="316.0" text="What is you daily sodium goal?" textFill="#6e2316">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="352.0" text="What is you daily carbs goal?" textFill="#6e2316">
+      <Label layoutX="19.0" layoutY="354.0" text="What is you daily carbs goal?" textFill="#6e2316">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="backButtonLabel" layoutX="164.0" layoutY="510.0" text="← Back">
+      <Label fx:id="backButtonLabel" layoutX="151.0" layoutY="511.0" text="← Back">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="390.0" text="Other goals:" textFill="#6e2316">
+      <Label layoutX="19.0" layoutY="392.0" text="Other goals:" textFill="#6e2316">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -82,12 +82,12 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="333.0" layoutY="163.0" prefHeight="17.0" prefWidth="27.0" text="cal" textFill="#6e2316" />
-      <Label layoutX="333.0" layoutY="203.0" prefHeight="17.0" prefWidth="27.0" text="g" textFill="#6e2316" />
-      <Label layoutX="333.0" layoutY="237.0" prefHeight="17.0" prefWidth="27.0" text="g" textFill="#6e2316" />
-      <Label layoutX="333.0" layoutY="276.0" prefHeight="17.0" prefWidth="27.0" text="g" textFill="#6e2316" />
-      <Label layoutX="333.0" layoutY="353.0" prefHeight="17.0" prefWidth="27.0" text="g" textFill="#6e2316" />
-      <Label layoutX="333.0" layoutY="315.0" prefHeight="17.0" prefWidth="27.0" text="mg" textFill="#6e2316" />
+      <Label layoutX="314.0" layoutY="165.0" prefHeight="17.0" prefWidth="27.0" text="cal" textFill="#6e2316" />
+      <Label layoutX="314.0" layoutY="205.0" prefHeight="17.0" prefWidth="27.0" text="g" textFill="#6e2316" />
+      <Label layoutX="314.0" layoutY="239.0" prefHeight="17.0" prefWidth="27.0" text="g" textFill="#6e2316" />
+      <Label layoutX="314.0" layoutY="278.0" prefHeight="17.0" prefWidth="27.0" text="g" textFill="#6e2316" />
+      <Label layoutX="314.0" layoutY="355.0" prefHeight="17.0" prefWidth="27.0" text="g" textFill="#6e2316" />
+      <Label layoutX="314.0" layoutY="317.0" prefHeight="17.0" prefWidth="27.0" text="mg" textFill="#6e2316" />
 
     </children>
 </AnchorPane>
