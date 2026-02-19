@@ -7,9 +7,9 @@ import java.util.List;
  * The Class UserPreferences.
  * Represents a user's diet plan preferences and macro goals.
  *
- * The {@code primaryGoal} is one of the known {@link PrimaryGoal} options that
+ * The primaryGoal is one of the known PrimaryGoal options that
  * the user has selected as their main focus. Additional, free-form goals may be
- * stored in {@code otherGoals}.
+ * stored in otherGoals.
  *
  * @author Yeni Almanza
  * @version spring 2026
@@ -36,7 +36,7 @@ public class UserPreferences {
      *               && sodiumGoal >= 0
      *               && carbsGoal >= 0
      *
-     * @param primaryGoal the user's primary goal — one of the {@link PrimaryGoal}
+     * @param primaryGoal the user's primary goal — one of the PrimaryGoal
      *        enum values that the user has chosen as their main focus
      * @param calorieGoal  the daily calorie goal (kcal)
      * @param proteinGoal  the daily protein goal (grams)
@@ -152,7 +152,7 @@ public class UserPreferences {
     }
 
     /**
-     * Gets the otheradditional goals.
+     * Gets the other additional goals.
      *
      * @return an unmodifiable list of additional goals
      */
