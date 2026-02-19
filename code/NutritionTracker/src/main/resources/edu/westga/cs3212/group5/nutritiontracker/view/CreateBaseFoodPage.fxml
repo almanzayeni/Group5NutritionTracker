@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateBaseFoodPageController">
+   <children>
+      <Label layoutX="43.0" layoutY="58.0" text="Add New Food" textAlignment="CENTER" textFill="#1f5c33">
+         <font>
+            <Font name="Bookman Old Style Bold" size="36.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nameTextField" layoutX="144.0" layoutY="125.0" prefHeight="26.0" prefWidth="166.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="-4.0" layoutY="125.0" prefHeight="27.0" prefWidth="135.0" text="Name:" textFill="#6e2316">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="-3.0" layoutY="175.0" prefHeight="27.0" prefWidth="135.0" text="Portion Type:" textFill="#6e2316">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="quantityCategoryComboBox" layoutX="143.0" layoutY="175.0" prefHeight="26.0" prefWidth="166.0" promptText="Select a Portion Type" />
+      <Label alignment="CENTER_RIGHT" layoutX="-4.0" layoutY="225.0" prefHeight="27.0" prefWidth="135.0" text="Portion Size:" textAlignment="RIGHT" textFill="#6e2316">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="portionSizeTextField" alignment="CENTER" editable="false" layoutX="144.0" layoutY="225.0" prefHeight="26.0" prefWidth="166.0" text="1" />
+      <Label alignment="CENTER_RIGHT" layoutX="-4.0" layoutY="275.0" prefHeight="27.0" prefWidth="135.0" text="Calories:" textFill="#6e2316">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="caloriesTextField" layoutX="143.0" layoutY="275.0" prefHeight="26.0" prefWidth="166.0" />
+      <Label alignment="BOTTOM_LEFT" layoutX="314.0" layoutY="275.0" prefHeight="26.0" prefWidth="50.0" text="cals" textFill="#6e2316" />
+      <Label fx:id="portionSizeUnitLabel" alignment="BOTTOM_LEFT" layoutX="314.0" layoutY="225.0" prefHeight="26.0" prefWidth="50.0" text="piece" textFill="#6e2316" />
+      <Label alignment="CENTER_RIGHT" layoutX="-4.0" layoutY="325.0" prefHeight="27.0" prefWidth="135.0" text="Protein:" textFill="#6e2316">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="-3.0" layoutY="375.0" prefHeight="27.0" prefWidth="135.0" text="Fat:" textFill="#6e2316">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="-4.0" layoutY="425.0" prefHeight="27.0" prefWidth="135.0" text="Sugar:" textFill="#6e2316">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="-3.0" layoutY="475.0" prefHeight="27.0" prefWidth="135.0" text="Carbohydrates:" textFill="#6e2316">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="-3.0" layoutY="525.0" prefHeight="18.0" prefWidth="135.0" text="Sodium:" textFill="#6e2316">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="proteinTextField" layoutX="144.0" layoutY="325.0" prefHeight="26.0" prefWidth="166.0" />
+      <TextField fx:id="fatTextField" layoutX="144.0" layoutY="375.0" prefHeight="26.0" prefWidth="166.0" />
+      <TextField fx:id="sugarTextField" layoutX="143.0" layoutY="425.0" prefHeight="26.0" prefWidth="166.0" />
+      <TextField fx:id="carbohydratesTextField" layoutX="144.0" layoutY="475.0" prefHeight="26.0" prefWidth="166.0" />
+      <TextField fx:id="sodiumTextField" layoutX="144.0" layoutY="525.0" prefHeight="26.0" prefWidth="166.0" />
+      <Label alignment="BOTTOM_LEFT" layoutX="314.0" layoutY="325.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
+      <Label alignment="BOTTOM_LEFT" layoutX="314.0" layoutY="375.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
+      <Label alignment="BOTTOM_LEFT" layoutX="314.0" layoutY="425.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
+      <Label alignment="BOTTOM_LEFT" layoutX="314.0" layoutY="475.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
+      <Label alignment="BOTTOM_LEFT" layoutX="314.0" layoutY="525.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
+      <Button fx:id="addFoodButton" layoutX="125.0" layoutY="575.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #b8d5a3;" text="Add Food">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+      <Button fx:id="logoutButton" layoutX="275.0" layoutY="10.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="70.0" style="-fx-background-color: #b8d5a3;" text="Logout">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Pane fx:id="menuPane" prefHeight="640.0" prefWidth="207.0" style="-fx-background-color: #87b442;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="homeButton" layoutY="55.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Home" textFill="#1f5c33">
+               <font>
+                  <Font name="Bookman Old Style Bold" size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <JFXHamburger fx:id="hamburgerMenu" layoutX="15.0" layoutY="15.0" prefHeight="20.0" prefWidth="33.0" />
+   </children>
+</AnchorPane>
