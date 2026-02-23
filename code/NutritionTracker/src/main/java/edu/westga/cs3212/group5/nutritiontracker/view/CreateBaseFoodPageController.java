@@ -3,6 +3,9 @@ package edu.westga.cs3212.group5.nutritiontracker.view;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
+import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateBaseFoodPageViewModel;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -50,11 +53,13 @@ public class CreateBaseFoodPageController {
     @FXML
     private TextField proteinTextField;
     @FXML
-    private ComboBox<?> quantityCategoryComboBox;
+    private ComboBox<QuantityCategory> quantityCategoryComboBox;
     @FXML
     private TextField sodiumTextField;
     @FXML
     private TextField sugarTextField;
+    
+    private CreateBaseFoodPageViewModel viewModel;
 
     @FXML
     void initialize() {
@@ -74,12 +79,60 @@ public class CreateBaseFoodPageController {
         assert sodiumTextField != null : "fx:id=\"sodiumTextField\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
         assert sugarTextField != null : "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
         setUpListeners();
+        this.viewModel = new CreateBaseFoodPageViewModel();
+        bindViewModel();
     }
+    
+    private void bindViewModel() {
+    	this.nameTextField.textProperty().bindBidirectional(this.viewModel.getNameProperty());
+		this.quantityCategoryComboBox.itemsProperty().bind(this.viewModel.getQuantityCategoriesListProperty());
+		this.quantityCategoryComboBox.valueProperty().bindBidirectional(this.viewModel.getSelectedQuantityCategoryProperty());
+		this.portionSizeTextField.textProperty().bindBidirectional(this.viewModel.getPortionSizeProperty(), new javafx.util.converter.NumberStringConverter());
+		this.caloriesTextField.textProperty().bindBidirectional(this.viewModel.getCaloriesProperty(), new javafx.util.converter.NumberStringConverter());
+		this.proteinTextField.textProperty().bindBidirectional(this.viewModel.getProteinProperty(), new javafx.util.converter.NumberStringConverter());
+		this.fatTextField.textProperty().bindBidirectional(this.viewModel.getFatProperty(), new javafx.util.converter.NumberStringConverter());
+		this.sugarTextField.textProperty().bindBidirectional(this.viewModel.getSugarProperty(), new javafx.util.converter.NumberStringConverter());
+		this.carbohydratesTextField.textProperty().bindBidirectional(this.viewModel.getCarbohydratesProperty(), new javafx.util.converter.NumberStringConverter());
+		this.sodiumTextField.textProperty().bindBidirectional(this.viewModel.getSodiumProperty(), new javafx.util.converter.NumberStringConverter());
+		
+    }
+
+	private void setupPortionSizeUnitLabelListener() {
+		this.quantityCategoryComboBox.setOnAction(event -> {
+			QuantityCategory selectedCategory = this.quantityCategoryComboBox.getValue();
+			if (selectedCategory != null) {
+				switch (selectedCategory) {
+					case QUANTITY:
+						if (Double.parseDouble(this.portionSizeTextField.getText()) == 1) {
+							this.portionSizeUnitLabel.setText("piece");
+						} else {
+							this.portionSizeUnitLabel.setText("pieces");
+						}
+						break;
+					case WEIGHT:
+						if (Double.parseDouble(this.portionSizeTextField.getText()) == 1) {
+							this.portionSizeUnitLabel.setText("ounce");
+						} else {
+							this.portionSizeUnitLabel.setText("ounces");
+						}
+						break;
+					case SERVING:
+						if (Double.parseDouble(this.portionSizeTextField.getText()) == 1) {
+							this.portionSizeUnitLabel.setText("serving");
+						} else {
+							this.portionSizeUnitLabel.setText("servings");
+						}
+						break;
+				}
+			}
+		});
+	}
     
     private void setUpListeners() {
 		this.handleHamburgerMenuClick();
 		//this.setUpListenerForLogoutButton();
 		this.setUpListenerForHomeButton();
+		setupPortionSizeUnitLabelListener();
 	}
     
     private void handleHamburgerMenuClick() {
