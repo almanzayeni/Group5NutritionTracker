@@ -1,4 +1,5 @@
 import zmq
+import json
 
 BIND_ADDR = "tcp://127.0.0.1:5555"
 
@@ -11,12 +12,15 @@ def run():
     
     while True:
         message = socket.recv_string()
-        print("Recieved: ", message)
-        
-        if message == "PING":
-            socket.send_string("PONG")
+        req = json.loads(message)
+
+        action = req.get("action")
+        if action == "ping":
+            res = {"status": "ok", "message": "pong"}
         else:
-            socket.send_string("UNKNOWN")
+            res = {"status": "error", "message": "unknown action"}
+            
+        socket.send_string(json.dumps(res))
             
 if __name__ == "__main__":
     run()

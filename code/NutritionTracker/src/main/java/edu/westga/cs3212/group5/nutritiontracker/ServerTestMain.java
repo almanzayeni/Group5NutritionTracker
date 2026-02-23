@@ -9,7 +9,6 @@ public class ServerTestMain {
     public static void main(String[] args) throws Exception {
         ServerClient client = new ServerClient();
         PingResponse res = client.send(new PingRequest(), PingResponse.class);
-
         System.out.println(res.status + " " + res.message);
     }
 }
