@@ -60,6 +60,12 @@ public class CreateBaseFoodPageController {
     private TextField sugarTextField;
     
     private CreateBaseFoodPageViewModel viewModel;
+    private boolean caloriesIsBound;
+    private boolean proteinIsBound;
+    private boolean fatIsBound;
+    private boolean sugarIsBound;
+    private boolean carbohydratesIsBound;
+    private boolean sodiumIsBound;
 
     @FXML
     void initialize() {
@@ -78,24 +84,157 @@ public class CreateBaseFoodPageController {
         assert quantityCategoryComboBox != null : "fx:id=\"quantityCategoryComboBox\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
         assert sodiumTextField != null : "fx:id=\"sodiumTextField\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
         assert sugarTextField != null : "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
-        setUpListeners();
+        
         this.viewModel = new CreateBaseFoodPageViewModel();
+        this.caloriesIsBound = false;
+        this.proteinIsBound = false;
+        this.fatIsBound = false;
+        this.sugarIsBound = false;
+        this.carbohydratesIsBound = false;
+        this.sodiumIsBound = false;
+        
+        setUpListeners();
         bindViewModel();
     }
+    
+    private void setUpListeners() {
+		this.handleHamburgerMenuClick();
+		//this.setUpListenerForLogoutButton();
+		this.setUpListenerForHomeButton();
+		this.setupPortionSizeUnitLabelListener();
+		this.setupCaloriesListener();
+		this.setupProteinListener();
+		this.setupFatListener();
+		this.setupSugarListener();
+		this.setupCarbohydratesListener();
+		this.setupSodiumListener();
+	}
     
     private void bindViewModel() {
     	this.nameTextField.textProperty().bindBidirectional(this.viewModel.getNameProperty());
 		this.quantityCategoryComboBox.itemsProperty().bind(this.viewModel.getQuantityCategoriesListProperty());
 		this.quantityCategoryComboBox.valueProperty().bindBidirectional(this.viewModel.getSelectedQuantityCategoryProperty());
-		this.portionSizeTextField.textProperty().bindBidirectional(this.viewModel.getPortionSizeProperty(), new javafx.util.converter.NumberStringConverter());
-		this.caloriesTextField.textProperty().bindBidirectional(this.viewModel.getCaloriesProperty(), new javafx.util.converter.NumberStringConverter());
-		this.proteinTextField.textProperty().bindBidirectional(this.viewModel.getProteinProperty(), new javafx.util.converter.NumberStringConverter());
-		this.fatTextField.textProperty().bindBidirectional(this.viewModel.getFatProperty(), new javafx.util.converter.NumberStringConverter());
-		this.sugarTextField.textProperty().bindBidirectional(this.viewModel.getSugarProperty(), new javafx.util.converter.NumberStringConverter());
-		this.carbohydratesTextField.textProperty().bindBidirectional(this.viewModel.getCarbohydratesProperty(), new javafx.util.converter.NumberStringConverter());
-		this.sodiumTextField.textProperty().bindBidirectional(this.viewModel.getSodiumProperty(), new javafx.util.converter.NumberStringConverter());
-		
     }
+    
+    private void setupCaloriesListener() {
+    	this.caloriesTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+    		if (newValue != null && !newValue.isBlank()) {
+				try {
+					if (newValue.endsWith(".")) {
+						return;
+					}
+					double doubleValue = Double.parseDouble(newValue);
+					if (!this.caloriesIsBound) {
+						this.caloriesTextField.textProperty().bindBidirectional(this.viewModel.getCaloriesProperty(), new javafx.util.converter.NumberStringConverter("0.##########"));
+						this.caloriesIsBound = true;
+					}
+					this.viewModel.getCaloriesProperty().setValue(doubleValue);
+				} catch (NumberFormatException e) {
+					this.caloriesTextField.setText(oldValue);
+				}
+			}
+		});
+    }
+    
+    private void setupProteinListener() {
+		this.proteinTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null && !newValue.isBlank()) {
+				try {
+					if (newValue.endsWith(".")) {
+						return;
+					}
+					double doubleValue = Double.parseDouble(newValue);
+					if (!this.proteinIsBound) {
+						this.proteinTextField.textProperty().bindBidirectional(this.viewModel.getProteinProperty(), new javafx.util.converter.NumberStringConverter("0.##########"));
+						this.proteinIsBound = true;
+					}
+					this.viewModel.getProteinProperty().setValue(doubleValue);
+				} catch (NumberFormatException e) {
+					this.proteinTextField.setText(oldValue);
+				}
+			}
+		});
+	}
+    
+    private void setupFatListener() {
+		this.fatTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null && !newValue.isBlank()) {
+				try {
+					if (newValue.endsWith(".")) {
+						return;
+					}
+					double doubleValue = Double.parseDouble(newValue);
+					if (!this.fatIsBound) {
+						this.fatTextField.textProperty().bindBidirectional(this.viewModel.getFatProperty(), new javafx.util.converter.NumberStringConverter("0.##########"));
+						this.fatIsBound = true;
+					}
+					this.viewModel.getFatProperty().setValue(doubleValue);
+				} catch (NumberFormatException e) {
+					this.fatTextField.setText(oldValue);
+				}
+			}
+		});
+	}
+    
+    private void setupSugarListener() {
+		this.sugarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null && !newValue.isBlank()) {
+				try {
+					if (newValue.endsWith(".")) {
+						return;
+					}
+					double doubleValue = Double.parseDouble(newValue);
+					if (!this.sugarIsBound) {
+						this.sugarTextField.textProperty().bindBidirectional(this.viewModel.getSugarProperty(), new javafx.util.converter.NumberStringConverter("0.##########"));
+						this.sugarIsBound = true;
+					}
+					this.viewModel.getSugarProperty().setValue(doubleValue);
+				} catch (NumberFormatException e) {
+					this.sugarTextField.setText(oldValue);
+				}
+			}
+		});
+	}
+    
+    private void setupCarbohydratesListener() {
+		this.carbohydratesTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null && !newValue.isBlank()) {
+				try {
+					if (newValue.endsWith(".")) {
+						return;
+					}
+					double doubleValue = Double.parseDouble(newValue);
+					if (!this.carbohydratesIsBound) {
+						this.carbohydratesTextField.textProperty().bindBidirectional(this.viewModel.getCarbohydratesProperty(), new javafx.util.converter.NumberStringConverter("0.##########"));
+						this.carbohydratesIsBound = true;
+					}
+					this.viewModel.getCarbohydratesProperty().setValue(doubleValue);
+				} catch (NumberFormatException e) {
+					this.carbohydratesTextField.setText(oldValue);
+				}
+			}
+		});
+	}
+    
+    private void setupSodiumListener() {
+		this.sodiumTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null && !newValue.isBlank()) {
+				try {
+					if (newValue.endsWith(".")) {
+						return;
+					}
+					double doubleValue = Double.parseDouble(newValue);
+					if (!this.sodiumIsBound) {
+						this.sodiumTextField.textProperty().bindBidirectional(this.viewModel.getSodiumProperty(), new javafx.util.converter.NumberStringConverter("0.##########"));
+						this.sodiumIsBound = true;
+					}
+					this.viewModel.getSodiumProperty().setValue(doubleValue);
+				} catch (NumberFormatException e) {
+					this.sodiumTextField.setText(oldValue);
+				}
+			}
+		});
+	}
 
 	private void setupPortionSizeUnitLabelListener() {
 		this.quantityCategoryComboBox.setOnAction(event -> {
@@ -126,13 +265,6 @@ public class CreateBaseFoodPageController {
 				}
 			}
 		});
-	}
-    
-    private void setUpListeners() {
-		this.handleHamburgerMenuClick();
-		//this.setUpListenerForLogoutButton();
-		this.setUpListenerForHomeButton();
-		setupPortionSizeUnitLabelListener();
 	}
     
     private void handleHamburgerMenuClick() {

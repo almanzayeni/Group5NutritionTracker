@@ -41,7 +41,7 @@
       </Label>
       <TextField fx:id="caloriesTextField" alignment="CENTER_RIGHT" layoutX="143.0" layoutY="275.0" prefHeight="26.0" prefWidth="166.0" promptText="e.g. 2000" />
       <Label alignment="BOTTOM_LEFT" layoutX="314.0" layoutY="275.0" prefHeight="26.0" prefWidth="50.0" text="cals" textFill="#6e2316" />
-      <Label fx:id="portionSizeUnitLabel" alignment="BOTTOM_LEFT" layoutX="314.0" layoutY="225.0" prefHeight="26.0" prefWidth="50.0" text="piece" textFill="#6e2316" />
+      <Label fx:id="portionSizeUnitLabel" alignment="BOTTOM_LEFT" layoutX="314.0" layoutY="225.0" prefHeight="26.0" prefWidth="50.0" textFill="#6e2316" />
       <Label alignment="CENTER_RIGHT" layoutX="-4.0" layoutY="325.0" prefHeight="27.0" prefWidth="135.0" text="Protein:" textFill="#6e2316">
          <font>
             <Font name="System Bold" size="16.0" />

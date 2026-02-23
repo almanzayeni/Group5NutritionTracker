@@ -13,7 +13,7 @@ public class CreateBaseFoodPageViewModel {
 	private StringProperty name;
 	private ListProperty<QuantityCategory> quantityCategoriesList;
 	private ObjectProperty<QuantityCategory> selectedQuantityCategory;
-	private DoubleProperty portionSize;
+	private double portionSize;
 	private DoubleProperty calories;
 	private DoubleProperty protein;
 	private DoubleProperty fat;
@@ -31,7 +31,7 @@ public class CreateBaseFoodPageViewModel {
 		
 		this.quantityCategoriesList = new javafx.beans.property.SimpleListProperty<>(FXCollections.observableArrayList(quantityCategories));
 		this.selectedQuantityCategory = new javafx.beans.property.SimpleObjectProperty<>();
-		this.portionSize = new javafx.beans.property.SimpleDoubleProperty();
+		this.portionSize = 1.0;
 		this.calories = new javafx.beans.property.SimpleDoubleProperty();
 		this.protein = new javafx.beans.property.SimpleDoubleProperty();
 		this.fat = new javafx.beans.property.SimpleDoubleProperty();
@@ -52,7 +52,7 @@ public class CreateBaseFoodPageViewModel {
 		return selectedQuantityCategory;
 	}
 
-	public DoubleProperty getPortionSizeProperty() {
+	public double getPortionSizeProperty() {
 		return portionSize;
 	}
 
