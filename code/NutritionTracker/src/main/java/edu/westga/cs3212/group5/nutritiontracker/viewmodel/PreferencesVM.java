@@ -6,6 +6,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
 import edu.westga.cs3212.group5.nutritiontracker.model.UserPreferences;
+import edu.westga.cs3212.group5.nutritiontracker.server.ServerClient;
+import edu.westga.cs3212.nutritiontracker.server.dto.PingRequest;
+import edu.westga.cs3212.nutritiontracker.server.dto.PingResponse;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +32,7 @@ public class PreferencesVM {
     private final DoubleProperty sodium   = new SimpleDoubleProperty(0.0);
     private final DoubleProperty carbs    = new SimpleDoubleProperty(0.0);
     private final StringProperty warning  = new SimpleStringProperty("");
-
+    
     /**
      * Gets the calorie property.
      *
