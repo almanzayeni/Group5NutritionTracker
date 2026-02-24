@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?xml-model href="SearchPage.fxml"?>
+
+<AnchorPane prefHeight="640.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.PreferencesController" />
