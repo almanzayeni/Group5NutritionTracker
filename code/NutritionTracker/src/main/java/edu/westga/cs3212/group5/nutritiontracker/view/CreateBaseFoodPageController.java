@@ -7,6 +7,7 @@ import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateBaseFoodPageViewModel;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -20,8 +21,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 public class CreateBaseFoodPageController {
     @FXML
@@ -85,6 +88,8 @@ public class CreateBaseFoodPageController {
         assert sodiumTextField != null : "fx:id=\"sodiumTextField\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
         assert sugarTextField != null : "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
         
+        
+        
         this.viewModel = new CreateBaseFoodPageViewModel();
         this.caloriesIsBound = false;
         this.proteinIsBound = false;
@@ -108,6 +113,7 @@ public class CreateBaseFoodPageController {
 		this.setupSugarListener();
 		this.setupCarbohydratesListener();
 		this.setupSodiumListener();
+		this.setupListenerForAddFoodButton();
 	}
     
     private void bindViewModel() {
@@ -337,5 +343,38 @@ public class CreateBaseFoodPageController {
 			}
     	});
     }
+    
+    private void setupListenerForAddFoodButton() {
+		this.addFoodButton.setOnAction((ActionEvent event) -> {
+			try {
+				this.viewModel.createBaseFood();
+				Alert alert = new Alert(Alert.AlertType.INFORMATION, this.nameTextField.getText() + " created successfully.");
+				alert.setHeaderText("Food Created");
+				alert.showAndWait();
+				this.clearFields();
+			} catch (Exception ex) {
+				if (ex instanceof IllegalArgumentException) {
+					Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage());
+					alert.setHeaderText("Food Already Exists");
+					alert.showAndWait();
+					return;
+				}
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Error creating " + this.nameTextField.getText() + ". Please ensure all fields are filled out correctly and try again.");
+				alert.setHeaderText("Error Creating Food");
+				alert.showAndWait();
+			}
+		});
+    }
+    
+    private void clearFields() {
+		this.nameTextField.clear();
+		this.quantityCategoryComboBox.getSelectionModel().clearSelection();
+		this.caloriesTextField.setText("");
+		this.proteinTextField.clear();
+		this.fatTextField.clear();
+		this.sugarTextField.clear();
+		this.carbohydratesTextField.clear();
+		this.sodiumTextField.clear();
+	}
 
 }

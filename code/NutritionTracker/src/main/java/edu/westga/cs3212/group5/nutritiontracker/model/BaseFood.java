@@ -17,6 +17,12 @@ public class BaseFood implements FoodItem {
 	private double carbohydrates;
 	private double sodium;
 	
+	
+	/**
+	 * Instantiates a new base food.
+	 */
+	public BaseFood() {}
+	
 	/**
 	 * Instantiates a new base food.
 	 *
@@ -292,4 +298,11 @@ public class BaseFood implements FoodItem {
 		this.sodium = sodium;
 	}
 
+	@Override
+	public String toString() {
+		return "BaseFood {Description=" + Description + ", quantityCategory=" + quantityCategory + ", portionSize="
+				+ portionSize + ", calories=" + calories + ", protein=" + protein + ", fat=" + fat + ", sugar="
+				+ sugar + ", carbohydrates=" + carbohydrates + ", sodium=" + sodium + "}";
+	}
+	
 }
