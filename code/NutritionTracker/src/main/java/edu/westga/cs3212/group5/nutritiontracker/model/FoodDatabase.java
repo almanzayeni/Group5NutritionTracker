@@ -120,20 +120,33 @@ public class FoodDatabase {
      */
     private void seedSampleData() {
         // BaseFood(description, quantityCategory, portionSize, calories, protein, fat, sugar, carbs, sodium)
-        this.foods.add(new BaseFood("Apple",          QuantityCategory.QUANTITY, 1,   95,  0.5,  0.3,  19.0, 25.0,   2.0));
-        this.foods.add(new BaseFood("Banana",         QuantityCategory.QUANTITY, 1,  105,  1.3,  0.4,  14.0, 27.0,   1.0));
-        this.foods.add(new BaseFood("Chicken Breast", QuantityCategory.WEIGHT,   100, 165, 31.0,  3.6,   0.0,  0.0,  74.0));
-        this.foods.add(new BaseFood("Brown Rice",     QuantityCategory.SERVING,  1,  216,  5.0,  1.8,   0.0, 45.0,  10.0));
-        this.foods.add(new BaseFood("Egg",            QuantityCategory.QUANTITY, 1,   78,  6.0,  5.0,   0.1,  0.6,  62.0));
-        this.foods.add(new BaseFood("Whole Milk",     QuantityCategory.SERVING,  1,  149,  8.0,  8.0,  12.0, 12.0, 105.0));
-        this.foods.add(new BaseFood("Oatmeal",        QuantityCategory.SERVING,  1,  158,  6.0,  3.0,   1.0, 27.0,   9.0));
-        this.foods.add(new BaseFood("Salmon",         QuantityCategory.WEIGHT,   100, 208, 20.0, 13.0,   0.0,  0.0,  59.0));
-        this.foods.add(new BaseFood("Broccoli",       QuantityCategory.WEIGHT,   100,  34,  2.8,  0.4,   1.7,  7.0,  33.0));
-        this.foods.add(new BaseFood("Cheddar Cheese", QuantityCategory.WEIGHT,   28,  113,  7.0,  9.0,   0.1,  0.4, 174.0));
-        this.foods.add(new BaseFood("Orange Juice",   QuantityCategory.SERVING,  1,  112,  1.7,  0.5,  20.8, 25.8,   2.0));
-        this.foods.add(new BaseFood("Greek Yogurt",   QuantityCategory.SERVING,  1,  100, 17.0,  0.7,   6.0,  6.0,  36.0));
-        this.foods.add(new BaseFood("Almonds",        QuantityCategory.WEIGHT,   28,  164,  6.0, 14.0,   1.2,  6.0,   0.0));
-        this.foods.add(new BaseFood("White Bread",    QuantityCategory.QUANTITY, 1,   79,  2.7,  1.0,   1.4, 15.0, 142.0));
-        this.foods.add(new BaseFood("Pasta",          QuantityCategory.SERVING,  1,  220,  8.0,  1.3,   0.6, 43.0,   1.0));
+
+        this.foods.add(new BaseFood("Apple (medium)",     QuantityCategory.QUANTITY, 1,   95,  0.5,  0.3, 19.0, 25.0,   2.0));
+        this.foods.add(new BaseFood("Banana (medium)",    QuantityCategory.QUANTITY, 1,  105,  1.3,  0.4, 14.4, 27.0,   1.0));
+        this.foods.add(new BaseFood("Egg (large)",        QuantityCategory.QUANTITY, 1,   72,  6.3,  5.0,  0.2,  0.4,  71.0));
+        this.foods.add(new BaseFood("White Bread (slice)",QuantityCategory.QUANTITY, 1,   79,  2.7,  1.0,  1.4, 15.0, 142.0));
+        this.foods.add(new BaseFood("Orange (medium)",    QuantityCategory.QUANTITY, 1,   62,  1.2,  0.2, 12.2, 15.4,   0.0));
+
+        this.foods.add(new BaseFood("Chicken Breast",     QuantityCategory.WEIGHT, 100, 165, 31.0,  3.6,  0.0,  0.0,  74.0));
+        this.foods.add(new BaseFood("Salmon (Atlantic)",  QuantityCategory.WEIGHT, 100, 208, 20.4, 13.4,  0.0,  0.0,  59.0));
+        this.foods.add(new BaseFood("Broccoli",           QuantityCategory.WEIGHT, 100,  34,  2.8,  0.4,  1.7,  6.6,  33.0));
+        this.foods.add(new BaseFood("Ground Beef (lean)", QuantityCategory.WEIGHT, 100, 215, 26.1, 12.0,  0.0,  0.0,  75.0));
+        this.foods.add(new BaseFood("Sweet Potato",       QuantityCategory.WEIGHT, 100,  86,  1.6,  0.1,  4.2, 20.1,  55.0));
+        this.foods.add(new BaseFood("Cheddar Cheese",     QuantityCategory.WEIGHT, 100, 403, 25.0, 33.0,  0.5,  1.3, 621.0));
+        this.foods.add(new BaseFood("Almonds",            QuantityCategory.WEIGHT, 100, 579, 21.2, 49.9,  4.4, 21.6,   1.0));
+        this.foods.add(new BaseFood("White Rice (cooked)",QuantityCategory.WEIGHT, 100, 130,  2.7,  0.3,  0.0, 28.2,   1.0));
+        this.foods.add(new BaseFood("Avocado",            QuantityCategory.WEIGHT, 100, 160,  2.0, 14.7,  0.7,  8.5,   7.0));
+        this.foods.add(new BaseFood("Tuna (canned)",      QuantityCategory.WEIGHT, 100, 116, 25.5,  0.8,  0.0,  0.0, 396.0));
+
+        this.foods.add(new BaseFood("Whole Milk (1 cup)",       QuantityCategory.SERVING, 1, 149,  8.0,  8.0, 12.3, 11.7, 105.0));
+        this.foods.add(new BaseFood("Orange Juice (1 cup)",     QuantityCategory.SERVING, 1, 112,  1.7,  0.5, 20.8, 25.8,   2.0));
+        this.foods.add(new BaseFood("Greek Yogurt (3/4 cup)",   QuantityCategory.SERVING, 1, 100, 17.3,  0.7,  6.0,  6.0,  36.0));
+        this.foods.add(new BaseFood("Oatmeal (1 cup cooked)",   QuantityCategory.SERVING, 1, 158,  5.9,  3.2,  0.6, 27.4,   9.0));
+        this.foods.add(new BaseFood("Brown Rice (1 cup cooked)",QuantityCategory.SERVING, 1, 216,  5.0,  1.8,  0.7, 44.8,  10.0));
+        this.foods.add(new BaseFood("Pasta (1 cup cooked)",     QuantityCategory.SERVING, 1, 220,  8.1,  1.3,  0.6, 43.2,   1.0));
+        this.foods.add(new BaseFood("Peanut Butter (2 tbsp)",   QuantityCategory.SERVING, 1, 188,  8.0, 16.0,  3.4,  6.9, 147.0));
+        this.foods.add(new BaseFood("Olive Oil (1 tbsp)",       QuantityCategory.SERVING, 1, 119,  0.0, 13.5,  0.0,  0.0,   0.0));
+        this.foods.add(new BaseFood("Black Beans (1/2 cup)",    QuantityCategory.SERVING, 1, 114,  7.6,  0.5,  0.3, 20.4, 204.0));
+        this.foods.add(new BaseFood("Cottage Cheese (1/2 cup)", QuantityCategory.SERVING, 1, 110, 12.5,  5.0,  3.0,  3.5, 380.0));
     }
 }

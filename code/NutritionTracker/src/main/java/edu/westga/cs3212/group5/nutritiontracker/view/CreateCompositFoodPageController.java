@@ -64,14 +64,20 @@ public class CreateCompositFoodPageController {
 	private ComboBox<QuantityCategory> quantityCategoryComboBox;
 	@FXML
 	private ListView<FoodItem> selectedIngredientsListView;
+    @FXML 
+    private Label searchSelectionLabel;
 	@FXML
 	private TextField sodiumTextField;
 	@FXML
 	private TextField sugarTextField;
 	@FXML
-	private Label ingredientStatusLabel;;
+	private Label ingredientStatusLabel;
+	@FXML
+	private FoodSearchPanelController searchPanelController;
 
 	private CreateCompositFoodPageViewModel viewModel;
+	
+	private FoodItem currentlySelectedFood = null;
 
 	@FXML
 	void initialize() {
@@ -111,65 +117,79 @@ public class CreateCompositFoodPageController {
 				: "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		setUpListeners();
 
-		this.viewModel = new CreateCompositFoodPageViewModel();
+	       this.viewModel = new CreateCompositFoodPageViewModel();
 
-		if (this.ingredientStatusLabel != null) {
-			this.ingredientStatusLabel.textProperty().bind(this.viewModel.statusMessageProperty());
-		}
+	        this.setUpQuantityComboBox();
+	        this.bindNutritionalFields();
+	        this.setUpIngredientsListView();
+	        this.connectSearchPanel();
+	        this.setUpListeners();
 
-		this.setUpQuantityComboBox();
-		this.bindNutritionalFields();
-		this.setUpIngredientsListView();
-		this.setUpListeners();
+	        if (this.ingredientStatusLabel != null) {
+	            this.ingredientStatusLabel.textProperty()
+	                    .bind(this.viewModel.statusMessageProperty());
+	        }
 	}
+	
+    private void connectSearchPanel() {
+        this.addIngredientButton.setDisable(true);
 
-	private void setUpQuantityComboBox() {
-		this.quantityCategoryComboBox.getItems().setAll(QuantityCategory.values());
-		this.quantityCategoryComboBox.setValue(QuantityCategory.SERVING);
+        this.searchPanelController.setOnFoodSelected(food -> {
+            this.currentlySelectedFood = food;
+            boolean hasSelection = food != null;
+            this.addIngredientButton.setDisable(!hasSelection);
+            if (this.searchSelectionLabel != null) {
+                this.searchSelectionLabel.setText(hasSelection
+                        ? "Selected: " + food.getDescription()
+                          + " — " + String.format("%.0f", food.getCalories()) + " cal"
+                        : "No food selected from search.");
+            }
+        });
+    }
 
-		this.quantityCategoryComboBox.valueProperty().addListener((obs, oldVal, newVal) -> {
-			if (newVal != null) {
-				switch (newVal) {
-				case WEIGHT -> this.portionSizeUnitLabel.setText("g");
-				case QUANTITY -> this.portionSizeUnitLabel.setText("pcs");
-				case SERVING -> this.portionSizeUnitLabel.setText("srv");
-				}
-			}
-		});
-	}
+    private void setUpQuantityComboBox() {
+        this.quantityCategoryComboBox.getItems().setAll(QuantityCategory.values());
+        this.quantityCategoryComboBox.setValue(QuantityCategory.SERVING);
 
-	private void bindNutritionalFields() {
-		// Make fields non-editable so the user knows they are calculated
-		this.caloriesTextField.setEditable(false);
-		this.proteinTextField.setEditable(false);
-		this.fatTextField.setEditable(false);
-		this.sugarTextField.setEditable(false);
-		this.carbohydratesTextField.setEditable(false);
-		this.sodiumTextField.setEditable(false);
-		
-		this.portionSizeTextField.setEditable(true);
+        this.quantityCategoryComboBox.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                switch (newVal) {
+                    case WEIGHT   -> this.portionSizeUnitLabel.setText("g");
+                    case QUANTITY -> this.portionSizeUnitLabel.setText("pcs");
+                    case SERVING  -> this.portionSizeUnitLabel.setText("srv");
+                }
+            }
+        });
+    }
+    
+    private void bindNutritionalFields() {
+        this.caloriesTextField.setEditable(false);
+        this.proteinTextField.setEditable(false);
+        this.fatTextField.setEditable(false);
+        this.sugarTextField.setEditable(false);
+        this.carbohydratesTextField.setEditable(false);
+        this.sodiumTextField.setEditable(false);
 
-		this.viewModel.totalCaloriesProperty()
-				.addListener((obs, o, n) -> this.caloriesTextField.setText(String.format("%.1f", n.doubleValue())));
-		this.viewModel.totalProteinProperty()
-				.addListener((obs, o, n) -> this.proteinTextField.setText(String.format("%.1f", n.doubleValue())));
-		this.viewModel.totalFatProperty()
-				.addListener((obs, o, n) -> this.fatTextField.setText(String.format("%.1f", n.doubleValue())));
-		this.viewModel.totalSugarProperty()
-				.addListener((obs, o, n) -> this.sugarTextField.setText(String.format("%.1f", n.doubleValue())));
-		this.viewModel.totalCarbohydratesProperty().addListener(
-				(obs, o, n) -> this.carbohydratesTextField.setText(String.format("%.1f", n.doubleValue())));
-		this.viewModel.totalSodiumProperty()
-				.addListener((obs, o, n) -> this.sodiumTextField.setText(String.format("%.1f", n.doubleValue())));
+        this.viewModel.totalCaloriesProperty()
+                .addListener((obs, o, n) -> this.caloriesTextField.setText(String.format("%.1f", n.doubleValue())));
+        this.viewModel.totalProteinProperty()
+                .addListener((obs, o, n) -> this.proteinTextField.setText(String.format("%.1f", n.doubleValue())));
+        this.viewModel.totalFatProperty()
+                .addListener((obs, o, n) -> this.fatTextField.setText(String.format("%.1f", n.doubleValue())));
+        this.viewModel.totalSugarProperty()
+                .addListener((obs, o, n) -> this.sugarTextField.setText(String.format("%.1f", n.doubleValue())));
+        this.viewModel.totalCarbohydratesProperty()
+                .addListener((obs, o, n) -> this.carbohydratesTextField.setText(String.format("%.1f", n.doubleValue())));
+        this.viewModel.totalSodiumProperty()
+                .addListener((obs, o, n) -> this.sodiumTextField.setText(String.format("%.1f", n.doubleValue())));
 
-		this.caloriesTextField.setText("0.0");
-		this.proteinTextField.setText("0.0");
-		this.fatTextField.setText("0.0");
-		this.sugarTextField.setText("0.0");
-		this.carbohydratesTextField.setText("0.0");
-		this.sodiumTextField.setText("0.0");
-
-	}
+        this.caloriesTextField.setText("0.0");
+        this.proteinTextField.setText("0.0");
+        this.fatTextField.setText("0.0");
+        this.sugarTextField.setText("0.0");
+        this.carbohydratesTextField.setText("0.0");
+        this.sodiumTextField.setText("0.0");
+    }
 
     private void setUpIngredientsListView() {
         this.selectedIngredientsListView.setItems(this.viewModel.getIngredients());
@@ -193,8 +213,8 @@ public class CreateCompositFoodPageController {
 
                 Button removeBtn = new Button("✕");
                 removeBtn.setStyle(
-                        "-fx-background-color: #e07070; -fx-text-fill: white; " +
-                        "-fx-font-weight: bold; -fx-padding: 2 7 2 7;");
+                        "-fx-background-color: #e07070; -fx-text-fill: white; "
+                        + "-fx-font-weight: bold; -fx-padding: 2 7 2 7;");
                 removeBtn.setOnAction(e -> {
                     int idx = getIndex();
                     if (idx >= 0 && idx < viewModel.getIngredients().size()) {
@@ -289,53 +309,45 @@ public class CreateCompositFoodPageController {
 		});
 	}
 
-	private void setUpListenerForAddIngredientButton() {
-		this.addIngredientButton.setOnAction((ActionEvent event) -> {
-			Stage ownerStage = (Stage) this.addIngredientButton.getScene().getWindow();
+    private void setUpListenerForAddIngredientButton() {
+        this.addIngredientButton.setOnAction((ActionEvent event) -> {
+            FoodItem food = this.searchPanelController.getSelectedFood();
 
-			FoodSearchController dialog = new FoodSearchController(ownerStage);
-			dialog.showAndWait();
+            if (food == null) {
+                new Alert(Alert.AlertType.WARNING,
+                        "Please select a food from the search results first.").showAndWait();
+                return;
+            }
 
-			dialog.getSelectedFood().ifPresent(food -> {
-				boolean added = this.viewModel.addIngredient(food);
-				if (!added) {
+            boolean added = this.viewModel.addIngredient(food);
+            if (!added) {
+                new Alert(Alert.AlertType.INFORMATION,
+                        this.viewModel.statusMessageProperty().get()).showAndWait();
+            }
+        });
+    }
 
-					Alert alert = new Alert(Alert.AlertType.INFORMATION);
-					alert.setTitle("Duplicate Ingredient");
-					alert.setHeaderText(null);
-					alert.setContentText(this.viewModel.statusMessageProperty().get());
-					alert.showAndWait();
-				}
-			});
-		});
-	}
+    private void setUpListenerForAddFoodButton() {
+        this.addFoodButton.setOnAction((ActionEvent event) -> {
+            String name = this.nameTextField.getText();
 
-	private void setUpListenerForAddFoodButton() {
-		this.addFoodButton.setOnAction((ActionEvent event) -> {
-			String name = this.nameTextField.getText();
+            if (name == null || name.isBlank()) {
+                new Alert(Alert.AlertType.WARNING, "Please enter a name for the food.").showAndWait();
+                return;
+            }
+            if (this.viewModel.getIngredients().isEmpty()) {
+                new Alert(Alert.AlertType.WARNING,
+                        "Please add at least one ingredient before saving.").showAndWait();
+                return;
+            }
 
-			if (name == null || name.isBlank()) {
-				new Alert(Alert.AlertType.WARNING, "Please enter a name for the food.").showAndWait();
-				return;
-			}
-			if (this.viewModel.getIngredients().isEmpty()) {
-				new Alert(Alert.AlertType.WARNING, "Please add at least one ingredient before saving.").showAndWait();
-				return;
-			}
-
-			// TODO: build CompositeFood and persist it / navigate away
-			// Example:
-			// CompositeFood composite = new CompositeFood(
-			// name,
-			// quantityCategoryComboBox.getValue(),
-			// new ArrayList<>(viewModel.getIngredients()));
-			// FoodDatabase.getInstance().addFood(composite);
-
-			new Alert(Alert.AlertType.INFORMATION,
-					"\"" + name + "\" saved with " + this.viewModel.getIngredients().size() + " ingredient(s)!\n"
-							+ "(Persistence hook — wire up in the next sprint.)")
-					.showAndWait();
-		});
-	}
+            // TODO: build CompositeFood, persist, and navigate in a future sprint
+            new Alert(Alert.AlertType.INFORMATION,
+                    "\"" + name + "\" saved with "
+                    + this.viewModel.getIngredients().size() + " ingredient(s)!\n"
+                    + "(Persistence hook — wire up in the next sprint.)")
+                    .showAndWait();
+        });
+    }
 
 }
