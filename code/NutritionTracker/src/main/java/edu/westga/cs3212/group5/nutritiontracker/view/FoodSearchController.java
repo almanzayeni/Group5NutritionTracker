@@ -24,22 +24,35 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A modal dialog that lets the user search the FoodDatabase and select
- * a food item.  After the dialog closes, call getSelectedFood() to
+ * A modal dialog that lets the user search the {@link FoodDatabase} and select
+ * a food item.  After the dialog closes, call {@link #getSelectedFood()} to
  * retrieve the user's choice (empty if the dialog was cancelled).
  *
- * @author Yeni ALmanza
+ * <p>Usage example (inside a controller):
+ * <pre>
+ *   FoodSearchDialog dialog = new FoodSearchDialog(primaryStage);
+ *   dialog.showAndWait();
+ *   dialog.getSelectedFood().ifPresent(food -> {
+ *       // populate fields with food's nutritional data
+ *   });
+ * </pre>
+ *
+ * @author Group 5
  * @version Spring 2026
  */
 public class FoodSearchController {
 
+    // ── State ─────────────────────────────────────────────────────────────────
     private FoodItem selectedFood = null;
     private final Stage dialogStage;
+
+    // ── UI controls (kept as fields so listeners can reference them) ──────────
     private final TextField searchTextField;
     private final ComboBox<SortOption> sortComboBox;
     private final ListView<FoodItem> resultsListView;
     private final Label statusLabel;
 
+    // ── Constructor ───────────────────────────────────────────────────────────
 
     /**
      * Creates a new FoodSearchDialog owned by the given window.
@@ -55,6 +68,7 @@ public class FoodSearchController {
         this.dialogStage.setTitle("Search Foods");
         this.dialogStage.setResizable(false);
 
+        // ── Search bar row ────────────────────────────────────────────────────
         this.searchTextField = new TextField();
         this.searchTextField.setPromptText("Search... (e.g. chicken, apple)");
         HBox.setHgrow(this.searchTextField, Priority.ALWAYS);
@@ -66,17 +80,21 @@ public class FoodSearchController {
 
         HBox searchRow = new HBox(8, this.searchTextField, this.sortComboBox);
 
+        // ── Sort label row ────────────────────────────────────────────────────
         Label sortLabel = new Label("Sort:");
         sortLabel.setStyle("-fx-text-fill: #6e2316; -fx-font-weight: bold;");
 
+        // ── Results list ──────────────────────────────────────────────────────
         this.resultsListView = new ListView<>();
         this.resultsListView.setPrefHeight(280);
         this.resultsListView.setCellFactory(lv -> new FoodCell());
 
+        // ── Status / info label ───────────────────────────────────────────────
         this.statusLabel = new Label(" ");
         this.statusLabel.setStyle("-fx-text-fill: #6e2316;");
         this.statusLabel.setWrapText(true);
 
+        // ── Buttons ───────────────────────────────────────────────────────────
         Button addButton = new Button("Add Selected");
         addButton.setStyle("-fx-background-color: #b8d5a3; -fx-font-weight: bold; -fx-font-size: 14;");
         addButton.setPrefWidth(150);
@@ -87,6 +105,7 @@ public class FoodSearchController {
 
         HBox buttonRow = new HBox(10, addButton, cancelButton);
 
+        // ── Layout ────────────────────────────────────────────────────────────
         Label titleLabel = new Label("Search Foods");
         titleLabel.setFont(new Font("Bookman Old Style Bold", 22));
         titleLabel.setStyle("-fx-text-fill: #1f5c33;");
@@ -103,13 +122,14 @@ public class FoodSearchController {
         Scene scene = new Scene(root, 440, 440);
         this.dialogStage.setScene(scene);
 
+        // ── Listeners ─────────────────────────────────────────────────────────
+        // Live search: refresh results whenever the user types
+        this.searchTextField.textProperty().addListener((obs, oldVal, newVal) -> this.refreshResults());
 
-        this.searchTextField.textProperty().addListener((obs, oldVal, newVal) 
-        		-> this.refreshResults());
+        // Re-sort when sort option changes
+        this.sortComboBox.valueProperty().addListener((obs, oldVal, newVal) -> this.refreshResults());
 
-        this.sortComboBox.valueProperty().addListener((obs, oldVal, newVal) 
-        		-> this.refreshResults());
-
+        // Confirm selection
         addButton.setOnAction(event -> {
             FoodItem chosen = this.resultsListView.getSelectionModel().getSelectedItem();
             if (chosen == null) {
@@ -120,6 +140,7 @@ public class FoodSearchController {
             this.dialogStage.close();
         });
 
+        // Double-click also confirms
         this.resultsListView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 FoodItem chosen = this.resultsListView.getSelectionModel().getSelectedItem();
@@ -130,10 +151,14 @@ public class FoodSearchController {
             }
         });
 
+        // Cancel
         cancelButton.setOnAction(event -> this.dialogStage.close());
 
+        // Load initial results (all foods)
         this.refreshResults();
     }
+
+    // ── Public API ────────────────────────────────────────────────────────────
 
     /**
      * Opens the dialog and blocks until it is closed.
@@ -143,7 +168,7 @@ public class FoodSearchController {
     }
 
     /**
-     * Returns the food selected by the user, or Optional#empty() if
+     * Returns the food selected by the user, or {@link Optional#empty()} if
      * the dialog was cancelled or no selection was made.
      *
      * @return an Optional containing the selected FoodItem
@@ -152,6 +177,7 @@ public class FoodSearchController {
         return Optional.ofNullable(this.selectedFood);
     }
 
+    // ── Private helpers ───────────────────────────────────────────────────────
 
     /**
      * Queries the database and refreshes the results list view.
@@ -170,9 +196,11 @@ public class FoodSearchController {
         }
     }
 
+    // ── Inner cell class ──────────────────────────────────────────────────────
+
     /**
      * Custom ListCell that displays each FoodItem as:
-     *   "Description  –  123 kcal  |  CATEGORY"
+     *   "Description  –  123 cal  |  CATEGORY"
      */
     private static class FoodCell extends ListCell<FoodItem> {
 
@@ -185,13 +213,15 @@ public class FoodSearchController {
                 return;
             }
 
+            // Main label: name + calories
             Label nameLabel = new Label(item.getDescription());
             nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 13;");
             HBox.setHgrow(nameLabel, Priority.ALWAYS);
 
-            Label calLabel = new Label(String.format("%.0f kcal", item.getCalories()));
+            Label calLabel = new Label(String.format("%.0f cal", item.getCalories()));
             calLabel.setStyle("-fx-text-fill: #555555; -fx-font-size: 12;");
 
+            // Category tag (uses toString of enum for a tidy label)
             String catText = "—";
             if (item instanceof edu.westga.cs3212.group5.nutritiontracker.model.BaseFood bf) {
                 catText = bf.getQuantityCategory().toString();

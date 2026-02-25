@@ -5,6 +5,7 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateCompositFoodPageViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,82 +21,206 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 public class CreateCompositFoodPageController {
-    @FXML
-    private ResourceBundle resources;
-    @FXML
-    private URL location;
-    @FXML
-    private Button addFoodButton;
-    @FXML
-    private Button addIngredientButton;
-    @FXML
-    private TextField caloriesTextField;
-    @FXML
-    private TextField carbohydratesTextField;
-    @FXML
-    private TextField fatTextField;
-    @FXML
-    private JFXHamburger hamburgerMenu;
-    @FXML
-    private Button homeButton;
-    @FXML
-    private Button logoutButton;
-    @FXML
-    private Pane menuPane;
-    @FXML
-    private TextField nameTextField;
-    @FXML
-    private TextField portionSizeTextField;
-    @FXML
-    private Label portionSizeUnitLabel;
-    @FXML
-    private TextField proteinTextField;
-    @FXML
-    private ComboBox<QuantityCategory> quantityCategoryComboBox;
-    @FXML
-    private ListView<FoodItem> selectedIngredientsListView;
-    @FXML
-    private TextField sodiumTextField;
-    @FXML
-    private TextField sugarTextField;
+	@FXML
+	private ResourceBundle resources;
+	@FXML
+	private URL location;
+	@FXML
+	private Button addFoodButton;
+	@FXML
+	private Button addIngredientButton;
+	@FXML
+	private TextField caloriesTextField;
+	@FXML
+	private TextField carbohydratesTextField;
+	@FXML
+	private TextField fatTextField;
+	@FXML
+	private JFXHamburger hamburgerMenu;
+	@FXML
+	private Button homeButton;
+	@FXML
+	private Button logoutButton;
+	@FXML
+	private Pane menuPane;
+	@FXML
+	private TextField nameTextField;
+	@FXML
+	private TextField portionSizeTextField;
+	@FXML
+	private Label portionSizeUnitLabel;
+	@FXML
+	private TextField proteinTextField;
+	@FXML
+	private ComboBox<QuantityCategory> quantityCategoryComboBox;
+	@FXML
+	private ListView<FoodItem> selectedIngredientsListView;
+	@FXML
+	private TextField sodiumTextField;
+	@FXML
+	private TextField sugarTextField;
+	@FXML
+	private Label ingredientStatusLabel;;
 
-    @FXML
-    void initialize() {
-        assert addFoodButton != null : "fx:id=\"addFoodButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert addIngredientButton != null : "fx:id=\"addIngredientButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert caloriesTextField != null : "fx:id=\"caloriesTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert carbohydratesTextField != null : "fx:id=\"carbohydratesTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert fatTextField != null : "fx:id=\"fatTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert hamburgerMenu != null : "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert homeButton != null : "fx:id=\"homeButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert menuPane != null : "fx:id=\"menuPane\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert nameTextField != null : "fx:id=\"nameTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert portionSizeTextField != null : "fx:id=\"portionSizeTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert portionSizeUnitLabel != null : "fx:id=\"portionSizeUnitLabel\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert proteinTextField != null : "fx:id=\"proteinTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert quantityCategoryComboBox != null : "fx:id=\"quantityCategoryComboBox\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert selectedIngredientsListView != null : "fx:id=\"selectedIngredientsListView\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert sodiumTextField != null : "fx:id=\"sodiumTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        assert sugarTextField != null : "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-        setUpListeners();
-    }
-    
-    private void setUpListeners() {
-		this.handleHamburgerMenuClick();
-		//this.setUpListenerForLogoutButton();
-		this.setUpListenerForHomeButton();
+	private CreateCompositFoodPageViewModel viewModel;
+
+	@FXML
+	void initialize() {
+		assert addFoodButton != null
+				: "fx:id=\"addFoodButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert addIngredientButton != null
+				: "fx:id=\"addIngredientButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert caloriesTextField != null
+				: "fx:id=\"caloriesTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert carbohydratesTextField != null
+				: "fx:id=\"carbohydratesTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert fatTextField != null
+				: "fx:id=\"fatTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert hamburgerMenu != null
+				: "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert homeButton != null
+				: "fx:id=\"homeButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert logoutButton != null
+				: "fx:id=\"logoutButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert menuPane != null
+				: "fx:id=\"menuPane\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert nameTextField != null
+				: "fx:id=\"nameTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert portionSizeTextField != null
+				: "fx:id=\"portionSizeTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert portionSizeUnitLabel != null
+				: "fx:id=\"portionSizeUnitLabel\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert proteinTextField != null
+				: "fx:id=\"proteinTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert quantityCategoryComboBox != null
+				: "fx:id=\"quantityCategoryComboBox\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert selectedIngredientsListView != null
+				: "fx:id=\"selectedIngredientsListView\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert sodiumTextField != null
+				: "fx:id=\"sodiumTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert sugarTextField != null
+				: "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		setUpListeners();
+
+		this.viewModel = new CreateCompositFoodPageViewModel();
+
+		if (this.ingredientStatusLabel != null) {
+			this.ingredientStatusLabel.textProperty().bind(this.viewModel.statusMessageProperty());
+		}
+
+		this.setUpQuantityComboBox();
+		this.bindNutritionalFields();
+		this.setUpIngredientsListView();
+		this.setUpListeners();
 	}
-    
-    private void handleHamburgerMenuClick() {
-    	HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(this.hamburgerMenu);
-    	transition.setRate(-1);
+
+	private void setUpQuantityComboBox() {
+		this.quantityCategoryComboBox.getItems().setAll(QuantityCategory.values());
+		this.quantityCategoryComboBox.setValue(QuantityCategory.SERVING);
+
+		this.quantityCategoryComboBox.valueProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal != null) {
+				switch (newVal) {
+				case WEIGHT -> this.portionSizeUnitLabel.setText("g");
+				case QUANTITY -> this.portionSizeUnitLabel.setText("pcs");
+				case SERVING -> this.portionSizeUnitLabel.setText("srv");
+				}
+			}
+		});
+	}
+
+	private void bindNutritionalFields() {
+		// Make fields non-editable so the user knows they are calculated
+		this.caloriesTextField.setEditable(false);
+		this.proteinTextField.setEditable(false);
+		this.fatTextField.setEditable(false);
+		this.sugarTextField.setEditable(false);
+		this.carbohydratesTextField.setEditable(false);
+		this.sodiumTextField.setEditable(false);
+		
+		this.portionSizeTextField.setEditable(true);
+
+		this.viewModel.totalCaloriesProperty()
+				.addListener((obs, o, n) -> this.caloriesTextField.setText(String.format("%.1f", n.doubleValue())));
+		this.viewModel.totalProteinProperty()
+				.addListener((obs, o, n) -> this.proteinTextField.setText(String.format("%.1f", n.doubleValue())));
+		this.viewModel.totalFatProperty()
+				.addListener((obs, o, n) -> this.fatTextField.setText(String.format("%.1f", n.doubleValue())));
+		this.viewModel.totalSugarProperty()
+				.addListener((obs, o, n) -> this.sugarTextField.setText(String.format("%.1f", n.doubleValue())));
+		this.viewModel.totalCarbohydratesProperty().addListener(
+				(obs, o, n) -> this.carbohydratesTextField.setText(String.format("%.1f", n.doubleValue())));
+		this.viewModel.totalSodiumProperty()
+				.addListener((obs, o, n) -> this.sodiumTextField.setText(String.format("%.1f", n.doubleValue())));
+
+		this.caloriesTextField.setText("0.0");
+		this.proteinTextField.setText("0.0");
+		this.fatTextField.setText("0.0");
+		this.sugarTextField.setText("0.0");
+		this.carbohydratesTextField.setText("0.0");
+		this.sodiumTextField.setText("0.0");
+
+	}
+
+    private void setUpIngredientsListView() {
+        this.selectedIngredientsListView.setItems(this.viewModel.getIngredients());
+
+        this.selectedIngredientsListView.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(FoodItem item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+
+                Label nameLabel = new Label(item.getDescription());
+                nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 13;");
+                HBox.setHgrow(nameLabel, Priority.ALWAYS);
+
+                Label calLabel = new Label(String.format("%.0f cal", item.getCalories()));
+                calLabel.setStyle("-fx-text-fill: #555555; -fx-font-size: 12;");
+
+                Button removeBtn = new Button("✕");
+                removeBtn.setStyle(
+                        "-fx-background-color: #e07070; -fx-text-fill: white; " +
+                        "-fx-font-weight: bold; -fx-padding: 2 7 2 7;");
+                removeBtn.setOnAction(e -> {
+                    int idx = getIndex();
+                    if (idx >= 0 && idx < viewModel.getIngredients().size()) {
+                        viewModel.removeIngredient(idx);
+                    }
+                });
+
+                HBox row = new HBox(8, nameLabel, calLabel, removeBtn);
+                row.setPadding(new Insets(3, 4, 3, 4));
+                setGraphic(row);
+                setText(null);
+            }
+        });
+    }
+
+	private void setUpListeners() {
+		this.handleHamburgerMenuClick();
+		// this.setUpListenerForLogoutButton();
+		this.setUpListenerForHomeButton();
+		this.setUpListenerForAddIngredientButton();
+		this.setUpListenerForAddFoodButton();
+	}
+
+	private void handleHamburgerMenuClick() {
+		HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(this.hamburgerMenu);
+		transition.setRate(-1);
 		this.hamburgerMenu.setOnMouseClicked(event -> {
 			try {
 				transition.setRate(transition.getRate() * -1);
@@ -113,8 +239,8 @@ public class CreateCompositFoodPageController {
 				e.printStackTrace();
 			}
 		});
-    }
-    
+	}
+
 //    private void setUpListenerForLogoutButton() {
 //		this.logoutButton.setOnAction((ActionEvent event) -> {
 //			try {
@@ -139,9 +265,9 @@ public class CreateCompositFoodPageController {
 //			}
 //		});
 //	}
-    
-    private void setUpListenerForHomeButton() {
-    	this.homeButton.setOnAction((ActionEvent event) -> {
+
+	private void setUpListenerForHomeButton() {
+		this.homeButton.setOnAction((ActionEvent event) -> {
 			try {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(HomeDashboardPageController.class.getResource("HomeDashboardPage.fxml"));
@@ -160,7 +286,56 @@ public class CreateCompositFoodPageController {
 				Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to home page.");
 				alert.showAndWait();
 			}
-    	});
-    }
+		});
+	}
+
+	private void setUpListenerForAddIngredientButton() {
+		this.addIngredientButton.setOnAction((ActionEvent event) -> {
+			Stage ownerStage = (Stage) this.addIngredientButton.getScene().getWindow();
+
+			FoodSearchController dialog = new FoodSearchController(ownerStage);
+			dialog.showAndWait();
+
+			dialog.getSelectedFood().ifPresent(food -> {
+				boolean added = this.viewModel.addIngredient(food);
+				if (!added) {
+
+					Alert alert = new Alert(Alert.AlertType.INFORMATION);
+					alert.setTitle("Duplicate Ingredient");
+					alert.setHeaderText(null);
+					alert.setContentText(this.viewModel.statusMessageProperty().get());
+					alert.showAndWait();
+				}
+			});
+		});
+	}
+
+	private void setUpListenerForAddFoodButton() {
+		this.addFoodButton.setOnAction((ActionEvent event) -> {
+			String name = this.nameTextField.getText();
+
+			if (name == null || name.isBlank()) {
+				new Alert(Alert.AlertType.WARNING, "Please enter a name for the food.").showAndWait();
+				return;
+			}
+			if (this.viewModel.getIngredients().isEmpty()) {
+				new Alert(Alert.AlertType.WARNING, "Please add at least one ingredient before saving.").showAndWait();
+				return;
+			}
+
+			// TODO: build CompositeFood and persist it / navigate away
+			// Example:
+			// CompositeFood composite = new CompositeFood(
+			// name,
+			// quantityCategoryComboBox.getValue(),
+			// new ArrayList<>(viewModel.getIngredients()));
+			// FoodDatabase.getInstance().addFood(composite);
+
+			new Alert(Alert.AlertType.INFORMATION,
+					"\"" + name + "\" saved with " + this.viewModel.getIngredients().size() + " ingredient(s)!\n"
+							+ "(Persistence hook — wire up in the next sprint.)")
+					.showAndWait();
+		});
+	}
 
 }
