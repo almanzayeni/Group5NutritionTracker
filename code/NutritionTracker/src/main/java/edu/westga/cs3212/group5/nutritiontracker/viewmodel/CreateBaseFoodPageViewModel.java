@@ -131,4 +131,5 @@ public class CreateBaseFoodPageViewModel {
 		}
 		return existingFoodNames.contains(foodName);
 	}
+	
 }
