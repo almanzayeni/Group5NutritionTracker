@@ -12,6 +12,8 @@ import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,17 +32,18 @@ public class CreateBaseFoodPageViewModel {
 	private DoubleProperty sugar;
 	private DoubleProperty carbohydrates;
 	private DoubleProperty sodium;
-	
+
 	public CreateBaseFoodPageViewModel() {
 		this.name = new javafx.beans.property.SimpleStringProperty();
-		
+
 		ArrayList<QuantityCategory> quantityCategories = new ArrayList<>();
 		quantityCategories.add(QuantityCategory.QUANTITY);
 		quantityCategories.add(QuantityCategory.WEIGHT);
 		quantityCategories.add(QuantityCategory.SERVING);
-		
-		this.quantityCategoriesList = new javafx.beans.property.SimpleListProperty<>(FXCollections.observableArrayList(quantityCategories));
-		this.selectedQuantityCategory = new javafx.beans.property.SimpleObjectProperty<>();
+
+		this.quantityCategoriesList = new SimpleListProperty<QuantityCategory>(
+				FXCollections.observableArrayList(quantityCategories));
+		this.selectedQuantityCategory = new SimpleObjectProperty<QuantityCategory>();
 		this.portionSize = 1.0;
 		this.calories = new javafx.beans.property.SimpleDoubleProperty();
 		this.protein = new javafx.beans.property.SimpleDoubleProperty();
@@ -89,32 +92,35 @@ public class CreateBaseFoodPageViewModel {
 	public DoubleProperty getSodiumProperty() {
 		return sodium;
 	}
-	
-	public void createBaseFood()throws IllegalArgumentException, JsonProcessingException, IOException {
+
+	public void createBaseFood() throws IllegalArgumentException, JsonProcessingException, IOException {
 		if (this.checkForExistingFood(this.name.get())) {
 			throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
 		}
-		
-		BaseFood baseFood = new BaseFood(this.name.get(), this.selectedQuantityCategory.get(), this.portionSize, this.calories.get(), this.protein.get(), this.fat.get(), this.sugar.get(), this.carbohydrates.get(), this.sodium.get());
+
+		BaseFood baseFood = new BaseFood(this.name.get(), this.selectedQuantityCategory.get(), this.portionSize,
+				this.calories.get(), this.protein.get(), this.fat.get(), this.sugar.get(), this.carbohydrates.get(),
+				this.sodium.get());
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonString = "";
-		
+
 		try {
 			jsonString = objectMapper.writeValueAsString(baseFood);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
+
 		try {
-			//TODO: Send jsonString to server
-			Files.write(Paths.get(BASE_FOOD_ITEMS_JSON_FILE), (jsonString + System.lineSeparator()).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+			// TODO: Send jsonString to server
+			Files.write(Paths.get(BASE_FOOD_ITEMS_JSON_FILE), (jsonString + System.lineSeparator()).getBytes(),
+					StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
-	
+
 	private boolean checkForExistingFood(String foodName) {
 		HashSet<String> existingFoodNames = new HashSet<>();
 		try {
@@ -131,5 +137,5 @@ public class CreateBaseFoodPageViewModel {
 		}
 		return existingFoodNames.contains(foodName);
 	}
-	
+
 }

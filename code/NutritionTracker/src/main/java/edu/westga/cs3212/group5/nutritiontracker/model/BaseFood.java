@@ -25,29 +25,6 @@ public class BaseFood implements FoodItem {
 	
 	/**
 	 * Instantiates a new base food.
-	 *
-	 *@precondition description != null && !description.isBlank() && quantityCategory != null && calories >= 0
-	 *
-	 * @param description the description
-	 * @param quantityCategory the quantity category
-	 * @param quantityValue the quantity value
-	 * @param calories the calories
-	 * @throws IllegalArgumentException if description is null or blank, quantity category is null, or calories is negative
-	 */
-	public BaseFood(String description, QuantityCategory quantityCategory, double calories) {
-		this.setDescription(description);
-		this.setQuantityCategory(quantityCategory);
-		this.setPortionSize(1.0);
-		this.setCalories(calories);
-		this.setProtein(0);
-		this.setFat(0);
-		this.setSugar(0);
-		this.setCarbohydrates(0);
-		this.setSodium(0);
-	}
-	
-	/**
-	 * Instantiates a new base food.
 	 * 
 	 * @precondition description != null && !description.isBlank() && quantityCategory != null && portionSize > 1 && calories >= 0 && protein >= 0 && fat >= 0 && sugar >= 0 && carbohydrates >= 0 && sodium >= 0
 	 *
@@ -167,7 +144,7 @@ public class BaseFood implements FoodItem {
 	 * @throws IllegalArgumentException if calories is negative
 	 */
 	public void setCalories(double calories) {
-		if (calories <= 0) {
+		if (calories < 0) {
 			throw new IllegalArgumentException("Calories cannot be negative");
 		}
 		this.calories = calories;
@@ -297,12 +274,4 @@ public class BaseFood implements FoodItem {
 		}
 		this.sodium = sodium;
 	}
-
-	@Override
-	public String toString() {
-		return "BaseFood {Description=" + Description + ", quantityCategory=" + quantityCategory + ", portionSize="
-				+ portionSize + ", calories=" + calories + ", protein=" + protein + ", fat=" + fat + ", sugar="
-				+ sugar + ", carbohydrates=" + carbohydrates + ", sodium=" + sodium + "}";
-	}
-	
 }

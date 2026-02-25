@@ -27,11 +27,11 @@ public class TestAddIngredient {
 		this.startingIngredients = new ArrayList<FoodItem>();
 		this.ingredient1 = new BaseFood("ingredient1", QuantityCategory.QUANTITY, 1, 100, 1, 2, 3, 4, 5);
 		this.startingIngredients.add(this.ingredient1);
-		this.ingredient2 = new CompositeFood("ingredient2", QuantityCategory.WEIGHT, this.startingIngredients);
+		this.ingredient2 = new CompositeFood("ingredient2", QuantityCategory.WEIGHT, 1, this.startingIngredients, 100, 1, 2, 3, 4, 5);
 		this.startingIngredients.add(this.ingredient2);
 		this.baseIngredientToAdd = new BaseFood("baseIngredientToAdd", QuantityCategory.SERVING, 1, 200, 2, 4, 6, 8, 10);
-		this.compositeIngredientToAdd = new CompositeFood("compositeIngredientToAdd", QuantityCategory.QUANTITY, this.startingIngredients);
-		this.compositeFoodToTest = new CompositeFood("compositeFoodToTest", QuantityCategory.WEIGHT, this.startingIngredients);
+		this.compositeIngredientToAdd = new CompositeFood("compositeIngredientToAdd", QuantityCategory.QUANTITY, 1, this.startingIngredients, 200, 2, 4, 6, 8, 10);
+		this.compositeFoodToTest = new CompositeFood("compositeFoodToTest", QuantityCategory.WEIGHT, 1, this.startingIngredients, 200, 2, 4, 6, 8, 10);
 	}
 	
 	@Test

@@ -1,6 +1,7 @@
 package edu.westga.cs3212.group5.nutritiontracker.model.compositefood;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -25,15 +26,15 @@ public class TestCompositeFoodConstructor {
 	
 	@BeforeEach
 	public void setUp() {
-		BaseFood ingredient1 = new BaseFood("Ingredient 1", QuantityCategory.SERVING, 200);
+		BaseFood ingredient1 = new BaseFood("Ingredient 1", QuantityCategory.SERVING, 1, 200, 0, 0, 0, 0, 0);
 		BaseFood ingredient2 = new BaseFood("Ingredient 2", QuantityCategory.WEIGHT, 2, 100, 1, 2, 3, 4, 5);
 		
 		baseIngredients = new ArrayList<FoodItem>();
 		baseIngredients.add(ingredient1);
 		baseIngredients.add(ingredient2);
 		
-		compositeFoodIngredient1 = new CompositeFood("Composite Ingredient", QuantityCategory.QUANTITY, baseIngredients);
-		compositeFoodIngredient2 = new CompositeFood("Composite Ingredient 2", QuantityCategory.SERVING, 2, baseIngredients);
+		compositeFoodIngredient1 = new CompositeFood("Composite Ingredient", QuantityCategory.QUANTITY, 1, baseIngredients, 400, 2, 4, 6, 8, 10);
+		compositeFoodIngredient2 = new CompositeFood("Composite Ingredient 2", QuantityCategory.SERVING, 2, baseIngredients, 400, 2, 4, 6, 8, 10);
 		
 		compositeIngredients = new ArrayList<FoodItem>();
 		compositeIngredients.add(compositeFoodIngredient1);
@@ -47,94 +48,62 @@ public class TestCompositeFoodConstructor {
 	@Test
 	public void testNullIngredients() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new CompositeFood("Composite Food", QuantityCategory.SERVING, null);
-		});
-	}
-	
-	@Test
-	public void testFullParameterNullIngredients() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, null);
+			new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, null, 1, 1, 1, 1, 1, 1);
 		});
 	}
 	
 	@Test
 	public void testEmptyIngredients() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new CompositeFood("Composite Food", QuantityCategory.SERVING, new ArrayList<FoodItem>());
+			new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, new ArrayList<FoodItem>(), 1, 1, 1, 1, 1, 1);
 		});
 	}
 	
 	@Test
-	public void testFullParameterEmptyIngredients() {
+	public void testDuplicateIngredientDescriptions() {
+		baseIngredients.add(new BaseFood("Ingredient 1", QuantityCategory.SERVING, 1, 200, 1, 1, 1, 1, 1));
 		assertThrows(IllegalArgumentException.class, () -> {
-			new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, new ArrayList<FoodItem>());
-		});
-	}
-	
-	@Test
-	public void testFullParameterDuplicateIngredientDescriptions() {
-		baseIngredients.add(new BaseFood("Ingredient 1", QuantityCategory.SERVING, 200));
-		assertThrows(IllegalArgumentException.class, () -> {
-			new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, baseIngredients);
+			new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, baseIngredients, 1, 1, 1, 1, 1, 1);
 		});
 	}
 	
 	@Test
 	public void testNullDescription() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new CompositeFood(null, QuantityCategory.SERVING, baseIngredients);
+			new CompositeFood(null, QuantityCategory.SERVING, 1, baseIngredients, 1, 1, 1, 1, 1, 1);
 		});
 	}
 	
 	@Test
 	public void testBlankDescription() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new CompositeFood("   ", QuantityCategory.SERVING, baseIngredients);
+			new CompositeFood("   ", QuantityCategory.SERVING, 1, baseIngredients, 1, 1, 1, 1, 1, 1);
 		});
 	}
 	
 	@Test
 	public void testNullQuantityCategory() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new CompositeFood("Composite Food", null, baseIngredients);
+			new CompositeFood("Composite Food", null, 1, baseIngredients, 1, 1, 1, 1, 1, 1);
 		});
 	}
 	
 	@Test
 	public void testPortionSizeLessThan1() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new CompositeFood("Composite Food", QuantityCategory.SERVING, 0, baseIngredients);
+			new CompositeFood("Composite Food", QuantityCategory.SERVING, 0, baseIngredients, 1, 1, 1, 1, 1, 1);
 		});
 	}
 	
 	@Test
-	public void testDuplicateIngredientDescriptions() {
-		baseIngredients.add(new BaseFood("Ingredient 1", QuantityCategory.SERVING, 200));
-		assertThrows(IllegalArgumentException.class, () -> {
-			new CompositeFood("Composite Food", QuantityCategory.SERVING, baseIngredients);
-		});
+	public void testZeroParameterConstructor() {
+		CompositeFood compositeFood = new CompositeFood();
+		assertNotNull(compositeFood);
 	}
 	
 	@Test
-	public void testValidConstructorWithoutPortionSizeOnlyBaseIngredients() {
-		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, baseIngredients);
-		
-		assertEquals("Composite Food", compositeFood.getDescription());
-		assertEquals(QuantityCategory.SERVING, compositeFood.getQuantityCategory());
-		assertEquals(2, compositeFood.getIngredients().size());
-		assertEquals(1, compositeFood.getPortionSize(), 0.001);
-		assertEquals(400, compositeFood.getCalories(), 0.001);
-		assertEquals(2, compositeFood.getProtein(), 0.001);
-		assertEquals(4, compositeFood.getFat(), 0.001);
-		assertEquals(6, compositeFood.getSugar(), 0.001);
-		assertEquals(8, compositeFood.getCarbohydrates(), 0.001);
-		assertEquals(10, compositeFood.getSodium(), 0.001);
-	}
-	
-	@Test
-	public void testValidConstructorWithPortionSizeOneOnlyBaseIngredients() {
-		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, baseIngredients);
+	public void testValidConstructorWithPortionSizeONeOnlyBaseIngredients() {
+		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, baseIngredients, 400, 2, 4, 6, 8, 10);
 		
 		assertEquals("Composite Food", compositeFood.getDescription());
 		assertEquals(QuantityCategory.SERVING, compositeFood.getQuantityCategory());
@@ -150,7 +119,7 @@ public class TestCompositeFoodConstructor {
 	
 	@Test
 	public void testValidConstructorWithPortionSizeTwoOnlyBaseIngredients() {
-		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 2, baseIngredients);
+		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 2, baseIngredients, 400, 2, 4, 6, 8, 10);
 		
 		assertEquals("Composite Food", compositeFood.getDescription());
 		assertEquals(QuantityCategory.SERVING, compositeFood.getQuantityCategory());
@@ -165,24 +134,8 @@ public class TestCompositeFoodConstructor {
 	}
 	
 	@Test
-	public void testValidConstructorWithoutPortionSizeWithOnlyCompositeIngredients() {
-		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, compositeIngredients);
-		
-		assertEquals("Composite Food", compositeFood.getDescription());
-		assertEquals(QuantityCategory.SERVING, compositeFood.getQuantityCategory());
-		assertEquals(2, compositeFood.getIngredients().size());
-		assertEquals(1, compositeFood.getPortionSize(), 0.001);
-		assertEquals(1200, compositeFood.getCalories(), 0.001);
-		assertEquals(6, compositeFood.getProtein(), 0.001);
-		assertEquals(12, compositeFood.getFat(), 0.001);
-		assertEquals(18, compositeFood.getSugar(), 0.001);
-		assertEquals(24, compositeFood.getCarbohydrates(), 0.001);
-		assertEquals(30, compositeFood.getSodium(), 0.001);
-	}
-	
-	@Test
 	public void testValidConstructorWithPortionSizeOfOneWithOnlyCompositeIngredients() {
-		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, compositeIngredients);
+		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, compositeIngredients, 1200, 6, 12, 18, 24, 30);
 		
 		assertEquals("Composite Food", compositeFood.getDescription());
 		assertEquals(QuantityCategory.SERVING, compositeFood.getQuantityCategory());
@@ -198,7 +151,7 @@ public class TestCompositeFoodConstructor {
 	
 	@Test
 	public void testValidConstructorWithPortionSizeOfTwoWithOnlyCompositeIngredients() {
-		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 2, compositeIngredients);
+		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 2, compositeIngredients, 1200, 6, 12, 18, 24, 30);
 		
 		assertEquals("Composite Food", compositeFood.getDescription());
 		assertEquals(QuantityCategory.SERVING, compositeFood.getQuantityCategory());
@@ -213,24 +166,8 @@ public class TestCompositeFoodConstructor {
 	}
 	
 	@Test
-	public void testValidConstructorWithoutPortionSizeWithBaseAndCompositeIngredients() {
-		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, allIngredients);
-		
-		assertEquals("Composite Food", compositeFood.getDescription());
-		assertEquals(QuantityCategory.SERVING, compositeFood.getQuantityCategory());
-		assertEquals(4, compositeFood.getIngredients().size());
-		assertEquals(1, compositeFood.getPortionSize(), 0.001);
-		assertEquals(1600, compositeFood.getCalories(), 0.001);
-		assertEquals(8, compositeFood.getProtein(), 0.001);
-		assertEquals(16, compositeFood.getFat(), 0.001);
-		assertEquals(24, compositeFood.getSugar(), 0.001);
-		assertEquals(32, compositeFood.getCarbohydrates(), 0.001);
-		assertEquals(40, compositeFood.getSodium(), 0.001);
-	}
-	
-	@Test
 	public void testValidConstructorWithPortionSizeOfOneWithBaseAndCompositeIngredients() {
-		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, allIngredients);
+		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 1, allIngredients, 1600, 8, 16, 24, 32, 40);
 		
 		assertEquals("Composite Food", compositeFood.getDescription());
 		assertEquals(QuantityCategory.SERVING, compositeFood.getQuantityCategory());
@@ -246,7 +183,7 @@ public class TestCompositeFoodConstructor {
 	
 	@Test
 	public void testValidConstructorWithPortionSizeOfTwoWithBaseAndCompositeIngredients() {
-		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 2, allIngredients);
+		CompositeFood compositeFood = new CompositeFood("Composite Food", QuantityCategory.SERVING, 2, allIngredients, 1600, 8, 16, 24, 32, 40);
 		
 		assertEquals("Composite Food", compositeFood.getDescription());
 		assertEquals(QuantityCategory.SERVING, compositeFood.getQuantityCategory());
