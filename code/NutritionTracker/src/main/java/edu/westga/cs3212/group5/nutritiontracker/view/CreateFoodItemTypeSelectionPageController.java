@@ -152,7 +152,7 @@ public class CreateFoodItemTypeSelectionPageController {
     	this.selectCompositFoodButton.setOnAction((ActionEvent event) -> {
     		try {
     			FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(CreateCompositFoodPageController.class.getResource("CreateCompositFoodPage.fxml"));
+				loader.setLocation(CreateCompositeFoodPageController.class.getResource("CreateCompositFoodPage.fxml"));
 				loader.load();
 
 				Parent parent = loader.getRoot();

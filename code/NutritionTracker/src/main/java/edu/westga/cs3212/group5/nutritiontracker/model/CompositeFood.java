@@ -24,52 +24,8 @@ public class CompositeFood implements FoodItem {
 	
 	/**
 	 * Instantiates a new composite food.
-	 *
-	 * @precondition description != null && !description.isBlank() && quantityCategory != null && ingredients != null && !ingredients.isEmpty() && no duplicate descriptions in ingredients
-	 *
-	 * @param description the description
-	 * @param quantityCategory the quantity category
-	 * @param portionSize portion size
-	 * @param ingredients the ingredients
-	 * @throws IllegalArgumentException if description is null or blank, quantity category is null, or ingredients is null or empty or contains duplicate descriptions
 	 */
-	public CompositeFood(String description, QuantityCategory quantityCategory, List<FoodItem> ingredients) {
-		if (ingredients == null || ingredients.isEmpty()) {
-			throw new IllegalArgumentException("Ingredients cannot be null or empty");
-		}
-		
-		this.ingredients = new HashMap<String, FoodItem>();
-		this.setDescription(description);
-		this.setQuantityCategory(quantityCategory);
-		this.setPortionSize(1.0);
-		
-		double calories = 0.0;
-		double protein = 0.0;
-		double fat = 0.0;
-		double sugar = 0.0;
-		double carbohydrates = 0.0;
-		double sodium = 0.0;
-		
-		for (FoodItem ingredient : ingredients) {
-			if (this.ingredients.containsKey(ingredient.getDescription())) {
-				throw new IllegalArgumentException("Duplicate ingredients not allowed in composit foods: " + ingredient.getDescription());
-			}
-			this.ingredients.put(ingredient.getDescription(), ingredient);
-			calories += ingredient.getCalories();
-			protein += ingredient.getProtein();
-			fat += ingredient.getFat();
-			sugar += ingredient.getSugar();
-			carbohydrates += ingredient.getCarbohydrates();
-			sodium += ingredient.getSodium();
-		}
-		
-		this.setCalories(calories);
-		this.setProtein(protein);
-		this.setFat(fat);
-		this.setSugar(sugar);
-		this.setCarbohydrates(carbohydrates);
-		this.setSodium(sodium);
-	}
+	public CompositeFood() {}
 	
 	/**
 	 * Instantiates a new composite food.
@@ -80,9 +36,15 @@ public class CompositeFood implements FoodItem {
 	 * @param quantityCategory the quantity category
 	 * @param portionSize portion size
 	 * @param ingredients the ingredients
+	 * @param calories the calories
+	 * @param protein the protein
+	 * @param fat the fat
+	 * @param sugar the sugar
+	 * @param carbohydrates the carbohydrates
+	 * @param sodium the sodium
 	 * @throws IllegalArgumentException if description is null or blank, quantity category is null, portionSize is less than 1, or ingredients is null or empty or contains duplicate descriptions
 	 */
-	public CompositeFood(String description, QuantityCategory quantityCategory, double portionSize, List<FoodItem> ingredients) {
+	public CompositeFood(String description, QuantityCategory quantityCategory, double portionSize, List<FoodItem> ingredients, double calories, double protein, double fat, double sugar, double carbohydrates, double sodium) {
 		if (ingredients == null || ingredients.isEmpty()) {
 			throw new IllegalArgumentException("Ingredients cannot be null or empty");
 		}
@@ -92,24 +54,11 @@ public class CompositeFood implements FoodItem {
 		this.setQuantityCategory(quantityCategory);
 		this.setPortionSize(portionSize);
 		
-		double calories = 0.0;
-		double protein = 0.0;
-		double fat = 0.0;
-		double sugar = 0.0;
-		double carbohydrates = 0.0;
-		double sodium = 0.0;
-		
 		for (FoodItem ingredient : ingredients) {
 			if (this.ingredients.containsKey(ingredient.getDescription())) {
 				throw new IllegalArgumentException("Duplicate ingredients not allowed in composit foods: " + ingredient.getDescription());
 			}
 			this.ingredients.put(ingredient.getDescription(), ingredient);
-			calories += ingredient.getCalories();
-			protein += ingredient.getProtein();
-			fat += ingredient.getFat();
-			sugar += ingredient.getSugar();
-			carbohydrates += ingredient.getCarbohydrates();
-			sodium += ingredient.getSodium();
 		}
 		
 		this.setCalories(calories);
