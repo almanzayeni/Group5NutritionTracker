@@ -120,15 +120,10 @@ public class CreateCompositFoodPageController {
 	       this.viewModel = new CreateCompositFoodPageViewModel();
 
 	        this.setUpQuantityComboBox();
-	        this.bindNutritionalFields();
 	        this.setUpIngredientsListView();
 	        this.connectSearchPanel();
 	        this.setUpListeners();
 
-	        if (this.ingredientStatusLabel != null) {
-	            this.ingredientStatusLabel.textProperty()
-	                    .bind(this.viewModel.statusMessageProperty());
-	        }
 	}
 	
     private void connectSearchPanel() {
@@ -161,38 +156,8 @@ public class CreateCompositFoodPageController {
             }
         });
     }
-    
-    private void bindNutritionalFields() {
-        this.caloriesTextField.setEditable(false);
-        this.proteinTextField.setEditable(false);
-        this.fatTextField.setEditable(false);
-        this.sugarTextField.setEditable(false);
-        this.carbohydratesTextField.setEditable(false);
-        this.sodiumTextField.setEditable(false);
-
-        this.viewModel.totalCaloriesProperty()
-                .addListener((obs, o, n) -> this.caloriesTextField.setText(String.format("%.1f", n.doubleValue())));
-        this.viewModel.totalProteinProperty()
-                .addListener((obs, o, n) -> this.proteinTextField.setText(String.format("%.1f", n.doubleValue())));
-        this.viewModel.totalFatProperty()
-                .addListener((obs, o, n) -> this.fatTextField.setText(String.format("%.1f", n.doubleValue())));
-        this.viewModel.totalSugarProperty()
-                .addListener((obs, o, n) -> this.sugarTextField.setText(String.format("%.1f", n.doubleValue())));
-        this.viewModel.totalCarbohydratesProperty()
-                .addListener((obs, o, n) -> this.carbohydratesTextField.setText(String.format("%.1f", n.doubleValue())));
-        this.viewModel.totalSodiumProperty()
-                .addListener((obs, o, n) -> this.sodiumTextField.setText(String.format("%.1f", n.doubleValue())));
-
-        this.caloriesTextField.setText("0.0");
-        this.proteinTextField.setText("0.0");
-        this.fatTextField.setText("0.0");
-        this.sugarTextField.setText("0.0");
-        this.carbohydratesTextField.setText("0.0");
-        this.sodiumTextField.setText("0.0");
-    }
 
     private void setUpIngredientsListView() {
-        this.selectedIngredientsListView.setItems(this.viewModel.getIngredients());
 
         this.selectedIngredientsListView.setCellFactory(lv -> new ListCell<>() {
             @Override
@@ -235,7 +200,6 @@ public class CreateCompositFoodPageController {
 		// this.setUpListenerForLogoutButton();
 		this.setUpListenerForHomeButton();
 		this.setUpListenerForAddIngredientButton();
-		this.setUpListenerForAddFoodButton();
 	}
 
 	private void handleHamburgerMenuClick() {
@@ -324,29 +288,6 @@ public class CreateCompositFoodPageController {
                 new Alert(Alert.AlertType.INFORMATION,
                         this.viewModel.statusMessageProperty().get()).showAndWait();
             }
-        });
-    }
-
-    private void setUpListenerForAddFoodButton() {
-        this.addFoodButton.setOnAction((ActionEvent event) -> {
-            String name = this.nameTextField.getText();
-
-            if (name == null || name.isBlank()) {
-                new Alert(Alert.AlertType.WARNING, "Please enter a name for the food.").showAndWait();
-                return;
-            }
-            if (this.viewModel.getIngredients().isEmpty()) {
-                new Alert(Alert.AlertType.WARNING,
-                        "Please add at least one ingredient before saving.").showAndWait();
-                return;
-            }
-
-            // TODO: build CompositeFood, persist, and navigate in a future sprint
-            new Alert(Alert.AlertType.INFORMATION,
-                    "\"" + name + "\" saved with "
-                    + this.viewModel.getIngredients().size() + " ingredient(s)!\n"
-                    + "(Persistence hook — wire up in the next sprint.)")
-                    .showAndWait();
         });
     }
 
