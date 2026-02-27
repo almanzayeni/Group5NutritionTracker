@@ -199,7 +199,7 @@ public class CreateCompositeFoodPageViewModel {
 	
 	public void addIngredient(FoodItem ingredient) {
 		if (ingredient == null) {
-			throw new IllegalArgumentException("Ingredient cannot be null.");
+			throw new IllegalArgumentException("No ingredient selected.");
 		}
 		if (this.checkForExistingFood(ingredient.getDescription())) {
 			throw new IllegalArgumentException("Ingredient already exists in the food item. Please update the portion size of the existing ingredient.");
