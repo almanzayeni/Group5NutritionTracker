@@ -142,21 +142,6 @@ public class CreateCompositFoodPageController {
         });
     }
 
-    private void setUpQuantityComboBox() {
-        this.quantityCategoryComboBox.getItems().setAll(QuantityCategory.values());
-        this.quantityCategoryComboBox.setValue(QuantityCategory.SERVING);
-
-        this.quantityCategoryComboBox.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                switch (newVal) {
-                    case WEIGHT   -> this.portionSizeUnitLabel.setText("g");
-                    case QUANTITY -> this.portionSizeUnitLabel.setText("pcs");
-                    case SERVING  -> this.portionSizeUnitLabel.setText("srv");
-                }
-            }
-        });
-    }
-
     private void setUpIngredientsListView() {
 
         this.selectedIngredientsListView.setCellFactory(lv -> new ListCell<>() {
