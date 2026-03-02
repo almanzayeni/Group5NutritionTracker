@@ -21,7 +21,7 @@ public class TestAddIngredients {
 			viewModel.addIngredients(null);
 		});
 	}
-	
+
 	@Test
 	public void testEmptyIngredients() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
@@ -29,7 +29,7 @@ public class TestAddIngredients {
 			viewModel.addIngredients(new ArrayList<FoodItem>());
 		});
 	}
-	
+
 	@Test
 	public void testValidIngredients() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();

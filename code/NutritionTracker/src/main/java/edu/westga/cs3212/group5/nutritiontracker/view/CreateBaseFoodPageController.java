@@ -7,7 +7,6 @@ import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateBaseFoodPageViewModel;
 
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -21,10 +20,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 public class CreateBaseFoodPageController {
 	@FXML

@@ -70,7 +70,8 @@ public class CreateCompositeFoodPageViewModel {
 		this.totalCarbohydrates.set(this.compositeFood.getCarbohydrates());
 		this.totalSodium = new SimpleDoubleProperty();
 		this.totalSodium.set(this.compositeFood.getSodium());
-		this.ingredients = new SimpleListProperty<FoodItem>(FXCollections.observableArrayList(new ArrayList<FoodItem>()));
+		this.ingredients = new SimpleListProperty<FoodItem>(
+				FXCollections.observableArrayList(new ArrayList<FoodItem>()));
 		this.filePath = COMPOSITE_FOOD_ITEMS_JSON_FILE;
 		this.objectMapper = new ObjectMapper();
 	}
@@ -202,8 +203,14 @@ public class CreateCompositeFoodPageViewModel {
 	/**
 	 * Creates the composite food.
 	 *
-	 * @throws IllegalArgumentException thrown if food name is empty, no ingredients are added, or a food with the same name already exists
-	 * @throws JsonProcessingException  thrown if there is an error during JSON processing when converting the composite food to a JSON string
+	 * @throws IllegalArgumentException if any of the following conditions occur:
+	 *                                  name is null or empty, no ingredients have
+	 *                                  been added, no quantity category has been
+	 *                                  selected, or a food with the same name
+	 *                                  already exists
+	 * @throws JsonProcessingException  thrown if there is an error during JSON
+	 *                                  processing when converting the composite
+	 *                                  food to a JSON string
 	 * @throws IOException              Signals that an I/O exception has occurred.
 	 */
 	public void createCompositeFood() throws IllegalArgumentException, JsonProcessingException, IOException {
@@ -244,9 +251,9 @@ public class CreateCompositeFoodPageViewModel {
 	}
 
 	/**
-	 * Adds the ingredient passed in to the selected ingredients.
+	 * Adds the ingredient passed in to the composite food
 	 *
-	 * @param ingredient the ingredient to add to the selected ingredients
+	 * @param ingredient the ingredient to add to the composite food
 	 */
 	public void addIngredient(FoodItem ingredient) {
 		if (ingredient == null) {
@@ -261,9 +268,9 @@ public class CreateCompositeFoodPageViewModel {
 	}
 
 	/**
-	 * Removes the ingredient passed in from the selected ingredients.
+	 * Removes the ingredient passed in from the composite food
 	 *
-	 * @param ingredient the ingredient to remove from the selected ingredients
+	 * @param ingredient the ingredient to remove from the composite food
 	 */
 	public void removeIngredient(FoodItem ingredient) {
 		if (ingredient == null) {
@@ -276,9 +283,9 @@ public class CreateCompositeFoodPageViewModel {
 	}
 
 	/**
-	 * Adds the ingredients passed in to the selected ingredients.
+	 * Adds the ingredients passed in to the composite food.
 	 *
-	 * @param ingredients the ingredients to add to the selected ingredients
+	 * @param ingredients the ingredients to add to the composite food
 	 */
 	public void addIngredients(List<FoodItem> ingredients) {
 		if (ingredients == null || ingredients.isEmpty()) {
@@ -290,23 +297,23 @@ public class CreateCompositeFoodPageViewModel {
 	}
 
 	/**
-	 * Gets the ingredient passed in from the selected ingredients.
+	 * Gets the ingredient passed in from the composite food.
 	 *
 	 * @param ingredientToFind the ingredient to find
-	 * @throws IllegalArgumentException if ingredientToFind is null or not found in the composite food
-	 * @return the ingredient
+	 * @throws IllegalArgumentException if ingredientToFind is null
+	 * @return the ingredient if found, or null if not found
 	 */
 	public FoodItem getIngredient(FoodItem ingredientToFind) {
 		if (ingredientToFind == null) {
 			throw new IllegalArgumentException("Ingredient name cannot be null.");
 		}
-		
+
 		return this.compositeFood.getIngredientByDescription(ingredientToFind.getDescription());
 	}
 
 	private boolean checkForExistingFood(String foodName) throws IOException {
 		HashSet<String> existingFoodNames = new HashSet<>();
-		try(var lines = Files.lines(Paths.get(this.filePath))) {
+		try (var lines = Files.lines(Paths.get(this.filePath))) {
 			lines.forEach(line -> {
 				try {
 					CompositeFood food = this.objectMapper.readValue(line, CompositeFood.class);

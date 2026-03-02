@@ -18,14 +18,14 @@ public class TestGetIngredient {
 			viewModel.getIngredient(null);
 		});
 	}
-	
+
 	@Test
 	public void testNonExistentIngredientWithEmptyIngredientsList() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
 		BaseFood ingredient = new BaseFood("Test Ingredient", QuantityCategory.WEIGHT, 1, 100, 10, 1, 1, 1, 1);
 		assertNull(viewModel.getIngredient(ingredient));
 	}
-	
+
 	@Test
 	public void testNonExistentIngredientWithNonEmptyIngredientsList() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
@@ -34,7 +34,7 @@ public class TestGetIngredient {
 		viewModel.addIngredient(ingredient1);
 		assertNull(viewModel.getIngredient(ingredient2));
 	}
-	
+
 	@Test
 	public void testExistingIngredientOnlyIngredient() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
@@ -42,7 +42,7 @@ public class TestGetIngredient {
 		viewModel.addIngredient(ingredient);
 		assertEquals(ingredient, viewModel.getIngredient(ingredient));
 	}
-	
+
 	@Test
 	public void testExistingIngredientFirstPositionMultipleIngredients() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
@@ -54,7 +54,7 @@ public class TestGetIngredient {
 		viewModel.addIngredient(ingredient3);
 		assertEquals(ingredient1.getDescription(), viewModel.getIngredient(ingredient1).getDescription());
 	}
-	
+
 	@Test
 	public void testExistingIngredientMiddlePositionMultipleIngredients() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
@@ -66,7 +66,7 @@ public class TestGetIngredient {
 		viewModel.addIngredient(ingredient3);
 		assertEquals(ingredient2.getDescription(), viewModel.getIngredient(ingredient2).getDescription());
 	}
-	
+
 	@Test
 	public void testExistingIngredientLastPositionMultipleIngredients() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();

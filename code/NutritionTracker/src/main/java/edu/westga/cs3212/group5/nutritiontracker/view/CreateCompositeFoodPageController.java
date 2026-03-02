@@ -64,8 +64,8 @@ public class CreateCompositeFoodPageController {
 	private ComboBox<QuantityCategory> quantityCategoryComboBox;
 	@FXML
 	private ListView<FoodItem> selectedIngredientsListView;
-	@FXML 
-    private Label searchSelectionLabel;
+	@FXML
+	private Label searchSelectionLabel;
 	@FXML
 	private Label ingredientStatusLabel;
 	@FXML
@@ -119,53 +119,53 @@ public class CreateCompositeFoodPageController {
 		this.bindViewModel();
 		setUpListeners();
 	}
-	
+
 	private void connectSearchPanel() {
-        this.searchPanelController.setOnFoodSelected(food -> {
-            boolean hasSelection = food != null;
-            this.addIngredientButton.setDisable(!hasSelection);
-            if (this.searchSelectionLabel != null) {
-                this.searchSelectionLabel.setText(hasSelection
-                        ? "Selected: " + food.getDescription()
-                          + " — " + String.format("%.0f", food.getCalories()) + " cal"
-                        : "No food selected from search.");
-            }
-        });
-    }
-	
+		this.searchPanelController.setOnFoodSelected(food -> {
+			boolean hasSelection = food != null;
+			this.addIngredientButton.setDisable(!hasSelection);
+			if (this.searchSelectionLabel != null) {
+				this.searchSelectionLabel
+						.setText(hasSelection
+								? "Selected: " + food.getDescription() + " — "
+										+ String.format("%.0f", food.getCalories()) + " cal"
+								: "No food selected from search.");
+			}
+		});
+	}
+
 	private void setUpIngredientsListView() {
-        this.selectedIngredientsListView.setCellFactory(lv -> new ListCell<>() {
-            @Override
-            protected void updateItem(FoodItem item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
+		this.selectedIngredientsListView.setCellFactory(lv -> new ListCell<>() {
+			@Override
+			protected void updateItem(FoodItem item, boolean empty) {
+				super.updateItem(item, empty);
+				if (empty || item == null) {
+					setGraphic(null);
+					setText(null);
+					return;
+				}
 
-                Label nameLabel = new Label(item.getDescription());
-                nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 13;");
-                HBox.setHgrow(nameLabel, Priority.ALWAYS);
+				Label nameLabel = new Label(item.getDescription());
+				nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 13;");
+				HBox.setHgrow(nameLabel, Priority.ALWAYS);
 
-                Label calLabel = new Label(String.format("%.0f cal", item.getCalories()));
-                calLabel.setStyle("-fx-text-fill: #555555; -fx-font-size: 12;");
+				Label calLabel = new Label(String.format("%.0f cal", item.getCalories()));
+				calLabel.setStyle("-fx-text-fill: #555555; -fx-font-size: 12;");
 
-                Button removeBtn = new Button("✕");
-                removeBtn.setStyle(
-                        "-fx-background-color: #e07070; -fx-text-fill: white; "
-                        + "-fx-font-weight: bold; -fx-padding: 2 7 2 7;");
-                removeBtn.setOnAction(event -> {
-                    viewModel.removeIngredient(item);
-                });
+				Button removeBtn = new Button("✕");
+				removeBtn.setStyle("-fx-background-color: #e07070; -fx-text-fill: white; "
+						+ "-fx-font-weight: bold; -fx-padding: 2 7 2 7;");
+				removeBtn.setOnAction(event -> {
+					viewModel.removeIngredient(item);
+				});
 
-                HBox row = new HBox(8, nameLabel, calLabel, removeBtn);
-                row.setPadding(new Insets(3, 4, 3, 4));
-                setGraphic(row);
-                setText(null);
-            }
-        });
-    }
+				HBox row = new HBox(8, nameLabel, calLabel, removeBtn);
+				row.setPadding(new Insets(3, 4, 3, 4));
+				setGraphic(row);
+				setText(null);
+			}
+		});
+	}
 
 	private void setUpListeners() {
 		this.setupPortionSizeUnitLabelListener();
@@ -180,7 +180,8 @@ public class CreateCompositeFoodPageController {
 	private void bindViewModel() {
 		this.nameTextField.textProperty().bindBidirectional(this.viewModel.getNameProperty());
 		this.quantityCategoryComboBox.itemsProperty().bind(this.viewModel.getQuantityCategoriesListPropery());
-		this.quantityCategoryComboBox.valueProperty().bindBidirectional(this.viewModel.getSelectedQuantityCategoryProperty());
+		this.quantityCategoryComboBox.valueProperty()
+				.bindBidirectional(this.viewModel.getSelectedQuantityCategoryProperty());
 		this.selectedIngredientsListView.itemsProperty().bindBidirectional(this.viewModel.getIngredientsListProperty());
 		this.caloriesTextField.textProperty().bind(this.viewModel.getTotalCaloriesProperty().asString());
 		this.proteinTextField.textProperty().bind(this.viewModel.getTotalProteinProperty().asString());
@@ -291,24 +292,23 @@ public class CreateCompositeFoodPageController {
 			}
 		});
 	}
-	
+
 	private void setUpListenerForAddIngredientButton() {
-        this.addIngredientButton.setOnAction((ActionEvent event) -> {
-            FoodItem food = this.searchPanelController.getSelectedFood();
+		this.addIngredientButton.setOnAction((ActionEvent event) -> {
+			FoodItem food = this.searchPanelController.getSelectedFood();
 
-            if (food == null) {
-                new Alert(Alert.AlertType.WARNING,
-                        "Please select a food from the search results first.").showAndWait();
-                return;
-            }
+			if (food == null) {
+				new Alert(Alert.AlertType.WARNING, "Please select a food from the search results first.").showAndWait();
+				return;
+			}
 
-            try {
+			try {
 				this.viewModel.addIngredient(food);
 			} catch (IllegalArgumentException e) {
 				new Alert(Alert.AlertType.WARNING, e.getMessage()).showAndWait();
 			}
-        });
-    }
+		});
+	}
 
 	private void setupListenerForAddFoodButton() {
 		this.addFoodButton.setOnAction((ActionEvent event) -> {
@@ -332,13 +332,12 @@ public class CreateCompositeFoodPageController {
 			}
 		});
 	}
-	
+
 	private void setUpListenerForEnableAddFoodButton() {
-		this.addFoodButton.disableProperty().bind(
-				this.viewModel.getNameProperty().isEmpty()
-				.or(this.quantityCategoryComboBox.valueProperty().isNull())
-				.or(this.viewModel.getIngredientsListProperty().emptyProperty())
-		);
+		this.addFoodButton.disableProperty()
+				.bind(this.viewModel.getNameProperty().isEmpty()
+						.or(this.quantityCategoryComboBox.valueProperty().isNull())
+						.or(this.viewModel.getIngredientsListProperty().emptyProperty()));
 	}
 
 }

@@ -18,7 +18,7 @@ public class TestRemoveIngredient {
 			viewModel.removeIngredient(null);
 		});
 	}
-	
+
 	@Test
 	public void testNonExistentIngredient() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
@@ -27,7 +27,7 @@ public class TestRemoveIngredient {
 			viewModel.removeIngredient(ingredient);
 		});
 	}
-	
+
 	@Test
 	public void testExistingIngredientOnlyIngredient() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
@@ -42,7 +42,7 @@ public class TestRemoveIngredient {
 		assertEquals(0, viewModel.getTotalCarbohydratesProperty().get(), 0.001);
 		assertEquals(0, viewModel.getTotalSodiumProperty().get(), 0.001);
 	}
-	
+
 	@Test
 	public void testExistingIngredientFirstPositionMultipleIngredients() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
@@ -61,7 +61,7 @@ public class TestRemoveIngredient {
 		assertEquals(5, viewModel.getTotalCarbohydratesProperty().get(), 0.001);
 		assertEquals(5, viewModel.getTotalSodiumProperty().get(), 0.001);
 	}
-	
+
 	@Test
 	public void testExistingIngredientMiddlePositionMultipleIngredients() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
@@ -80,7 +80,7 @@ public class TestRemoveIngredient {
 		assertEquals(4, viewModel.getTotalCarbohydratesProperty().get(), 0.001);
 		assertEquals(4, viewModel.getTotalSodiumProperty().get(), 0.001);
 	}
-	
+
 	@Test
 	public void testExistingIngredientLastPositionMultipleIngredients() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();

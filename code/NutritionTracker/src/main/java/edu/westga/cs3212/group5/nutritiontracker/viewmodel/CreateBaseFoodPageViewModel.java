@@ -59,10 +59,11 @@ public class CreateBaseFoodPageViewModel {
 		this.filePath = BASE_FOOD_ITEMS_JSON_FILE;
 		this.objectMapper = new ObjectMapper();
 	}
-	
+
 	/**
-	 * Instantiates a new creates the base food page view model.
-	 * FOR TESTING PURPOSES ONLY - allows injection of a custom file path to simulate file I/O exceptions.
+	 * Instantiates a new creates the base food page view model. FOR TESTING
+	 * PURPOSES ONLY - allows injection of a custom file path to simulate file I/O
+	 * exceptions.
 	 *
 	 * @param filePath the file path
 	 */
@@ -70,10 +71,11 @@ public class CreateBaseFoodPageViewModel {
 		this();
 		this.filePath = filePath;
 	}
-	
+
 	/**
-	 * Instantiates a new creates the base food page view model. 
-	 * FOR TESTING PURPOSES ONLY - allows injection of a mock ObjectMapper to simulate JSON processing exceptions.
+	 * Instantiates a new creates the base food page view model. FOR TESTING
+	 * PURPOSES ONLY - allows injection of a mock ObjectMapper to simulate JSON
+	 * processing exceptions.
 	 *
 	 * @param objectMapper the object mapper
 	 */
@@ -176,8 +178,9 @@ public class CreateBaseFoodPageViewModel {
 	 * Creates a new the base food and saves it.
 	 *
 	 * @throws IllegalArgumentException if a food with the same name already exists
-	 * @throws JsonProcessingException if there is an error processing the JSON data
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws JsonProcessingException  if there is an error processing the JSON
+	 *                                  data
+	 * @throws IOException              Signals that an I/O exception has occurred.
 	 */
 	public void createBaseFood() throws IllegalArgumentException, JsonProcessingException, IOException {
 		if (this.checkForExistingFood(this.name.get())) {

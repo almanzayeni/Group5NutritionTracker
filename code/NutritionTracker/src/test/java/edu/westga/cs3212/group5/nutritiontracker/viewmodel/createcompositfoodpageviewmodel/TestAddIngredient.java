@@ -18,7 +18,7 @@ public class TestAddIngredient {
 			viewModel.addIngredient(null);
 		});
 	}
-	
+
 	@Test
 	public void testValidIngredient() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
@@ -33,7 +33,7 @@ public class TestAddIngredient {
 		assertEquals(1, viewModel.getTotalCarbohydratesProperty().get(), 0.001);
 		assertEquals(1, viewModel.getTotalSodiumProperty().get(), 0.001);
 	}
-	
+
 	@Test
 	public void testDuplicateIngredient() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();

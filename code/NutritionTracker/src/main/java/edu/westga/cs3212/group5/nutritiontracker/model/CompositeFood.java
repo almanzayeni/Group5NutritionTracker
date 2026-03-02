@@ -27,7 +27,7 @@ public class CompositeFood implements FoodItem {
 	private Map<String, FoodItem> ingredients;
 
 	/**
-	 * Instantiates a new composite food.
+	 * Instantiates a new composite food with default values.
 	 */
 	public CompositeFood() {
 		this.description = "";
@@ -53,7 +53,7 @@ public class CompositeFood implements FoodItem {
 	 * @param description      the description
 	 * @param quantityCategory the quantity category
 	 * @param portionSize      portion size
-	 * @param ingredients      the ingredients
+	 * @param ingredients      the ingredients that make up this composite food
 	 * @throws IllegalArgumentException if description is null or blank, quantity
 	 *                                  category is null, portionSize is less than
 	 *                                  1, or ingredients is null or empty or
@@ -79,7 +79,7 @@ public class CompositeFood implements FoodItem {
 			this.updateNutritionValues(ingredient, ADD);
 		}
 	}
-	
+
 	/**
 	 * Gets the ingredients as a map.
 	 *
@@ -327,7 +327,7 @@ public class CompositeFood implements FoodItem {
 			this.addSugar(ingredient.getSugar());
 			this.addCarbohydrates(ingredient.getCarbohydrates());
 			this.addSodium(ingredient.getSodium());
-		} 
+		}
 		if (sign == MINUS) {
 			this.addCalories(ingredient.getCalories() * MINUS);
 			this.addProtein(ingredient.getProtein() * MINUS);
