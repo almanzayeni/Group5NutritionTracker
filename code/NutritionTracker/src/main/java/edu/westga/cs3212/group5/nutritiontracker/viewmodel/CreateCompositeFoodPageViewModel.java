@@ -11,7 +11,6 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
 import edu.westga.cs3212.group5.nutritiontracker.model.CompositeFood;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
@@ -71,7 +70,7 @@ public class CreateCompositeFoodPageViewModel {
 		this.totalCarbohydrates.set(this.compositeFood.getCarbohydrates());
 		this.totalSodium = new SimpleDoubleProperty();
 		this.totalSodium.set(this.compositeFood.getSodium());
-		this.ingredients = new SimpleListProperty<>(FXCollections.observableArrayList(new ArrayList<FoodItem>()));
+		this.ingredients = new SimpleListProperty<FoodItem>(FXCollections.observableArrayList(new ArrayList<FoodItem>()));
 		this.filePath = COMPOSITE_FOOD_ITEMS_JSON_FILE;
 		this.objectMapper = new ObjectMapper();
 	}
@@ -95,8 +94,9 @@ public class CreateCompositeFoodPageViewModel {
 	 *
 	 * @param objectMapper the object mapper
 	 */
-	public CreateCompositeFoodPageViewModel(ObjectMapper objectMapper) {
+	public CreateCompositeFoodPageViewModel(ObjectMapper objectMapper, String filePath) {
 		this();
+		this.filePath = filePath;
 		this.objectMapper = objectMapper;
 	}
 
@@ -202,16 +202,19 @@ public class CreateCompositeFoodPageViewModel {
 	/**
 	 * Creates the composite food.
 	 *
-	 * @throws IllegalArgumentException the illegal argument exception
-	 * @throws JsonProcessingException  the json processing exception
+	 * @throws IllegalArgumentException thrown if food name is empty, no ingredients are added, or a food with the same name already exists
+	 * @throws JsonProcessingException  thrown if there is an error during JSON processing when converting the composite food to a JSON string
 	 * @throws IOException              Signals that an I/O exception has occurred.
 	 */
 	public void createCompositeFood() throws IllegalArgumentException, JsonProcessingException, IOException {
 		if (this.name.get() == null || this.name.get().isEmpty()) {
 			throw new IllegalArgumentException("Food name cannot be empty.");
 		}
-		if (this.ingredients.get() == null || this.ingredients.get().isEmpty()) {
+		if (this.compositeFood.getIngredients().isEmpty()) {
 			throw new IllegalArgumentException("At least one ingredient must be added.");
+		}
+		if (this.selectedQuantityCategory.get() == null) {
+			throw new IllegalArgumentException("A quantity category must be selected.");
 		}
 		if (this.checkForExistingFood(this.name.get())) {
 			throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
@@ -301,12 +304,12 @@ public class CreateCompositeFoodPageViewModel {
 		return this.compositeFood.getIngredientByDescription(ingredientToFind.getDescription());
 	}
 
-	private boolean checkForExistingFood(String foodName) {
+	private boolean checkForExistingFood(String foodName) throws IOException {
 		HashSet<String> existingFoodNames = new HashSet<>();
-		try {
-			Files.lines(Paths.get(this.filePath)).forEach(line -> {
+		try(var lines = Files.lines(Paths.get(this.filePath))) {
+			lines.forEach(line -> {
 				try {
-					BaseFood food = new ObjectMapper().readValue(line, BaseFood.class);
+					CompositeFood food = this.objectMapper.readValue(line, CompositeFood.class);
 					existingFoodNames.add(food.getDescription());
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
@@ -314,28 +317,14 @@ public class CreateCompositeFoodPageViewModel {
 			});
 		} catch (IOException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		return existingFoodNames.contains(foodName);
 	}
 
 	private void updateDisplayInfo() {
-//		double totalCalories = 0;
-//		double totalProtein = 0;
-//		double totalFat = 0;
-//		double totalSugar = 0;
-//		double totalCarbohydrates = 0;
-//		double totalSodium = 0;
-//
-//		for (FoodItem ingredient : ingredients.get()) {
-//			totalCalories += ingredient.getCalories() * ingredient.getPortionSize();
-//			totalProtein += ingredient.getProtein() * ingredient.getPortionSize();
-//			totalFat += ingredient.getFat() * ingredient.getPortionSize();
-//			totalSugar += ingredient.getSugar() * ingredient.getPortionSize();
-//			totalCarbohydrates += ingredient.getCarbohydrates() * ingredient.getPortionSize();
-//			totalSodium += ingredient.getSodium() * ingredient.getPortionSize();
-//		}
 		this.ingredients.clear();
-		this.ingredients.addAll(this.compositeFood.getIngredients());
+		this.ingredients.addAll(this.compositeFood.getIngredientsList());
 		this.totalCalories.set(this.compositeFood.getCalories());
 		this.totalProtein.set(this.compositeFood.getProtein());
 		this.totalFat.set(this.compositeFood.getFat());

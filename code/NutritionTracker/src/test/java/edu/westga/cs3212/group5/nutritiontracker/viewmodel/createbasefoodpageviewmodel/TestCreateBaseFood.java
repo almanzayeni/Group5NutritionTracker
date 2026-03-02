@@ -50,7 +50,6 @@ public class TestCreateBaseFood {
         CreateBaseFoodPageViewModel vm = new CreateBaseFoodPageViewModel("test.json");
         vm.getNameProperty().set("Strawberry");
         vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.WEIGHT);
-
         vm.getCaloriesProperty().set(10);
         vm.getProteinProperty().set(1);
         vm.getFatProperty().set(1);
@@ -65,7 +64,7 @@ public class TestCreateBaseFood {
     
     @Test
     void createBaseFoodShouldThrowJsonProcessingException()
-            throws JsonProcessingException {
+        throws JsonProcessingException {
 
         ObjectMapper mockMapper = mock(ObjectMapper.class);
 
@@ -77,7 +76,6 @@ public class TestCreateBaseFood {
 
         vm.getNameProperty().set("UniqueFood");
         vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.WEIGHT);
-
         vm.getCaloriesProperty().set(10);
         vm.getProteinProperty().set(1);
         vm.getFatProperty().set(1);

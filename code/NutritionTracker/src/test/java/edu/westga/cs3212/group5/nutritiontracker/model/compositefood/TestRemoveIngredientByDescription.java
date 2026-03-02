@@ -53,7 +53,7 @@ public class TestRemoveIngredientByDescription {
 	@Test
 	public void testRemoveBaseIngredient() {
 		assertTrue(this.compositeFoodToTest.removeIngredientByDescription("ingredient1"));
-		assertFalse(this.compositeFoodToTest.getIngredients().contains(this.ingredient1));
+		assertFalse(this.compositeFoodToTest.getIngredientsList().contains(this.ingredient1));
 		assertEquals(100, this.compositeFoodToTest.getCalories());
 		assertEquals(1, this.compositeFoodToTest.getProtein());
 		assertEquals(2, this.compositeFoodToTest.getFat());
@@ -65,7 +65,7 @@ public class TestRemoveIngredientByDescription {
 	@Test
 	public void testRemoveCompositeIngredient() {
 		assertTrue(this.compositeFoodToTest.removeIngredientByDescription("ingredient2"));
-		assertFalse(this.compositeFoodToTest.getIngredients().contains(this.ingredient2));
+		assertFalse(this.compositeFoodToTest.getIngredientsList().contains(this.ingredient2));
 		assertEquals(100, this.compositeFoodToTest.getCalories());
 		assertEquals(1, this.compositeFoodToTest.getProtein());
 		assertEquals(2, this.compositeFoodToTest.getFat());

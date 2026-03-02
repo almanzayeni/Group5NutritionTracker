@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The Class CompositeFood.
  * 
@@ -77,13 +79,23 @@ public class CompositeFood implements FoodItem {
 			this.updateNutritionValues(ingredient, ADD);
 		}
 	}
+	
+	/**
+	 * Gets the ingredients as a map.
+	 *
+	 * @return the ingredients map
+	 */
+	public Map<String, FoodItem> getIngredients() {
+		return this.ingredients;
+	}
 
 	/**
-	 * Gets the ingredients.
+	 * Gets the ingredients as a list.
 	 *
-	 * @return the ingredients
+	 * @return the ingredients list
 	 */
-	public List<FoodItem> getIngredients() {
+	@JsonIgnore
+	public List<FoodItem> getIngredientsList() {
 		return this.ingredients.values().stream().toList();
 	}
 

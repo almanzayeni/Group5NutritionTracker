@@ -51,7 +51,7 @@ public class TestAddIngredient {
 	@Test
 	public void testAddBaseIngredient() {
 		this.compositeFoodToTest.addIngredient(baseIngredientToAdd);
-		assertTrue(this.compositeFoodToTest.getIngredients().contains(this.baseIngredientToAdd));
+		assertTrue(this.compositeFoodToTest.getIngredientsList().contains(this.baseIngredientToAdd));
 		assertEquals(400, this.compositeFoodToTest.getCalories());
 		assertEquals(4, this.compositeFoodToTest.getProtein());
 		assertEquals(8, this.compositeFoodToTest.getFat());
@@ -63,7 +63,7 @@ public class TestAddIngredient {
 	@Test
 	public void testAddCompositeIngredient() {
 		this.compositeFoodToTest.addIngredient(compositeIngredientToAdd);
-		assertTrue(this.compositeFoodToTest.getIngredients().contains(this.compositeIngredientToAdd));
+		assertTrue(this.compositeFoodToTest.getIngredientsList().contains(this.compositeIngredientToAdd));
 		assertEquals(400, this.compositeFoodToTest.getCalories());
 		assertEquals(4, this.compositeFoodToTest.getProtein());
 		assertEquals(8, this.compositeFoodToTest.getFat());
