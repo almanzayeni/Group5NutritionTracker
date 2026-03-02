@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +39,7 @@ public class CreateCompositeFoodPageViewModel {
 	private DoubleProperty totalCarbohydrates;
 	private DoubleProperty totalSodium;
 	private ListProperty<FoodItem> ingredients;
+	private CompositeFood compositeFood;
 	private String filePath;
 	private ObjectMapper objectMapper;
 
@@ -45,6 +47,7 @@ public class CreateCompositeFoodPageViewModel {
 	 * Instantiates a new creates the composite food page view model.
 	 */
 	public CreateCompositeFoodPageViewModel() {
+		this.compositeFood = new CompositeFood();
 		this.name = new SimpleStringProperty();
 
 		ArrayList<QuantityCategory> quantityCategories = new ArrayList<>();
@@ -72,10 +75,11 @@ public class CreateCompositeFoodPageViewModel {
 		this.filePath = COMPOSITE_FOOD_ITEMS_JSON_FILE;
 		this.objectMapper = new ObjectMapper();
 	}
-	
+
 	/**
-	 * Instantiates a new creates the composite food page view model.
-	 * FOR TESTING PURPOSES ONLY - allows for custom file path to be set for testing without affecting production data
+	 * Instantiates a new creates the composite food page view model. FOR TESTING
+	 * PURPOSES ONLY - allows for custom file path to be set for testing without
+	 * affecting production data
 	 *
 	 * @param filePath the file path
 	 */
@@ -83,10 +87,11 @@ public class CreateCompositeFoodPageViewModel {
 		this();
 		this.filePath = filePath;
 	}
-	
+
 	/**
-	 * Instantiates a new creates the composite food page view model.
-	 * FOR TESTING PURPOSES ONLY - allows injection of a mock ObjectMapper to simulate JSON processing exceptions.
+	 * Instantiates a new creates the composite food page view model. FOR TESTING
+	 * PURPOSES ONLY - allows injection of a mock ObjectMapper to simulate JSON
+	 * processing exceptions.
 	 *
 	 * @param objectMapper the object mapper
 	 */
@@ -121,7 +126,7 @@ public class CreateCompositeFoodPageViewModel {
 	public ObjectProperty<QuantityCategory> getSelectedQuantityCategoryProperty() {
 		return selectedQuantityCategory;
 	}
-	
+
 	/**
 	 * Gets the portion size.
 	 *
@@ -198,8 +203,8 @@ public class CreateCompositeFoodPageViewModel {
 	 * Creates the composite food.
 	 *
 	 * @throws IllegalArgumentException the illegal argument exception
-	 * @throws JsonProcessingException the json processing exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws JsonProcessingException  the json processing exception
+	 * @throws IOException              Signals that an I/O exception has occurred.
 	 */
 	public void createCompositeFood() throws IllegalArgumentException, JsonProcessingException, IOException {
 		if (this.name.get() == null || this.name.get().isEmpty()) {
@@ -212,14 +217,13 @@ public class CreateCompositeFoodPageViewModel {
 			throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
 		}
 
-		this.updateNutritionInfo();
-		CompositeFood compositeFood = new CompositeFood(this.name.get(), this.selectedQuantityCategory.get(),
-				this.portionSize, this.ingredients.get(), this.totalCalories.get(), this.totalProtein.get(), this.totalFat.get(),
-				this.totalSugar.get(), this.totalCarbohydrates.get(), this.totalSodium.get());
 		String jsonString = "";
+		this.compositeFood.setDescription(this.name.get());
+		this.compositeFood.setQuantityCategory(this.selectedQuantityCategory.get());
+		this.compositeFood.setPortionSize(this.portionSize);
 
 		try {
-			jsonString = this.objectMapper.writeValueAsString(compositeFood);
+			jsonString = this.objectMapper.writeValueAsString(this.compositeFood);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			throw e;
@@ -236,7 +240,7 @@ public class CreateCompositeFoodPageViewModel {
 
 		this.clearFields();
 	}
-	
+
 	/**
 	 * Adds the ingredient passed in to the selected ingredients.
 	 *
@@ -246,13 +250,15 @@ public class CreateCompositeFoodPageViewModel {
 		if (ingredient == null) {
 			throw new IllegalArgumentException("No ingredient selected.");
 		}
-		if (this.checkForExistingFood(ingredient.getDescription())) {
-			throw new IllegalArgumentException("Ingredient already exists in the food item. Please update the portion size of the existing ingredient.");
+		if (this.compositeFood.getIngredientByDescription(ingredient.getDescription()) != null) {
+			throw new IllegalArgumentException(
+					"Ingredient already exists in the food item. Please update the portion size of the existing ingredient.");
 		}
 		this.ingredients.add(ingredient);
+		this.compositeFood.addIngredient(ingredient);
 		this.updateNutritionInfo();
 	}
-	
+
 	/**
 	 * Removes the ingredient passed in from the selected ingredients.
 	 *
@@ -266,15 +272,16 @@ public class CreateCompositeFoodPageViewModel {
 			throw new IllegalArgumentException("Ingredient does not exist in the food.");
 		}
 		this.ingredients.remove(ingredient);
+		this.compositeFood.removeIngredientByDescription(ingredient.getDescription());
 		this.updateNutritionInfo();
 	}
-	
+
 	/**
 	 * Adds the ingredients passed in to the selected ingredients.
 	 *
 	 * @param ingredients the ingredients to add to the selected ingredients
 	 */
-	public void addIngredients(ArrayList<FoodItem> ingredients) {
+	public void addIngredients(List<FoodItem> ingredients) {
 		if (ingredients == null || ingredients.isEmpty()) {
 			throw new IllegalArgumentException("Ingredients list cannot be null or empty.");
 		}
@@ -282,25 +289,29 @@ public class CreateCompositeFoodPageViewModel {
 			this.addIngredient(ingredient);
 		}
 	}
-	
+
 	/**
 	 * Gets the ingredient passed in from the selected ingredients.
 	 *
 	 * @param ingredientToFind the ingredient to find
+	 * @throws IllegalArgumentException if ingredientToFind is null or not found in the composite food
 	 * @return the ingredient
 	 */
 	public FoodItem getIngredient(FoodItem ingredientToFind) {
 		if (ingredientToFind == null) {
 			throw new IllegalArgumentException("Ingredient name cannot be null.");
 		}
+		
+		FoodItem foundIngredient = null;
 		for (FoodItem ingredient : this.ingredients.get()) {
-			if (ingredient.getDescription().equals(ingredientToFind.getDescription())) {
-				return ingredient;
-			}
+			foundIngredient = this.compositeFood.getIngredientByDescription(ingredient.getDescription());
+		}
+		if (foundIngredient != null) {
+			return foundIngredient;
 		}
 		throw new IllegalArgumentException("Ingredient not found.");
 	}
-	
+
 	private boolean checkForExistingFood(String foodName) {
 		HashSet<String> existingFoodNames = new HashSet<>();
 		try {
@@ -317,7 +328,7 @@ public class CreateCompositeFoodPageViewModel {
 		}
 		return existingFoodNames.contains(foodName);
 	}
-	
+
 	private void updateNutritionInfo() {
 		double totalCalories = 0;
 		double totalProtein = 0;
@@ -342,7 +353,7 @@ public class CreateCompositeFoodPageViewModel {
 		this.totalCarbohydrates.set(totalCarbohydrates);
 		this.totalSodium.set(totalSodium);
 	}
-	
+
 	private void clearFields() {
 		this.name.set("");
 		this.selectedQuantityCategory.set(null);
