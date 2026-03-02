@@ -178,16 +178,16 @@ public class CreateCompositeFoodPageController {
 	}
 
 	private void bindViewModel() {
-		this.nameTextField.textProperty().bindBidirectional(this.viewModel.getName());
-		this.quantityCategoryComboBox.itemsProperty().bind(this.viewModel.getQuantityCategories());
-		this.quantityCategoryComboBox.valueProperty().bindBidirectional(this.viewModel.getSelectedQuantityCategory());
-		this.selectedIngredientsListView.itemsProperty().bindBidirectional(this.viewModel.getIngredients());
-		this.caloriesTextField.textProperty().bind(this.viewModel.getCalories().asString());
-		this.proteinTextField.textProperty().bind(this.viewModel.getProtein().asString());
-		this.fatTextField.textProperty().bind(this.viewModel.getFat().asString());
-		this.sugarTextField.textProperty().bind(this.viewModel.getSugar().asString());
-		this.carbohydratesTextField.textProperty().bind(this.viewModel.getCarbohydrates().asString());
-		this.sodiumTextField.textProperty().bind(this.viewModel.getSodium().asString());
+		this.nameTextField.textProperty().bindBidirectional(this.viewModel.getNameProperty());
+		this.quantityCategoryComboBox.itemsProperty().bind(this.viewModel.getQuantityCategoriesListPropery());
+		this.quantityCategoryComboBox.valueProperty().bindBidirectional(this.viewModel.getSelectedQuantityCategoryProperty());
+		this.selectedIngredientsListView.itemsProperty().bindBidirectional(this.viewModel.getIngredientsListProperty());
+		this.caloriesTextField.textProperty().bind(this.viewModel.getTotalCaloriesProperty().asString());
+		this.proteinTextField.textProperty().bind(this.viewModel.getTotalProteinProperty().asString());
+		this.fatTextField.textProperty().bind(this.viewModel.getTotalFatProperty().asString());
+		this.sugarTextField.textProperty().bind(this.viewModel.getTotalSugarProperty().asString());
+		this.carbohydratesTextField.textProperty().bind(this.viewModel.getTotalCarbohydratesProperty().asString());
+		this.sodiumTextField.textProperty().bind(this.viewModel.getTotalSodiumProperty().asString());
 	}
 
 	private void setupPortionSizeUnitLabelListener() {
@@ -335,9 +335,9 @@ public class CreateCompositeFoodPageController {
 	
 	private void setUpListenerForEnableAddFoodButton() {
 		this.addFoodButton.disableProperty().bind(
-				this.viewModel.getName().isEmpty()
+				this.viewModel.getNameProperty().isEmpty()
 				.or(this.quantityCategoryComboBox.valueProperty().isNull())
-				.or(this.viewModel.getIngredients().emptyProperty())
+				.or(this.viewModel.getIngredientsListProperty().emptyProperty())
 		);
 	}
 
