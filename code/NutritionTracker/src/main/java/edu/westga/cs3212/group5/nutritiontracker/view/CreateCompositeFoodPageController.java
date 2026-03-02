@@ -74,7 +74,6 @@ public class CreateCompositeFoodPageController {
 	private TextField sugarTextField;
 
 	private CreateCompositeFoodPageViewModel viewModel;
-	private FoodSearchPanelController searchPanelController;
 
 	@FXML
 	void initialize() {
@@ -113,7 +112,6 @@ public class CreateCompositeFoodPageController {
 		assert sugarTextField != null
 				: "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		this.viewModel = new CreateCompositeFoodPageViewModel();
-		this.searchPanelController = new FoodSearchPanelController();
 		this.connectSearchPanel();
 		this.setUpIngredientsListView();
 		this.bindViewModel();
@@ -121,16 +119,7 @@ public class CreateCompositeFoodPageController {
 	}
 	
 	private void connectSearchPanel() {
-        this.searchPanelController.setOnFoodSelected(food -> {
-            boolean hasSelection = food != null;
-            this.addIngredientButton.setDisable(!hasSelection);
-            if (this.searchSelectionLabel != null) {
-                this.searchSelectionLabel.setText(hasSelection
-                        ? "Selected: " + food.getDescription()
-                          + " — " + String.format("%.0f", food.getCalories()) + " cal"
-                        : "No food selected from search.");
-            }
-        });
+		//TODO : add functionality
     }
 	
 	private void setUpIngredientsListView() {
@@ -173,7 +162,7 @@ public class CreateCompositeFoodPageController {
 		// this.setUpListenerForLogoutButton();
 		this.setUpListenerForHomeButton();
 		this.setupListenerForAddFoodButton();
-		this.setUpListenerForAddIngredientButton();
+		//this.setUpListenerForAddIngredientButton();
 		this.setUpListenerForEnableAddFoodButton();
 	}
 
@@ -292,23 +281,23 @@ public class CreateCompositeFoodPageController {
 		});
 	}
 	
-	private void setUpListenerForAddIngredientButton() {
-        this.addIngredientButton.setOnAction((ActionEvent event) -> {
-            FoodItem food = this.searchPanelController.getSelectedFood();
-
-            if (food == null) {
-                new Alert(Alert.AlertType.WARNING,
-                        "Please select a food from the search results first.").showAndWait();
-                return;
-            }
-
-            try {
-				this.viewModel.addIngredient(food);
-			} catch (IllegalArgumentException e) {
-				new Alert(Alert.AlertType.WARNING, e.getMessage()).showAndWait();
-			}
-        });
-    }
+//	private void setUpListenerForAddIngredientButton() {
+//        this.addIngredientButton.setOnAction((ActionEvent event) -> {
+//            FoodItem food = this.searchPanelController.getSelectedFood();
+//
+//            if (food == null) {
+//                new Alert(Alert.AlertType.WARNING,
+//                        "Please select a food from the search results first.").showAndWait();
+//                return;
+//            }
+//
+//            try {
+//				this.viewModel.addIngredient(food);
+//			} catch (IllegalArgumentException e) {
+//				new Alert(Alert.AlertType.WARNING, e.getMessage()).showAndWait();
+//			}
+//        });
+//    }
 
 	private void setupListenerForAddFoodButton() {
 		this.addFoodButton.setOnAction((ActionEvent event) -> {
