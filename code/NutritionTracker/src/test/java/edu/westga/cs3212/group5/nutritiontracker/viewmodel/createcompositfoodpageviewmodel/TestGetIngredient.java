@@ -1,6 +1,7 @@
 package edu.westga.cs3212.group5.nutritiontracker.viewmodel.createcompositfoodpageviewmodel;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -22,9 +23,7 @@ public class TestGetIngredient {
 	public void testNonExistentIngredientWithEmptyIngredientsList() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
 		BaseFood ingredient = new BaseFood("Test Ingredient", QuantityCategory.WEIGHT, 1, 100, 10, 1, 1, 1, 1);
-		assertThrows(IllegalArgumentException.class, () -> {
-			viewModel.getIngredient(ingredient);
-		});
+		assertNull(viewModel.getIngredient(ingredient));
 	}
 	
 	@Test
@@ -33,9 +32,7 @@ public class TestGetIngredient {
 		BaseFood ingredient1 = new BaseFood("Ingredient 1", QuantityCategory.WEIGHT, 1, 100, 10, 1, 1, 1, 1);
 		BaseFood ingredient2 = new BaseFood("Ingredient 2", QuantityCategory.QUANTITY, 1, 200, 20, 2, 2, 2, 2);
 		viewModel.addIngredient(ingredient1);
-		assertThrows(IllegalArgumentException.class, () -> {
-			viewModel.getIngredient(ingredient2);
-		});
+		assertNull(viewModel.getIngredient(ingredient2));
 	}
 	
 	@Test
@@ -55,7 +52,7 @@ public class TestGetIngredient {
 		viewModel.addIngredient(ingredient1);
 		viewModel.addIngredient(ingredient2);
 		viewModel.addIngredient(ingredient3);
-		assertEquals(ingredient1, viewModel.getIngredient(ingredient1));
+		assertEquals(ingredient1.getDescription(), viewModel.getIngredient(ingredient1).getDescription());
 	}
 	
 	@Test
@@ -67,7 +64,7 @@ public class TestGetIngredient {
 		viewModel.addIngredient(ingredient1);
 		viewModel.addIngredient(ingredient2);
 		viewModel.addIngredient(ingredient3);
-		assertEquals(ingredient2, viewModel.getIngredient(ingredient2));
+		assertEquals(ingredient2.getDescription(), viewModel.getIngredient(ingredient2).getDescription());
 	}
 	
 	@Test
@@ -79,6 +76,6 @@ public class TestGetIngredient {
 		viewModel.addIngredient(ingredient1);
 		viewModel.addIngredient(ingredient2);
 		viewModel.addIngredient(ingredient3);
-		assertEquals(ingredient3, viewModel.getIngredient(ingredient3));
+		assertEquals(ingredient3.getDescription(), viewModel.getIngredient(ingredient3).getDescription());
 	}
 }

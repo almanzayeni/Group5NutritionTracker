@@ -58,19 +58,19 @@ public class CreateCompositeFoodPageViewModel {
 		this.quantityCategories = new SimpleListProperty<QuantityCategory>(
 				FXCollections.observableArrayList(quantityCategories));
 		this.selectedQuantityCategory = new SimpleObjectProperty<QuantityCategory>();
-		this.portionSize = 1;
+		this.portionSize = this.compositeFood.getPortionSize();
 		this.totalCalories = new SimpleDoubleProperty();
-		this.totalCalories.set(0);
+		this.totalCalories.set(this.compositeFood.getCalories());
 		this.totalProtein = new SimpleDoubleProperty();
-		this.totalProtein.set(0);
+		this.totalProtein.set(this.compositeFood.getProtein());
 		this.totalFat = new SimpleDoubleProperty();
-		this.totalFat.set(0);
+		this.totalFat.set(this.compositeFood.getFat());
 		this.totalSugar = new SimpleDoubleProperty();
-		this.totalSugar.set(0);
+		this.totalSugar.set(this.compositeFood.getSugar());
 		this.totalCarbohydrates = new SimpleDoubleProperty();
-		this.totalCarbohydrates.set(0);
+		this.totalCarbohydrates.set(this.compositeFood.getCarbohydrates());
 		this.totalSodium = new SimpleDoubleProperty();
-		this.totalSodium.set(0);
+		this.totalSodium.set(this.compositeFood.getSodium());
 		this.ingredients = new SimpleListProperty<>(FXCollections.observableArrayList(new ArrayList<FoodItem>()));
 		this.filePath = COMPOSITE_FOOD_ITEMS_JSON_FILE;
 		this.objectMapper = new ObjectMapper();
@@ -220,7 +220,6 @@ public class CreateCompositeFoodPageViewModel {
 		String jsonString = "";
 		this.compositeFood.setDescription(this.name.get());
 		this.compositeFood.setQuantityCategory(this.selectedQuantityCategory.get());
-		this.compositeFood.setPortionSize(this.portionSize);
 
 		try {
 			jsonString = this.objectMapper.writeValueAsString(this.compositeFood);
@@ -254,9 +253,8 @@ public class CreateCompositeFoodPageViewModel {
 			throw new IllegalArgumentException(
 					"Ingredient already exists in the food item. Please update the portion size of the existing ingredient.");
 		}
-		this.ingredients.add(ingredient);
 		this.compositeFood.addIngredient(ingredient);
-		this.updateNutritionInfo();
+		this.updateDisplayInfo();
 	}
 
 	/**
@@ -268,12 +266,10 @@ public class CreateCompositeFoodPageViewModel {
 		if (ingredient == null) {
 			throw new IllegalArgumentException("Ingredient cannot be null.");
 		}
-		if (!this.ingredients.contains(ingredient)) {
+		if (!this.compositeFood.removeIngredientByDescription(ingredient.getDescription())) {
 			throw new IllegalArgumentException("Ingredient does not exist in the food.");
 		}
-		this.ingredients.remove(ingredient);
-		this.compositeFood.removeIngredientByDescription(ingredient.getDescription());
-		this.updateNutritionInfo();
+		this.updateDisplayInfo();
 	}
 
 	/**
@@ -302,14 +298,7 @@ public class CreateCompositeFoodPageViewModel {
 			throw new IllegalArgumentException("Ingredient name cannot be null.");
 		}
 		
-		FoodItem foundIngredient = null;
-		for (FoodItem ingredient : this.ingredients.get()) {
-			foundIngredient = this.compositeFood.getIngredientByDescription(ingredient.getDescription());
-		}
-		if (foundIngredient != null) {
-			return foundIngredient;
-		}
-		throw new IllegalArgumentException("Ingredient not found.");
+		return this.compositeFood.getIngredientByDescription(ingredientToFind.getDescription());
 	}
 
 	private boolean checkForExistingFood(String foodName) {
@@ -329,29 +318,30 @@ public class CreateCompositeFoodPageViewModel {
 		return existingFoodNames.contains(foodName);
 	}
 
-	private void updateNutritionInfo() {
-		double totalCalories = 0;
-		double totalProtein = 0;
-		double totalFat = 0;
-		double totalSugar = 0;
-		double totalCarbohydrates = 0;
-		double totalSodium = 0;
-
-		for (FoodItem ingredient : ingredients.get()) {
-			totalCalories += ingredient.getCalories() * ingredient.getPortionSize();
-			totalProtein += ingredient.getProtein() * ingredient.getPortionSize();
-			totalFat += ingredient.getFat() * ingredient.getPortionSize();
-			totalSugar += ingredient.getSugar() * ingredient.getPortionSize();
-			totalCarbohydrates += ingredient.getCarbohydrates() * ingredient.getPortionSize();
-			totalSodium += ingredient.getSodium() * ingredient.getPortionSize();
-		}
-
-		this.totalCalories.set(totalCalories);
-		this.totalProtein.set(totalProtein);
-		this.totalFat.set(totalFat);
-		this.totalSugar.set(totalSugar);
-		this.totalCarbohydrates.set(totalCarbohydrates);
-		this.totalSodium.set(totalSodium);
+	private void updateDisplayInfo() {
+//		double totalCalories = 0;
+//		double totalProtein = 0;
+//		double totalFat = 0;
+//		double totalSugar = 0;
+//		double totalCarbohydrates = 0;
+//		double totalSodium = 0;
+//
+//		for (FoodItem ingredient : ingredients.get()) {
+//			totalCalories += ingredient.getCalories() * ingredient.getPortionSize();
+//			totalProtein += ingredient.getProtein() * ingredient.getPortionSize();
+//			totalFat += ingredient.getFat() * ingredient.getPortionSize();
+//			totalSugar += ingredient.getSugar() * ingredient.getPortionSize();
+//			totalCarbohydrates += ingredient.getCarbohydrates() * ingredient.getPortionSize();
+//			totalSodium += ingredient.getSodium() * ingredient.getPortionSize();
+//		}
+		this.ingredients.clear();
+		this.ingredients.addAll(this.compositeFood.getIngredients());
+		this.totalCalories.set(this.compositeFood.getCalories());
+		this.totalProtein.set(this.compositeFood.getProtein());
+		this.totalFat.set(this.compositeFood.getFat());
+		this.totalSugar.set(this.compositeFood.getSugar());
+		this.totalCarbohydrates.set(this.compositeFood.getCarbohydrates());
+		this.totalSodium.set(this.compositeFood.getSodium());
 	}
 
 	private void clearFields() {
