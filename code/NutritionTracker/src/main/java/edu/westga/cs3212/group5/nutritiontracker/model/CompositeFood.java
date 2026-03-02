@@ -11,6 +11,8 @@ import java.util.Map;
  * @version spring 2026
  */
 public class CompositeFood implements FoodItem {
+	private static final int ADD = 1;
+	private static final int MINUS = -1;
 	private String description;
 	private QuantityCategory quantityCategory;
 	private double portionSize;
@@ -72,7 +74,7 @@ public class CompositeFood implements FoodItem {
 						"Duplicate ingredients not allowed in composit foods: " + ingredient.getDescription());
 			}
 			this.ingredients.put(ingredient.getDescription(), ingredient);
-			this.updateNutritionValues(ingredient, 1);
+			this.updateNutritionValues(ingredient, ADD);
 		}
 	}
 
@@ -103,7 +105,7 @@ public class CompositeFood implements FoodItem {
 			throw new IllegalArgumentException("Ingredient already exists");
 		}
 		this.ingredients.put(ingredient.getDescription(), ingredient);
-		this.updateNutritionValues(ingredient, 1);
+		this.updateNutritionValues(ingredient, ADD);
 	}
 
 	/**
@@ -140,7 +142,7 @@ public class CompositeFood implements FoodItem {
 		}
 		FoodItem ingredient = this.ingredients.remove(description);
 		if (ingredient != null) {
-			this.updateNutritionValues(ingredient, -1);
+			this.updateNutritionValues(ingredient, MINUS);
 			return true;
 		}
 		return false;
@@ -231,8 +233,8 @@ public class CompositeFood implements FoodItem {
 		return this.calories * this.portionSize;
 	}
 
-	private void setCalories(double calories) {
-		this.calories = calories;
+	private void addCalories(double calories) {
+		this.calories += calories;
 	}
 
 	/**
@@ -245,8 +247,8 @@ public class CompositeFood implements FoodItem {
 		return this.protein * this.portionSize;
 	}
 
-	private void setProtein(double protein) {
-		this.protein = protein;
+	private void addProtein(double protein) {
+		this.protein += protein;
 	}
 
 	/**
@@ -259,8 +261,8 @@ public class CompositeFood implements FoodItem {
 		return this.fat * this.portionSize;
 	}
 
-	private void setFat(double fat) {
-		this.fat = fat;
+	private void addFat(double fat) {
+		this.fat += fat;
 	}
 
 	/**
@@ -273,8 +275,8 @@ public class CompositeFood implements FoodItem {
 		return this.sugar * this.portionSize;
 	}
 
-	private void setSugar(double sugar) {
-		this.sugar = sugar;
+	private void addSugar(double sugar) {
+		this.sugar += sugar;
 	}
 
 	/**
@@ -287,8 +289,8 @@ public class CompositeFood implements FoodItem {
 		return this.carbohydrates * this.portionSize;
 	}
 
-	private void setCarbohydrates(double carbohydrates) {
-		this.carbohydrates = carbohydrates;
+	private void addCarbohydrates(double carbohydrates) {
+		this.carbohydrates += carbohydrates;
 	}
 
 	/**
@@ -301,33 +303,26 @@ public class CompositeFood implements FoodItem {
 		return this.sodium * this.portionSize;
 	}
 
-	private void setSodium(double sodium) {
-		this.sodium = sodium;
+	private void addSodium(double sodium) {
+		this.sodium += sodium;
 	}
-	
+
 	private void updateNutritionValues(FoodItem ingredient, int sign) {
-		if (ingredient == null) {
-			throw new IllegalArgumentException("Ingredient cannot be null");
-		}
-		if (sign != 1 && sign != -1) {
-			throw new IllegalArgumentException("Sign must be 1 or -1");
-		}
-		if (sign == 1) {
-			this.setCalories(this.getCalories() + (ingredient.getCalories() * ingredient.getPortionSize()));
-			this.setProtein(this.getProtein() + (ingredient.getProtein() * ingredient.getPortionSize()));
-			this.setFat(this.getFat() + (ingredient.getFat() * ingredient.getPortionSize()));
-			this.setSugar(this.getSugar() + (ingredient.getSugar() * ingredient.getPortionSize()));
-			this.setCarbohydrates(
-					this.getCarbohydrates() + (ingredient.getCarbohydrates() * ingredient.getPortionSize()));
-			this.setSodium(this.getSodium() + (ingredient.getSodium() * ingredient.getPortionSize()));
-		} else if (sign == -1) {
-			this.setCalories(this.getCalories() - (ingredient.getCalories() * ingredient.getPortionSize()));
-			this.setProtein(this.getProtein() - (ingredient.getProtein() * ingredient.getPortionSize()));
-			this.setFat(this.getFat() - (ingredient.getFat() * ingredient.getPortionSize()));
-			this.setSugar(this.getSugar() - (ingredient.getSugar() * ingredient.getPortionSize()));
-			this.setCarbohydrates(
-					this.getCarbohydrates() - (ingredient.getCarbohydrates() * ingredient.getPortionSize()));
-			this.setSodium(this.getSodium() - (ingredient.getSodium() * ingredient.getPortionSize()));
+		if (sign == ADD) {
+			this.addCalories(ingredient.getCalories());
+			this.addProtein(ingredient.getProtein());
+			this.addFat(ingredient.getFat());
+			this.addSugar(ingredient.getSugar());
+			this.addCarbohydrates(ingredient.getCarbohydrates());
+			this.addSodium(ingredient.getSodium());
+		} 
+		if (sign == MINUS) {
+			this.addCalories(ingredient.getCalories() * MINUS);
+			this.addProtein(ingredient.getProtein() * MINUS);
+			this.addFat(ingredient.getFat() * MINUS);
+			this.addSugar(ingredient.getSugar() * MINUS);
+			this.addCarbohydrates(ingredient.getCarbohydrates() * MINUS);
+			this.addSodium(ingredient.getSodium() * MINUS);
 		}
 
 	}
