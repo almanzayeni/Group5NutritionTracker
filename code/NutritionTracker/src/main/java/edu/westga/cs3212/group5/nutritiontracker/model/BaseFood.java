@@ -16,27 +16,35 @@ public class BaseFood implements FoodItem {
 	private double sugar;
 	private double carbohydrates;
 	private double sodium;
-	
-	
+
 	/**
 	 * Instantiates a new base food.
 	 */
-	public BaseFood() {}
-	
+	public BaseFood() {
+	}
+
 	/**
 	 * Instantiates a new base food.
 	 * 
-	 * @precondition description != null && !description.isBlank() && quantityCategory != null && portionSize > 1 && calories >= 0 && protein >= 0 && fat >= 0 && sugar >= 0 && carbohydrates >= 0 && sodium >= 0
+	 * @precondition description != null && !description.isBlank() &&
+	 *               quantityCategory != null && portionSize > 1 && calories >= 0 &&
+	 *               protein >= 0 && fat >= 0 && sugar >= 0 && carbohydrates >= 0 &&
+	 *               sodium >= 0
 	 *
-	 * @param description the description
+	 * @param description      the description
 	 * @param quantityCategory the quantity category
-	 * @param calories the calories
-	 * @param protein the protein
-	 * @param fat the fat
-	 * @param sugar the sugar
-	 * @param carbohydrates the carbohydrates
-	 * @param sodium the sodium
-	 * @throws IllegalArgumentException if description is null or blank, quantity category is null, portion size is less than 1, calories is negative, protein is negative, fat is negative, sugar is negative, carbohydrates is negative, or sodium is negative
+	 * @param calories         the calories
+	 * @param protein          the protein
+	 * @param fat              the fat
+	 * @param sugar            the sugar
+	 * @param carbohydrates    the carbohydrates
+	 * @param sodium           the sodium
+	 * @throws IllegalArgumentException if description is null or blank, quantity
+	 *                                  category is null, portion size is less than
+	 *                                  1, calories is negative, protein is
+	 *                                  negative, fat is negative, sugar is
+	 *                                  negative, carbohydrates is negative, or
+	 *                                  sodium is negative
 	 */
 	public BaseFood(String description, QuantityCategory quantityCategory, double portionSize, double calories,
 			double protein, double fat, double sugar, double carbohydrates, double sodium) {
@@ -50,7 +58,7 @@ public class BaseFood implements FoodItem {
 		this.setCarbohydrates(carbohydrates);
 		this.setSodium(sodium);
 	}
-	
+
 	/**
 	 * Gets the description.
 	 *
@@ -100,7 +108,7 @@ public class BaseFood implements FoodItem {
 		}
 		this.quantityCategory = quantityCategory;
 	}
-	
+
 	/**
 	 * Gets the portion size.
 	 *
@@ -109,11 +117,11 @@ public class BaseFood implements FoodItem {
 	public double getPortionSize() {
 		return this.portionSize;
 	}
-	
+
 	/**
 	 * Sets the portion size.
 	 * 
-	 * @precondition portionSize >= 1 
+	 * @precondition portionSize >= 1
 	 *
 	 * @param portionSize the new portion size
 	 * @throws IllegalArgumentException if portion size is not positive

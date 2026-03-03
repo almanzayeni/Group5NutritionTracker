@@ -10,83 +10,83 @@ import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 
 public class TestBaseFoodConstructor {
-	
+
 	@Test
 	public void testPortionSizeLessThan1() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new BaseFood("Strawberry", QuantityCategory.WEIGHT, 0, 1, 1, 1, 1, 1, 1);
 		});
 	}
-	
+
 	@Test
 	public void testNegativeCalories() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new BaseFood("Strawberry", QuantityCategory.WEIGHT, 1, -1, 1, 1, 1, 1, 1);
 		});
 	}
-	
+
 	@Test
 	public void testNegativeProtein() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new BaseFood("Strawberry", QuantityCategory.WEIGHT, 1, 1, -1, 1, 1, 1, 1);
 		});
 	}
-	
+
 	@Test
 	public void testNegativeFat() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new BaseFood("Strawberry", QuantityCategory.WEIGHT, 1, 1, 1, -1, 1, 1, 1);
 		});
 	}
-	
+
 	@Test
 	public void testNegativeSugar() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new BaseFood("Strawberry", QuantityCategory.WEIGHT, 1, 1, 1, 1, -1, 1, 1);
 		});
 	}
-	
+
 	@Test
 	public void testNegativeCarbohydrates() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new BaseFood("Strawberry", QuantityCategory.WEIGHT, 1, 1, 1, 1, 1, -1, 1);
 		});
 	}
-	
+
 	@Test
 	public void testNegativeSodium() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new BaseFood("Strawberry", QuantityCategory.WEIGHT, 1, 1, 1, 1, 1, 1, -1);
 		});
 	}
-	
+
 	@Test
 	public void testNullDescription() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new BaseFood(null, QuantityCategory.WEIGHT, 1, 1, 1, 1, 1, 1, 1);
 		});
 	}
-	
+
 	@Test
 	public void testBlankDescription() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new BaseFood("   ", QuantityCategory.WEIGHT, 1, 1, 1, 1, 1, 1, 1);
 		});
 	}
-	
+
 	@Test
 	public void testNullQuantityCategory() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new BaseFood("Strawberry", null, 1, 1, 1, 1, 1, 1, 1);
 		});
 	}
-	
+
 	@Test
 	public void testZeroParametersConstructor() {
 		BaseFood food = new BaseFood();
 		assertNotNull(food);
 	}
-	
+
 	@Test
 	public void testValidFullParametersConstructorWholeNumbers() {
 		BaseFood food = new BaseFood("Strawberry", QuantityCategory.SERVING, 1, 1, 1, 1, 1, 1, 1);
@@ -100,7 +100,7 @@ public class TestBaseFoodConstructor {
 		assertEquals(1, food.getCarbohydrates(), 0.001);
 		assertEquals(1, food.getSodium(), 0.001);
 	}
-	
+
 	@Test
 	public void testValidFullParametersConstructorDecimalNumbers() {
 		BaseFood food = new BaseFood("Apple", QuantityCategory.WEIGHT, 1.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1);
@@ -113,7 +113,7 @@ public class TestBaseFoodConstructor {
 		assertEquals(0.11, food.getCarbohydrates(), 0.001);
 		assertEquals(0.11, food.getSodium(), 0.001);
 	}
-	
+
 	@Test
 	public void testValidFullParametersConstructorMixedNumbers() {
 		BaseFood food = new BaseFood("Strawberry", QuantityCategory.SERVING, 2, 5000, 8.5, 1.75, 38.6, 42, 13.2);
@@ -127,5 +127,5 @@ public class TestBaseFoodConstructor {
 		assertEquals(84, food.getCarbohydrates(), 0.001);
 		assertEquals(26.4, food.getSodium(), 0.001);
 	}
-	
+
 }

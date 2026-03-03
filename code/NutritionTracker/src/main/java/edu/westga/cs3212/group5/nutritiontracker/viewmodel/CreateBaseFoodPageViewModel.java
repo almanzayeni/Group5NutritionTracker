@@ -32,7 +32,12 @@ public class CreateBaseFoodPageViewModel {
 	private DoubleProperty sugar;
 	private DoubleProperty carbohydrates;
 	private DoubleProperty sodium;
+	private String filePath;
+	private ObjectMapper objectMapper;
 
+	/**
+	 * Instantiates a new creates the base food page view model.
+	 */
 	public CreateBaseFoodPageViewModel() {
 		this.name = new javafx.beans.property.SimpleStringProperty();
 
@@ -51,48 +56,132 @@ public class CreateBaseFoodPageViewModel {
 		this.sugar = new javafx.beans.property.SimpleDoubleProperty();
 		this.carbohydrates = new javafx.beans.property.SimpleDoubleProperty();
 		this.sodium = new javafx.beans.property.SimpleDoubleProperty();
+		this.filePath = BASE_FOOD_ITEMS_JSON_FILE;
+		this.objectMapper = new ObjectMapper();
 	}
 
+	/**
+	 * Instantiates a new creates the base food page view model. FOR TESTING
+	 * PURPOSES ONLY - allows injection of a custom file path to simulate file I/O
+	 * exceptions.
+	 *
+	 * @param filePath the file path
+	 */
+	public CreateBaseFoodPageViewModel(String filePath) {
+		this();
+		this.filePath = filePath;
+	}
+
+	/**
+	 * Instantiates a new creates the base food page view model. FOR TESTING
+	 * PURPOSES ONLY - allows injection of a mock ObjectMapper to simulate JSON
+	 * processing exceptions.
+	 *
+	 * @param objectMapper the object mapper
+	 */
+	public CreateBaseFoodPageViewModel(ObjectMapper objectMapper) {
+		this();
+		this.objectMapper = objectMapper;
+	}
+
+	/**
+	 * Gets the name property.
+	 *
+	 * @return the name property
+	 */
 	public StringProperty getNameProperty() {
 		return name;
 	}
 
+	/**
+	 * Gets the quantity categories list property.
+	 *
+	 * @return the quantity categories list property
+	 */
 	public ListProperty<QuantityCategory> getQuantityCategoriesListProperty() {
 		return quantityCategoriesList;
 	}
 
+	/**
+	 * Gets the selected quantity category property.
+	 *
+	 * @return the selected quantity category property
+	 */
 	public ObjectProperty<QuantityCategory> getSelectedQuantityCategoryProperty() {
 		return selectedQuantityCategory;
 	}
 
-	public double getPortionSizeProperty() {
+	/**
+	 * Gets the portion size.
+	 *
+	 * @return the portion size
+	 */
+	public double getPortionSize() {
 		return portionSize;
 	}
 
+	/**
+	 * Gets the calories property.
+	 *
+	 * @return the calories property
+	 */
 	public DoubleProperty getCaloriesProperty() {
 		return calories;
 	}
 
+	/**
+	 * Gets the protein property.
+	 *
+	 * @return the protein property
+	 */
 	public DoubleProperty getProteinProperty() {
 		return protein;
 	}
 
+	/**
+	 * Gets the fat property.
+	 *
+	 * @return the fat property
+	 */
 	public DoubleProperty getFatProperty() {
 		return fat;
 	}
 
+	/**
+	 * Gets the sugar property.
+	 *
+	 * @return the sugar property
+	 */
 	public DoubleProperty getSugarProperty() {
 		return sugar;
 	}
 
+	/**
+	 * Gets the carbohydrates property.
+	 *
+	 * @return the carbohydrates property
+	 */
 	public DoubleProperty getCarbohydratesProperty() {
 		return carbohydrates;
 	}
 
+	/**
+	 * Gets the sodium property.
+	 *
+	 * @return the sodium property
+	 */
 	public DoubleProperty getSodiumProperty() {
 		return sodium;
 	}
 
+	/**
+	 * Creates a new the base food and saves it.
+	 *
+	 * @throws IllegalArgumentException if a food with the same name already exists
+	 * @throws JsonProcessingException  if there is an error processing the JSON
+	 *                                  data
+	 * @throws IOException              Signals that an I/O exception has occurred.
+	 */
 	public void createBaseFood() throws IllegalArgumentException, JsonProcessingException, IOException {
 		if (this.checkForExistingFood(this.name.get())) {
 			throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
@@ -101,11 +190,10 @@ public class CreateBaseFoodPageViewModel {
 		BaseFood baseFood = new BaseFood(this.name.get(), this.selectedQuantityCategory.get(), this.portionSize,
 				this.calories.get(), this.protein.get(), this.fat.get(), this.sugar.get(), this.carbohydrates.get(),
 				this.sodium.get());
-		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonString = "";
 
 		try {
-			jsonString = objectMapper.writeValueAsString(baseFood);
+			jsonString = this.objectMapper.writeValueAsString(baseFood);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			throw e;
@@ -113,7 +201,7 @@ public class CreateBaseFoodPageViewModel {
 
 		try {
 			// TODO: Send jsonString to server
-			Files.write(Paths.get(BASE_FOOD_ITEMS_JSON_FILE), (jsonString + System.lineSeparator()).getBytes(),
+			Files.write(Paths.get(this.filePath), (jsonString + System.lineSeparator()).getBytes(),
 					StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -124,7 +212,7 @@ public class CreateBaseFoodPageViewModel {
 	private boolean checkForExistingFood(String foodName) {
 		HashSet<String> existingFoodNames = new HashSet<>();
 		try {
-			Files.lines(Paths.get(BASE_FOOD_ITEMS_JSON_FILE)).forEach(line -> {
+			Files.lines(Paths.get(this.filePath)).forEach(line -> {
 				try {
 					BaseFood food = new ObjectMapper().readValue(line, BaseFood.class);
 					existingFoodNames.add(food.getDescription());
