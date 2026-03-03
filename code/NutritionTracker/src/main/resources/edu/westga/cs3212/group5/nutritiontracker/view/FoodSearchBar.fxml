@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="2"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.FoodSearchBarController">
+
+    <padding><Insets top="2" right="2" bottom="2" left="2"/></padding>
+
+    <TextField fx:id="searchTextField"
+               promptText="Apple"
+               style="-fx-font-size: 14;" />
+
+</VBox>

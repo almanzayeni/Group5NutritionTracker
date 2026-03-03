@@ -74,6 +74,8 @@ public class CreateCompositeFoodPageController {
 	private TextField sugarTextField;
 
 	private CreateCompositeFoodPageViewModel viewModel;
+	@FXML
+	private FoodSearchBarController foodSearchBarController;
 
 	@FXML
 	void initialize() {
@@ -119,8 +121,17 @@ public class CreateCompositeFoodPageController {
 	}
 	
 	private void connectSearchPanel() {
-		//TODO : add functionality
-    }
+	    this.foodSearchBarController.selectedEntryProperty().addListener((obs, oldVal, newVal) -> {
+	        boolean hasSelection = newVal != null;
+	        this.addIngredientButton.setDisable(!hasSelection);
+	        if (this.searchSelectionLabel != null) {
+	            this.searchSelectionLabel.setText(hasSelection
+	                    ? "Selected: " + newVal.getDescription()
+	                      + " — " + String.format("%.0f", newVal.getCalories()) + " cal"
+	                    : "No food selected from search.");
+	        }
+	    });
+	}
 	
 	private void setUpIngredientsListView() {
         this.selectedIngredientsListView.setCellFactory(lv -> new ListCell<>() {
@@ -162,7 +173,7 @@ public class CreateCompositeFoodPageController {
 		// this.setUpListenerForLogoutButton();
 		this.setUpListenerForHomeButton();
 		this.setupListenerForAddFoodButton();
-		//this.setUpListenerForAddIngredientButton();
+		this.setUpListenerForAddIngredientButton();
 		this.setUpListenerForEnableAddFoodButton();
 	}
 
@@ -281,7 +292,7 @@ public class CreateCompositeFoodPageController {
 		});
 	}
 	
-//	private void setUpListenerForAddIngredientButton() {
+//	private void sUpListenerForAddIngredientButton() {
 //        this.addIngredientButton.setOnAction((ActionEvent event) -> {
 //            FoodItem food = this.searchPanelController.getSelectedFood();
 //
@@ -298,6 +309,37 @@ public class CreateCompositeFoodPageController {
 //			}
 //        });
 //    }
+	
+	private void setUpListenerForAddIngredientButton() {
+	    this.addIngredientButton.setOnAction((ActionEvent event) -> {
+	        var entry = this.foodSearchBarController.getSelectedEntry();
+
+	        if (entry == null) {
+	            new Alert(Alert.AlertType.WARNING,
+	                    "Please select a food from the search results first.").showAndWait();
+	            return;
+	        }
+
+	        try {
+	            edu.westga.cs3212.group5.nutritiontracker.model.BaseFood food =
+	                new edu.westga.cs3212.group5.nutritiontracker.model.BaseFood(
+	                    entry.getDescription(),
+	                    edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory.SERVING,
+	                    1.0,
+	                    entry.getCalories(),
+	                    entry.getProtein(),
+	                    entry.getFat(),
+	                    entry.getSugar(),
+	                    entry.getCarbohydrates(),
+	                    entry.getSodium()
+	                );
+	            this.viewModel.addIngredient(food);
+	            this.foodSearchBarController.reset(); 
+	        } catch (IllegalArgumentException ex) {
+	            new Alert(Alert.AlertType.WARNING, ex.getMessage()).showAndWait();
+	        }
+	    });
+	}
 
 	private void setupListenerForAddFoodButton() {
 		this.addFoodButton.setOnAction((ActionEvent event) -> {

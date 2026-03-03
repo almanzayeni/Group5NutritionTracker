@@ -1,0 +1,22 @@
+[
+  { "description": "Apple", "calories": 95.0, "protein": 0.5, "fat": 0.3, "sugar": 19.0, "carbohydrates": 25.0, "sodium": 2.0 },
+  { "description": "Banana", "calories": 105.0, "protein": 1.3, "fat": 0.4, "sugar": 14.0, "carbohydrates": 27.0, "sodium": 1.0 },
+  { "description": "Grilled Chicken Breast", "calories": 165.0, "protein": 31.0, "fat": 3.6, "sugar": 0.0, "carbohydrates": 0.0, "sodium": 74.0 },
+  { "description": "Brown Rice", "calories": 216.0, "protein": 5.0, "fat": 1.8, "sugar": 0.0, "carbohydrates": 45.0, "sodium": 10.0 },
+  { "description": "Whole Milk", "calories": 149.0, "protein": 8.0, "fat": 8.0, "sugar": 12.0, "carbohydrates": 12.0, "sodium": 105.0 },
+  { "description": "Scrambled Eggs", "calories": 140.0, "protein": 10.0, "fat": 10.0, "sugar": 1.0, "carbohydrates": 2.0, "sodium": 140.0 },
+  { "description": "Oatmeal", "calories": 150.0, "protein": 5.0, "fat": 3.0, "sugar": 1.0, "carbohydrates": 27.0, "sodium": 0.0 },
+  { "description": "Salmon Fillet", "calories": 208.0, "protein": 20.0, "fat": 13.0, "sugar": 0.0, "carbohydrates": 0.0, "sodium": 59.0 },
+  { "description": "Greek Yogurt", "calories": 100.0, "protein": 17.0, "fat": 0.7, "sugar": 6.0, "carbohydrates": 6.0, "sodium": 65.0 },
+  { "description": "Broccoli", "calories": 55.0, "protein": 3.7, "fat": 0.6, "sugar": 1.7, "carbohydrates": 11.0, "sodium": 64.0 },
+  { "description": "Almonds", "calories": 164.0, "protein": 6.0, "fat": 14.0, "sugar": 1.2, "carbohydrates": 6.0, "sodium": 0.0 },
+  { "description": "Whole Wheat Bread", "calories": 69.0, "protein": 3.6, "fat": 1.1, "sugar": 1.4, "carbohydrates": 12.0, "sodium": 132.0 },
+  { "description": "Sweet Potato", "calories": 103.0, "protein": 2.3, "fat": 0.1, "sugar": 7.0, "carbohydrates": 24.0, "sodium": 41.0 },
+  { "description": "Cheddar Cheese", "calories": 113.0, "protein": 7.0, "fat": 9.0, "sugar": 0.1, "carbohydrates": 0.4, "sodium": 174.0 },
+  { "description": "Orange", "calories": 62.0, "protein": 1.2, "fat": 0.2, "sugar": 12.0, "carbohydrates": 15.0, "sodium": 0.0 },
+  { "description": "Black Beans", "calories": 227.0, "protein": 15.0, "fat": 0.9, "sugar": 0.6, "carbohydrates": 41.0, "sodium": 1.0 },
+  { "description": "Tuna (canned in water)", "calories": 109.0, "protein": 25.0, "fat": 1.0, "sugar": 0.0, "carbohydrates": 0.0, "sodium": 320.0 },
+  { "description": "Strawberries", "calories": 49.0, "protein": 1.0, "fat": 0.5, "sugar": 7.0, "carbohydrates": 12.0, "sodium": 2.0 },
+  { "description": "Pasta (cooked)", "calories": 220.0, "protein": 8.0, "fat": 1.3, "sugar": 0.6, "carbohydrates": 43.0, "sodium": 1.0 },
+  { "description": "Olive Oil", "calories": 119.0, "protein": 0.0, "fat": 13.5, "sugar": 0.0, "carbohydrates": 0.0, "sodium": 0.0 }
+]

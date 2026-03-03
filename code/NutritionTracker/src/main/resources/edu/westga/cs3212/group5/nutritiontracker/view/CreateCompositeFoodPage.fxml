@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateCompositeFoodPageController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateCompositeFoodPageController">
    <content>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1160.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;">
          <children>
 
             <!-- Title -->
@@ -41,74 +41,74 @@
             <Label fx:id="portionSizeUnitLabel" alignment="BOTTOM_LEFT" layoutX="312.0" layoutY="186.0" prefHeight="26.0" prefWidth="50.0" text="srv" textFill="#6e2316" />
 
             <!-- ─── SEARCH SECTION ─── -->
-            <Label layoutX="23.0" layoutY="229.0" text="Search &amp; Add Ingredients:" textFill="#1f5c33">
+            <Label layoutX="123.0" layoutY="241.0" text="Search Ingredients:" textFill="#1f5c33">
                <font><Font name="System Bold" size="15.0" /></font>
             </Label>
 
             <!-- Embedded reusable search panel -->
-            <VBox layoutX="23.0" layoutY="253.0">
-               <fx:include fx:id="searchPanel" source="FoodSearchPanel.fxml" />
-            </VBox>
+			<VBox layoutX="78.0" layoutY="262.0" prefHeight="33.0" prefWidth="225.0">
+   				<fx:include fx:id="foodSearchBar" source="FoodSearchBar.fxml" />
+			</VBox>
 
             <!-- Selection feedback label -->
-            <Label fx:id="searchSelectionLabel" layoutX="23.0" layoutY="563.0" prefWidth="310.0" style="-fx-font-style: italic;" text="No food selected from search." textFill="#555555">
+            <Label fx:id="searchSelectionLabel" layoutX="25.0" layoutY="320.0" prefWidth="310.0" style="-fx-font-style: italic;" text="No food selected from search." textFill="#555555">
                <font><Font size="12.0" /></font>
             </Label>
 
             <!-- SEPARATE Add Ingredient button — only adds, does not search -->
-            <Button fx:id="addIngredientButton" layoutX="23.0" layoutY="589.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="310.0" style="-fx-background-color: #3a7d44; -fx-text-fill: white;" text="+ Add Selected Food as Ingredient">
+            <Button fx:id="addIngredientButton" layoutX="25.0" layoutY="338.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="310.0" style="-fx-background-color: #3a7d44; -fx-text-fill: white;" text="+ Add Selected Food as Ingredient">
                <font><Font name="System Bold" size="14.0" /></font>
             </Button>
 
             <!-- ─── INGREDIENT LIST SECTION ─── -->
-            <Label layoutX="98.0" layoutY="641.0" prefHeight="26.0" prefWidth="160.0" text="Selected Ingredients" textFill="#6e2316">
+            <Label layoutX="111.0" layoutY="584.0" prefHeight="26.0" prefWidth="160.0" text="Selected Ingredients" textFill="#6e2316">
                <font><Font name="System Bold" size="16.0" /></font>
             </Label>
-            <ListView fx:id="selectedIngredientsListView" layoutX="23.0" layoutY="671.0" prefHeight="180.0" prefWidth="310.0" />
+            <ListView fx:id="selectedIngredientsListView" layoutX="25.0" layoutY="397.0" prefHeight="180.0" prefWidth="310.0" />
 
             <Label fx:id="ingredientStatusLabel" layoutX="25.0" layoutY="825.0" prefHeight="18.0" prefWidth="310.0" style="-fx-font-style: italic;" text="" textFill="#1f5c33">
                <font><Font size="12.0" /></font>
             </Label>
 
             <!-- ─── NUTRITIONAL TOTALS ─── -->
-            <Label alignment="CENTER_RIGHT" layoutX="-2.0" layoutY="881.0" prefHeight="27.0" prefWidth="135.0" text="Calories:" textFill="#6e2316">
+            <Label alignment="CENTER_RIGHT" layoutX="-14.0" layoutY="623.0" prefHeight="27.0" prefWidth="135.0" text="Calories:" textFill="#6e2316">
                <font><Font name="System Bold" size="16.0" /></font>
             </Label>
-            <TextField fx:id="caloriesTextField" editable="false" layoutX="145.0" layoutY="881.0" prefHeight="26.0" prefWidth="166.0" />
-            <Label alignment="BOTTOM_LEFT" layoutX="316.0" layoutY="881.0" prefHeight="26.0" prefWidth="50.0" text="cals" textFill="#6e2316" />
+            <TextField fx:id="caloriesTextField" editable="false" layoutX="133.0" layoutY="623.0" prefHeight="26.0" prefWidth="166.0" />
+            <Label alignment="BOTTOM_LEFT" layoutX="304.0" layoutY="623.0" prefHeight="26.0" prefWidth="50.0" text="cals" textFill="#6e2316" />
 
-            <Label alignment="CENTER_RIGHT" layoutX="-2.0" layoutY="916.0" prefHeight="27.0" prefWidth="135.0" text="Protein:" textFill="#6e2316">
+            <Label alignment="CENTER_RIGHT" layoutX="-14.0" layoutY="658.0" prefHeight="27.0" prefWidth="135.0" text="Protein:" textFill="#6e2316">
                <font><Font name="System Bold" size="16.0" /></font>
             </Label>
-            <TextField fx:id="proteinTextField" editable="false" layoutX="146.0" layoutY="916.0" prefHeight="26.0" prefWidth="166.0" />
-            <Label alignment="BOTTOM_LEFT" layoutX="316.0" layoutY="916.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
+            <TextField fx:id="proteinTextField" editable="false" layoutX="134.0" layoutY="658.0" prefHeight="26.0" prefWidth="166.0" />
+            <Label alignment="BOTTOM_LEFT" layoutX="304.0" layoutY="658.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
 
-            <Label alignment="CENTER_RIGHT" layoutX="-1.0" layoutY="951.0" prefHeight="27.0" prefWidth="135.0" text="Fat:" textFill="#6e2316">
+            <Label alignment="CENTER_RIGHT" layoutX="-13.0" layoutY="693.0" prefHeight="27.0" prefWidth="135.0" text="Fat:" textFill="#6e2316">
                <font><Font name="System Bold" size="16.0" /></font>
             </Label>
-            <TextField fx:id="fatTextField" editable="false" layoutX="146.0" layoutY="951.0" prefHeight="26.0" prefWidth="166.0" />
-            <Label alignment="BOTTOM_LEFT" layoutX="316.0" layoutY="951.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
+            <TextField fx:id="fatTextField" editable="false" layoutX="134.0" layoutY="693.0" prefHeight="26.0" prefWidth="166.0" />
+            <Label alignment="BOTTOM_LEFT" layoutX="304.0" layoutY="693.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
 
-            <Label alignment="CENTER_RIGHT" layoutX="-2.0" layoutY="986.0" prefHeight="27.0" prefWidth="135.0" text="Sugar:" textFill="#6e2316">
+            <Label alignment="CENTER_RIGHT" layoutX="-14.0" layoutY="728.0" prefHeight="27.0" prefWidth="135.0" text="Sugar:" textFill="#6e2316">
                <font><Font name="System Bold" size="16.0" /></font>
             </Label>
-            <TextField fx:id="sugarTextField" editable="false" layoutX="145.0" layoutY="986.0" prefHeight="26.0" prefWidth="166.0" />
-            <Label alignment="BOTTOM_LEFT" layoutX="316.0" layoutY="986.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
+            <TextField fx:id="sugarTextField" editable="false" layoutX="133.0" layoutY="728.0" prefHeight="26.0" prefWidth="166.0" />
+            <Label alignment="BOTTOM_LEFT" layoutX="304.0" layoutY="728.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
 
-            <Label alignment="CENTER_RIGHT" layoutX="-1.0" layoutY="1021.0" prefHeight="27.0" prefWidth="135.0" text="Carbohydrates:" textFill="#6e2316">
+            <Label alignment="CENTER_RIGHT" layoutX="-13.0" layoutY="763.0" prefHeight="27.0" prefWidth="135.0" text="Carbohydrates:" textFill="#6e2316">
                <font><Font name="System Bold" size="16.0" /></font>
             </Label>
-            <TextField fx:id="carbohydratesTextField" editable="false" layoutX="146.0" layoutY="1021.0" prefHeight="26.0" prefWidth="166.0" />
-            <Label alignment="BOTTOM_LEFT" layoutX="316.0" layoutY="1021.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
+            <TextField fx:id="carbohydratesTextField" editable="false" layoutX="134.0" layoutY="763.0" prefHeight="26.0" prefWidth="166.0" />
+            <Label alignment="BOTTOM_LEFT" layoutX="304.0" layoutY="763.0" prefHeight="26.0" prefWidth="50.0" text="g" textFill="#6e2316" />
 
-            <Label alignment="CENTER_RIGHT" layoutX="-1.0" layoutY="1056.0" prefHeight="18.0" prefWidth="135.0" text="Sodium:" textFill="#6e2316">
+            <Label alignment="CENTER_RIGHT" layoutX="-13.0" layoutY="798.0" prefHeight="18.0" prefWidth="135.0" text="Sodium:" textFill="#6e2316">
                <font><Font name="System Bold" size="16.0" /></font>
             </Label>
-            <TextField fx:id="sodiumTextField" editable="false" layoutX="146.0" layoutY="1056.0" prefHeight="26.0" prefWidth="166.0" />
-            <Label alignment="BOTTOM_LEFT" layoutX="316.0" layoutY="1056.0" prefHeight="26.0" prefWidth="50.0" text="mg" textFill="#6e2316" />
+            <TextField fx:id="sodiumTextField" editable="false" layoutX="134.0" layoutY="798.0" prefHeight="26.0" prefWidth="166.0" />
+            <Label alignment="BOTTOM_LEFT" layoutX="304.0" layoutY="798.0" prefHeight="26.0" prefWidth="50.0" text="mg" textFill="#6e2316" />
 
             <!-- Save Food button -->
-            <Button fx:id="addFoodButton" layoutX="127.0" layoutY="1093.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #b8d5a3;" text="Add Food">
+            <Button fx:id="addFoodButton" layoutX="115.0" layoutY="835.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #b8d5a3;" text="Add Food">
                <font><Font name="System Bold" size="18.0" /></font>
             </Button>
 
