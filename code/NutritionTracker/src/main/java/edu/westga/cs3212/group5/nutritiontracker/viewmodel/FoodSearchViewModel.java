@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 /**
  * ViewModel for the standalone food search bar.
  * Reads food data from food_search_data.json and exposes filtered results.
- * Does NOT depend on FoodDatabase, BaseFood, CompositeFood, or any other
- * group member's classes.
  *
  * @author Yeni Almanza
  * @version Spring 2026
@@ -37,7 +35,6 @@ public class FoodSearchViewModel {
     /** Creates the ViewModel and loads all food entries from JSON. */
     public FoodSearchViewModel() {
         loadFromJson(JSON_FILE);
-        // Automatically re-filter whenever search text changes
         searchText.addListener((obs, oldVal, newVal) -> filterResults(newVal));
         filterResults("");
     }
@@ -53,27 +50,22 @@ public class FoodSearchViewModel {
         filterResults("");
     }
 
-    /** Bind this to the TextField's textProperty. */
     public StringProperty searchTextProperty() {
         return searchText;
     }
 
-    /** Bind this to the ListView's items. */
     public ObservableList<FoodSearchEntry> getSearchResults() {
         return searchResults;
     }
 
-    /** Bind or listen to this to know which row the user selected. */
     public ObjectProperty<FoodSearchEntry> selectedEntryProperty() {
         return selectedEntry;
     }
 
-    /** Returns the currently selected entry, or null. */
     public FoodSearchEntry getSelectedEntry() {
         return selectedEntry.get();
     }
 
-    /** Call this when the user clicks / selects a row in the ListView. */
     public void setSelectedEntry(FoodSearchEntry entry) {
         selectedEntry.set(entry);
     }
