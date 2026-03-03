@@ -3,6 +3,7 @@ package edu.westga.cs3212.group5.nutritiontracker.view;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
+import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateCompositeFoodPageViewModel;
@@ -321,10 +322,9 @@ public class CreateCompositeFoodPageController {
 	        }
 
 	        try {
-	            edu.westga.cs3212.group5.nutritiontracker.model.BaseFood food =
-	                new edu.westga.cs3212.group5.nutritiontracker.model.BaseFood(
+	            BaseFood food = new BaseFood(
 	                    entry.getDescription(),
-	                    edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory.SERVING,
+	                    QuantityCategory.SERVING,
 	                    1.0,
 	                    entry.getCalories(),
 	                    entry.getProtein(),
