@@ -20,9 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class CreateBaseFoodPageViewModel {
-	private static final String FOOD_ALREADY_EXISTS_ERROR_MESSAGE = "A food with this name already exists. Please enter a unique name, or edit the existing food item.";
+	private static final String FOOD_ALREADY_EXISTS_ERROR_MESSAGE = "A food with this name already exists. Please enter a unique name, or edit the existing food.";
 	private static final String BASE_FOOD_ITEMS_JSON_FILE = "base_food_items.json";
-	private StringProperty name;
+	private StringProperty description;
 	private ListProperty<QuantityCategory> quantityCategoriesList;
 	private ObjectProperty<QuantityCategory> selectedQuantityCategory;
 	private double portionSize;
@@ -39,7 +39,7 @@ public class CreateBaseFoodPageViewModel {
 	 * Instantiates a new creates the base food page view model.
 	 */
 	public CreateBaseFoodPageViewModel() {
-		this.name = new javafx.beans.property.SimpleStringProperty();
+		this.description = new javafx.beans.property.SimpleStringProperty();
 
 		ArrayList<QuantityCategory> quantityCategories = new ArrayList<>();
 		quantityCategories.add(QuantityCategory.QUANTITY);
@@ -89,8 +89,8 @@ public class CreateBaseFoodPageViewModel {
 	 *
 	 * @return the name property
 	 */
-	public StringProperty getNameProperty() {
-		return name;
+	public StringProperty getDescriptionProperty() {
+		return description;
 	}
 
 	/**
@@ -183,11 +183,11 @@ public class CreateBaseFoodPageViewModel {
 	 * @throws IOException              Signals that an I/O exception has occurred.
 	 */
 	public void createBaseFood() throws IllegalArgumentException, JsonProcessingException, IOException {
-		if (this.checkForExistingFood(this.name.get())) {
+		if (this.checkForExistingFood(this.description.get())) {
 			throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
 		}
 
-		BaseFood baseFood = new BaseFood(this.name.get(), this.selectedQuantityCategory.get(), this.portionSize,
+		BaseFood baseFood = new BaseFood(this.description.get(), this.selectedQuantityCategory.get(), this.portionSize,
 				this.calories.get(), this.protein.get(), this.fat.get(), this.sugar.get(), this.carbohydrates.get(),
 				this.sodium.get());
 		String jsonString = "";

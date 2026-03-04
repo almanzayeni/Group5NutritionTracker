@@ -106,7 +106,7 @@ public class CreateCompositeFoodPageViewModel {
 	 *
 	 * @return the name
 	 */
-	public StringProperty getNameProperty() {
+	public StringProperty getDescriptionProperty() {
 		return name;
 	}
 

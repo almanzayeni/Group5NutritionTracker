@@ -44,7 +44,7 @@ public class TestCreateCompositeFood {
 
 	private CreateCompositeFoodPageViewModel buildValidVm(Path filePath) {
 		CreateCompositeFoodPageViewModel vm = new CreateCompositeFoodPageViewModel(filePath.toString());
-		vm.getNameProperty().set("Test Composite Food");
+		vm.getDescriptionProperty().set("Test Composite Food");
 		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.QUANTITY);
 		vm.addIngredient(ingredient1());
 		vm.addIngredient(ingredient2());
@@ -55,7 +55,7 @@ public class TestCreateCompositeFood {
 	void testCreateCompositeFoodNullNameThrowsIllegalArgumentException() {
 		Path file = tempDir.resolve("test.json");
 		CreateCompositeFoodPageViewModel vm = new CreateCompositeFoodPageViewModel(file.toString());
-		vm.getNameProperty().set(null);
+		vm.getDescriptionProperty().set(null);
 		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.QUANTITY);
 		vm.addIngredient(ingredient1());
 
@@ -66,7 +66,7 @@ public class TestCreateCompositeFood {
 	void testCreateCompositeFoodEmptyNameThrowsIllegalArgumentException() {
 		Path file = tempDir.resolve("test.json");
 		CreateCompositeFoodPageViewModel vm = new CreateCompositeFoodPageViewModel(file.toString());
-		vm.getNameProperty().set("");
+		vm.getDescriptionProperty().set("");
 		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.QUANTITY);
 		vm.addIngredient(ingredient1());
 
@@ -77,7 +77,7 @@ public class TestCreateCompositeFood {
 	void testCreateCompositeFoodNoIngredientsThrowsIllegalArgumentException() {
 		Path file = tempDir.resolve("test.json");
 		CreateCompositeFoodPageViewModel vm = new CreateCompositeFoodPageViewModel(file.toString());
-		vm.getNameProperty().set("Test Composite Food");
+		vm.getDescriptionProperty().set("Test Composite Food");
 		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.QUANTITY);
 
 		assertThrows(IllegalArgumentException.class, vm::createCompositeFood);
@@ -87,7 +87,7 @@ public class TestCreateCompositeFood {
 	void testCreateCompositeFoodNullQuantityCategoryThrowsIllegalArgumentException() {
 		Path file = tempDir.resolve("test.json");
 		CreateCompositeFoodPageViewModel vm = new CreateCompositeFoodPageViewModel(file.toString());
-		vm.getNameProperty().set("Test Composite Food");
+		vm.getDescriptionProperty().set("Test Composite Food");
 		vm.getSelectedQuantityCategoryProperty().set(null);
 		vm.addIngredient(ingredient1());
 
@@ -104,7 +104,7 @@ public class TestCreateCompositeFood {
 		});
 
 		CreateCompositeFoodPageViewModel vm = new CreateCompositeFoodPageViewModel(mockMapper, file.toString());
-		vm.getNameProperty().set("Test Composite Food");
+		vm.getDescriptionProperty().set("Test Composite Food");
 		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.QUANTITY);
 		vm.addIngredient(ingredient1());
 		vm.addIngredient(ingredient2());
@@ -172,7 +172,7 @@ public class TestCreateCompositeFood {
 		List<String> lines = Files.readAllLines(file);
 		assertEquals(1, lines.size());
 
-		assertEquals("", vm.getNameProperty().get());
+		assertEquals("", vm.getDescriptionProperty().get());
 		assertEquals(null, vm.getSelectedQuantityCategoryProperty().get());
 		assertTrue(vm.getIngredientsListProperty().isEmpty());
 		assertEquals(0.0, vm.getTotalCaloriesProperty().get(), 0.0001);
