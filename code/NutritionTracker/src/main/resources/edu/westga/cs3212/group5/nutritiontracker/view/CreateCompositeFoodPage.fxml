@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateCompositeFoodPageController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateCompositeFoodPageController">
    <content>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1160.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;">
          <children>
@@ -51,12 +51,12 @@
             </VBox>
 
             <!-- Selection feedback label -->
-            <Label fx:id="searchSelectionLabel" layoutX="23.0" layoutY="563.0" prefWidth="310.0" style="-fx-font-style: italic;" text="No food selected from search." textFill="#555555">
+            <Label fx:id="searchSelectionLabel" layoutX="23.0" layoutY="603.0" prefWidth="310.0" style="-fx-font-style: italic;" text="No food selected from search." textFill="#555555">
                <font><Font size="12.0" /></font>
             </Label>
 
             <!-- SEPARATE Add Ingredient button — only adds, does not search -->
-            <Button fx:id="addIngredientButton" layoutX="23.0" layoutY="589.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="310.0" style="-fx-background-color: #3a7d44; -fx-text-fill: white;" text="+ Add Selected Food as Ingredient">
+            <Button fx:id="addIngredientButton" layoutX="23.0" layoutY="629.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="310.0" style="-fx-background-color: #3a7d44; -fx-text-fill: white;" text="+ Add Selected Food as Ingredient">
                <font><Font name="System Bold" size="14.0" /></font>
             </Button>
 

@@ -2,7 +2,6 @@ package edu.westga.cs3212.group5.nutritiontracker.view;
 
 import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
@@ -10,48 +9,43 @@ import edu.westga.cs3212.group5.nutritiontracker.model.CompositeFood;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodDatabase;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodDatabase.SortOption;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
+import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.stage.Stage;
 
 /**
- * Controller for the reusable FoodSearchPanel component.
- *
- * Can be used in two modes:
- *   - Embedded mode (default): the Add button and selection label are hidden.
- *     The host controller calls {@link #setOnFoodSelected} to react to selections.
- *   - Standalone page mode: call {@link #enableStandaloneMode} after load to
- *     show the Add button and selection label, turning this panel into a full page.
+ * Controller for the reusable FoodSearchPanel component..
  *
  * @author Yeni Almanza
  * @version Spring 2026
  */
 public class FoodSearchPanelController {
 
-    @FXML private ResourceBundle resources;
     @FXML private URL location;
+    @FXML private java.util.ResourceBundle resources;
 
     @FXML private TextField searchTextField;
     @FXML private ComboBox<SortOption> sortComboBox;
     @FXML private ListView<FoodItem> resultsListView;
     @FXML private Label statusLabel;
 
-    // Standalone-mode controls (hidden when embedded)
+    @FXML private HBox portionSizeRow;
+    @FXML private Spinner<Double> portionSizeSpinner;
+    @FXML private Label portionUnitLabel;
+
     @FXML private Label selectionLabel;
     @FXML private Button addSelectedFoodButton;
 
@@ -79,10 +73,7 @@ public class FoodSearchPanelController {
         this.resultsListView.getSelectionModel().selectedItemProperty()
                 .addListener((obs, oldVal, newVal) -> {
                     this.currentlySelectedFood = newVal;
-                    if (newVal != null && this.onFoodSelected != null) {
-                        this.onFoodSelected.accept(newVal);
-                    }
-                    // Update standalone-mode label if visible
+
                     if (this.selectionLabel != null && this.selectionLabel.isVisible()) {
                         boolean hasSelection = newVal != null;
                         this.selectionLabel.setText(hasSelection
@@ -93,19 +84,38 @@ public class FoodSearchPanelController {
                             this.addSelectedFoodButton.setDisable(!hasSelection);
                         }
                     }
+                    if (this.portionSizeRow != null && this.portionSizeRow.isVisible() && newVal != null) {
+                        this.updatePortionUnitLabel(newVal);
+                    }
+
+                    if (newVal != null && this.onFoodSelected != null) {
+                        this.onFoodSelected.accept(newVal);
+                    }
                 });
 
         this.refreshResults();
     }
 
     /**
+     * Switches the panel into ingredient mode by showing the portion size
+     * spinner row. Call this from CreateCompositeFoodPageController after load.
+     * The spinner resets to 1 whenever a new food is selected.
+     */
+    public void enableIngredientMode() {
+        if (this.portionSizeRow != null) {
+            this.portionSizeRow.setVisible(true);
+            this.portionSizeRow.setManaged(true);
+        }
+        if (this.portionSizeSpinner != null) {
+            this.portionSizeSpinner.setValueFactory(
+                    new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 9999, 1, 1));
+            this.portionSizeSpinner.setEditable(true);
+        }
+    }
+
+    /**
      * Switches this panel into standalone page mode by making the selection
-     * label and Add button visible. Should be called by the host FXML's
-     * controller after the scene is loaded (e.g. from HomeDashboardPageController
-     * when navigating to the search page).
-     *
-     * In embedded mode (the default) these controls stay hidden so the panel
-     * is non-intrusive inside composite pages.
+     * label and Add button visible.
      */
     public void enableStandaloneMode() {
         if (this.selectionLabel != null) {
@@ -121,19 +131,16 @@ public class FoodSearchPanelController {
     }
 
     /**
-     * Registers a callback that fires whenever the user selects (highlights)
-     * a food item in the results list.
+     * Registers a callback that fires whenever the user selects a food item.
      *
-     * @param callback a {@link Consumer} that receives the selected FoodItem;
-     *                 may be null to clear
+     * @param callback receives the selected FoodItem; may be null to clear
      */
     public void setOnFoodSelected(Consumer<FoodItem> callback) {
         this.onFoodSelected = callback;
     }
 
     /**
-     * Returns the currently highlighted food in the results list, or
-     * {@code null} if nothing is selected.
+     * Returns the currently highlighted food, or null if nothing is selected.
      *
      * @return the selected FoodItem, or null
      */
@@ -142,12 +149,34 @@ public class FoodSearchPanelController {
     }
 
     /**
-     * Clears the search text and resets the results to the full list.
+     * Returns the portion size currently shown in the spinner.
+     * Defaults to 1.0 if ingredient mode is not enabled.
+     *
+     * @return the portion size value
+     */
+    public double getSelectedPortionSize() {
+        if (this.portionSizeSpinner == null || !this.portionSizeRow.isVisible()) {
+            return 1.0;
+        }
+        try {
+            this.portionSizeSpinner.commitValue();
+            return this.portionSizeSpinner.getValue();
+        } catch (Exception e) {
+            return 1.0;
+        }
+    }
+
+    /**
+     * Clears the search text, resets the portion spinner to 1, and reloads results.
      */
     public void reset() {
         this.searchTextField.clear();
         this.sortComboBox.setValue(SortOption.NAME_ASC);
         this.currentlySelectedFood = null;
+        if (this.portionSizeSpinner != null && this.portionSizeRow.isVisible()) {
+            this.portionSizeSpinner.getValueFactory().setValue(1.0);
+            this.portionUnitLabel.setText("");
+        }
         if (this.selectionLabel != null && this.selectionLabel.isVisible()) {
             this.selectionLabel.setText("No food selected.");
         }
@@ -179,6 +208,22 @@ public class FoodSearchPanelController {
                 .showAndWait();
 
         this.reset();
+    }
+
+    private void updatePortionUnitLabel(FoodItem food) {
+        if (this.portionUnitLabel == null) {
+            return;
+        }
+        QuantityCategory cat = food.getQuantityCategory();
+        if (cat == null) {
+            this.portionUnitLabel.setText("");
+            return;
+        }
+        switch (cat) {
+            case QUANTITY -> this.portionUnitLabel.setText("piece(s)");
+            case WEIGHT   -> this.portionUnitLabel.setText("g");
+            case SERVING  -> this.portionUnitLabel.setText("serving(s)");
+        }
     }
 
     private void refreshResults() {

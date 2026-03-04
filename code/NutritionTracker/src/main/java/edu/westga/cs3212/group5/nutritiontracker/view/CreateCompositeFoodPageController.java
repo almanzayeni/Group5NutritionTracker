@@ -114,6 +114,7 @@ public class CreateCompositeFoodPageController {
 		assert sugarTextField != null
 				: "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		this.viewModel = new CreateCompositeFoodPageViewModel();
+		this.searchPanelController.enableIngredientMode();
 		this.connectSearchPanel();
 		this.setUpIngredientsListView();
 		this.bindViewModel();
@@ -303,6 +304,7 @@ public class CreateCompositeFoodPageController {
 			}
 
 			try {
+				food.setPortionSize(this.searchPanelController.getSelectedPortionSize());
 				this.viewModel.addIngredient(food);
 				this.searchPanelController.reset();
 				this.addIngredientButton.setDisable(true);
