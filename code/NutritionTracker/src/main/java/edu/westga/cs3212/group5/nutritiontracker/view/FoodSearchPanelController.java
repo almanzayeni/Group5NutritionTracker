@@ -2,6 +2,7 @@ package edu.westga.cs3212.group5.nutritiontracker.view;
 
 import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
@@ -10,6 +11,7 @@ import edu.westga.cs3212.group5.nutritiontracker.model.FoodDatabase;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodDatabase.SortOption;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +37,7 @@ import javafx.scene.layout.Priority;
 public class FoodSearchPanelController {
 
     @FXML private URL location;
-    @FXML private java.util.ResourceBundle resources;
+    @FXML private ResourceBundle resources;
 
     @FXML private TextField searchTextField;
     @FXML private ComboBox<SortOption> sortComboBox;
@@ -191,7 +193,7 @@ public class FoodSearchPanelController {
      *
      * @return the status label text property
      */
-    public javafx.beans.property.StringProperty statusTextProperty() {
+    public StringProperty statusTextProperty() {
         return this.statusLabel.textProperty();
     }
 
