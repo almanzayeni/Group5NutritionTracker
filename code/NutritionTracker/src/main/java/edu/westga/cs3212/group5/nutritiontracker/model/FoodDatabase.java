@@ -1,22 +1,36 @@
 package edu.westga.cs3212.group5.nutritiontracker.model;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
- * Singleton in-memory database of all known FoodItems.
- * Acts as the central store that search queries run against.
+ * Singleton database of all known FoodItems, backed by a JSON file.
  *
+ * File format: one JSON object per line (NDJSON). Each line carries a "type"
+ * discriminator ("base" or "composite") so Jackson can deserialize back to
+ * the correct concrete class via the @JsonTypeInfo on FoodItem.
+ *
+ * Place food_database.json in the project root before first run.
+ * The file is the source of truth — nothing is held in memory between calls.
  *
  * @author Yeni Almanza
  * @version Spring 2026
  */
 public class FoodDatabase {
 
+    public static final String DATABASE_FILE = "food_database.json";
+
     private static FoodDatabase instance;
-    private final List<FoodItem> foods = new ArrayList<>();
+    private final String filePath;
+    private final ObjectMapper objectMapper;
+
 
     /**
      * Returns the single shared instance, creating it on first call.
@@ -25,60 +39,75 @@ public class FoodDatabase {
      */
     public static FoodDatabase getInstance() {
         if (instance == null) {
-            instance = new FoodDatabase();
+            instance = new FoodDatabase(DATABASE_FILE);
         }
         return instance;
     }
 
-    private FoodDatabase() {
-        this.seedSampleData();
+    /**
+     * Package-private constructor for testing — accepts a custom file path.
+     *
+     * @param filePath path to the backing NDJSON file
+     */
+    FoodDatabase(String filePath) {
+        this.filePath = filePath;
+        this.objectMapper = new ObjectMapper();
     }
 
     /**
-     * Adds a food item to the database.
+     * Appends a food item as a JSON line to the backing file.
      *
      * @precondition food != null
-     * @param food the item to add
+     * @param food the item to persist
      * @throws IllegalArgumentException if food is null
+     * @throws RuntimeException if the file cannot be written
      */
     public void addFood(FoodItem food) {
         if (food == null) {
             throw new IllegalArgumentException("Food cannot be null");
         }
-        this.foods.add(food);
+        try {
+            String line = this.objectMapper.writeValueAsString(food);
+            Files.write(Paths.get(this.filePath),
+                    (line + System.lineSeparator()).getBytes(),
+                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to save food to database file: " + e.getMessage(), e);
+        }
     }
 
     /**
-     * Returns an unmodifiable view of every item in the database.
+     * Returns all foods loaded from the backing file.
      *
-     * @return all foods
+     * @return all foods, never null
      */
     public List<FoodItem> getAllFoods() {
-        return Collections.unmodifiableList(this.foods);
+        return this.loadAll();
     }
 
     /**
-     * Returns all foods whose description contains query
-     * (case-insensitive). An empty or null query returns all foods.
+     * Returns all foods whose description contains {@code query}
+     * (case-insensitive). A null or blank query returns all foods.
      *
      * @param query the search string
      * @return matching foods, never null
      */
     public List<FoodItem> search(String query) {
+        List<FoodItem> all = this.loadAll();
         if (query == null || query.isBlank()) {
-            return new ArrayList<>(this.foods);
+            return all;
         }
         String lower = query.toLowerCase();
-        return this.foods.stream()
+        return all.stream()
                 .filter(f -> f.getDescription().toLowerCase().contains(lower))
                 .collect(Collectors.toList());
     }
 
     /**
-     * Returns foods matching query, sorted by the given SortOption.
+     * Returns foods matching {@code query}, sorted by the given {@link SortOption}.
      *
-     * @param query  search string (null/blank = all foods)
-     * @param sort   how to order results
+     * @param query search string (null/blank = all foods)
+     * @param sort  how to order results
      * @return sorted, filtered list
      */
     public List<FoodItem> search(String query, SortOption sort) {
@@ -95,7 +124,9 @@ public class FoodDatabase {
         return results;
     }
 
-
+    /**
+     * Sort options for search results.
+     */
     public enum SortOption {
         NAME_ASC("Name (A-Z)"),
         NAME_DESC("Name (Z-A)"),
@@ -115,38 +146,26 @@ public class FoodDatabase {
     }
 
     /**
-     * Pre-populates the database with common foods so the search feature works
-     * immediately without the user needing to add items first.
+     * Reads every line from the backing file and deserializes it as a FoodItem.
+     * Lines that fail to parse are skipped with a warning printed to stderr.
      */
-    private void seedSampleData() {
-        // BaseFood(description, quantityCategory, portionSize, calories, protein, fat, sugar, carbs, sodium)
-
-        this.foods.add(new BaseFood("Apple (medium)",     QuantityCategory.QUANTITY, 1,   95,  0.5,  0.3, 19.0, 25.0,   2.0));
-        this.foods.add(new BaseFood("Banana (medium)",    QuantityCategory.QUANTITY, 1,  105,  1.3,  0.4, 14.4, 27.0,   1.0));
-        this.foods.add(new BaseFood("Egg (large)",        QuantityCategory.QUANTITY, 1,   72,  6.3,  5.0,  0.2,  0.4,  71.0));
-        this.foods.add(new BaseFood("White Bread (slice)",QuantityCategory.QUANTITY, 1,   79,  2.7,  1.0,  1.4, 15.0, 142.0));
-        this.foods.add(new BaseFood("Orange (medium)",    QuantityCategory.QUANTITY, 1,   62,  1.2,  0.2, 12.2, 15.4,   0.0));
-
-        this.foods.add(new BaseFood("Chicken Breast",     QuantityCategory.WEIGHT, 100, 165, 31.0,  3.6,  0.0,  0.0,  74.0));
-        this.foods.add(new BaseFood("Salmon (Atlantic)",  QuantityCategory.WEIGHT, 100, 208, 20.4, 13.4,  0.0,  0.0,  59.0));
-        this.foods.add(new BaseFood("Broccoli",           QuantityCategory.WEIGHT, 100,  34,  2.8,  0.4,  1.7,  6.6,  33.0));
-        this.foods.add(new BaseFood("Ground Beef (lean)", QuantityCategory.WEIGHT, 100, 215, 26.1, 12.0,  0.0,  0.0,  75.0));
-        this.foods.add(new BaseFood("Sweet Potato",       QuantityCategory.WEIGHT, 100,  86,  1.6,  0.1,  4.2, 20.1,  55.0));
-        this.foods.add(new BaseFood("Cheddar Cheese",     QuantityCategory.WEIGHT, 100, 403, 25.0, 33.0,  0.5,  1.3, 621.0));
-        this.foods.add(new BaseFood("Almonds",            QuantityCategory.WEIGHT, 100, 579, 21.2, 49.9,  4.4, 21.6,   1.0));
-        this.foods.add(new BaseFood("White Rice (cooked)",QuantityCategory.WEIGHT, 100, 130,  2.7,  0.3,  0.0, 28.2,   1.0));
-        this.foods.add(new BaseFood("Avocado",            QuantityCategory.WEIGHT, 100, 160,  2.0, 14.7,  0.7,  8.5,   7.0));
-        this.foods.add(new BaseFood("Tuna (canned)",      QuantityCategory.WEIGHT, 100, 116, 25.5,  0.8,  0.0,  0.0, 396.0));
-
-        this.foods.add(new BaseFood("Whole Milk (1 cup)",       QuantityCategory.SERVING, 1, 149,  8.0,  8.0, 12.3, 11.7, 105.0));
-        this.foods.add(new BaseFood("Orange Juice (1 cup)",     QuantityCategory.SERVING, 1, 112,  1.7,  0.5, 20.8, 25.8,   2.0));
-        this.foods.add(new BaseFood("Greek Yogurt (3/4 cup)",   QuantityCategory.SERVING, 1, 100, 17.3,  0.7,  6.0,  6.0,  36.0));
-        this.foods.add(new BaseFood("Oatmeal (1 cup cooked)",   QuantityCategory.SERVING, 1, 158,  5.9,  3.2,  0.6, 27.4,   9.0));
-        this.foods.add(new BaseFood("Brown Rice (1 cup cooked)",QuantityCategory.SERVING, 1, 216,  5.0,  1.8,  0.7, 44.8,  10.0));
-        this.foods.add(new BaseFood("Pasta (1 cup cooked)",     QuantityCategory.SERVING, 1, 220,  8.1,  1.3,  0.6, 43.2,   1.0));
-        this.foods.add(new BaseFood("Peanut Butter (2 tbsp)",   QuantityCategory.SERVING, 1, 188,  8.0, 16.0,  3.4,  6.9, 147.0));
-        this.foods.add(new BaseFood("Olive Oil (1 tbsp)",       QuantityCategory.SERVING, 1, 119,  0.0, 13.5,  0.0,  0.0,   0.0));
-        this.foods.add(new BaseFood("Black Beans (1/2 cup)",    QuantityCategory.SERVING, 1, 114,  7.6,  0.5,  0.3, 20.4, 204.0));
-        this.foods.add(new BaseFood("Cottage Cheese (1/2 cup)", QuantityCategory.SERVING, 1, 110, 12.5,  5.0,  3.0,  3.5, 380.0));
+    private List<FoodItem> loadAll() {
+        List<FoodItem> foods = new ArrayList<>();
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(this.filePath));
+            for (String line : lines) {
+                if (line.isBlank()) {
+                    continue;
+                }
+                try {
+                    foods.add(this.objectMapper.readValue(line, FoodItem.class));
+                } catch (IOException e) {
+                    System.err.println("Skipping unreadable line in food database: " + e.getMessage());
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Could not read food database file: " + e.getMessage());
+        }
+        return foods;
     }
 }

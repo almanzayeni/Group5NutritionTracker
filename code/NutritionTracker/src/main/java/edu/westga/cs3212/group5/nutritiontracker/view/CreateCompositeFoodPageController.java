@@ -72,9 +72,10 @@ public class CreateCompositeFoodPageController {
 	private TextField sodiumTextField;
 	@FXML
 	private TextField sugarTextField;
+	@FXML 
+	private FoodSearchPanelController searchPanelController;
 
 	private CreateCompositeFoodPageViewModel viewModel;
-	private FoodSearchPanelController searchPanelController;
 
 	@FXML
 	void initialize() {
@@ -113,7 +114,6 @@ public class CreateCompositeFoodPageController {
 		assert sugarTextField != null
 				: "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		this.viewModel = new CreateCompositeFoodPageViewModel();
-		this.searchPanelController = new FoodSearchPanelController();
 		this.connectSearchPanel();
 		this.setUpIngredientsListView();
 		this.bindViewModel();
@@ -304,6 +304,11 @@ public class CreateCompositeFoodPageController {
 
 			try {
 				this.viewModel.addIngredient(food);
+				this.searchPanelController.reset();
+				this.addIngredientButton.setDisable(true);
+				if (this.searchSelectionLabel != null) {
+					this.searchSelectionLabel.setText("No food selected from search.");
+				}
 			} catch (IllegalArgumentException e) {
 				new Alert(Alert.AlertType.WARNING, e.getMessage()).showAndWait();
 			}
