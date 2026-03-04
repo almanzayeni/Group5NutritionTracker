@@ -47,7 +47,7 @@ public class TestCreateBaseFood {
 		}
 
 		CreateBaseFoodPageViewModel vm = new CreateBaseFoodPageViewModel("test.json");
-		vm.getNameProperty().set("Strawberry");
+		vm.getDescriptionProperty().set("Strawberry");
 		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.WEIGHT);
 		vm.getCaloriesProperty().set(10);
 		vm.getProteinProperty().set(1);
@@ -71,7 +71,7 @@ public class TestCreateBaseFood {
 
 		CreateBaseFoodPageViewModel vm = new CreateBaseFoodPageViewModel(mockMapper);
 
-		vm.getNameProperty().set("UniqueFood");
+		vm.getDescriptionProperty().set("UniqueFood");
 		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.WEIGHT);
 		vm.getCaloriesProperty().set(10);
 		vm.getProteinProperty().set(1);
@@ -88,7 +88,7 @@ public class TestCreateBaseFood {
 	@Test
 	void createValidBaseFood() {
 		CreateBaseFoodPageViewModel vm = new CreateBaseFoodPageViewModel("test.json");
-		vm.getNameProperty().set("Strawberry");
+		vm.getDescriptionProperty().set("Strawberry");
 		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.WEIGHT);
 		vm.getCaloriesProperty().set(10);
 		vm.getProteinProperty().set(1);
@@ -126,7 +126,7 @@ public class TestCreateBaseFood {
 	@Test
 	void createDuplicateBaseFoodShouldThrowIllegalArgumentException() {
 		CreateBaseFoodPageViewModel vm = new CreateBaseFoodPageViewModel("test.json");
-		vm.getNameProperty().set("Strawberry");
+		vm.getDescriptionProperty().set("Strawberry");
 		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.WEIGHT);
 		vm.getCaloriesProperty().set(10);
 		vm.getProteinProperty().set(1);

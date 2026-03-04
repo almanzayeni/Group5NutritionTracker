@@ -45,7 +45,7 @@ public class CreateBaseFoodPageController {
 	@FXML
 	private Pane menuPane;
 	@FXML
-	private TextField nameTextField;
+	private TextField descriptionTextField;
 	@FXML
 	private TextField portionSizeTextField;
 	@FXML
@@ -85,8 +85,8 @@ public class CreateBaseFoodPageController {
 				: "fx:id=\"logoutButton\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
 		assert menuPane != null
 				: "fx:id=\"menuPane\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
-		assert nameTextField != null
-				: "fx:id=\"nameTextField\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
+		assert descriptionTextField != null
+				: "fx:id=\"descriptionTextField\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
 		assert portionSizeTextField != null
 				: "fx:id=\"portionSizeTextField\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
 		assert portionSizeUnitLabel != null
@@ -127,7 +127,7 @@ public class CreateBaseFoodPageController {
 	}
 
 	private void bindViewModel() {
-		this.nameTextField.textProperty().bindBidirectional(this.viewModel.getNameProperty());
+		this.descriptionTextField.textProperty().bindBidirectional(this.viewModel.getDescriptionProperty());
 		this.quantityCategoryComboBox.itemsProperty().bind(this.viewModel.getQuantityCategoriesListProperty());
 		this.quantityCategoryComboBox.valueProperty()
 				.bindBidirectional(this.viewModel.getSelectedQuantityCategoryProperty());
@@ -315,7 +315,7 @@ public class CreateBaseFoodPageController {
 	}
 
 //    private void setUpListenerForLogoutButton() {
-//		this.logoutButton.setOnAction((ActionEvent event) -> {
+// 		this.logoutButton.setOnAction((ActionEvent event) -> {
 //			try {
 //				//this.viewModel.saveData();
 //
@@ -367,7 +367,7 @@ public class CreateBaseFoodPageController {
 			try {
 				this.viewModel.createBaseFood();
 				Alert alert = new Alert(Alert.AlertType.INFORMATION,
-						this.nameTextField.getText() + " created successfully.");
+						this.descriptionTextField.getText() + " created successfully.");
 				alert.setHeaderText("Food Created");
 				alert.showAndWait();
 				this.clearFields();
@@ -378,7 +378,7 @@ public class CreateBaseFoodPageController {
 					alert.showAndWait();
 					return;
 				}
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Error creating " + this.nameTextField.getText()
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Error creating " + this.descriptionTextField.getText()
 						+ ". Please ensure all fields are filled out correctly and try again.");
 				alert.setHeaderText("Error Creating Food");
 				alert.showAndWait();
@@ -387,7 +387,7 @@ public class CreateBaseFoodPageController {
 	}
 
 	private void clearFields() {
-		this.nameTextField.clear();
+		this.descriptionTextField.clear();
 		this.quantityCategoryComboBox.getSelectionModel().clearSelection();
 		this.caloriesTextField.setText("");
 		this.proteinTextField.clear();

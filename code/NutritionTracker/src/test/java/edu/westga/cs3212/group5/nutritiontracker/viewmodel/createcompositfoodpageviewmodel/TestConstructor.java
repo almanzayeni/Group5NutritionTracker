@@ -11,7 +11,7 @@ public class TestConstructor {
 	@Test
 	public void testConstructor() {
 		CreateCompositeFoodPageViewModel viewModel = new CreateCompositeFoodPageViewModel();
-		assertNotNull(viewModel.getNameProperty());
+		assertNotNull(viewModel.getDescriptionProperty());
 		assertNotNull(viewModel.getQuantityCategoriesListPropery());
 		assertNotNull(viewModel.getSelectedQuantityCategoryProperty());
 		assertEquals(1.0, viewModel.getPortionSize(), 0.001);

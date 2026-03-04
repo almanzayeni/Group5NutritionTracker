@@ -14,8 +14,14 @@ public interface FoodItem {
 	String getDescription();
 
 	void setDescription(String description);
+	
+	QuantityCategory getQuantityCategory();
+	
+	void setQuantityCategory(QuantityCategory quantityCategory);
 
 	double getPortionSize();
+	
+	void setPortionSize(double portionSize);
 
 	double getCalories();
 

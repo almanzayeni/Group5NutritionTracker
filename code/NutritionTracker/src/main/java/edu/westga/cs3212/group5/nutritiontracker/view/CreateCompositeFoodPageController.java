@@ -53,7 +53,7 @@ public class CreateCompositeFoodPageController {
 	@FXML
 	private Pane menuPane;
 	@FXML
-	private TextField nameTextField;
+	private TextField descriptionTextField;
 	@FXML
 	private TextField portionSizeTextField;
 	@FXML
@@ -96,8 +96,8 @@ public class CreateCompositeFoodPageController {
 				: "fx:id=\"logoutButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert menuPane != null
 				: "fx:id=\"menuPane\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-		assert nameTextField != null
-				: "fx:id=\"nameTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert descriptionTextField != null
+				: "fx:id=\"descriptionTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert portionSizeTextField != null
 				: "fx:id=\"portionSizeTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert portionSizeUnitLabel != null
@@ -145,9 +145,9 @@ public class CreateCompositeFoodPageController {
 					return;
 				}
 
-				Label nameLabel = new Label(item.getDescription());
-				nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 13;");
-				HBox.setHgrow(nameLabel, Priority.ALWAYS);
+				Label descriptionLabel = new Label(item.getDescription());
+				descriptionLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 13;");
+				HBox.setHgrow(descriptionLabel, Priority.ALWAYS);
 
 				Label calLabel = new Label(String.format("%.0f cal", item.getCalories()));
 				calLabel.setStyle("-fx-text-fill: #555555; -fx-font-size: 12;");
@@ -159,7 +159,7 @@ public class CreateCompositeFoodPageController {
 					viewModel.removeIngredient(item);
 				});
 
-				HBox row = new HBox(8, nameLabel, calLabel, removeBtn);
+				HBox row = new HBox(8, descriptionLabel, calLabel, removeBtn);
 				row.setPadding(new Insets(3, 4, 3, 4));
 				setGraphic(row);
 				setText(null);
@@ -178,7 +178,7 @@ public class CreateCompositeFoodPageController {
 	}
 
 	private void bindViewModel() {
-		this.nameTextField.textProperty().bindBidirectional(this.viewModel.getNameProperty());
+		this.descriptionTextField.textProperty().bindBidirectional(this.viewModel.getDescriptionProperty());
 		this.quantityCategoryComboBox.itemsProperty().bind(this.viewModel.getQuantityCategoriesListPropery());
 		this.quantityCategoryComboBox.valueProperty()
 				.bindBidirectional(this.viewModel.getSelectedQuantityCategoryProperty());
@@ -315,7 +315,7 @@ public class CreateCompositeFoodPageController {
 			try {
 				this.viewModel.createCompositeFood();
 				Alert alert = new Alert(Alert.AlertType.INFORMATION,
-						this.nameTextField.getText() + " created successfully.");
+						this.descriptionTextField.getText() + " created successfully.");
 				alert.setHeaderText("Food Created");
 				alert.showAndWait();
 			} catch (Exception ex) {
@@ -325,7 +325,7 @@ public class CreateCompositeFoodPageController {
 					alert.showAndWait();
 					return;
 				}
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Error creating " + this.nameTextField.getText()
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Error creating " + this.descriptionTextField.getText()
 						+ ". Please ensure all fields are filled out correctly and try again.");
 				alert.setHeaderText("Error Creating Food");
 				alert.showAndWait();
@@ -335,7 +335,7 @@ public class CreateCompositeFoodPageController {
 
 	private void setUpListenerForEnableAddFoodButton() {
 		this.addFoodButton.disableProperty()
-				.bind(this.viewModel.getNameProperty().isEmpty()
+				.bind(this.viewModel.getDescriptionProperty().isEmpty()
 						.or(this.quantityCategoryComboBox.valueProperty().isNull())
 						.or(this.viewModel.getIngredientsListProperty().emptyProperty()));
 	}
