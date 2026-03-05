@@ -16,20 +16,16 @@ import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ListProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 
 public class CreateMealItemPageViewModel {
-	private static final String FOOD_ALREADY_EXISTS_ERROR_MESSAGE = "A food with this name already exists. Please enter a unique name, or edit the existing food item.";
+	private static final String MEAL_ALREADY_EXISTS_ERROR_MESSAGE = "A meal with this name already exists. Please enter a unique name, or edit the existing meal.";
 	private static final String COMPOSITE_FOOD_ITEMS_JSON_FILE = "composite_food_items.json";
-	private StringProperty name;
-	private ListProperty<QuantityCategory> quantityCategories;
-	private ObjectProperty<QuantityCategory> selectedQuantityCategory;
+	private StringProperty description;
 	private double portionSize;
 	private DoubleProperty totalCalories;
 	private DoubleProperty totalProtein;
@@ -37,8 +33,8 @@ public class CreateMealItemPageViewModel {
 	private DoubleProperty totalSugar;
 	private DoubleProperty totalCarbohydrates;
 	private DoubleProperty totalSodium;
-	private ListProperty<FoodItem> ingredients;
-	private CompositeFood compositeFood;
+	private ListProperty<FoodItem> foods;
+	private CompositeFood mealItem;
 	private String filePath;
 	private ObjectMapper objectMapper;
 
@@ -46,31 +42,22 @@ public class CreateMealItemPageViewModel {
 	 * Instantiates a new creates the composite food page view model.
 	 */
 	public CreateMealItemPageViewModel() {
-		this.compositeFood = new CompositeFood();
-		this.name = new SimpleStringProperty();
-
-		ArrayList<QuantityCategory> quantityCategories = new ArrayList<>();
-		quantityCategories.add(QuantityCategory.QUANTITY);
-		quantityCategories.add(QuantityCategory.WEIGHT);
-		quantityCategories.add(QuantityCategory.SERVING);
-
-		this.quantityCategories = new SimpleListProperty<QuantityCategory>(
-				FXCollections.observableArrayList(quantityCategories));
-		this.selectedQuantityCategory = new SimpleObjectProperty<QuantityCategory>();
-		this.portionSize = this.compositeFood.getPortionSize();
+		this.mealItem = new CompositeFood();
+		this.description = new SimpleStringProperty();
+		this.portionSize = this.mealItem.getPortionSize();
 		this.totalCalories = new SimpleDoubleProperty();
-		this.totalCalories.set(this.compositeFood.getCalories());
+		this.totalCalories.set(this.mealItem.getCalories());
 		this.totalProtein = new SimpleDoubleProperty();
-		this.totalProtein.set(this.compositeFood.getProtein());
+		this.totalProtein.set(this.mealItem.getProtein());
 		this.totalFat = new SimpleDoubleProperty();
-		this.totalFat.set(this.compositeFood.getFat());
+		this.totalFat.set(this.mealItem.getFat());
 		this.totalSugar = new SimpleDoubleProperty();
-		this.totalSugar.set(this.compositeFood.getSugar());
+		this.totalSugar.set(this.mealItem.getSugar());
 		this.totalCarbohydrates = new SimpleDoubleProperty();
-		this.totalCarbohydrates.set(this.compositeFood.getCarbohydrates());
+		this.totalCarbohydrates.set(this.mealItem.getCarbohydrates());
 		this.totalSodium = new SimpleDoubleProperty();
-		this.totalSodium.set(this.compositeFood.getSodium());
-		this.ingredients = new SimpleListProperty<FoodItem>(
+		this.totalSodium.set(this.mealItem.getSodium());
+		this.foods = new SimpleListProperty<FoodItem>(
 				FXCollections.observableArrayList(new ArrayList<FoodItem>()));
 		this.filePath = COMPOSITE_FOOD_ITEMS_JSON_FILE;
 		this.objectMapper = new ObjectMapper();
@@ -107,25 +94,7 @@ public class CreateMealItemPageViewModel {
 	 * @return the name
 	 */
 	public StringProperty getDescriptionProperty() {
-		return name;
-	}
-
-	/**
-	 * Gets the quantity categories.
-	 *
-	 * @return the quantity categories
-	 */
-	public ListProperty<QuantityCategory> getQuantityCategoriesListPropery() {
-		return quantityCategories;
-	}
-
-	/**
-	 * Gets the selected quantity category.
-	 *
-	 * @return the selected quantity category
-	 */
-	public ObjectProperty<QuantityCategory> getSelectedQuantityCategoryProperty() {
-		return selectedQuantityCategory;
+		return description;
 	}
 
 	/**
@@ -197,42 +166,38 @@ public class CreateMealItemPageViewModel {
 	 * @return the ingredients
 	 */
 	public ListProperty<FoodItem> getIngredientsListProperty() {
-		return ingredients;
+		return foods;
 	}
 
 	/**
-	 * Creates the composite food.
+	 * Creates the meal item.
 	 *
 	 * @throws IllegalArgumentException if any of the following conditions occur:
-	 *                                  name is null or empty, no ingredients have
-	 *                                  been added, no quantity category has been
-	 *                                  selected, or a food with the same name
+	 *                                  name is null or empty, no foods have
+	 *                                  been added, or a meal with the same name
 	 *                                  already exists
 	 * @throws JsonProcessingException  thrown if there is an error during JSON
 	 *                                  processing when converting the composite
 	 *                                  food to a JSON string
 	 * @throws IOException              Signals that an I/O exception has occurred.
 	 */
-	public void createCompositeFood() throws IllegalArgumentException, JsonProcessingException, IOException {
-		if (this.name.get() == null || this.name.get().isEmpty()) {
-			throw new IllegalArgumentException("Food name cannot be empty.");
+	public void createMealItem() throws IllegalArgumentException, JsonProcessingException, IOException {
+		if (this.description.get() == null || this.description.get().isEmpty()) {
+			throw new IllegalArgumentException("Meal name cannot be empty.");
 		}
-		if (this.compositeFood.getIngredients().isEmpty()) {
-			throw new IllegalArgumentException("At least one ingredient must be added.");
+		if (this.mealItem.getIngredients().isEmpty()) {
+			throw new IllegalArgumentException("At least one food must be added.");
 		}
-		if (this.selectedQuantityCategory.get() == null) {
-			throw new IllegalArgumentException("A quantity category must be selected.");
-		}
-		if (this.checkForExistingFood(this.name.get())) {
-			throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
+		if (this.checkForExistingMeal(this.description.get())) {
+			throw new IllegalArgumentException(MEAL_ALREADY_EXISTS_ERROR_MESSAGE);
 		}
 
 		String jsonString = "";
-		this.compositeFood.setDescription(this.name.get());
-		this.compositeFood.setQuantityCategory(this.selectedQuantityCategory.get());
+		this.mealItem.setDescription(this.description.get());
+		this.mealItem.setQuantityCategory(QuantityCategory.SERVING);
 
 		try {
-			jsonString = this.objectMapper.writeValueAsString(this.compositeFood);
+			jsonString = this.objectMapper.writeValueAsString(this.mealItem);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			throw e;
@@ -251,73 +216,76 @@ public class CreateMealItemPageViewModel {
 	}
 
 	/**
-	 * Adds the ingredient passed in to the composite food
+	 * Adds the food passed in to the meal
 	 *
-	 * @param ingredient the ingredient to add to the composite food
+	 * @param food the food to add to the meal
+	 * @throws IllegalArgumentException if food is null or already exists in the meal
 	 */
-	public void addIngredient(FoodItem ingredient) {
-		if (ingredient == null) {
-			throw new IllegalArgumentException("No ingredient selected.");
+	public void addFood(FoodItem food) {
+		if (food == null) {
+			throw new IllegalArgumentException("No food selected.");
 		}
-		if (this.compositeFood.getIngredientByDescription(ingredient.getDescription()) != null) {
+		if (this.mealItem.getIngredientByDescription(food.getDescription()) != null) {
 			throw new IllegalArgumentException(
-					"Ingredient already exists in the food item. Please update the portion size of the existing ingredient.");
+					"Food already exists in the meal. Please update the portion size of the existing food.");
 		}
-		this.compositeFood.addIngredient(ingredient);
+		this.mealItem.addIngredient(food);
 		this.updateDisplayInfo();
 	}
 
 	/**
-	 * Removes the ingredient passed in from the composite food
+	 * Removes the food passed in from the meal
 	 *
-	 * @param ingredient the ingredient to remove from the composite food
+	 * @param food the ingredient to remove from the meal
+	 * @throws IllegalArgumentException if food is null or does not exist in the meal
 	 */
-	public void removeIngredient(FoodItem ingredient) {
-		if (ingredient == null) {
+	public void removeFood(FoodItem food) {
+		if (food == null) {
 			throw new IllegalArgumentException("Ingredient cannot be null.");
 		}
-		if (!this.compositeFood.removeIngredientByDescription(ingredient.getDescription())) {
+		if (!this.mealItem.removeIngredientByDescription(food.getDescription())) {
 			throw new IllegalArgumentException("Ingredient does not exist in the food.");
 		}
 		this.updateDisplayInfo();
 	}
 
 	/**
-	 * Adds the ingredients passed in to the composite food.
+	 * Adds the foods passed in to the meal.
 	 *
-	 * @param ingredients the ingredients to add to the composite food
+	 * @param mealFoods the foods to add to the meal
+	 * @throws IllegalArgumentException if mealFoods is null or empty, or if any food in mealFoods already exists in the meal
 	 */
-	public void addIngredients(List<FoodItem> ingredients) {
-		if (ingredients == null || ingredients.isEmpty()) {
-			throw new IllegalArgumentException("Ingredients list cannot be null or empty.");
+	public void addFoods(List<FoodItem> mealFoods) {
+		if (mealFoods == null || mealFoods.isEmpty()) {
+			throw new IllegalArgumentException("MealFoods list cannot be null or empty.");
 		}
-		for (FoodItem ingredient : ingredients) {
-			this.addIngredient(ingredient);
+		for (FoodItem food : mealFoods) {
+			this.addFood(food);
 		}
 	}
 
 	/**
-	 * Gets the ingredient passed in from the composite food.
+	 * Gets the food passed in from the meal.
 	 *
-	 * @param ingredientToFind the ingredient to find
-	 * @throws IllegalArgumentException if ingredientToFind is null
-	 * @return the ingredient if found, or null if not found
+	 * @param foodToFind the food to find
+	 * @throws IllegalArgumentException if foodToFind is null
+	 * @return the food if found, or null if not found
 	 */
-	public FoodItem getIngredient(FoodItem ingredientToFind) {
-		if (ingredientToFind == null) {
-			throw new IllegalArgumentException("Ingredient name cannot be null.");
+	public FoodItem getFood(FoodItem foodToFind) {
+		if (foodToFind == null) {
+			throw new IllegalArgumentException("Food to find cannot be null.");
 		}
 
-		return this.compositeFood.getIngredientByDescription(ingredientToFind.getDescription());
+		return this.mealItem.getIngredientByDescription(foodToFind.getDescription());
 	}
 
-	private boolean checkForExistingFood(String foodName) throws IOException {
-		HashSet<String> existingFoodNames = new HashSet<>();
+	private boolean checkForExistingMeal(String mealName) throws IOException {
+		HashSet<String> existingMealNames = new HashSet<>();
 		try (var lines = Files.lines(Paths.get(this.filePath))) {
 			lines.forEach(line -> {
 				try {
 					CompositeFood food = this.objectMapper.readValue(line, CompositeFood.class);
-					existingFoodNames.add(food.getDescription());
+					existingMealNames.add(food.getDescription());
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
@@ -326,29 +294,28 @@ public class CreateMealItemPageViewModel {
 			e.printStackTrace();
 			throw e;
 		}
-		return existingFoodNames.contains(foodName);
+		return existingMealNames.contains(mealName);
 	}
 
 	private void updateDisplayInfo() {
-		this.ingredients.clear();
-		this.ingredients.addAll(this.compositeFood.getIngredientsList());
-		this.totalCalories.set(this.compositeFood.getCalories());
-		this.totalProtein.set(this.compositeFood.getProtein());
-		this.totalFat.set(this.compositeFood.getFat());
-		this.totalSugar.set(this.compositeFood.getSugar());
-		this.totalCarbohydrates.set(this.compositeFood.getCarbohydrates());
-		this.totalSodium.set(this.compositeFood.getSodium());
+		this.foods.clear();
+		this.foods.addAll(this.mealItem.getIngredientsList());
+		this.totalCalories.set(this.mealItem.getCalories());
+		this.totalProtein.set(this.mealItem.getProtein());
+		this.totalFat.set(this.mealItem.getFat());
+		this.totalSugar.set(this.mealItem.getSugar());
+		this.totalCarbohydrates.set(this.mealItem.getCarbohydrates());
+		this.totalSodium.set(this.mealItem.getSodium());
 	}
 
 	private void clearFields() {
-		this.name.set("");
-		this.selectedQuantityCategory.set(null);
+		this.description.set("");
 		this.totalCalories.set(0);
 		this.totalProtein.set(0);
 		this.totalFat.set(0);
 		this.totalSugar.set(0);
 		this.totalCarbohydrates.set(0);
 		this.totalSodium.set(0);
-		this.ingredients.clear();
+		this.foods.clear();
 	}
 }

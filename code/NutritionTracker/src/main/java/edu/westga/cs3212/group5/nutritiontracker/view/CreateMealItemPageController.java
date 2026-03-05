@@ -35,7 +35,7 @@ public class CreateMealItemPageController {
 	@FXML
 	private Button addMealButton;
 	@FXML
-	private Button addIngredientButton;
+	private Button addFoodButton;
 	@FXML
 	private TextField caloriesTextField;
 	@FXML
@@ -74,8 +74,8 @@ public class CreateMealItemPageController {
 	void initialize() {
 		assert addMealButton != null
 				: "fx:id=\"addMealButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-		assert addIngredientButton != null
-				: "fx:id=\"addIngredientButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert addFoodButton != null
+				: "fx:id=\"addFoodButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert caloriesTextField != null
 				: "fx:id=\"caloriesTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert carbohydratesTextField != null
@@ -113,7 +113,7 @@ public class CreateMealItemPageController {
 	private void connectSearchPanel() {
 		this.searchPanelController.setOnFoodSelected(food -> {
 			boolean hasSelection = food != null;
-			this.addIngredientButton.setDisable(!hasSelection);
+			this.addFoodButton.setDisable(!hasSelection);
 			if (this.searchSelectionLabel != null) {
 				this.searchSelectionLabel
 						.setText(hasSelection
@@ -146,7 +146,7 @@ public class CreateMealItemPageController {
 				removeBtn.setStyle("-fx-background-color: #e07070; -fx-text-fill: white; "
 						+ "-fx-font-weight: bold; -fx-padding: 2 7 2 7;");
 				removeBtn.setOnAction(event -> {
-					viewModel.removeIngredient(item);
+					viewModel.removeFood(item);
 				});
 
 				HBox row = new HBox(8, descriptionLabel, calLabel, removeBtn);
@@ -162,8 +162,8 @@ public class CreateMealItemPageController {
 		// this.setUpListenerForLogoutButton();
 		this.setUpListenerForHomeButton();
 		this.setUpListenerForCreateFoodButton();
-		this.setupListenerForAddFoodButton();
-		this.setUpListenerForAddIngredientButton();
+		this.setupListenerForAddMealButton();
+		this.setUpListenerForAddFoodButton();
 		this.setUpListenerForEnableAddMealButton();
 	}
 
@@ -272,8 +272,8 @@ public class CreateMealItemPageController {
 		});
 	}
 
-	private void setUpListenerForAddIngredientButton() {
-		this.addIngredientButton.setOnAction((ActionEvent event) -> {
+	private void setUpListenerForAddFoodButton() {
+		this.addFoodButton.setOnAction((ActionEvent event) -> {
 			FoodItem food = this.searchPanelController.getSelectedFood();
 
 			if (food == null) {
@@ -282,31 +282,31 @@ public class CreateMealItemPageController {
 			}
 
 			try {
-				this.viewModel.addIngredient(food);
+				this.viewModel.addFood(food);
 			} catch (IllegalArgumentException e) {
 				new Alert(Alert.AlertType.WARNING, e.getMessage()).showAndWait();
 			}
 		});
 	}
 
-	private void setupListenerForAddFoodButton() {
+	private void setupListenerForAddMealButton() {
 		this.addMealButton.setOnAction((ActionEvent event) -> {
 			try {
-				this.viewModel.createCompositeFood();
+				this.viewModel.createMealItem();
 				Alert alert = new Alert(Alert.AlertType.INFORMATION,
 						this.descriptionTextField.getText() + " created successfully.");
-				alert.setHeaderText("Food Created");
+				alert.setHeaderText("Meal Created");
 				alert.showAndWait();
 			} catch (Exception ex) {
 				if (ex instanceof IllegalArgumentException) {
 					Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage());
-					alert.setHeaderText("Food Already Exists");
+					alert.setHeaderText("Meal Already Exists");
 					alert.showAndWait();
 					return;
 				}
 				Alert alert = new Alert(Alert.AlertType.ERROR, "Error creating " + this.descriptionTextField.getText()
 						+ ". Please ensure all fields are filled out correctly and try again.");
-				alert.setHeaderText("Error Creating Food");
+				alert.setHeaderText("Error Creating Meal");
 				alert.showAndWait();
 			}
 		});

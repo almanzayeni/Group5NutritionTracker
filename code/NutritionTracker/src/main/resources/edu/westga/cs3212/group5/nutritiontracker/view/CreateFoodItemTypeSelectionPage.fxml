@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateFoodItemTypeSelectionPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateFoodItemTypeSelectionPageController">
    <children>
       <Label alignment="CENTER" layoutX="18.0" layoutY="57.0" prefHeight="134.0" prefWidth="323.0" text="Select How You Want To Create Your Food." textAlignment="CENTER" textFill="#1f5c33" wrapText="true">
          <font>
@@ -33,6 +32,11 @@
       <Pane fx:id="menuPane" prefHeight="640.0" prefWidth="207.0" style="-fx-background-color: #87b442;" visible="false">
          <children>
             <Button fx:id="homeButton" layoutY="55.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Home" textFill="#1f5c33">
+               <font>
+                  <Font name="Bookman Old Style Bold" size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="createMealButton" layoutY="112.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Create Meal" textFill="#1f5c33">
                <font>
                   <Font name="Bookman Old Style Bold" size="24.0" />
                </font>

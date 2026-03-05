@@ -49,6 +49,8 @@ public class CreateCompositeFoodPageController {
 	@FXML
 	private Button homeButton;
 	@FXML
+	private Button createMealButton;
+	@FXML
 	private Button logoutButton;
 	@FXML
 	private Pane menuPane;
@@ -92,6 +94,8 @@ public class CreateCompositeFoodPageController {
 				: "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert homeButton != null
 				: "fx:id=\"homeButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+		assert createMealButton != null
+				: "fx:id=\"createMealButton\" was not injected: check your FXML file 'CreateFoodItemTypeSelectionPage.fxml'.";
 		assert logoutButton != null
 				: "fx:id=\"logoutButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert menuPane != null
@@ -172,6 +176,7 @@ public class CreateCompositeFoodPageController {
 		this.handleHamburgerMenuClick();
 		// this.setUpListenerForLogoutButton();
 		this.setUpListenerForHomeButton();
+		this.setUpListenerForCreateMealButton();
 		this.setupListenerForAddFoodButton();
 		this.setUpListenerForAddIngredientButton();
 		this.setUpListenerForEnableAddFoodButton();
@@ -275,6 +280,29 @@ public class CreateCompositeFoodPageController {
 			try {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(HomeDashboardPageController.class.getResource("HomeDashboardPage.fxml"));
+				loader.load();
+
+				Parent parent = loader.getRoot();
+				Scene scene = new Scene(parent);
+
+				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+				stage.setScene(scene);
+				stage.setTitle("Home");
+				stage.show();
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to home page.");
+				alert.showAndWait();
+			}
+		});
+	}
+	
+	private void setUpListenerForCreateMealButton() {
+		this.createMealButton.setOnAction((ActionEvent event) -> {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(CreateMealItemPageController.class.getResource("CreateMealItemPage.fxml"));
 				loader.load();
 
 				Parent parent = loader.getRoot();
