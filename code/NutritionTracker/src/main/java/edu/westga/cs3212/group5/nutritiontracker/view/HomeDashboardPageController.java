@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import javafx.beans.binding.Bindings;
 
 import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
@@ -51,6 +52,12 @@ public class HomeDashboardPageController {
     private Button addSnacksButton;
     
     @FXML
+    private Button createFoodButton;
+    
+    @FXML
+    private Button addFoodButton;
+    
+    @FXML
     private DatePicker calendarPicker;
     
     @FXML
@@ -73,6 +80,12 @@ public class HomeDashboardPageController {
     
     @FXML
     private Label totalCaloriesLabel;
+    
+    @FXML private void goHome() { switchTo("HomeDashboardPage.fxml"); }
+
+    @FXML private void goCreateFood() { switchTo("CreateFoodItemTypeSelectionPage.fxml"); }
+
+    @FXML private void goAddFood() { switchTo("SearchPage.fxml"); }
     
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("M-d-yyyy");
     
@@ -103,6 +116,8 @@ public class HomeDashboardPageController {
     private void initialize() {
     	this.setViewModel(new HomeDashboardViewModel());
     	this.setupDateLabel();
+    	
+    	this.handleHamburgerMenuClick();
     	
     	this.breakfastListView.setItems(this.viewModel.getBreakfastItems());
     	this.lunchListView.setItems(this.viewModel.getLunchItems());
@@ -143,6 +158,29 @@ public class HomeDashboardPageController {
         });
     }
     
+    private void handleHamburgerMenuClick() {
+		HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(this.hamburgerMenu);
+		transition.setRate(-1);
+		this.hamburgerMenu.setOnMouseClicked(event -> {
+			try {
+				transition.setRate(transition.getRate() * -1);
+				transition.play();
+				if (menuPane.isVisible()) {
+					menuPane.setVisible(false);
+					homeButton.disableProperty().set(true);
+				} else {
+					menuPane.setVisible(true);
+					homeButton.disableProperty().set(false);
+					menuPane.toFront();
+					hamburgerMenu.toFront();
+					homeButton.toFront();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
+    
     // For once we have add food page.
 //    private void goToAddFood() {
 //        try {
@@ -157,6 +195,20 @@ public class HomeDashboardPageController {
 //            ex.printStackTrace();
 //        }
 //    }
+    
+    private void switchTo(String fxml) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) this.hamburgerMenu.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     @FunctionalInterface
     private interface RemoveHandler {
