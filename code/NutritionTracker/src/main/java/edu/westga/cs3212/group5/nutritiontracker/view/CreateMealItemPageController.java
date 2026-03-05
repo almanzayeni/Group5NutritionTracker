@@ -4,8 +4,7 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
-import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
-import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateCompositeFoodPageViewModel;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateMealItemPageViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,7 +18,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -29,15 +27,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
-public class CreateCompositeFoodPageController {
+public class CreateMealItemPageController {
 	@FXML
 	private ResourceBundle resources;
 	@FXML
 	private URL location;
 	@FXML
-	private Button addFoodButton;
+	private Button addMealButton;
 	@FXML
-	private Button addIngredientButton;
+	private Button addFoodButton;
 	@FXML
 	private TextField caloriesTextField;
 	@FXML
@@ -49,7 +47,7 @@ public class CreateCompositeFoodPageController {
 	@FXML
 	private Button homeButton;
 	@FXML
-	private Button createMealButton;
+	private Button createFoodButton;
 	@FXML
 	private Button logoutButton;
 	@FXML
@@ -57,13 +55,7 @@ public class CreateCompositeFoodPageController {
 	@FXML
 	private TextField descriptionTextField;
 	@FXML
-	private TextField portionSizeTextField;
-	@FXML
-	private Label portionSizeUnitLabel;
-	@FXML
 	private TextField proteinTextField;
-	@FXML
-	private ComboBox<QuantityCategory> quantityCategoryComboBox;
 	@FXML
 	private ListView<FoodItem> selectedIngredientsListView;
 	@FXML
@@ -75,15 +67,15 @@ public class CreateCompositeFoodPageController {
 	@FXML
 	private TextField sugarTextField;
 
-	private CreateCompositeFoodPageViewModel viewModel;
+	private CreateMealItemPageViewModel viewModel;
 	private FoodSearchPanelController searchPanelController;
 
 	@FXML
 	void initialize() {
+		assert addMealButton != null
+				: "fx:id=\"addMealButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert addFoodButton != null
 				: "fx:id=\"addFoodButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-		assert addIngredientButton != null
-				: "fx:id=\"addIngredientButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert caloriesTextField != null
 				: "fx:id=\"caloriesTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert carbohydratesTextField != null
@@ -94,29 +86,23 @@ public class CreateCompositeFoodPageController {
 				: "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert homeButton != null
 				: "fx:id=\"homeButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-		assert createMealButton != null
-				: "fx:id=\"createMealButton\" was not injected: check your FXML file 'CreateFoodItemTypeSelectionPage.fxml'.";
+		assert createFoodButton != null
+				: "fx:id=\"createFoodButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert logoutButton != null
 				: "fx:id=\"logoutButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert menuPane != null
 				: "fx:id=\"menuPane\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert descriptionTextField != null
 				: "fx:id=\"descriptionTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-		assert portionSizeTextField != null
-				: "fx:id=\"portionSizeTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-		assert portionSizeUnitLabel != null
-				: "fx:id=\"portionSizeUnitLabel\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert proteinTextField != null
 				: "fx:id=\"proteinTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-		assert quantityCategoryComboBox != null
-				: "fx:id=\"quantityCategoryComboBox\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert selectedIngredientsListView != null
 				: "fx:id=\"selectedIngredientsListView\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert sodiumTextField != null
 				: "fx:id=\"sodiumTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert sugarTextField != null
 				: "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-		this.viewModel = new CreateCompositeFoodPageViewModel();
+		this.viewModel = new CreateMealItemPageViewModel();
 		this.searchPanelController = new FoodSearchPanelController();
 		this.connectSearchPanel();
 		this.setUpIngredientsListView();
@@ -127,7 +113,7 @@ public class CreateCompositeFoodPageController {
 	private void connectSearchPanel() {
 		this.searchPanelController.setOnFoodSelected(food -> {
 			boolean hasSelection = food != null;
-			this.addIngredientButton.setDisable(!hasSelection);
+			this.addFoodButton.setDisable(!hasSelection);
 			if (this.searchSelectionLabel != null) {
 				this.searchSelectionLabel
 						.setText(hasSelection
@@ -160,7 +146,7 @@ public class CreateCompositeFoodPageController {
 				removeBtn.setStyle("-fx-background-color: #e07070; -fx-text-fill: white; "
 						+ "-fx-font-weight: bold; -fx-padding: 2 7 2 7;");
 				removeBtn.setOnAction(event -> {
-					viewModel.removeIngredient(item);
+					viewModel.removeFood(item);
 				});
 
 				HBox row = new HBox(8, descriptionLabel, calLabel, removeBtn);
@@ -172,21 +158,17 @@ public class CreateCompositeFoodPageController {
 	}
 
 	private void setUpListeners() {
-		this.setupPortionSizeUnitLabelListener();
 		this.handleHamburgerMenuClick();
 		// this.setUpListenerForLogoutButton();
 		this.setUpListenerForHomeButton();
-		this.setUpListenerForCreateMealButton();
-		this.setupListenerForAddFoodButton();
-		this.setUpListenerForAddIngredientButton();
-		this.setUpListenerForEnableAddFoodButton();
+		this.setUpListenerForCreateFoodButton();
+		this.setupListenerForAddMealButton();
+		this.setUpListenerForAddFoodButton();
+		this.setUpListenerForEnableAddMealButton();
 	}
 
 	private void bindViewModel() {
 		this.descriptionTextField.textProperty().bindBidirectional(this.viewModel.getDescriptionProperty());
-		this.quantityCategoryComboBox.itemsProperty().bind(this.viewModel.getQuantityCategoriesListPropery());
-		this.quantityCategoryComboBox.valueProperty()
-				.bindBidirectional(this.viewModel.getSelectedQuantityCategoryProperty());
 		this.selectedIngredientsListView.itemsProperty().bindBidirectional(this.viewModel.getIngredientsListProperty());
 		this.caloriesTextField.textProperty().bind(this.viewModel.getTotalCaloriesProperty().asString());
 		this.proteinTextField.textProperty().bind(this.viewModel.getTotalProteinProperty().asString());
@@ -194,37 +176,6 @@ public class CreateCompositeFoodPageController {
 		this.sugarTextField.textProperty().bind(this.viewModel.getTotalSugarProperty().asString());
 		this.carbohydratesTextField.textProperty().bind(this.viewModel.getTotalCarbohydratesProperty().asString());
 		this.sodiumTextField.textProperty().bind(this.viewModel.getTotalSodiumProperty().asString());
-	}
-
-	private void setupPortionSizeUnitLabelListener() {
-		this.quantityCategoryComboBox.setOnAction(event -> {
-			QuantityCategory selectedCategory = this.quantityCategoryComboBox.getValue();
-			if (selectedCategory != null) {
-				switch (selectedCategory) {
-				case QUANTITY:
-					if (Double.parseDouble(this.portionSizeTextField.getText()) == 1) {
-						this.portionSizeUnitLabel.setText("piece");
-					} else {
-						this.portionSizeUnitLabel.setText("pieces");
-					}
-					break;
-				case WEIGHT:
-					if (Double.parseDouble(this.portionSizeTextField.getText()) == 1) {
-						this.portionSizeUnitLabel.setText("ounce");
-					} else {
-						this.portionSizeUnitLabel.setText("ounces");
-					}
-					break;
-				case SERVING:
-					if (Double.parseDouble(this.portionSizeTextField.getText()) == 1) {
-						this.portionSizeUnitLabel.setText("serving");
-					} else {
-						this.portionSizeUnitLabel.setText("servings");
-					}
-					break;
-				}
-			}
-		});
 	}
 
 	private void handleHamburgerMenuClick() {
@@ -298,11 +249,11 @@ public class CreateCompositeFoodPageController {
 		});
 	}
 	
-	private void setUpListenerForCreateMealButton() {
-		this.createMealButton.setOnAction((ActionEvent event) -> {
+	private void setUpListenerForCreateFoodButton() {
+		this.createFoodButton.setOnAction((ActionEvent event) -> {
 			try {
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(CreateMealItemPageController.class.getResource("CreateMealItemPage.fxml"));
+				loader.setLocation(CreateFoodItemTypeSelectionPageController.class.getResource("CreateFoodItemTypeSelectionPage.fxml"));
 				loader.load();
 
 				Parent parent = loader.getRoot();
@@ -310,19 +261,19 @@ public class CreateCompositeFoodPageController {
 
 				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
 				stage.setScene(scene);
-				stage.setTitle("Home");
+				stage.setTitle("Select Food Type");
 				stage.show();
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to home page.");
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to create food item selection page.");
 				alert.showAndWait();
 			}
 		});
 	}
 
-	private void setUpListenerForAddIngredientButton() {
-		this.addIngredientButton.setOnAction((ActionEvent event) -> {
+	private void setUpListenerForAddFoodButton() {
+		this.addFoodButton.setOnAction((ActionEvent event) -> {
 			FoodItem food = this.searchPanelController.getSelectedFood();
 
 			if (food == null) {
@@ -331,40 +282,39 @@ public class CreateCompositeFoodPageController {
 			}
 
 			try {
-				this.viewModel.addIngredient(food);
+				this.viewModel.addFood(food);
 			} catch (IllegalArgumentException e) {
 				new Alert(Alert.AlertType.WARNING, e.getMessage()).showAndWait();
 			}
 		});
 	}
 
-	private void setupListenerForAddFoodButton() {
-		this.addFoodButton.setOnAction((ActionEvent event) -> {
+	private void setupListenerForAddMealButton() {
+		this.addMealButton.setOnAction((ActionEvent event) -> {
 			try {
-				this.viewModel.createCompositeFood();
+				this.viewModel.createMealItem();
 				Alert alert = new Alert(Alert.AlertType.INFORMATION,
 						this.descriptionTextField.getText() + " created successfully.");
-				alert.setHeaderText("Food Created");
+				alert.setHeaderText("Meal Created");
 				alert.showAndWait();
 			} catch (Exception ex) {
 				if (ex instanceof IllegalArgumentException) {
 					Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage());
-					alert.setHeaderText("Food Already Exists");
+					alert.setHeaderText("Meal Already Exists");
 					alert.showAndWait();
 					return;
 				}
 				Alert alert = new Alert(Alert.AlertType.ERROR, "Error creating " + this.descriptionTextField.getText()
 						+ ". Please ensure all fields are filled out correctly and try again.");
-				alert.setHeaderText("Error Creating Food");
+				alert.setHeaderText("Error Creating Meal");
 				alert.showAndWait();
 			}
 		});
 	}
 
-	private void setUpListenerForEnableAddFoodButton() {
-		this.addFoodButton.disableProperty()
+	private void setUpListenerForEnableAddMealButton() {
+		this.addMealButton.disableProperty()
 				.bind(this.viewModel.getDescriptionProperty().isEmpty()
-						.or(this.quantityCategoryComboBox.valueProperty().isNull())
 						.or(this.viewModel.getIngredientsListProperty().emptyProperty()));
 	}
 
