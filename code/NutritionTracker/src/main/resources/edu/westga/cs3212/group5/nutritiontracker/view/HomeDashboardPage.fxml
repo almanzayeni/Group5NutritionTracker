@@ -7,6 +7,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.HomeDashboardPageController">
    <children>
@@ -36,5 +42,119 @@
       </Pane>
       <JFXHamburger fx:id="hamburgerMenu" layoutX="15.0" layoutY="15.0" prefHeight="20.0" prefWidth="33.0" />
       <DatePicker fx:id="calendarPicker" layoutX="17.0" layoutY="135.0" prefHeight="25.0" prefWidth="116.0" />
+      <Pane fx:id="todayMealsCard"
+      layoutX="19.0" layoutY="180.0"
+      prefWidth="323.0" prefHeight="420.0"
+      style="-fx-background-color: #DECFBD; -fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: rgba(31,92,51,0.25); -fx-border-width: 2;">
+   <children>
+
+      <VBox layoutX="14.0" layoutY="12.0" prefWidth="295.0" prefHeight="396.0" spacing="10.0">
+         <padding>
+            <Insets top="6" right="8" bottom="8" left="8"/>
+         </padding>
+
+         <!-- Header -->
+         <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <Label text="Today"
+                   textFill="#1f5c33"
+                   style="-fx-font-family: 'Bookman Old Style'; -fx-font-size: 22px; -fx-font-weight: bold;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="todayDateLabel" text="2-1-2026"
+                   textFill="#1f5c33"
+                   style="-fx-font-family: 'Bookman Old Style'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-opacity: 0.85;" />
+         </HBox>
+
+         <Pane prefHeight="2.0" prefWidth="295.0"
+               style="-fx-background-color: rgba(31,92,51,0.25); -fx-background-radius: 2;" />
+
+         <!-- Breakfast -->
+         <VBox spacing="6.0"
+               style="-fx-background-color: rgba(243,237,228,0.65); -fx-background-radius: 14;">
+            <padding><Insets top="8" right="8" bottom="8" left="10"/></padding>
+            <HBox alignment="CENTER_LEFT">
+               <Label text="Breakfast"
+                      textFill="#1f5c33"
+                      style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+               <Region HBox.hgrow="ALWAYS"/>
+               <Button fx:id="addBreakfastButton" text="+"
+                       mnemonicParsing="false"
+                       prefHeight="28.0" prefWidth="32.0"
+                       style="-fx-background-color: #87b442; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+            </HBox>
+            <ListView fx:id="breakfastListView" prefHeight="70.0"
+                      style="-fx-background-color: transparent;">
+               <!-- UI-only placeholder items can be added later in controller -->
+            </ListView>
+         </VBox>
+
+         <!-- Lunch -->
+         <VBox spacing="6.0"
+               style="-fx-background-color: rgba(243,237,228,0.65); -fx-background-radius: 14;">
+            <padding><Insets top="8" right="8" bottom="8" left="10"/></padding>
+            <HBox alignment="CENTER_LEFT">
+               <Label text="Lunch"
+                      textFill="#1f5c33"
+                      style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+               <Region HBox.hgrow="ALWAYS"/>
+               <Button fx:id="addLunchButton" text="+"
+                       mnemonicParsing="false"
+                       prefHeight="28.0" prefWidth="32.0"
+                       style="-fx-background-color: #87b442; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+            </HBox>
+            <ListView fx:id="lunchListView" prefHeight="70.0"
+                      style="-fx-background-color: transparent;" />
+         </VBox>
+
+         <!-- Dinner -->
+         <VBox spacing="6.0"
+               style="-fx-background-color: rgba(243,237,228,0.65); -fx-background-radius: 14;">
+            <padding><Insets top="8" right="8" bottom="8" left="10"/></padding>
+            <HBox alignment="CENTER_LEFT">
+               <Label text="Dinner"
+                      textFill="#1f5c33"
+                      style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+               <Region HBox.hgrow="ALWAYS"/>
+               <Button fx:id="addDinnerButton" text="+"
+                       mnemonicParsing="false"
+                       prefHeight="28.0" prefWidth="32.0"
+                       style="-fx-background-color: #87b442; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+            </HBox>
+            <ListView fx:id="dinnerListView" prefHeight="70.0"
+                      style="-fx-background-color: transparent;" />
+         </VBox>
+
+         <!-- Snacks -->
+         <VBox spacing="6.0"
+               style="-fx-background-color: rgba(243,237,228,0.65); -fx-background-radius: 14;">
+            <padding><Insets top="8" right="8" bottom="8" left="10"/></padding>
+            <HBox alignment="CENTER_LEFT">
+               <Label text="Snacks"
+                      textFill="#1f5c33"
+                      style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+               <Region HBox.hgrow="ALWAYS"/>
+               <Button fx:id="addSnacksButton" text="+"
+                       mnemonicParsing="false"
+                       prefHeight="28.0" prefWidth="32.0"
+                       style="-fx-background-color: #87b442; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+            </HBox>
+            <ListView fx:id="snacksListView" prefHeight="70.0"
+                      style="-fx-background-color: transparent;" />
+         </VBox>
+
+         <!-- Footer -->
+         <HBox alignment="CENTER" spacing="10.0"
+               style="-fx-background-color: rgba(184,213,163,0.85); -fx-background-radius: 14;">
+            <padding><Insets top="10" right="12" bottom="10" left="12"/></padding>
+            <Label text="Total:"
+                   textFill="#1f5c33"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <Label fx:id="totalCaloriesLabel" text="0 kcal"
+                   textFill="#1f5c33"
+                   style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+         </HBox>
+
+      </VBox>
+   </children>
+</Pane>
    </children>
 </AnchorPane>
