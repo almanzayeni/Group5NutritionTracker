@@ -41,6 +41,8 @@ public class CreateBaseFoodPageController {
 	@FXML
 	private Button homeButton;
 	@FXML
+	private Button createMealButton;
+	@FXML
 	private Button logoutButton;
 	@FXML
 	private Pane menuPane;
@@ -81,6 +83,8 @@ public class CreateBaseFoodPageController {
 				: "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
 		assert homeButton != null
 				: "fx:id=\"homeButton\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
+		assert createMealButton != null
+				: "fx:id=\"createMealButton\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
 		assert logoutButton != null
 				: "fx:id=\"logoutButton\" was not injected: check your FXML file 'CreateBaseFoodPage.fxml'.";
 		assert menuPane != null
@@ -116,6 +120,7 @@ public class CreateBaseFoodPageController {
 		this.handleHamburgerMenuClick();
 		// this.setUpListenerForLogoutButton();
 		this.setUpListenerForHomeButton();
+		this.setUpListenerForCreateMealButton();
 		this.setupPortionSizeUnitLabelListener();
 		this.setupCaloriesListener();
 		this.setupProteinListener();
@@ -344,6 +349,29 @@ public class CreateBaseFoodPageController {
 			try {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(HomeDashboardPageController.class.getResource("HomeDashboardPage.fxml"));
+				loader.load();
+
+				Parent parent = loader.getRoot();
+				Scene scene = new Scene(parent);
+
+				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+				stage.setScene(scene);
+				stage.setTitle("Home");
+				stage.show();
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to home page.");
+				alert.showAndWait();
+			}
+		});
+	}
+	
+	private void setUpListenerForCreateMealButton() {
+		this.createMealButton.setOnAction((ActionEvent event) -> {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(CreateMealItemPageController.class.getResource("CreateMealItemPage.fxml"));
 				loader.load();
 
 				Parent parent = loader.getRoot();

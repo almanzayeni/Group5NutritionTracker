@@ -12,7 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
 <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateCompositeFoodPageController">
+=======
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateCompositeFoodPageController">
+>>>>>>> main
    <content>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1260.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;">
          <children>
@@ -38,6 +42,7 @@
             <Label alignment="CENTER_RIGHT" layoutX="-6.0" layoutY="186.0" prefHeight="27.0" prefWidth="135.0" text="Portion Size:" textAlignment="RIGHT" textFill="#6e2316">
                <font><Font name="System Bold" size="16.0" /></font>
             </Label>
+
             <TextField fx:id="portionSizeTextField" alignment="CENTER" editable="false" layoutX="142.0" layoutY="186.0" prefHeight="26.0" prefWidth="166.0" text="1" />
             <Label fx:id="portionSizeUnitLabel" alignment="BOTTOM_LEFT" layoutX="312.0" layoutY="186.0" prefHeight="26.0" prefWidth="50.0" text="srv" textFill="#6e2316" />
 
@@ -123,6 +128,11 @@
                <children>
                   <Button fx:id="homeButton" layoutY="55.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Home" textFill="#1f5c33">
                      <font><Font name="Bookman Old Style Bold" size="24.0" /></font>
+                  </Button>
+                  <Button fx:id="createMealButton" layoutY="112.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Create Meal" textFill="#1f5c33">
+                     <font>
+                        <Font name="Bookman Old Style Bold" size="24.0" />
+                     </font>
                   </Button>
                </children>
             </Pane>

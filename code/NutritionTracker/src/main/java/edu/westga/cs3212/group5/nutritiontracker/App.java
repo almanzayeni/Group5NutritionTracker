@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class App extends Application {
 	
 	private static final String WINDOW_TITLE = "Login";
-	private static final String GUI_FXML = "view/CreateFoodItemTypeSelectionPage.fxml";
+	private static final String GUI_FXML = "view/HomeDashboardPage.fxml";
 
 	@Override
 	public void start(Stage primaryStage) {
