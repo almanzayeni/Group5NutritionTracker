@@ -72,7 +72,8 @@ public class CreateCompositeFoodPageController {
 	private TextField sodiumTextField;
 	@FXML
 	private TextField sugarTextField;
-	@FXML 
+
+	@FXML
 	private FoodSearchPanelController searchPanelController;
 
 	private CreateCompositeFoodPageViewModel viewModel;
@@ -80,39 +81,40 @@ public class CreateCompositeFoodPageController {
 	@FXML
 	void initialize() {
 		assert addFoodButton != null
-				: "fx:id=\"addFoodButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"addFoodButton\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert addIngredientButton != null
-				: "fx:id=\"addIngredientButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"addIngredientButton\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert caloriesTextField != null
-				: "fx:id=\"caloriesTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"caloriesTextField\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert carbohydratesTextField != null
-				: "fx:id=\"carbohydratesTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"carbohydratesTextField\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert fatTextField != null
-				: "fx:id=\"fatTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"fatTextField\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert hamburgerMenu != null
-				: "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert homeButton != null
-				: "fx:id=\"homeButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"homeButton\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert logoutButton != null
-				: "fx:id=\"logoutButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"logoutButton\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert menuPane != null
-				: "fx:id=\"menuPane\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"menuPane\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert descriptionTextField != null
-				: "fx:id=\"descriptionTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"descriptionTextField\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert portionSizeTextField != null
-				: "fx:id=\"portionSizeTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"portionSizeTextField\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert portionSizeUnitLabel != null
-				: "fx:id=\"portionSizeUnitLabel\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"portionSizeUnitLabel\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert proteinTextField != null
-				: "fx:id=\"proteinTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"proteinTextField\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert quantityCategoryComboBox != null
-				: "fx:id=\"quantityCategoryComboBox\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"quantityCategoryComboBox\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert selectedIngredientsListView != null
-				: "fx:id=\"selectedIngredientsListView\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"selectedIngredientsListView\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert sodiumTextField != null
-				: "fx:id=\"sodiumTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"sodiumTextField\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
 		assert sugarTextField != null
-				: "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
+				: "fx:id=\"sugarTextField\" was not injected: check your FXML file 'CreateCompositeFoodPage.fxml'.";
+
 		this.viewModel = new CreateCompositeFoodPageViewModel();
 		this.searchPanelController.enableIngredientMode();
 		this.connectSearchPanel();
