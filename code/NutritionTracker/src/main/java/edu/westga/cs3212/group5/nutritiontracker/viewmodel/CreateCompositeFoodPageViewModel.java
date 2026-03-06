@@ -26,8 +26,7 @@ import javafx.collections.FXCollections;
 
 public class CreateCompositeFoodPageViewModel {
 	private static final String FOOD_ALREADY_EXISTS_ERROR_MESSAGE = "A food with this name already exists. Please enter a unique name, or edit the existing food item.";
-	private static final String COMPOSITE_FOOD_ITEMS_JSON_FILE = "composite_food_items.json";
-	private StringProperty name;
+	private StringProperty description;
 	private ListProperty<QuantityCategory> quantityCategories;
 	private ObjectProperty<QuantityCategory> selectedQuantityCategory;
 	private double portionSize;
@@ -47,7 +46,7 @@ public class CreateCompositeFoodPageViewModel {
 	 */
 	public CreateCompositeFoodPageViewModel() {
 		this.compositeFood = new CompositeFood();
-		this.name = new SimpleStringProperty();
+		this.description = new SimpleStringProperty();
 
 		ArrayList<QuantityCategory> quantityCategories = new ArrayList<>();
 		quantityCategories.add(QuantityCategory.QUANTITY);
@@ -72,7 +71,7 @@ public class CreateCompositeFoodPageViewModel {
 		this.totalSodium.set(this.compositeFood.getSodium());
 		this.ingredients = new SimpleListProperty<FoodItem>(
 				FXCollections.observableArrayList(new ArrayList<FoodItem>()));
-		this.filePath = COMPOSITE_FOOD_ITEMS_JSON_FILE;
+		this.filePath = FoodItem.FOOD_ITEMS_JSON_FILE;
 		this.objectMapper = new ObjectMapper();
 	}
 
@@ -107,7 +106,7 @@ public class CreateCompositeFoodPageViewModel {
 	 * @return the name
 	 */
 	public StringProperty getDescriptionProperty() {
-		return name;
+		return description;
 	}
 
 	/**
@@ -214,7 +213,7 @@ public class CreateCompositeFoodPageViewModel {
 	 * @throws IOException              Signals that an I/O exception has occurred.
 	 */
 	public void createCompositeFood() throws IllegalArgumentException, JsonProcessingException, IOException {
-		if (this.name.get() == null || this.name.get().isEmpty()) {
+		if (this.description.get() == null || this.description.get().isEmpty()) {
 			throw new IllegalArgumentException("Food name cannot be empty.");
 		}
 		if (this.compositeFood.getIngredients().isEmpty()) {
@@ -223,12 +222,17 @@ public class CreateCompositeFoodPageViewModel {
 		if (this.selectedQuantityCategory.get() == null) {
 			throw new IllegalArgumentException("A quantity category must be selected.");
 		}
-		if (this.checkForExistingFood(this.name.get())) {
-			throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
+		try {
+			if (this.checkForExistingFood(this.description.get())) {
+				throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
+			}
+		} catch (Exception e) {
+			throw e;
 		}
+		
 
 		String jsonString = "";
-		this.compositeFood.setDescription(this.name.get());
+		this.compositeFood.setDescription(this.description.get());
 		this.compositeFood.setQuantityCategory(this.selectedQuantityCategory.get());
 
 		try {
@@ -311,21 +315,26 @@ public class CreateCompositeFoodPageViewModel {
 		return this.compositeFood.getIngredientByDescription(ingredientToFind.getDescription());
 	}
 
-	private boolean checkForExistingFood(String foodName) throws IOException {
+	private boolean checkForExistingFood(String foodName) throws IOException, JsonProcessingException {
 		HashSet<String> existingFoodNames = new HashSet<>();
+		
 		try (var lines = Files.lines(Paths.get(this.filePath))) {
-			lines.forEach(line -> {
-				try {
-					CompositeFood food = this.objectMapper.readValue(line, CompositeFood.class);
-					existingFoodNames.add(food.getDescription());
-				} catch (JsonProcessingException e) {
-					e.printStackTrace();
+			for (String line : (Iterable<String>) lines::iterator) {
+				if (!line.trim().isEmpty()) {
+					try {
+						FoodItem food = this.objectMapper.readValue(line, FoodItem.class);
+						existingFoodNames.add(food.getDescription());
+					} catch (JsonProcessingException e) {
+						e.printStackTrace();
+						throw e;
+					}
 				}
-			});
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw e;
 		}
+		
 		return existingFoodNames.contains(foodName);
 	}
 
@@ -341,7 +350,7 @@ public class CreateCompositeFoodPageViewModel {
 	}
 
 	private void clearFields() {
-		this.name.set("");
+		this.description.set("");
 		this.selectedQuantityCategory.set(null);
 		this.totalCalories.set(0);
 		this.totalProtein.set(0);

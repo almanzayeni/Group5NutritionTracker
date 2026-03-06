@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
+import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ListProperty;
@@ -16,12 +17,12 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class CreateBaseFoodPageViewModel {
 	private static final String FOOD_ALREADY_EXISTS_ERROR_MESSAGE = "A food with this name already exists. Please enter a unique name, or edit the existing food.";
-	private static final String BASE_FOOD_ITEMS_JSON_FILE = "base_food_items.json";
 	private StringProperty description;
 	private ListProperty<QuantityCategory> quantityCategoriesList;
 	private ObjectProperty<QuantityCategory> selectedQuantityCategory;
@@ -56,7 +57,7 @@ public class CreateBaseFoodPageViewModel {
 		this.sugar = new javafx.beans.property.SimpleDoubleProperty();
 		this.carbohydrates = new javafx.beans.property.SimpleDoubleProperty();
 		this.sodium = new javafx.beans.property.SimpleDoubleProperty();
-		this.filePath = BASE_FOOD_ITEMS_JSON_FILE;
+		this.filePath = FoodItem.FOOD_ITEMS_JSON_FILE;
 		this.objectMapper = new ObjectMapper();
 	}
 
@@ -183,8 +184,12 @@ public class CreateBaseFoodPageViewModel {
 	 * @throws IOException              Signals that an I/O exception has occurred.
 	 */
 	public void createBaseFood() throws IllegalArgumentException, JsonProcessingException, IOException {
-		if (this.checkForExistingFood(this.description.get())) {
-			throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
+		try {
+			if (this.checkForExistingFood(this.description.get())) {
+				throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
+			}
+		} catch (Exception e) {
+			throw e;
 		}
 
 		BaseFood baseFood = new BaseFood(this.description.get(), this.selectedQuantityCategory.get(), this.portionSize,
@@ -209,20 +214,26 @@ public class CreateBaseFoodPageViewModel {
 		}
 	}
 
-	private boolean checkForExistingFood(String foodName) {
+	private boolean checkForExistingFood(String foodName) throws IOException, JsonProcessingException{
 		HashSet<String> existingFoodNames = new HashSet<>();
-		try {
-			Files.lines(Paths.get(this.filePath)).forEach(line -> {
-				try {
-					BaseFood food = new ObjectMapper().readValue(line, BaseFood.class);
-					existingFoodNames.add(food.getDescription());
-				} catch (JsonProcessingException e) {
-					e.printStackTrace();
+		
+		try (var lines = Files.lines(Paths.get(this.filePath))){
+			for (String line : (Iterable<String>) lines::iterator) {
+				if (!line.trim().isEmpty()) {
+					try {
+						FoodItem food = this.objectMapper.readValue(line, FoodItem.class);
+						existingFoodNames.add(food.getDescription());
+					} catch (JsonProcessingException e) {
+						e.printStackTrace();
+						throw e;
+					}
 				}
-			});
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			throw e;
 		}
+		
 		return existingFoodNames.contains(foodName);
 	}
 
