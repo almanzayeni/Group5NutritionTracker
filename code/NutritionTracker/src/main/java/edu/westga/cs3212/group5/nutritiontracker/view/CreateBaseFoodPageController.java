@@ -129,6 +129,7 @@ public class CreateBaseFoodPageController {
 		this.setupCarbohydratesListener();
 		this.setupSodiumListener();
 		this.setupListenerForAddFoodButton();
+		this.setUpListenerForEnableAddFoodButton();
 	}
 
 	private void bindViewModel() {
@@ -412,6 +413,16 @@ public class CreateBaseFoodPageController {
 				alert.showAndWait();
 			}
 		});
+	}
+
+	private void setUpListenerForEnableAddFoodButton() {
+		this.addFoodButton.disableProperty()
+				.bind(this.viewModel.getDescriptionProperty().isEmpty()
+						.or(this.descriptionTextField.textProperty().isEmpty())
+						.or(this.quantityCategoryComboBox.valueProperty().isNull())
+						.or(this.quantityCategoryComboBox.getSelectionModel().selectedItemProperty().isNull())
+						.or(this.viewModel.getCaloriesProperty().lessThanOrEqualTo(0))
+						.or(this.caloriesTextField.textProperty().isEmpty()));
 	}
 
 	private void clearFields() {
