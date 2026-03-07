@@ -24,7 +24,6 @@ import javafx.collections.FXCollections;
 
 public class CreateMealItemPageViewModel {
 	private static final String MEAL_ALREADY_EXISTS_ERROR_MESSAGE = "A meal with this name already exists. Please enter a unique name, or edit the existing meal.";
-	private static final String COMPOSITE_FOOD_ITEMS_JSON_FILE = "composite_food_items.json";
 	private StringProperty description;
 	private double portionSize;
 	private DoubleProperty totalCalories;
@@ -59,7 +58,7 @@ public class CreateMealItemPageViewModel {
 		this.totalSodium.set(this.mealItem.getSodium());
 		this.foods = new SimpleListProperty<FoodItem>(
 				FXCollections.observableArrayList(new ArrayList<FoodItem>()));
-		this.filePath = COMPOSITE_FOOD_ITEMS_JSON_FILE;
+		this.filePath = FoodItem.FOOD_ITEMS_JSON_FILE;
 		this.objectMapper = new ObjectMapper();
 	}
 
