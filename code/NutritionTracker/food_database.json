@@ -1,0 +1,25 @@
+{"type": "base", "description": "Apple (medium)", "quantityCategory": "QUANTITY", "portionSize": 1, "calories": 95, "protein": 0.5, "fat": 0.3, "sugar": 19.0, "carbohydrates": 25.0, "sodium": 2.0}
+{"type": "base", "description": "Banana (medium)", "quantityCategory": "QUANTITY", "portionSize": 1, "calories": 105, "protein": 1.3, "fat": 0.4, "sugar": 14.4, "carbohydrates": 27.0, "sodium": 1.0}
+{"type": "base", "description": "Egg (large)", "quantityCategory": "QUANTITY", "portionSize": 1, "calories": 72, "protein": 6.3, "fat": 5.0, "sugar": 0.2, "carbohydrates": 0.4, "sodium": 71.0}
+{"type": "base", "description": "White Bread (slice)", "quantityCategory": "QUANTITY", "portionSize": 1, "calories": 79, "protein": 2.7, "fat": 1.0, "sugar": 1.4, "carbohydrates": 15.0, "sodium": 142.0}
+{"type": "base", "description": "Orange (medium)", "quantityCategory": "QUANTITY", "portionSize": 1, "calories": 62, "protein": 1.2, "fat": 0.2, "sugar": 12.2, "carbohydrates": 15.4, "sodium": 0.0}
+{"type": "base", "description": "Chicken Breast", "quantityCategory": "WEIGHT", "portionSize": 1, "calories": 1.65, "protein": 0.31, "fat": 0.036, "sugar": 0.0, "carbohydrates": 0.0, "sodium": 0.74}
+{"type": "base", "description": "Salmon (Atlantic)", "quantityCategory": "WEIGHT", "portionSize": 1, "calories": 2.08, "protein": 0.204, "fat": 0.134, "sugar": 0.0, "carbohydrates": 0.0, "sodium": 0.59}
+{"type": "base", "description": "Broccoli", "quantityCategory": "WEIGHT", "portionSize": 1, "calories": 0.34, "protein": 0.028, "fat": 0.004, "sugar": 0.017, "carbohydrates": 0.066, "sodium": 0.33}
+{"type": "base", "description": "Ground Beef (lean)", "quantityCategory": "WEIGHT", "portionSize": 1, "calories": 2.15, "protein": 0.261, "fat": 0.12, "sugar": 0.0, "carbohydrates": 0.0, "sodium": 0.75}
+{"type": "base", "description": "Sweet Potato", "quantityCategory": "WEIGHT", "portionSize": 1, "calories": 0.86, "protein": 0.016, "fat": 0.001, "sugar": 0.042, "carbohydrates": 0.201, "sodium": 0.55}
+{"type": "base", "description": "Cheddar Cheese", "quantityCategory": "WEIGHT", "portionSize": 1, "calories": 4.03, "protein": 0.25, "fat": 0.33, "sugar": 0.005, "carbohydrates": 0.013, "sodium": 6.21}
+{"type": "base", "description": "Almonds", "quantityCategory": "WEIGHT", "portionSize": 1, "calories": 5.79, "protein": 0.212, "fat": 0.499, "sugar": 0.044, "carbohydrates": 0.216, "sodium": 0.01}
+{"type": "base", "description": "White Rice (cooked)", "quantityCategory": "WEIGHT", "portionSize": 1, "calories": 1.3, "protein": 0.027, "fat": 0.003, "sugar": 0.0, "carbohydrates": 0.282, "sodium": 0.01}
+{"type": "base", "description": "Avocado", "quantityCategory": "WEIGHT", "portionSize": 1, "calories": 1.6, "protein": 0.02, "fat": 0.147, "sugar": 0.007, "carbohydrates": 0.085, "sodium": 0.07}
+{"type": "base", "description": "Tuna (canned)", "quantityCategory": "WEIGHT", "portionSize": 1, "calories": 1.16, "protein": 0.255, "fat": 0.008, "sugar": 0.0, "carbohydrates": 0.0, "sodium": 3.96}
+{"type": "base", "description": "Whole Milk (1 cup)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 149, "protein": 8.0, "fat": 8.0, "sugar": 12.3, "carbohydrates": 11.7, "sodium": 105.0}
+{"type": "base", "description": "Orange Juice (1 cup)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 112, "protein": 1.7, "fat": 0.5, "sugar": 20.8, "carbohydrates": 25.8, "sodium": 2.0}
+{"type": "base", "description": "Greek Yogurt (3/4 cup)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 100, "protein": 17.3, "fat": 0.7, "sugar": 6.0, "carbohydrates": 6.0, "sodium": 36.0}
+{"type": "base", "description": "Oatmeal (1 cup cooked)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 158, "protein": 5.9, "fat": 3.2, "sugar": 0.6, "carbohydrates": 27.4, "sodium": 9.0}
+{"type": "base", "description": "Brown Rice (1 cup cooked)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 216, "protein": 5.0, "fat": 1.8, "sugar": 0.7, "carbohydrates": 44.8, "sodium": 10.0}
+{"type": "base", "description": "Pasta (1 cup cooked)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 220, "protein": 8.1, "fat": 1.3, "sugar": 0.6, "carbohydrates": 43.2, "sodium": 1.0}
+{"type": "base", "description": "Peanut Butter (2 tbsp)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 188, "protein": 8.0, "fat": 16.0, "sugar": 3.4, "carbohydrates": 6.9, "sodium": 147.0}
+{"type": "base", "description": "Olive Oil (1 tbsp)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 119, "protein": 0.0, "fat": 13.5, "sugar": 0.0, "carbohydrates": 0.0, "sodium": 0.0}
+{"type": "base", "description": "Black Beans (1/2 cup)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 114, "protein": 7.6, "fat": 0.5, "sugar": 0.3, "carbohydrates": 20.4, "sodium": 204.0}
+{"type": "base", "description": "Cottage Cheese (1/2 cup)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 110, "protein": 12.5, "fat": 5.0, "sugar": 3.0, "carbohydrates": 3.5, "sodium": 380.0}
