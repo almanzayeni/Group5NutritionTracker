@@ -27,11 +27,11 @@ import javafx.stage.Stage;
  * @author vfilpo + Emi :)
  */
 public class HomeDashboardPageController {
-	@FXML
-    private Button calendarButton;
-
     @FXML
     private JFXHamburger hamburgerMenu;
+    
+    @FXML
+    private Button calendarButton;
 
     @FXML
     private Button homeButton;
