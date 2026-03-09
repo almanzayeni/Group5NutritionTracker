@@ -20,46 +20,48 @@ public class TestGetIngredientByDescription {
 	private CompositeFood ingredient2;
 	private CompositeFood compositeFoodToTest;
 	private List<FoodItem> startingIngredients;
+
 	@BeforeEach
 	public void setUp() {
 		this.startingIngredients = new ArrayList<FoodItem>();
 		this.ingredient1 = new BaseFood("ingredient1", QuantityCategory.QUANTITY, 1, 100, 1, 2, 3, 4, 5);
 		this.startingIngredients.add(this.ingredient1);
-		this.ingredient2 = new CompositeFood("ingredient2", QuantityCategory.WEIGHT, this.startingIngredients);
+		this.ingredient2 = new CompositeFood("ingredient2", QuantityCategory.WEIGHT, 1, this.startingIngredients);
 		this.startingIngredients.add(this.ingredient2);
-		this.compositeFoodToTest = new CompositeFood("compositeFoodToTest", QuantityCategory.WEIGHT, this.startingIngredients);
+		this.compositeFoodToTest = new CompositeFood("compositeFoodToTest", QuantityCategory.WEIGHT, 1,
+				this.startingIngredients);
 	}
-	
+
 	@Test
 	public void testNullDescription() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			this.compositeFoodToTest.getIngredientByDescription(null);
 		});
 	}
-	
+
 	@Test
 	public void testBlankDescription() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			this.compositeFoodToTest.getIngredientByDescription("   ");
 		});
 	}
-	
+
 	@Test
 	public void testIngredientNotFound() {
 		FoodItem result = this.compositeFoodToTest.getIngredientByDescription("nonexistent ingredient");
 		assertNull(result);
 	}
-	
+
 	@Test
 	public void testBaseIngredientFound() {
 		FoodItem result = this.compositeFoodToTest.getIngredientByDescription("ingredient1");
 		assertEquals(this.ingredient1, result);
 	}
-	
+
 	@Test
 	public void testCompositeIngredientFound() {
 		FoodItem result = this.compositeFoodToTest.getIngredientByDescription("ingredient2");
 		assertEquals(this.ingredient2, result);
 	}
-	
+
 }

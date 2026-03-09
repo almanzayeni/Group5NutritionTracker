@@ -21,39 +21,41 @@ public class TestRemoveIngredientByDescription {
 	private CompositeFood ingredient2;
 	private CompositeFood compositeFoodToTest;
 	private List<FoodItem> startingIngredients;
+
 	@BeforeEach
 	public void setUp() {
 		this.startingIngredients = new ArrayList<FoodItem>();
 		this.ingredient1 = new BaseFood("ingredient1", QuantityCategory.QUANTITY, 1, 100, 1, 2, 3, 4, 5);
 		this.startingIngredients.add(this.ingredient1);
-		this.ingredient2 = new CompositeFood("ingredient2", QuantityCategory.WEIGHT, this.startingIngredients);
+		this.ingredient2 = new CompositeFood("ingredient2", QuantityCategory.WEIGHT, 1, this.startingIngredients);
 		this.startingIngredients.add(this.ingredient2);
-		this.compositeFoodToTest = new CompositeFood("compositeFoodToTest", QuantityCategory.WEIGHT, this.startingIngredients);
+		this.compositeFoodToTest = new CompositeFood("compositeFoodToTest", QuantityCategory.WEIGHT, 1,
+				this.startingIngredients);
 	}
-	
+
 	@Test
 	public void testNullDescription() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			this.compositeFoodToTest.removeIngredientByDescription(null);
 		});
 	}
-	
+
 	@Test
 	public void testBlankDescription() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			this.compositeFoodToTest.removeIngredientByDescription("   ");
 		});
 	}
-	
+
 	@Test
 	public void testIngredientNotFound() {
 		assertFalse(this.compositeFoodToTest.removeIngredientByDescription("nonexistent ingredient"));
 	}
-	
+
 	@Test
 	public void testRemoveBaseIngredient() {
 		assertTrue(this.compositeFoodToTest.removeIngredientByDescription("ingredient1"));
-		assertFalse(this.compositeFoodToTest.getIngredients().contains(this.ingredient1));
+		assertFalse(this.compositeFoodToTest.getIngredientsList().contains(this.ingredient1));
 		assertEquals(100, this.compositeFoodToTest.getCalories());
 		assertEquals(1, this.compositeFoodToTest.getProtein());
 		assertEquals(2, this.compositeFoodToTest.getFat());
@@ -61,11 +63,11 @@ public class TestRemoveIngredientByDescription {
 		assertEquals(4, this.compositeFoodToTest.getCarbohydrates());
 		assertEquals(5, this.compositeFoodToTest.getSodium());
 	}
-	
+
 	@Test
 	public void testRemoveCompositeIngredient() {
 		assertTrue(this.compositeFoodToTest.removeIngredientByDescription("ingredient2"));
-		assertFalse(this.compositeFoodToTest.getIngredients().contains(this.ingredient2));
+		assertFalse(this.compositeFoodToTest.getIngredientsList().contains(this.ingredient2));
 		assertEquals(100, this.compositeFoodToTest.getCalories());
 		assertEquals(1, this.compositeFoodToTest.getProtein());
 		assertEquals(2, this.compositeFoodToTest.getFat());
@@ -73,5 +75,5 @@ public class TestRemoveIngredientByDescription {
 		assertEquals(4, this.compositeFoodToTest.getCarbohydrates());
 		assertEquals(5, this.compositeFoodToTest.getSodium());
 	}
-	
+
 }
