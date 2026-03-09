@@ -46,6 +46,12 @@
 			<version>5.5.1</version>
 			<scope>test</scope>
 		</dependency>
+	  <!-- ZeroMQ  -->
+	  <dependency>
+	    <groupId>org.zeromq</groupId>
+	    <artifactId>jeromq</artifactId>
+	    <version>0.6.0</version>
+	  </dependency>
 		<!-- Source: https://mvnrepository.com/artifact/org.mockito/mockito-core -->
 		<dependency>
     		<groupId>org.mockito</groupId>
