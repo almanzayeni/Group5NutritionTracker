@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<?xml-model href="LoginPage.fxml"?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="640.0" prefWidth="360.0"
+            style="-fx-background-color: #F3EDE4;"
+            xmlns="http://javafx.com/javafx/19"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.LoginPageController">
+
+   <children>
+
+      <!-- Logo / App Title -->
+      <VBox alignment="CENTER" layoutX="0.0" layoutY="80.0" prefWidth="360.0" spacing="6.0">
+         <Label text="NutriTracker"
+                textFill="#1f5c33"
+                style="-fx-font-family: 'Bookman Old Style'; -fx-font-size: 34px; -fx-font-weight: bold;" />
+         <Label text="Track what matters."
+                textFill="#1f5c33"
+                style="-fx-font-family: 'Bookman Old Style'; -fx-font-size: 13px; -fx-opacity: 0.7;" />
+      </VBox>
+
+      <!-- Login Card -->
+      <Pane layoutX="19.0" layoutY="200.0" prefWidth="323.0" prefHeight="340.0"
+            style="-fx-background-color: #DECFBD; -fx-background-radius: 18; -fx-border-radius: 18;
+                   -fx-border-color: rgba(31,92,51,0.25); -fx-border-width: 2;">
+         <children>
+            <VBox layoutX="24.0" layoutY="28.0" prefWidth="275.0" spacing="18.0">
+
+               <!-- Card Header -->
+               <Label text="Sign In"
+                      textFill="#1f5c33"
+                      style="-fx-font-family: 'Bookman Old Style'; -fx-font-size: 22px; -fx-font-weight: bold;" />
+
+               <!-- Username -->
+               <VBox spacing="6.0">
+                  <Label text="Username"
+                         textFill="#1f5c33"
+                         style="-fx-font-size: 13px; -fx-font-weight: bold;" />
+                  <TextField fx:id="usernameField"
+                             promptText="Enter your username"
+                             prefHeight="40.0" prefWidth="275.0"
+                             style="-fx-background-color: #F3EDE4; -fx-background-radius: 10;
+                                    -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 10;
+                                    -fx-border-width: 1.5; -fx-font-size: 14px; -fx-padding: 0 10 0 10;" />
+               </VBox>
+
+               <!-- Password -->
+               <VBox spacing="6.0">
+                  <Label text="Password"
+                         textFill="#1f5c33"
+                         style="-fx-font-size: 13px; -fx-font-weight: bold;" />
+                  <PasswordField fx:id="passwordField"
+                                 promptText="Enter your password"
+                                 prefHeight="40.0" prefWidth="275.0"
+                                 style="-fx-background-color: #F3EDE4; -fx-background-radius: 10;
+                                        -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 10;
+                                        -fx-border-width: 1.5; -fx-font-size: 14px; -fx-padding: 0 10 0 10;" />
+               </VBox>
+
+               <!-- Error Label -->
+               <Label fx:id="errorLabel" text=""
+                      textFill="#c0392b"
+                      style="-fx-font-size: 12px;"
+                      wrapText="true" prefWidth="275.0" />
+
+               <!-- Login Button -->
+               <Button fx:id="loginButton" text="Login"
+                       mnemonicParsing="false"
+                       prefHeight="44.0" prefWidth="275.0"
+                       onAction="#handleLogin"
+                       style="-fx-background-color: #87b442; -fx-text-fill: white;
+                              -fx-background-radius: 12; -fx-font-weight: bold; -fx-font-size: 15px;" />
+
+            </VBox>
+         </children>
+      </Pane>
+
+      <!-- Create Account Link -->
+      <HBox alignment="CENTER" layoutX="0.0" layoutY="558.0" prefWidth="360.0" spacing="4.0">
+         <Label text="Don't have an account?"
+                textFill="#1f5c33"
+                style="-fx-font-size: 13px;" />
+         <Button fx:id="createAccountButton" text="Create Account"
+                 mnemonicParsing="false"
+                 onAction="#handleCreateAccount"
+                 style="-fx-background-color: transparent; -fx-text-fill: #87b442;
+                        -fx-font-weight: bold; -fx-font-size: 13px;
+                        -fx-cursor: hand; -fx-underline: true; -fx-padding: 0;" />
+      </HBox>
+
+   </children>
+</AnchorPane>
