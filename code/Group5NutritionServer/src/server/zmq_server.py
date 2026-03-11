@@ -36,6 +36,10 @@ def run(protocol, ipAddress, port):
             response = login_authentication_request_handler.handleRequest(request)
             json_response = json.dumps(response)
             socket.send_string(json_response)
+        else:
+            response = {constants.KEY_STATUS:constants.UNSUPPORTED_OPERATION_STATUS, constants.KEY_FAILURE_MESSAGE:"unsupported request type"}
+            json_response = json.dumps(response)
+            socket.send_string(json_response)
             
 if __name__ == "__main__":
     run(constants.PROTOCOL, constants.IP_ADDRESS, constants.PORT)
