@@ -10,6 +10,7 @@ PORT = "5555"
 
 KEY_REQUEST_TYPE = "request_type"
 KEY_FAILURE_MESSAGE = "failure_message"
+EXIT_COMMAND = "exit";
 KEY_STATUS = "status"
 KEY_USER = "user"
 KEY_USERNAME = "username"

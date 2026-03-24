@@ -88,3 +88,12 @@ class User(object):
         @return the diet goals of the user.
         '''
         return self._dietGoals
+    
+    def toDict(self):
+        return {
+            "name": self.getName(),
+            "username": self.getUsername(),
+            "password": self.getPassword(),
+            "currentFoodLog": self.getCurrentFoodLog().toDict(),
+            "dietGoals": self.getDietGoals().toDict()
+        }

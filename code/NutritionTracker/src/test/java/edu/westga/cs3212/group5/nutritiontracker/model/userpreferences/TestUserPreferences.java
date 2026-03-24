@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
-import edu.westga.cs3212.group5.nutritiontracker.model.UserPreferences;
+import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
 
 /**
  * Unit tests for UserPreferences.
@@ -19,7 +19,7 @@ public class TestUserPreferences {
 
     @Test
     void testConstructorValidAllGoals() {
-        UserPreferences prefs = new UserPreferences(
+        DietGoals prefs = new DietGoals(
                 PrimaryGoal.CALORIE, 2000, 150, 65, 50, 2300, 250,
                 List.of("Drink more water", "Sleep 8 hours"));
 
@@ -35,7 +35,7 @@ public class TestUserPreferences {
 
     @Test
     void testConstructorNullOtherGoalsTreatedAsEmpty() {
-        UserPreferences prefs = new UserPreferences(
+        DietGoals prefs = new DietGoals(
                 PrimaryGoal.PROTEIN, 2200, 100, 70, 40, 1800, 300, null);
 
         assertNotNull(prefs.getOtherGoals());
@@ -44,13 +44,13 @@ public class TestUserPreferences {
 
     @Test
     void testConstructorZeroNumericGoalsAllowed() {
-        assertDoesNotThrow(() -> new UserPreferences(
+        assertDoesNotThrow(() -> new DietGoals(
                 PrimaryGoal.PROTEIN, 0, 0, 0, 0, 0, 0, null));
     }
 
     @Test
     void testOtherGoalsListIsUnmodifiable() {
-        UserPreferences prefs = new UserPreferences(
+        DietGoals prefs = new DietGoals(
                 PrimaryGoal.CALORIE, 1800, 120, 60, 35, 2000, 220,
                 List.of("Goal A"));
 
@@ -61,48 +61,48 @@ public class TestUserPreferences {
     @Test
     void testConstructorNullPrimaryGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(null, 2000, 150, 65, 50, 2300, 250, null));
+                new DietGoals(null, 2000, 150, 65, 50, 2300, 250, null));
     }
 
     @Test
     void testConstructorNegativeCalorieGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.CALORIE, -1, 150, 65, 50, 2300, 250, null));
+                new DietGoals(PrimaryGoal.CALORIE, -1, 150, 65, 50, 2300, 250, null));
     }
 
     @Test
     void testConstructorNegativeProteinGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.CALORIE, 2000, -1, 65, 50, 2300, 250, null));
+                new DietGoals(PrimaryGoal.CALORIE, 2000, -1, 65, 50, 2300, 250, null));
     }
 
     @Test
     void testConstructorNegativeFatGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.CALORIE, 2000, 150, -1, 50, 2300, 250, null));
+                new DietGoals(PrimaryGoal.CALORIE, 2000, 150, -1, 50, 2300, 250, null));
     }
 
     @Test
     void testConstructorNegativeSugarGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.CALORIE, 2000, 150, 65, -1, 2300, 250, null));
+                new DietGoals(PrimaryGoal.CALORIE, 2000, 150, 65, -1, 2300, 250, null));
     }
 
     @Test
     void testConstructorNegativeSodiumGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.CALORIE, 2000, 150, 65, 50, -1, 250, null));
+                new DietGoals(PrimaryGoal.CALORIE, 2000, 150, 65, 50, -1, 250, null));
     }
 
     @Test
     void testConstructorNegativeCarbsGoalThrows() {
         assertThrows(IllegalArgumentException.class, () ->
-                new UserPreferences(PrimaryGoal.CALORIE, 2000, 150, 65, 50, 2300, -1, null));
+                new DietGoals(PrimaryGoal.CALORIE, 2000, 150, 65, 50, 2300, -1, null));
     }
 
     @Test
     void testGetPrimaryGoalReturnsCorrectEnum() {
-        UserPreferences prefs = new UserPreferences(
+        DietGoals prefs = new DietGoals(
                 PrimaryGoal.PROTEIN, 2500, 180, 80, 45, 2500, 300, null);
         assertEquals(PrimaryGoal.PROTEIN, prefs.getPrimaryGoal());
     }

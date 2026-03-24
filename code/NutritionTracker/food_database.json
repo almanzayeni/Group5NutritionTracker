@@ -24,3 +24,4 @@
 {"type": "base", "description": "Black Beans (1/2 cup)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 114, "protein": 7.6, "fat": 0.5, "sugar": 0.3, "carbohydrates": 20.4, "sodium": 204.0}
 {"type": "base", "description": "Cottage Cheese (1/2 cup)", "quantityCategory": "SERVING", "portionSize": 1, "calories": 110, "protein": 12.5, "fat": 5.0, "sugar": 3.0, "carbohydrates": 3.5, "sodium": 380.0}
 {"type":"base","quantityCategory":"QUANTITY","portionSize":1.0,"calories":50.0,"protein":0.0,"fat":0.0,"sugar":0.0,"carbohydrates":0.0,"sodium":0.0,"description":"UniqueFoodXYZ"}
+{"type":"base","quantityCategory":"QUANTITY","portionSize":1.0,"calories":50.0,"protein":0.0,"fat":0.0,"sugar":0.0,"carbohydrates":0.0,"sodium":0.0,"description":"UniqueFoodXYZ"}

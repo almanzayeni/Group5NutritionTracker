@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
-import edu.westga.cs3212.group5.nutritiontracker.model.UserPreferences;
+import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.PreferencesVM;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -72,7 +72,7 @@ public class PreferencesController {
         }
 
         String otherGoals = this.otherGoalsTextField.getText();
-        UserPreferences prefs = this.viewModel.createPreferences(selectedGoal, otherGoals);
+        DietGoals prefs = this.viewModel.createPreferences(selectedGoal, otherGoals);
 
         if (prefs != null) {
             // TODO: pass prefs to account-creation logic / navigate to next screen

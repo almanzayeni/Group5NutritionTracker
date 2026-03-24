@@ -144,3 +144,15 @@ class DietGoals(object):
         @return the other diet goals for the user.
         '''
         return self._otherGoals
+    
+    def toDict(self):
+        return {
+            "primaryGoal": self.getPrimaryGoal(),
+            "calorieGoal": self.getCalorieGoal(),
+            "proteinGoal": self.getProteinGoal(),
+            "fatGoal": self.getFatGoal(),
+            "sugarGoal": self.getSugarGoal(),
+            "sodiumGoal": self.getSodiumGoal(),
+            "carbsGoal": self.getCarbsGoal(),
+            "otherGoals": self.getOtherGoals()
+        }

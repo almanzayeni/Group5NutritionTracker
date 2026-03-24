@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
-import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
 

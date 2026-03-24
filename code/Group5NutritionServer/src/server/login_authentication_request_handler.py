@@ -3,6 +3,7 @@ Created on Mar 9, 2026
 
 @author: Justin Smith
 '''
+import json
 from model import database
 from server import constants
 
@@ -21,11 +22,13 @@ def handleRequest(request):
     if (constants.KEY_PASSWORD not in request):
         raise Exception("request does not contain password")
         
-    username = request.constants.KEY_USERNAME
-    password = request.constants.KEY_PASSWORD
+    username = request[constants.KEY_USERNAME]
+    password = request[constants.KEY_PASSWORD]
     user = None
+    
     try:
         user = database.getUsers()[username][password]
     except KeyError:
         return {constants.KEY_STATUS:constants.BAD_MESSAGE_STATUS, constants.KEY_FAILURE_MESSAGE:"invalid username or password"}
-    return {constants.KEY_STATUS:constants.SUCCESS_STATUS, constants.KEY_USER:user}
+    
+    return {constants.KEY_STATUS:constants.SUCCESS_STATUS, constants.KEY_USER:user.toDict()}

@@ -5,10 +5,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
-import edu.westga.cs3212.group5.nutritiontracker.model.UserPreferences;
-import edu.westga.cs3212.group5.nutritiontracker.server.ServerClient;
-import edu.westga.cs3212.nutritiontracker.server.dto.PingRequest;
-import edu.westga.cs3212.nutritiontracker.server.dto.PingResponse;
+import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
 
 import java.util.Arrays;
 import java.util.List;
@@ -103,9 +100,9 @@ public class PreferencesVM {
      *
      * @param primaryGoal    the selected primary goal enum value
      * @param otherGoalsText comma-separated string of additional goals (may be blank)
-     * @return a new {@link UserPreferences}, or {@code null} if validation fails
+     * @return a new {@link DietGoals}, or {@code null} if validation fails
      */
-    public UserPreferences createPreferences(PrimaryGoal primaryGoal, String otherGoalsText) {
+    public DietGoals createPreferences(PrimaryGoal primaryGoal, String otherGoalsText) {
         try {
             List<String> otherGoals = (otherGoalsText == null || otherGoalsText.isBlank())
                     ? List.of()
@@ -114,7 +111,7 @@ public class PreferencesVM {
                             .filter(s -> !s.isEmpty())
                             .collect(Collectors.toList());
 
-            UserPreferences prefs = new UserPreferences(
+            DietGoals prefs = new DietGoals(
                     primaryGoal,
                     this.calorie.get(),
                     this.protein.get(),

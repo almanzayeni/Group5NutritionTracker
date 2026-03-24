@@ -101,4 +101,11 @@ class FoodLog(object):
         '''
         return self._snacks
     
-        
+    def toDict(self):
+        return {
+            "date": self.getDate().isoformat(),
+            "breakfast": [food.to_dict() for food in self._breakfast],
+            "lunch": [food.to_dict() for food in self._lunch],
+            "dinner": [food.to_dict() for food in self._dinner],
+            "snacks": [food.to_dict() for food in self._snacks]
+        }

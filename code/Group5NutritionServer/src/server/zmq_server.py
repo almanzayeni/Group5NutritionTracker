@@ -26,18 +26,22 @@ def run(protocol, ipAddress, port):
         request = json.loads(message)
         log("Received request: {0}".format(request))
         
-        if(request == "exit"):
+        if(request == constants.EXIT_COMMAND):
+            log("Exiting server...")
             return
         elif(constants.KEY_REQUEST_TYPE not in request):
             response = {constants.KEY_STATUS:constants.BAD_MESSAGE_STATUS, constants.KEY_FAILURE_MESSAGE:"no request type"}
+            log("Response: {0}".format(response))
             json_response = json.dumps(response)
             socket.send_string(json_response)
         elif(request[constants.KEY_REQUEST_TYPE] == constants.AUTHENTICATE_LOGIN_REQUEST_TYPE):
             response = login_authentication_request_handler.handleRequest(request)
+            log("Response: {0}".format(response))
             json_response = json.dumps(response)
             socket.send_string(json_response)
         else:
             response = {constants.KEY_STATUS:constants.UNSUPPORTED_OPERATION_STATUS, constants.KEY_FAILURE_MESSAGE:"unsupported request type"}
+            log("Response: {0}".format(response))
             json_response = json.dumps(response)
             socket.send_string(json_response)
             
