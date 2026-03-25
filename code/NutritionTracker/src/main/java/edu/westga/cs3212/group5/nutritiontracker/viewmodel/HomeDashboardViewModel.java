@@ -2,9 +2,7 @@ package edu.westga.cs3212.group5.nutritiontracker.viewmodel;
 
 import java.time.LocalDate;
 
-import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
-import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.ObjectProperty;

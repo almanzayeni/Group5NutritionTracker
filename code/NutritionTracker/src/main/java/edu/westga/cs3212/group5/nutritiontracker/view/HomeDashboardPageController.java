@@ -1,6 +1,5 @@
 package edu.westga.cs3212.group5.nutritiontracker.view;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import javafx.beans.binding.Bindings;

@@ -1,0 +1,99 @@
+'''
+Created on Mar 9, 2026
+
+@author: Justin Smith
+'''
+
+class User(object):
+    '''
+    Models a user.
+    '''
+
+
+    def __init__(self, name, username, password, foodLog, dietGoals):
+        '''
+        Create a new User with the provided information.
+        
+        @precondition name != None &&
+                      username != None &&
+                      password != None &&
+                      currentFoodLog != None &&
+                      dietGoals != None
+                      
+        @postcondition getName() == name &&
+                       getUsername() == username &&
+                       getPassword() == password &&
+                       getCurrentFoodLog() == foodLog &&
+                       getDietGoals() == dietGoals
+                       
+        @param name name of the user
+        @param username username for the user
+        @param password password for the user
+        @param foodLog food log for the user
+        @param dietGoals diet goals for the user
+        '''
+        if (name == None):
+            raise Exception("name is None")
+        if (username == None):
+            raise Exception("username is None")
+        if (password == None):
+            raise Exception("password is None")
+        if (foodLog == None):
+            raise Exception("food log is None")
+        if (dietGoals == None):
+            raise Exception("diet goals is None")
+        
+        self._name = name
+        self._username = username
+        self._password = password
+        self._currentFoodLog = foodLog
+        self._dietGoals = dietGoals
+        
+    def getName(self):
+        '''
+        Get the name of the user.
+        
+        @return the name of the user.
+        '''
+        return self._name
+    
+    def getUsername(self):
+        '''
+        Get the username of the user.
+        
+        @return the username of the user.
+        '''
+        return self._username
+    
+    def getPassword(self):
+        '''
+        Get the password of the user.
+        
+        @return the password of the user.
+        '''
+        return self._password
+    
+    def getCurrentFoodLog(self):
+        '''
+        Get the current food log of the user.
+        
+        @return the current food log of the user
+        '''
+        return self._currentFoodLog
+    
+    def getDietGoals(self):
+        '''
+        Get the diet goals of the user.
+        
+        @return the diet goals of the user.
+        '''
+        return self._dietGoals
+    
+    def toDict(self):
+        return {
+            "name": self.getName(),
+            "username": self.getUsername(),
+            "password": self.getPassword(),
+            "currentFoodLog": self.getCurrentFoodLog().toDict(),
+            "dietGoals": self.getDietGoals().toDict()
+        }

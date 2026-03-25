@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
-import edu.westga.cs3212.group5.nutritiontracker.model.UserPreferences;
+import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
 
 /**
  * Unit tests for PreferencesVM.
@@ -49,7 +49,7 @@ class TestPreferencesVM {
         this.viewModel.sodiumProperty().set(2300);
         this.viewModel.carbsProperty().set(250);
 
-        UserPreferences prefs = this.viewModel.createPreferences(
+        DietGoals prefs = this.viewModel.createPreferences(
                 PrimaryGoal.CALORIE, "Drink water, Sleep well");
 
         assertNotNull(prefs);
@@ -66,7 +66,7 @@ class TestPreferencesVM {
     void testCreatePreferencesOtherGoalsParsedCorrectly() {
         this.viewModel.calorieProperty().set(1800);
 
-        UserPreferences prefs = this.viewModel.createPreferences(
+        DietGoals prefs = this.viewModel.createPreferences(
                 PrimaryGoal.OTHER, "Goal A, Goal B, Goal C");
 
         assertNotNull(prefs);
@@ -81,7 +81,7 @@ class TestPreferencesVM {
     void testCreatePreferencesBlankOtherGoalsProducesEmptyList() {
         this.viewModel.calorieProperty().set(2200);
 
-        UserPreferences prefs = this.viewModel.createPreferences(
+        DietGoals prefs = this.viewModel.createPreferences(
                 PrimaryGoal.PROTEIN, "   ");
 
         assertNotNull(prefs);
@@ -92,7 +92,7 @@ class TestPreferencesVM {
     void testCreatePreferencesNullOtherGoalsProducesEmptyList() {
         this.viewModel.calorieProperty().set(2200);
 
-        UserPreferences prefs = this.viewModel.createPreferences(
+        DietGoals prefs = this.viewModel.createPreferences(
                 PrimaryGoal.PROTEIN, null);
 
         assertNotNull(prefs);
@@ -113,7 +113,7 @@ class TestPreferencesVM {
     void testCreatePreferencesNullPrimaryGoalReturnsNull() {
         this.viewModel.calorieProperty().set(2000);
 
-        UserPreferences prefs = this.viewModel.createPreferences(null, "");
+        DietGoals prefs = this.viewModel.createPreferences(null, "");
 
         assertNull(prefs);
         assertFalse(this.viewModel.warningProperty().get().isEmpty());
@@ -123,7 +123,7 @@ class TestPreferencesVM {
     void testCreatePreferencesNegativeCalorieSetsWarning() {
         this.viewModel.calorieProperty().set(-1);
 
-        UserPreferences prefs = this.viewModel.createPreferences(
+        DietGoals prefs = this.viewModel.createPreferences(
                 PrimaryGoal.CALORIE, "");
 
         assertNull(prefs);

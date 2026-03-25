@@ -3,6 +3,9 @@ package edu.westga.cs3212.group5.nutritiontracker.model;
 import java.util.Collections;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The Class UserPreferences.
  * Represents a user's diet plan preferences and macro goals.
@@ -14,7 +17,7 @@ import java.util.List;
  * @author Yeni Almanza
  * @version spring 2026
  */
-public class UserPreferences {
+public class DietGoals {
 
     private final PrimaryGoal primaryGoal;
     private final double calorieGoal;
@@ -50,8 +53,16 @@ public class UserPreferences {
      * @throws IllegalArgumentException if primaryGoal is null, or if any numeric
      *         goal is negative
      */
-    public UserPreferences(PrimaryGoal primaryGoal, double calorieGoal, double proteinGoal, double fatGoal,
-            double sugarGoal, double sodiumGoal, double carbsGoal, List<String> otherGoals) {
+    @JsonCreator
+    public DietGoals(
+            @JsonProperty("primaryGoal") PrimaryGoal primaryGoal,
+            @JsonProperty("calorieGoal") double calorieGoal,
+            @JsonProperty("proteinGoal") double proteinGoal,
+            @JsonProperty("fatGoal") double fatGoal,
+            @JsonProperty("sugarGoal") double sugarGoal,
+            @JsonProperty("sodiumGoal") double sodiumGoal,
+            @JsonProperty("carbsGoal") double carbsGoal,
+            @JsonProperty("otherGoals") List<String> otherGoals) {
 
         if (primaryGoal == null) {
             throw new IllegalArgumentException("Primary goal cannot be null");
@@ -82,7 +93,6 @@ public class UserPreferences {
         this.sugarGoal = sugarGoal;
         this.sodiumGoal = sodiumGoal;
         this.carbsGoal = carbsGoal;
-
         this.otherGoals = otherGoals == null
                 ? Collections.emptyList()
                 : Collections.unmodifiableList(List.copyOf(otherGoals));
