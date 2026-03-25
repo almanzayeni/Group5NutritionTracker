@@ -3,6 +3,12 @@ package edu.westga.cs3212.group5.nutritiontracker.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * The Class User.
+ * 
+ * @author Justin Smith
+ * @version spring 2026
+ */
 public class User {
 	private String username;
 	private String password;
@@ -10,6 +16,21 @@ public class User {
 	private DietGoals dietGoals;
 	private FoodLog currentFoodLog;
 
+	/**
+	 * Instantiates a new user.
+	 * 
+	 * @precondition username != null && !username.isBlank() &&
+	 * 				 password != null && !password.isBlank() &&
+	 * 				 name != null && !name.isBlank() &&
+	 * 				 dietGoals != null &&
+	 * 				 currentFoodLog != null
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param name the name
+	 * @param dietGoals the diet goals
+	 * @param currentFoodLog the current food log
+	 */
 	@JsonCreator
 	public User(@JsonProperty("username") String username, @JsonProperty("password") String password,
 			@JsonProperty("name") String name, @JsonProperty("dietGoals") DietGoals dietGoals,
@@ -38,22 +59,47 @@ public class User {
 		this.currentFoodLog = currentFoodLog;
 	}
 
+	/**
+	 * Gets the username.
+	 *
+	 * @return the username
+	 */
 	public String getUsername() {
 		return this.username;
 	}
 
+	/**
+	 * Gets the password.
+	 *
+	 * @return the password
+	 */
 	public String getPassword() {
 		return this.password;
 	}
 
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	public String getName() {
 		return this.name;
 	}
 
+	/**
+	 * Gets the diet goals.
+	 *
+	 * @return the diet goals
+	 */
 	public DietGoals getDietGoals() {
 		return this.dietGoals;
 	}
 
+	/**
+	 * Gets the current food log.
+	 *
+	 * @return the current food log
+	 */
 	public FoodLog getCurrentFoodLog() {
 		return this.currentFoodLog;
 	}

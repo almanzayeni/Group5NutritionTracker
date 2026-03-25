@@ -1,5 +1,12 @@
 package edu.westga.cs3212.group5.nutritiontracker.server;
 
+/**
+ * The Class ServerConstants.
+ * Holds all of the constant values used by the server.
+ * 
+ * @author Justin Smith
+ * @version spring 2026
+ */
 public class ServerConstants {
 	public static final String PROTOCOL = "tcp";
 	public static final String IP_ADDRESS = "127.0.0.1";

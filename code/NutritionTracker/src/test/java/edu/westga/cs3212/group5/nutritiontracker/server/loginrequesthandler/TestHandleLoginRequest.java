@@ -1,5 +1,117 @@
 package edu.westga.cs3212.group5.nutritiontracker.server.loginrequesthandler;
 
-public class HandleLoginRequest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.time.LocalDate;
+import java.util.Collections;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
+import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
+import edu.westga.cs3212.group5.nutritiontracker.model.JsonMapperFactory;
+import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
+import edu.westga.cs3212.group5.nutritiontracker.model.User;
+import edu.westga.cs3212.group5.nutritiontracker.server.LoginRequestHandler;
+import edu.westga.cs3212.group5.nutritiontracker.server.ServerClient;
+import edu.westga.cs3212.group5.nutritiontracker.server.ServerConstants;
+
+public class TestHandleLoginRequest {
+
+	@Test
+	public void testNullRequest() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			LoginRequestHandler.handleLoginRequest(null);
+		});
+	}
+
+	@Test
+	public void testBlankRequest() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			LoginRequestHandler.handleLoginRequest("   ");
+		});
+	}
+
+	@Test
+	public void testNullResponse() {
+		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
+			serverClientMock.when(() -> ServerClient.send("request")).thenReturn(null);
+
+			RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+				LoginRequestHandler.handleLoginRequest("request");
+			});
+			assertEquals("Failed to handle login request", exception.getMessage());
+			assertEquals("Received empty response from server", exception.getCause().getMessage());
+		}
+	}
+
+	@Test
+	public void testBlankResponse() {
+		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
+			serverClientMock.when(() -> ServerClient.send("request")).thenReturn("   ");
+
+			RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+				LoginRequestHandler.handleLoginRequest("request");
+			});
+			assertEquals("Failed to handle login request", exception.getMessage());
+			assertEquals("Received empty response from server", exception.getCause().getMessage());
+		}
+	}
+
+	@Test
+	public void testFailureMessageResponse() {
+		String response = "{\"failure_message\":\"Invalid credentials\"}";
+		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
+			serverClientMock.when(() -> ServerClient.send("request")).thenReturn(response);
+
+			RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+				LoginRequestHandler.handleLoginRequest("request");
+			});
+			assertEquals("Failed to handle login request", exception.getMessage());
+			assertEquals("Login failed: Invalid credentials", exception.getCause().getMessage());
+		}
+	}
+
+	@Test
+	public void testMissingUserResponse() {
+		String response = "{\"status\":\"1\"}";
+		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
+			serverClientMock.when(() -> ServerClient.send("request")).thenReturn(response);
+
+			RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+				LoginRequestHandler.handleLoginRequest("request");
+			});
+			assertEquals("Failed to handle login request", exception.getMessage());
+			assertEquals("Login failed: User data is null", exception.getCause().getMessage());
+		}
+	}
+
+	@Test
+	public void testSuccessfulLoginResponse() throws Exception {
+		User expectedUser = this.createUser();
+		String response = JsonMapperFactory.create().writeValueAsString(Collections.singletonMap(ServerConstants.KEY_USER, expectedUser));
+
+		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
+			serverClientMock.when(() -> ServerClient.send("request")).thenReturn(response);
+
+			User result = LoginRequestHandler.handleLoginRequest("request");
+
+			assertEquals(expectedUser.getUsername(), result.getUsername());
+			assertEquals(expectedUser.getPassword(), result.getPassword());
+			assertEquals(expectedUser.getName(), result.getName());
+			assertEquals(expectedUser.getDietGoals().getPrimaryGoal(), result.getDietGoals().getPrimaryGoal());
+			assertEquals(expectedUser.getCurrentFoodLog().getDate(), result.getCurrentFoodLog().getDate());
+		}
+	}
+
+	private User createUser() {
+		DietGoals dietGoals = new DietGoals(PrimaryGoal.CALORIE, 2000, 100, 60, 50, 2300, 250,
+				Collections.singletonList("Stay consistent"));
+		FoodLog currentFoodLog = new FoodLog(LocalDate.of(2026, 3, 25));
+		return new User("username", "password", "name", dietGoals, currentFoodLog);
+	}
 
 }
