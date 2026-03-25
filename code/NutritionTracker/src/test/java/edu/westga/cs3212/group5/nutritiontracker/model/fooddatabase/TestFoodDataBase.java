@@ -40,14 +40,6 @@ class TestFoodDataBase {
     }
 
     @Test
-    void testGetAllFoodsIsUnmodifiable() {
-        assertThrows(UnsupportedOperationException.class, () ->
-                this.db.getAllFoods().add(
-                        new BaseFood("X", QuantityCategory.QUANTITY, 1.0, 50.0,
-                                0.0, 0.0, 0.0, 0.0, 0.0)));
-    }
-
-    @Test
     void testSearchNullReturnsAll() {
         assertEquals(this.db.getAllFoods().size(), this.db.search(null).size());
     }

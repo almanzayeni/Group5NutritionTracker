@@ -169,8 +169,8 @@ public class TestCreateMealItem {
 		assertEquals("Test Composite Food", created.getDescription());
 		assertEquals(300.0, created.getCalories(), 0.001);
 
-		FoodItem i1 = created.getIngredientByDescription("Ingredient 1");
-		FoodItem i2 = created.getIngredientByDescription("Ingredient 2");
+		FoodItem i1 = created.getIngredientByDescription("Food 1");
+		FoodItem i2 = created.getIngredientByDescription("Food 2");
 		assertTrue(i1 != null);
 		assertTrue(i2 != null);
 	}
