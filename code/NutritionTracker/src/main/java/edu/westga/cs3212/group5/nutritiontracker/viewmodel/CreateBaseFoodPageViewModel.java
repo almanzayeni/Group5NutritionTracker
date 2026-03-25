@@ -217,12 +217,18 @@ public class CreateBaseFoodPageViewModel {
 	private boolean checkForExistingFood(String foodName) throws IOException, JsonProcessingException{
 		HashSet<String> existingFoodNames = new HashSet<>();
 		
+		if (!Files.exists(Paths.get(this.filePath))) {
+			return false;
+		}
+		
 		try (var lines = Files.lines(Paths.get(this.filePath))){
 			for (String line : (Iterable<String>) lines::iterator) {
 				if (!line.trim().isEmpty()) {
 					try {
 						FoodItem food = this.objectMapper.readValue(line, FoodItem.class);
-						existingFoodNames.add(food.getDescription());
+						if (food != null) {
+							existingFoodNames.add(food.getDescription());
+						}
 					} catch (JsonProcessingException e) {
 						e.printStackTrace();
 						throw e;

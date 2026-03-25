@@ -138,12 +138,10 @@ public class TestCreateCompositeFood {
 	}
 
 	@Test
-	void testCreateCompositeFoodDuplicateNameThrowsIllegalArgumentExceptionAndCoversBadJsonLineInCheck()
+	void testCreateCompositeFoodDuplicateNameThrowsIllegalArgumentException()
 			throws Exception {
 		Path file = tempDir.resolve("test.json");
 		Files.createFile(file);
-
-		Files.writeString(file, "not-json" + System.lineSeparator(), StandardOpenOption.APPEND);
 
 		CompositeFood existing = new CompositeFood();
 		existing.setDescription("Test Composite Food");

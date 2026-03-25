@@ -5,7 +5,7 @@ import org.zeromq.ZMQ;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ServerClient extends Thread {
-	
+
 	public static String send(String request) throws Exception {
 		if (request == null || request.isBlank()) {
 			throw new IllegalArgumentException("Request cannot be null or blank");
@@ -23,10 +23,10 @@ public class ServerClient extends Thread {
 
 		socket.close();
 		context.term();
-		
+
 		return response;
 	}
-	
+
 	public static void close() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {

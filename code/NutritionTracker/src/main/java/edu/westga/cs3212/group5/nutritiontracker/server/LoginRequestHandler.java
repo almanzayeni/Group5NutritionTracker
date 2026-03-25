@@ -21,7 +21,7 @@ public class LoginRequestHandler {
 		requestMap.put(ServerConstants.KEY_REQUEST_TYPE, ServerConstants.AUTHENTICATE_LOGIN_REQUEST_TYPE);
 		requestMap.put(ServerConstants.KEY_USERNAME, username);
 		requestMap.put(ServerConstants.KEY_PASSWORD, password);
-		
+
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			return mapper.writeValueAsString(requestMap);
@@ -30,38 +30,38 @@ public class LoginRequestHandler {
 			throw new RuntimeException("Failed to create login request");
 		}
 	}
-	
+
 	public static User handleLoginRequest(String request) {
-	    if (request == null || request.isBlank()) {
-	        throw new IllegalArgumentException("Request cannot be null or blank");
-	    }
+		if (request == null || request.isBlank()) {
+			throw new IllegalArgumentException("Request cannot be null or blank");
+		}
 
-	    ObjectMapper mapper = JsonMapperFactory.create();
+		ObjectMapper mapper = JsonMapperFactory.create();
 
-	    try {
-	        String response = ServerClient.send(request);
-	        if (response == null || response.isBlank()) {
-	            throw new RuntimeException("Received empty response from server");
-	        }
+		try {
+			String response = ServerClient.send(request);
+			if (response == null || response.isBlank()) {
+				throw new RuntimeException("Received empty response from server");
+			}
 
-	        var root = mapper.readTree(response);
+			var root = mapper.readTree(response);
 
-	        if (root.has(ServerConstants.KEY_FAILURE_MESSAGE)) {
-	            String failureMessage = root.get(ServerConstants.KEY_FAILURE_MESSAGE).asText();
-	            throw new RuntimeException("Login failed: " + failureMessage);
-	        }
+			if (root.has(ServerConstants.KEY_FAILURE_MESSAGE)) {
+				String failureMessage = root.get(ServerConstants.KEY_FAILURE_MESSAGE).asText();
+				throw new RuntimeException("Login failed: " + failureMessage);
+			}
 
-	        if (!root.has(ServerConstants.KEY_USER)) {
-	            throw new RuntimeException("Login failed: User data is null");
-	        }
+			if (!root.has(ServerConstants.KEY_USER)) {
+				throw new RuntimeException("Login failed: User data is null");
+			}
 
-	        User user = mapper.treeToValue(root.get(ServerConstants.KEY_USER), User.class);
-	        System.out.println("Login successful for user: " + user.getName());
-	        return user;
+			User user = mapper.treeToValue(root.get(ServerConstants.KEY_USER), User.class);
+			System.out.println("Login successful for user: " + user.getName());
+			return user;
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        throw new RuntimeException("Failed to handle login request", e);
-	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Failed to handle login request", e);
+		}
 	}
 }
