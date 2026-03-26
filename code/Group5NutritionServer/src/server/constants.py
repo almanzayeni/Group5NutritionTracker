@@ -1,7 +1,7 @@
 '''
 Created on Mar 9, 2026
 
-@author: Justin Smith
+@author: Justin Smith, Yeni Almanza
 '''
 
 PROTOCOL = "tcp"
@@ -15,9 +15,11 @@ KEY_STATUS = "status"
 KEY_USER = "user"
 KEY_USERNAME = "username"
 KEY_PASSWORD = "password"
+KEY_NAME = "name"
 
 SUCCESS_STATUS = 1
 BAD_MESSAGE_STATUS = -1
 UNSUPPORTED_OPERATION_STATUS = -1
 
 AUTHENTICATE_LOGIN_REQUEST_TYPE = "AUTH"
+CREATE_ACCOUNT_REQUEST_TYPE      = "CREATE_ACCOUNT"

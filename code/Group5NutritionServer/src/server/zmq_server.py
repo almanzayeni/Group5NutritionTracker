@@ -1,12 +1,13 @@
 '''
 Created on Mar 9, 2026
 
-@author: Emi, Justin Smith
+@author: Emi, Justin Smith, Yeni Almanza
 '''
 import zmq
 import json
 from model import database
 from server import constants, login_authentication_request_handler
+from server import create_account_request_handler
 
 def log(message):
     print("SERVER::{0}".format(message))
@@ -36,6 +37,12 @@ def run(protocol, ipAddress, port):
             socket.send_string(json_response)
         elif(request[constants.KEY_REQUEST_TYPE] == constants.AUTHENTICATE_LOGIN_REQUEST_TYPE):
             response = login_authentication_request_handler.handleRequest(request)
+            log("Response: {0}".format(response))
+            json_response = json.dumps(response)
+            socket.send_string(json_response)
+            
+        elif(request[constants.KEY_REQUEST_TYPE] == constants.CREATE_ACCOUNT_REQUEST_TYPE):
+            response = create_account_request_handler.handleRequest(request)
             log("Response: {0}".format(response))
             json_response = json.dumps(response)
             socket.send_string(json_response)
