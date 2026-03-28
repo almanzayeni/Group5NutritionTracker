@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
+import edu.westga.cs3212.group5.nutritiontracker.model.User;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,8 @@ public class HomeDashboardPageController {
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("M-d-yyyy");
     
     private HomeDashboardViewModel viewModel;
+    private User currentUser;
+    
     @FXML
     private JFXHamburger hamburgerMenu;
     
@@ -89,6 +92,16 @@ public class HomeDashboardPageController {
     @FXML private void goCreateFood() { switchTo("CreateFoodItemTypeSelectionPage.fxml"); }
 
     @FXML private void goAddFood() { switchTo("SearchPage.fxml"); }
+    
+    /**
+     * Receives the logged-in user from the login controller and stores it.
+     * Call this immediately after loader.load() before the stage is shown.
+     *
+     * @param user the User returned from the server after successful login
+     */
+    public void initUser(User user) {
+        this.currentUser = user;
+    }
         
     /**
      * Sets the ViewModel that data will be pulled from.
