@@ -1,13 +1,10 @@
 '''
 Create account request handler.
 
-Validates the incoming request, checks for duplicate usernames,
-creates a new User, and stores it in the database.
 
 @author: Yeni Almanza
 @version: spring 2026
 '''
-import json
 from model import database
 from model.user import User
 from model.food_log import FoodLog
@@ -16,15 +13,27 @@ from server import constants
 from datetime import date as dateTime
 
 
+KEY_NAME                    = "name"
+KEY_PRIMARY_GOAL            = "primaryGoal"
+KEY_CALORIE_GOAL            = "calorieGoal"
+KEY_PROTEIN_GOAL            = "proteinGoal"
+KEY_FAT_GOAL                = "fatGoal"
+KEY_SUGAR_GOAL              = "sugarGoal"
+KEY_SODIUM_GOAL             = "sodiumGoal"
+KEY_CARBS_GOAL              = "carbsGoal"
+KEY_OTHER_GOALS             = "otherGoals"
+CREATE_ACCOUNT_REQUEST_TYPE = "CREATE_ACCOUNT"
+
+
 def handleRequest(request):
     '''
-    Validates the provided account creation data and creates a new user.
+    Validates the provided account creation data, reads the diet goals
+    entered by the user, and creates a new User.
 
     @precondition request != None &&
-                  request contains keys:
-                    constants.KEY_USERNAME,
-                    constants.KEY_PASSWORD,
-                    KEY_NAME
+                  request contains keys: username, password, name,
+                  primaryGoal, calorieGoal, proteinGoal, fatGoal,
+                  sugarGoal, sodiumGoal, carbsGoal, otherGoals
 
     @param request  the parsed JSON dict sent by the Java client
 
@@ -40,6 +49,22 @@ def handleRequest(request):
         raise Exception("request does not contain password")
     if KEY_NAME not in request:
         raise Exception("request does not contain name")
+    if KEY_PRIMARY_GOAL not in request:
+        raise Exception("request does not contain primaryGoal")
+    if KEY_CALORIE_GOAL not in request:
+        raise Exception("request does not contain calorieGoal")
+    if KEY_PROTEIN_GOAL not in request:
+        raise Exception("request does not contain proteinGoal")
+    if KEY_FAT_GOAL not in request:
+        raise Exception("request does not contain fatGoal")
+    if KEY_SUGAR_GOAL not in request:
+        raise Exception("request does not contain sugarGoal")
+    if KEY_SODIUM_GOAL not in request:
+        raise Exception("request does not contain sodiumGoal")
+    if KEY_CARBS_GOAL not in request:
+        raise Exception("request does not contain carbsGoal")
+    if KEY_OTHER_GOALS not in request:
+        raise Exception("request does not contain otherGoals")
 
     username = request[constants.KEY_USERNAME]
     password = request[constants.KEY_PASSWORD]
@@ -52,15 +77,16 @@ def handleRequest(request):
         }
 
     diet_goals = DietGoals(
-        primaryGoal="CALORIE",
-        calorieGoal=2000,
-        proteinGoal=150,
-        fatGoal=70,
-        sugarGoal=50,
-        sodiumGoal=2300,
-        carbsGoal=250,
-        otherGoals=[]
+        primaryGoal=request[KEY_PRIMARY_GOAL],
+        calorieGoal=request[KEY_CALORIE_GOAL],
+        proteinGoal=request[KEY_PROTEIN_GOAL],
+        fatGoal=request[KEY_FAT_GOAL],
+        sugarGoal=request[KEY_SUGAR_GOAL],
+        sodiumGoal=request[KEY_SODIUM_GOAL],
+        carbsGoal=request[KEY_CARBS_GOAL],
+        otherGoals=request[KEY_OTHER_GOALS]
     )
+
     food_log = FoodLog(
         date=dateTime.today(),
         breakfast=[],
@@ -77,7 +103,3 @@ def handleRequest(request):
         constants.KEY_STATUS: constants.SUCCESS_STATUS,
         constants.KEY_USER: new_user.toDict()
     }
-
-
-KEY_NAME                    = "name"
-CREATE_ACCOUNT_REQUEST_TYPE = "CREATE_ACCOUNT"
