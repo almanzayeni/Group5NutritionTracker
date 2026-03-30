@@ -2,6 +2,8 @@ package edu.westga.cs3212.group5.nutritiontracker;
 
 import java.io.IOException;
 
+import edu.westga.cs3212.group5.nutritiontracker.server.LoginRequestHandler;
+import edu.westga.cs3212.group5.nutritiontracker.server.ServerClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -45,5 +47,7 @@ public class App extends Application {
 	 */
 	public static void main(String[] args) {
 		launch(args);
+		LoginRequestHandler.handleLoginRequest(LoginRequestHandler.createLoginRequest("johndoe", "password123"));
+		ServerClient.close();
 	}
 }

@@ -24,7 +24,7 @@ def handleRequest(request):
                   request contains keys:
                     constants.KEY_USERNAME,
                     constants.KEY_PASSWORD,
-                    KEY_NAME
+                    constants.KEY_NAME
 
     @param request  the parsed JSON dict sent by the Java client
 
@@ -38,12 +38,12 @@ def handleRequest(request):
         raise Exception("request does not contain username")
     if constants.KEY_PASSWORD not in request:
         raise Exception("request does not contain password")
-    if KEY_NAME not in request:
+    if constants.KEY_NAME not in request:
         raise Exception("request does not contain name")
 
     username = request[constants.KEY_USERNAME]
     password = request[constants.KEY_PASSWORD]
-    name     = request[KEY_NAME]
+    name     = request[constants.KEY_NAME]
 
     if username in database.getUsers():
         return {
