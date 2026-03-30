@@ -1,0 +1,3 @@
+'''
+Food item model tests.
+'''
