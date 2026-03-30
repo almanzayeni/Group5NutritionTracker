@@ -42,7 +42,7 @@ class TestSearchRequestHandler(unittest.TestCase):
 
         search_food_item_by_description.assert_called_once_with("ban")
         self.assertEqual(constants.SUCCESS_STATUS, response[constants.KEY_STATUS])
-        self.assertEqual([banana.toDict()], response["food_items"])
+        self.assertEqual([banana.toDict()], response[constants.KEY_SEARCH_RESULTS])
 
 
 if __name__ == "__main__":
