@@ -103,3 +103,26 @@ def addFoodItem(foodItem):
     if(foodItem == None):
         raise Exception("food item is None")
     _foodItems.append(foodItem)
+    
+def searchFoodItemByDescription(query):
+    '''
+    Search for food items whose descriptions contain the provided query string.
+    
+    @precondition query != None
+    
+    @param query the string to search for in food item descriptions
+    
+    @return a list of all food items that contain the query string in their description.
+    '''
+    if (query == None):
+        raise Exception("query is None")
+    if (query == ""):
+        return []
+    
+    foodItems = []
+    
+    for key, value in _foodItems:
+        if query.lower() in key.lower():
+            foodItems.append(value)
+            
+    return foodItems

@@ -8,6 +8,7 @@ import json
 from model import database
 from server import constants, login_authentication_request_handler
 from server import create_account_request_handler
+from server import search_request_handler
 
 def log(message):
     print("SERVER::{0}".format(message))
@@ -32,25 +33,24 @@ def run(protocol, ipAddress, port):
             return
         elif(constants.KEY_REQUEST_TYPE not in request):
             response = {constants.KEY_STATUS:constants.BAD_MESSAGE_STATUS, constants.KEY_FAILURE_MESSAGE:"no request type"}
-            log("Response: {0}".format(response))
-            json_response = json.dumps(response)
-            socket.send_string(json_response)
+            sendResponse(socket, response)
         elif(request[constants.KEY_REQUEST_TYPE] == constants.AUTHENTICATE_LOGIN_REQUEST_TYPE):
             response = login_authentication_request_handler.handleRequest(request)
-            log("Response: {0}".format(response))
-            json_response = json.dumps(response)
-            socket.send_string(json_response)
-            
+            sendResponse(socket, response) 
         elif(request[constants.KEY_REQUEST_TYPE] == constants.CREATE_ACCOUNT_REQUEST_TYPE):
             response = create_account_request_handler.handleRequest(request)
-            log("Response: {0}".format(response))
-            json_response = json.dumps(response)
-            socket.send_string(json_response)
+            sendResponse(socket, response)
+        elif(request[constants.KEY_REQUEST_TYPE] == constants.SEARCH_REQUEST_TYPE):
+            response = search_request_handler.handleRequest(request)
+            sendResponse(socket, response)
         else:
             response = {constants.KEY_STATUS:constants.UNSUPPORTED_OPERATION_STATUS, constants.KEY_FAILURE_MESSAGE:"unsupported request type"}
-            log("Response: {0}".format(response))
-            json_response = json.dumps(response)
-            socket.send_string(json_response)
-            
+            sendResponse(socket, response)
+          
+def sendResponse(socket, response):
+    log("Response: {0}".format(response))
+    json_response = json.dumps(response)
+    socket.send_string(json_response)
+    
 if __name__ == "__main__":
     run(constants.PROTOCOL, constants.IP_ADDRESS, constants.PORT)
