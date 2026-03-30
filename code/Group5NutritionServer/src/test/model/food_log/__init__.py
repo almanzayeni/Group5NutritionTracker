@@ -1,0 +1,3 @@
+'''
+Food log model tests.
+'''

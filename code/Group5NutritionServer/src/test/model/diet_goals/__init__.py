@@ -1,0 +1,3 @@
+'''
+Diet goals model tests.
+'''

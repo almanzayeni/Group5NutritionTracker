@@ -1,0 +1,3 @@
+'''
+Quantity category model tests.
+'''
