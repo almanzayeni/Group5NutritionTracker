@@ -1,1 +1,39 @@
-We could put some notes in here...
+No request type included response = {'status':-1, 'failure_message':'no request type'}
+No matching request type response = {'status':-1, 'failure_message':'unsupported request type'}
+
+AUTH request = {"request_type":"AUTH", "password":"password123", "username":"johndoe"}
+Failed AUTH response = {'status':-1, 'failure_message':'invalid username or password'}
+Success AUTH response = {'status': 1, 'user': {'name': 'John Doe', 'username': 'johndoe', 'password': 'password123', 'currentFoodLog': {'date': '2026-03-30', 
+							'breakfast': [{'type': 'base', 'description': 'oatmeal', 'quantityCategory': 'SERVING', 'portionSize': 1, 'calories': 150, 'protein': 5, 'fat': 3, 'sugar': 1, 'carbohydrates': 27, 'sodium': 0}, ...], 
+							'lunch': [{'type': 'composite', 'description': 'chicken salad', 'quantityCategory': 'SERVING', 'portionSize': 1, 'calories': 350, 'protein': 30, 'fat': 20, 'sugar': 5, 'carbohydrates': 10, 'sodium': 500, 'ingredients': {'chicken breast': {'type': 'base', 'description': 'chicken breast', 'quantityCategory': 'WEIGHT', 'portionSize': 1, 'calories': 165, 'protein': 31, 'fat': 4, 'sugar': 0, 'carbohydrates': 0, 'sodium': 74}, ...}}], 
+							'dinner': [...], 'snacks': [...]}, 'dietGoals': {'primaryGoal': 'CALORIE', 'calorieGoal': 2000, 'proteinGoal': 150, 'fatGoal': 70, 'sugarGoal': 50, 'sodiumGoal': 2300, 'carbsGoal': 250, 'otherGoals': ['eat more vegetables']}}}
+									
+CREATE_ACCOUNT request = {"request_type":"CREATE_ACCOUNT", "username":"janedoe", "password":"password123", "name":"Jane Doe", "dietGoals":{"primaryGoal":"CALORIE", "calorieGoal":5000, "proteinGoal":50, "fatGoal":10, "sugarGoal":30, "sodiumGoal":20, "carbsGoal":13, "otherGoals":['eat more vegetables', ...]}}
+Success CREATE_ACCOUNT response = {'status': 1, 'user': {'name': 'John Doe', 'username': 'johndoe', 'password': 'password123', 'currentFoodLog': {'date': '2026-03-30', 'breakfast': [], 'lunch': [], 'dinner': [], 'snacks': []}, 
+									'dietGoals': {'primaryGoal': 'CALORIE', 'calorieGoal': 2000, 'proteinGoal': 150, 'fatGoal': 70, 'sugarGoal': 50, 'sodiumGoal': 2300, 'carbsGoal': 250, 'otherGoals': ['eat more vegetables']}}}
+
+ADD_FOOD request = {"request_type":ADD_FOOD, "food_item":{"type": "base", "description": "oatmeal", "quantityCategory": "SERVING", "portionSize": 1, "calories": 150, "protein": 5, "fat": 3, "sugar": 1, "carbohydrates": 27, "sodium": 0}
+Success ADD_FOOD response = {'status':1}
+
+SEARCH request = {"request_type":"SEARCH", "query":"String to search"}
+Success SEARCH response = {'status': 1, 'search_results': [{'type': 'base', 'description': 'oatmeal', 'quantityCategory': 'SERVING', 'portionSize': 1, 'calories': 150, 'protein': 5, 'fat': 3, 'sugar': 1, 'carbohydrates': 27, 'sodium': 0}, ...]}
+
+UPDATE_FOODLOG request = {"request_type":"UPDATE_FOODLOG", "username":"johndoe", "currentFoodLog": {"date": "2026-03-30", "breakfast": [{"type": "base", "description": "oatmeal", "quantityCategory": "SERVING", "portionSize": 1, "calories": 150, "protein": 5, "fat": 3, "sugar": 1, "carbohydrates": 27, "sodium": 0}, ...], "lunch": [...], "dinner": [...], "snacks": [...]}}
+Success UPDATE_FOODLOG response = {'status':1}
+
+EDIT_DIET request = {"request_type":"EDIT_DIET", "username":"johndoe", "dietGoals":{"primaryGoal":"CALORIE", "calorieGoal":5000, "proteinGoal":50, "fatGoal":10, "sugarGoal":30, "sodiumGoal":20, "carbsGoal":13, "otherGoals":['eat more vegetables', ...]}
+Success EDIT_DIET response = {'status':1}
+
+User Class:
+String name;
+String username;
+String password;
+FoodLog currentFoodLog;
+DietGoals currentGoals;
+
+FoodLog Class:
+datetime date;
+List<FoodItem> breakfast;
+List<FoodItem> lunch;
+List<FoodItem> dinner;
+List<FoodItem> snacks;
