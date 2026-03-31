@@ -20,10 +20,13 @@ public class ServerConstants {
 	public static final String KEY_USER = "user";
 	public static final String KEY_USERNAME = "username";
 	public static final String KEY_PASSWORD = "password";
+	public static final String KEY_FOOD_ITEM = "food_item";
 	
 	public static final String SUCCESS_STATUS = "1";
 	public static final String BAD_MESSAGE_STATUS = "-1";
 	public static final String UNSUPPORTED_OPERATION_STATUS = "-1";
 	
 	public static final String AUTHENTICATE_LOGIN_REQUEST_TYPE = "AUTH";
+	public static final String ADD_FOOD_REQUEST_TYPE = "ADD_FOOD";
+	
 }
