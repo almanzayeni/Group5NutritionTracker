@@ -13,6 +13,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import edu.westga.cs3212.group5.nutritiontracker.model.User;
+import edu.westga.cs3212.group5.nutritiontracker.server.LoginRequestHandler;
+
 /**
  * Login page controller
  * 
@@ -20,10 +23,6 @@ import javafx.stage.Stage;
  * @version Spring 2026
  */
 public class LoginPageController {
-	
-	// TODO: remove before server auth is wired up
-	private static final String DEFAULT_USERNAME = "nutri";
-	private static final String DEFAULT_PASSWORD = "pass123";
 
     @FXML
     private ResourceBundle resources;
@@ -56,27 +55,14 @@ public class LoginPageController {
             return;
         }
 
-        // TODO: Replace this stub with actual server authentication:
-        //
-        //   try {
-        //       LoginRequest request = new LoginRequest(username, password);
-        //       LoginResponse response = new ServerClient().send(request, LoginResponse.class);
-        //       if (!response.isSuccess()) {
-        //           this.errorLabel.setText("Invalid username or password.");
-        //           return;
-        //       }
-        //   } catch (Exception e) {
-        //       this.errorLabel.setText("Could not connect to server.");
-        //       return;
-        //   }
-
-        if (!username.equals(DEFAULT_USERNAME) || !password.equals(DEFAULT_PASSWORD)) {
+        try {
+            String request = LoginRequestHandler.createLoginRequest(username, password);
+            User user = LoginRequestHandler.handleLoginRequest(request);
+            this.errorLabel.setText("");
+            this.switchToDashboard(user);
+        } catch (Exception e) {
             this.errorLabel.setText("Invalid username or password.");
-            return;
         }
-        
-        this.errorLabel.setText("");
-        this.switchTo("HomeDashboardPage.fxml");
     }
 
     @FXML
@@ -85,11 +71,14 @@ public class LoginPageController {
         this.errorLabel.setText("Account creation coming soon!");
         this.errorLabel.setStyle("-fx-text-fill: #1f5c33; -fx-font-size: 12px;");
     }
-    
-    private void switchTo(String fxml) {
+
+    private void switchToDashboard(User user) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeDashboardPage.fxml"));
             Parent root = loader.load();
+
+            HomeDashboardPageController controller = loader.getController();
+            controller.initUser(user);
 
             Stage stage = (Stage) this.loginButton.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -107,7 +96,6 @@ public class LoginPageController {
         assert this.loginButton != null : "fx:id=\"loginButton\" was not injected: check your FXML file 'LoginPage.fxml'.";
         assert this.passwordField != null : "fx:id=\"passwordField\" was not injected: check your FXML file 'LoginPage.fxml'.";
         assert this.usernameField != null : "fx:id=\"usernameField\" was not injected: check your FXML file 'LoginPage.fxml'.";
-
     }
 
 }
