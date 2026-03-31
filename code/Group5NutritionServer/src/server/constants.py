@@ -17,6 +17,7 @@ KEY_USERNAME = "username"
 KEY_PASSWORD = "password"
 KEY_NAME = "name"
 KEY_QUERY = "query"
+KEY_SEARCH_RESULTS = "search_results"
 
 SUCCESS_STATUS = 1
 BAD_MESSAGE_STATUS = -1

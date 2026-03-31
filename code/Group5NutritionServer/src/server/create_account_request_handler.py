@@ -31,9 +31,16 @@ def handleRequest(request):
     entered by the user, and creates a new User.
 
     @precondition request != None &&
+<<<<<<< feature-ServerSearch
+                  request contains keys:
+                    constants.KEY_USERNAME,
+                    constants.KEY_PASSWORD,
+                    constants.KEY_NAME
+=======
                   request contains keys: username, password, name,
                   primaryGoal, calorieGoal, proteinGoal, fatGoal,
                   sugarGoal, sodiumGoal, carbsGoal, otherGoals
+>>>>>>> main
 
     @param request  the parsed JSON dict sent by the Java client
 
@@ -47,7 +54,7 @@ def handleRequest(request):
         raise Exception("request does not contain username")
     if constants.KEY_PASSWORD not in request:
         raise Exception("request does not contain password")
-    if KEY_NAME not in request:
+    if constants.KEY_NAME not in request:
         raise Exception("request does not contain name")
     if KEY_PRIMARY_GOAL not in request:
         raise Exception("request does not contain primaryGoal")
@@ -68,7 +75,7 @@ def handleRequest(request):
 
     username = request[constants.KEY_USERNAME]
     password = request[constants.KEY_PASSWORD]
-    name     = request[KEY_NAME]
+    name     = request[constants.KEY_NAME]
 
     if username in database.getUsers():
         return {
