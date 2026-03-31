@@ -2,13 +2,18 @@ package edu.westga.cs3212.group5.nutritiontracker.viewmodel;
 
 import java.time.LocalDate;
 
+import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
+import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
+import edu.westga.cs3212.group5.nutritiontracker.model.User;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -20,26 +25,83 @@ import javafx.collections.ObservableList;
  */
 public class HomeDashboardViewModel {
     private final ObjectProperty<LocalDate> selectedDate = new SimpleObjectProperty<>(LocalDate.now());
-    private final ObservableList<FoodItem> breakfastItems = FXCollections.observableArrayList();
-    private final ObservableList<FoodItem> lunchItems = FXCollections.observableArrayList();
-    private final ObservableList<FoodItem> dinnerItems = FXCollections.observableArrayList();
-    private final ObservableList<FoodItem> snacksItems = FXCollections.observableArrayList();
+    private final ObservableList<FoodItem> breakfastItems;
+    private final ObservableList<FoodItem> lunchItems;
+    private final ObservableList<FoodItem> dinnerItems;
+    private final ObservableList<FoodItem> snacksItems;
     
     private final ReadOnlyDoubleWrapper totalCalories = new ReadOnlyDoubleWrapper();
     
+    private final ObjectProperty<User> currentUser = new SimpleObjectProperty<>();
+    private final ObjectProperty<DietGoals> usersDietGoals;
+    private final ObjectProperty<FoodLog> currentFoodLog;
+    private final StringProperty usersName;
+
     /**
      * HomeDashboard VM Constructor.
      * Binds calorie totals to foods added.
+     * 
+     * TODO update javadocs
      */
-    public HomeDashboardViewModel() {
-    	DoubleBinding total = Bindings.createDoubleBinding(this::computeTotalCalories, breakfastItems, lunchItems, dinnerItems, snacksItems);
-    	this.totalCalories.bind(total);
+    public HomeDashboardViewModel(User user) {
+        this.currentUser.set(user);
+        this.usersName = new SimpleStringProperty(this.currentUser.get().getName());
+        this.currentFoodLog = new SimpleObjectProperty<>(this.currentUser.get().getCurrentFoodLog());
+        this.usersDietGoals = new SimpleObjectProperty<>(this.currentUser.get().getDietGoals());
+        
+        var breakfastList = this.currentUser.get().getCurrentFoodLog().getBreakfast();
+        this.breakfastItems = FXCollections.observableArrayList(breakfastList);
+        
+        var lunchList = this.currentUser.get().getCurrentFoodLog().getLunch();
+        this.lunchItems = FXCollections.observableArrayList(lunchList);
+        
+        var dinnerList = this.currentUser.get().getCurrentFoodLog().getDinner();
+        this.dinnerItems = FXCollections.observableArrayList(dinnerList);
+        
+        var snackList = this.currentUser.get().getCurrentFoodLog().getSnacks();
+        this.snacksItems = FXCollections.observableArrayList(snackList);
+        
+        DoubleBinding total = Bindings.createDoubleBinding(
+            this::computeTotalCalories, 
+            breakfastItems, lunchItems, dinnerItems, snacksItems
+        );
+        this.totalCalories.bind(total);
     }
 
     /**
+     * Get User object.
+     * 
+     * @return user object.
+     */
+    public User getCurrentUser() {
+        return this.currentUser.get();
+    }
+    
+    /**
+     * Set User object.
+     * 
+     * @param user to be set.
+     */
+    public void setCurrentUser(User user) {
+        this.currentUser.set(user);
+    }
+    
+    public StringProperty getUsersNameProperty() {
+    	return this.usersName;
+    }
+    
+    public ObjectProperty<FoodLog> userFoodLogProperty() {
+    	return this.currentFoodLog;
+    }
+    
+    public ObjectProperty<DietGoals> userDietGoalsProperty() {
+    	return this.usersDietGoals;
+    }
+    
+    /**
      * Get selected date property.
      * 
-     * @return selected date property.
+     * @return ObjectProperty<LocalDate> selected date property.
      */
     public ObjectProperty<LocalDate> getSelectedDateProperty() {
         return this.selectedDate;
@@ -64,7 +126,7 @@ public class HomeDashboardViewModel {
     }
     
     /**
-     * Get breakfast food items list.
+     * Get the user's breakfast food items list.
      * @return ObservableList of food items.
      */
     public ObservableList<FoodItem> getBreakfastItems() {
@@ -72,7 +134,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Get lunch food items list.
+     * Get the user's lunch food items list.
      * @return ObservableList of food items.
      */
     public ObservableList<FoodItem> getLunchItems() {
@@ -80,7 +142,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Get dinner food items list.
+     * Get the user's dinner food items list.
      * @return ObservableList of food items.
      */
     public ObservableList<FoodItem> getDinnerItems() {
@@ -88,7 +150,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Get snack food items list.
+     * Get the user's snack food items list.
      * @return ObservableList of food items.
      */
     public ObservableList<FoodItem> getSnacksItems() {
@@ -96,7 +158,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Returns a read-only property representing the total calories for the day.
+     * Returns a read-only property representing the user's total calories for the day.
      *
      * @return the read-only total calories property
      */
@@ -105,7 +167,7 @@ public class HomeDashboardViewModel {
     }
     
     /**
-     * Adds a food item to the breakfast list.
+     * Adds a food item to the user's  breakfast list.
      *
      * @param item the food item to add
      */
@@ -114,7 +176,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Adds a food item to the lunch list.
+     * Adds a food item to the user's  lunch list.
      *
      * @param item the food item to add
      */
@@ -123,7 +185,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Adds a food item to the dinner list.
+     * Adds a food item to the user's  dinner list.
      *
      * @param item the food item to add
      */
@@ -132,7 +194,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Adds a food item to the snacks list.
+     * Adds a food item to the user's  snacks list.
      *
      * @param item the food item to add
      */
@@ -141,7 +203,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Removes a food item from the breakfast list.
+     * Removes a food item from the user's breakfast list.
      *
      * @param item the food item to remove
      */
@@ -150,7 +212,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Removes a food item from the lunch list.
+     * Removes a food item from the user's lunch list.
      *
      * @param item the food item to remove
      */
@@ -159,7 +221,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Removes a food item from the dinner list.
+     * Removes a food item from the user's dinner list.
      *
      * @param item the food item to remove
      */
@@ -168,7 +230,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Removes a food item from the snacks list.
+     * Removes a food item from the user's snacks list.
      *
      * @param item the food item to remove
      */

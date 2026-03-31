@@ -3,6 +3,9 @@ package edu.westga.cs3212.group5.nutritiontracker.view;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,7 +26,8 @@ import javafx.stage.Stage;
  * @author Yeni Almanza
  * @version Spring 2026
  */
-public class SearchPageController {
+public class SearchPageController implements ViewModelAware {
+    private HomeDashboardViewModel viewModel;
 
     @FXML private ResourceBundle resources;
     @FXML private URL location;
@@ -81,7 +85,12 @@ public class SearchPageController {
 
                 Parent parent = loader.getRoot();
                 Scene scene = new Scene(parent);
-
+                
+                Object controller = loader.getController();
+                if (controller instanceof ViewModelAware) {
+                    ((ViewModelAware) controller).setViewModel(this.viewModel);
+                }
+                
                 Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
                 stage.setScene(scene);
                 stage.setTitle("Home");
@@ -93,4 +102,9 @@ public class SearchPageController {
             }
         });
     }
+
+	@Override
+	public void setViewModel(HomeDashboardViewModel viewModel) {
+		this.viewModel = viewModel;
+	}
 }

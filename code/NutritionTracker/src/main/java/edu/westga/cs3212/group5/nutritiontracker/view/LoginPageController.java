@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.User;
 import edu.westga.cs3212.group5.nutritiontracker.server.LoginRequestHandler;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
 
 /**
  * Login page controller
@@ -76,10 +77,12 @@ public class LoginPageController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeDashboardPage.fxml"));
             Parent root = loader.load();
-
+            
             HomeDashboardPageController controller = loader.getController();
-            controller.initUser(user);
 
+            HomeDashboardViewModel vm = new HomeDashboardViewModel(user);
+            controller.setViewModel(vm);
+          
             Stage stage = (Stage) this.loginButton.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

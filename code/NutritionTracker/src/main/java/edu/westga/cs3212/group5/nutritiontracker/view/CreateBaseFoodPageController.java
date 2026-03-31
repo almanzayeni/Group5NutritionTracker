@@ -5,6 +5,8 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateBaseFoodPageViewModel;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class CreateBaseFoodPageController {
+public class CreateBaseFoodPageController implements ViewModelAware {
 	@FXML
 	private ResourceBundle resources;
 	@FXML
@@ -68,6 +70,7 @@ public class CreateBaseFoodPageController {
 	private boolean sugarIsBound;
 	private boolean carbohydratesIsBound;
 	private boolean sodiumIsBound;
+    private HomeDashboardViewModel hdViewModel;
 
 	@FXML
 	void initialize() {
@@ -354,7 +357,12 @@ public class CreateBaseFoodPageController {
 
 				Parent parent = loader.getRoot();
 				Scene scene = new Scene(parent);
-
+				
+	            Object controller = loader.getController();
+	            if (controller instanceof ViewModelAware) {
+	                ((ViewModelAware) controller).setViewModel(this.hdViewModel);
+	            }
+	            
 				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
 				stage.setScene(scene);
 				stage.setTitle("Home");
@@ -434,6 +442,11 @@ public class CreateBaseFoodPageController {
 		this.sugarTextField.clear();
 		this.carbohydratesTextField.clear();
 		this.sodiumTextField.clear();
+	}
+
+	@Override
+	public void setViewModel(HomeDashboardViewModel viewModel) {
+		this.hdViewModel = viewModel;
 	}
 
 }

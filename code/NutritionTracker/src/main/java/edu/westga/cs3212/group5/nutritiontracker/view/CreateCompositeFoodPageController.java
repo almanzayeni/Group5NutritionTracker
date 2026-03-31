@@ -6,6 +6,8 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateCompositeFoodPageViewModel;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,7 +31,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
-public class CreateCompositeFoodPageController {
+public class CreateCompositeFoodPageController implements ViewModelAware {
 	@FXML
 	private ResourceBundle resources;
 	@FXML
@@ -79,6 +81,7 @@ public class CreateCompositeFoodPageController {
 	private FoodSearchPanelController searchPanelController;
 
 	private CreateCompositeFoodPageViewModel viewModel;
+    private HomeDashboardViewModel hdViewModel;
 
 	@FXML
 	void initialize() {
@@ -139,6 +142,11 @@ public class CreateCompositeFoodPageController {
 								: "No food selected from search.");
 			}
 		});
+	}
+	
+	@Override
+	public void setViewModel(HomeDashboardViewModel viewModel) {
+		this.hdViewModel = viewModel;
 	}
 
 	private void setUpIngredientsListView() {
@@ -284,6 +292,11 @@ public class CreateCompositeFoodPageController {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(HomeDashboardPageController.class.getResource("HomeDashboardPage.fxml"));
 				loader.load();
+				
+	            Object controller = loader.getController();
+	            if (controller instanceof ViewModelAware) {
+	                ((ViewModelAware) controller).setViewModel(this.hdViewModel);
+	            }
 
 				Parent parent = loader.getRoot();
 				Scene scene = new Scene(parent);
@@ -310,6 +323,11 @@ public class CreateCompositeFoodPageController {
 
 				Parent parent = loader.getRoot();
 				Scene scene = new Scene(parent);
+				
+	            Object controller = loader.getController();
+	            if (controller instanceof ViewModelAware) {
+	                ((ViewModelAware) controller).setViewModel(this.hdViewModel);
+	            }
 
 				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
 				stage.setScene(scene);
