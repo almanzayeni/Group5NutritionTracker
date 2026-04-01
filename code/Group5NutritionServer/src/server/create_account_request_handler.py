@@ -13,16 +13,7 @@ from server import constants
 from datetime import date as dateTime
 
 
-KEY_NAME                    = "name"
-KEY_PRIMARY_GOAL            = "primaryGoal"
-KEY_CALORIE_GOAL            = "calorieGoal"
-KEY_PROTEIN_GOAL            = "proteinGoal"
-KEY_FAT_GOAL                = "fatGoal"
-KEY_SUGAR_GOAL              = "sugarGoal"
-KEY_SODIUM_GOAL             = "sodiumGoal"
-KEY_CARBS_GOAL              = "carbsGoal"
-KEY_OTHER_GOALS             = "otherGoals"
-CREATE_ACCOUNT_REQUEST_TYPE = "CREATE_ACCOUNT"
+
 
 
 def handleRequest(request):
@@ -31,16 +22,7 @@ def handleRequest(request):
     entered by the user, and creates a new User.
 
     @precondition request != None &&
-<<<<<<< feature-ServerSearch
-                  request contains keys:
-                    constants.KEY_USERNAME,
-                    constants.KEY_PASSWORD,
-                    constants.KEY_NAME
-=======
-                  request contains keys: username, password, name,
-                  primaryGoal, calorieGoal, proteinGoal, fatGoal,
-                  sugarGoal, sodiumGoal, carbsGoal, otherGoals
->>>>>>> main
+                  request contains constants.KEY_USER
 
     @param request  the parsed JSON dict sent by the Java client
 
@@ -50,48 +32,29 @@ def handleRequest(request):
     '''
     if request is None:
         raise Exception("request is None")
-    if constants.KEY_USERNAME not in request:
-        raise Exception("request does not contain username")
-    if constants.KEY_PASSWORD not in request:
-        raise Exception("request does not contain password")
-    if constants.KEY_NAME not in request:
-        raise Exception("request does not contain name")
-    if KEY_PRIMARY_GOAL not in request:
-        raise Exception("request does not contain primaryGoal")
-    if KEY_CALORIE_GOAL not in request:
-        raise Exception("request does not contain calorieGoal")
-    if KEY_PROTEIN_GOAL not in request:
-        raise Exception("request does not contain proteinGoal")
-    if KEY_FAT_GOAL not in request:
-        raise Exception("request does not contain fatGoal")
-    if KEY_SUGAR_GOAL not in request:
-        raise Exception("request does not contain sugarGoal")
-    if KEY_SODIUM_GOAL not in request:
-        raise Exception("request does not contain sodiumGoal")
-    if KEY_CARBS_GOAL not in request:
-        raise Exception("request does not contain carbsGoal")
-    if KEY_OTHER_GOALS not in request:
-        raise Exception("request does not contain otherGoals")
+    if constants.KEY_USER not in request:
+        raise Exception("request does not contain user.")
 
-    username = request[constants.KEY_USERNAME]
-    password = request[constants.KEY_PASSWORD]
-    name     = request[constants.KEY_NAME]
+    username = request[constants.KEY_USER][constants.KEY_USERNAME]
 
     if username in database.getUsers():
         return {
             constants.KEY_STATUS: constants.BAD_MESSAGE_STATUS,
             constants.KEY_FAILURE_MESSAGE: "username already exists"
         }
+        
+    password = request[constants.KEY_USER][constants.KEY_PASSWORD]
+    name     = request[constants.KEY_USER][constants.KEY_NAME]
 
     diet_goals = DietGoals(
-        primaryGoal=request[KEY_PRIMARY_GOAL],
-        calorieGoal=request[KEY_CALORIE_GOAL],
-        proteinGoal=request[KEY_PROTEIN_GOAL],
-        fatGoal=request[KEY_FAT_GOAL],
-        sugarGoal=request[KEY_SUGAR_GOAL],
-        sodiumGoal=request[KEY_SODIUM_GOAL],
-        carbsGoal=request[KEY_CARBS_GOAL],
-        otherGoals=request[KEY_OTHER_GOALS]
+        primaryGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_PRIMARY_GOAL],
+        calorieGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_CALORIE_GOAL],
+        proteinGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_PROTEIN_GOAL],
+        fatGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_FAT_GOAL],
+        sugarGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_SUGAR_GOAL],
+        sodiumGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_SODIUM_GOAL],
+        carbsGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_CARBS_GOAL],
+        otherGoals=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_OTHER_GOALS]
     )
 
     food_log = FoodLog(
