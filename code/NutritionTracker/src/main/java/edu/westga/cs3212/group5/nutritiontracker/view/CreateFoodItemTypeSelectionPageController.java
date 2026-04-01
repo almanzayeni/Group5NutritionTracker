@@ -3,6 +3,9 @@ package edu.westga.cs3212.group5.nutritiontracker.view;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -17,7 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class CreateFoodItemTypeSelectionPageController {
+public class CreateFoodItemTypeSelectionPageController implements ViewModelAware {
 	@FXML
 	private ResourceBundle resources;
 	@FXML
@@ -36,6 +39,8 @@ public class CreateFoodItemTypeSelectionPageController {
 	private Button selectBaseFoodButton;
 	@FXML
 	private Button selectCompositFoodButton;
+
+    private HomeDashboardViewModel viewModel;
 
 	@FXML
 	void initialize() {
@@ -122,7 +127,12 @@ public class CreateFoodItemTypeSelectionPageController {
 
 				Parent parent = loader.getRoot();
 				Scene scene = new Scene(parent);
-
+				
+	            Object controller = loader.getController();
+	            if (controller instanceof ViewModelAware) {
+	                ((ViewModelAware) controller).setViewModel(this.viewModel);
+	            }
+	            
 				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
 				stage.setScene(scene);
 				stage.setTitle("Home");
@@ -145,10 +155,15 @@ public class CreateFoodItemTypeSelectionPageController {
 
 				Parent parent = loader.getRoot();
 				Scene scene = new Scene(parent);
-
+				
+	            Object controller = loader.getController();
+	            if (controller instanceof ViewModelAware) {
+	                ((ViewModelAware) controller).setViewModel(this.viewModel);
+	            }
+	            
 				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
 				stage.setScene(scene);
-				stage.setTitle("Ceate Meal");
+				stage.setTitle("Create Meal");
 				stage.show();
 
 			} catch (Exception ex) {
@@ -168,7 +183,12 @@ public class CreateFoodItemTypeSelectionPageController {
 
 				Parent parent = loader.getRoot();
 				Scene scene = new Scene(parent);
-
+				
+	            Object controller = loader.getController();
+	            if (controller instanceof ViewModelAware) {
+	                ((ViewModelAware) controller).setViewModel(this.viewModel);
+	            }
+	            
 				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
 				stage.setScene(scene);
 				stage.setTitle("Create Base Food Item");
@@ -191,7 +211,12 @@ public class CreateFoodItemTypeSelectionPageController {
 
 				Parent parent = loader.getRoot();
 				Scene scene = new Scene(parent);
-
+				
+	            Object controller = loader.getController();
+	            if (controller instanceof ViewModelAware) {
+	                ((ViewModelAware) controller).setViewModel(this.viewModel);
+	            }
+	            
 				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
 				stage.setScene(scene);
 				stage.setTitle("Create Base Food Item");
@@ -203,6 +228,12 @@ public class CreateFoodItemTypeSelectionPageController {
 				alert.showAndWait();
 			}
 		});
+	}
+
+	@Override
+	public void setViewModel(HomeDashboardViewModel viewModel) {
+		this.viewModel = viewModel;
+		
 	}
 
 }
