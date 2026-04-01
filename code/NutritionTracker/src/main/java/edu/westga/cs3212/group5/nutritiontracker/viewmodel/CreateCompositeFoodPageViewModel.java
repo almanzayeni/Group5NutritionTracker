@@ -1,19 +1,12 @@
 package edu.westga.cs3212.group5.nutritiontracker.viewmodel;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.CompositeFood;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
+import edu.westga.cs3212.group5.nutritiontracker.server.AddFoodRequestHandler;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -25,7 +18,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 
 public class CreateCompositeFoodPageViewModel {
-	private static final String FOOD_ALREADY_EXISTS_ERROR_MESSAGE = "A food with this name already exists. Please enter a unique name, or edit the existing food item.";
 	private StringProperty description;
 	private ListProperty<QuantityCategory> quantityCategories;
 	private ObjectProperty<QuantityCategory> selectedQuantityCategory;
@@ -38,8 +30,6 @@ public class CreateCompositeFoodPageViewModel {
 	private DoubleProperty totalSodium;
 	private ListProperty<FoodItem> ingredients;
 	private CompositeFood compositeFood;
-	private String filePath;
-	private ObjectMapper objectMapper;
 
 	/**
 	 * Instantiates a new creates the composite food page view model.
@@ -71,33 +61,6 @@ public class CreateCompositeFoodPageViewModel {
 		this.totalSodium.set(this.compositeFood.getSodium());
 		this.ingredients = new SimpleListProperty<FoodItem>(
 				FXCollections.observableArrayList(new ArrayList<FoodItem>()));
-		this.filePath = FoodItem.FOOD_ITEMS_JSON_FILE;
-		this.objectMapper = new ObjectMapper();
-	}
-
-	/**
-	 * Instantiates a new creates the composite food page view model. FOR TESTING
-	 * PURPOSES ONLY - allows for custom file path to be set for testing without
-	 * affecting production data
-	 *
-	 * @param filePath the file path
-	 */
-	public CreateCompositeFoodPageViewModel(String filePath) {
-		this();
-		this.filePath = filePath;
-	}
-
-	/**
-	 * Instantiates a new creates the composite food page view model. FOR TESTING
-	 * PURPOSES ONLY - allows injection of a mock ObjectMapper to simulate JSON
-	 * processing exceptions.
-	 *
-	 * @param objectMapper the object mapper
-	 */
-	public CreateCompositeFoodPageViewModel(ObjectMapper objectMapper, String filePath) {
-		this();
-		this.filePath = filePath;
-		this.objectMapper = objectMapper;
 	}
 
 	/**
@@ -200,19 +163,14 @@ public class CreateCompositeFoodPageViewModel {
 	}
 
 	/**
-	 * Creates the composite food.
+	 * Creates the composite food and sends it to the server.
 	 *
-	 * @throws IllegalArgumentException if any of the following conditions occur:
-	 *                                  name is null or empty, no ingredients have
-	 *                                  been added, no quantity category has been
-	 *                                  selected, or a food with the same name
-	 *                                  already exists
-	 * @throws JsonProcessingException  thrown if there is an error during JSON
-	 *                                  processing when converting the composite
-	 *                                  food to a JSON string
-	 * @throws IOException              Signals that an I/O exception has occurred.
+	 * @throws IllegalArgumentException if name is null or empty, no ingredients
+	 *                                  have been added, or no quantity category
+	 *                                  has been selected
+	 * @throws RuntimeException         if the server call fails
 	 */
-	public void createCompositeFood() throws IllegalArgumentException, JsonProcessingException, IOException {
+	public void createCompositeFood() {
 		if (this.description.get() == null || this.description.get().isEmpty()) {
 			throw new IllegalArgumentException("Food name cannot be empty.");
 		}
@@ -222,34 +180,12 @@ public class CreateCompositeFoodPageViewModel {
 		if (this.selectedQuantityCategory.get() == null) {
 			throw new IllegalArgumentException("A quantity category must be selected.");
 		}
-		try {
-			if (this.checkForExistingFood(this.description.get())) {
-				throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
-			}
-		} catch (Exception e) {
-			throw e;
-		}
-		
 
-		String jsonString = "";
 		this.compositeFood.setDescription(this.description.get());
 		this.compositeFood.setQuantityCategory(this.selectedQuantityCategory.get());
 
-		try {
-			jsonString = this.objectMapper.writeValueAsString(this.compositeFood);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-			throw e;
-		}
-
-		try {
-			// TODO: Send jsonString to server
-			Files.write(Paths.get(this.filePath), (jsonString + System.lineSeparator()).getBytes(),
-					StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw e;
-		}
+		String request = AddFoodRequestHandler.createAddFoodRequest(this.compositeFood);
+		AddFoodRequestHandler.handleAddFoodRequest(request);
 
 		this.clearFields();
 	}
@@ -311,31 +247,7 @@ public class CreateCompositeFoodPageViewModel {
 		if (ingredientToFind == null) {
 			throw new IllegalArgumentException("Ingredient name cannot be null.");
 		}
-
 		return this.compositeFood.getIngredientByDescription(ingredientToFind.getDescription());
-	}
-
-	private boolean checkForExistingFood(String foodName) throws IOException, JsonProcessingException {
-		HashSet<String> existingFoodNames = new HashSet<>();
-		
-		try (var lines = Files.lines(Paths.get(this.filePath))) {
-			for (String line : (Iterable<String>) lines::iterator) {
-				if (!line.trim().isEmpty()) {
-					try {
-						FoodItem food = this.objectMapper.readValue(line, FoodItem.class);
-						existingFoodNames.add(food.getDescription());
-					} catch (JsonProcessingException e) {
-						e.printStackTrace();
-						throw e;
-					}
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-		return existingFoodNames.contains(foodName);
 	}
 
 	private void updateDisplayInfo() {

@@ -58,33 +58,35 @@ public class AddFoodRequestHandler {
 	 *                                  reached
 	 */
 	public static void handleAddFoodRequest(String request) {
-		if (request == null || request.isBlank()) {
-			throw new IllegalArgumentException("Request cannot be null or blank");
-		}
+	    if (request == null || request.isBlank()) {
+	        throw new IllegalArgumentException("Request cannot be null or blank");
+	    }
 
-		ObjectMapper mapper = JsonMapperFactory.create();
+	    ObjectMapper mapper = JsonMapperFactory.create();
+	    try {
+	        String response = ServerClient.send(request);
 
-		try {
-			String response = ServerClient.send(request);
-			if (response == null || response.isBlank()) {
-				throw new RuntimeException("Received empty response from server");
-			}
+	        if (response == null || response.isBlank()) {
+	            throw new RuntimeException("Received empty response from server");
+	        }
 
-			JsonNode root = mapper.readTree(response);
+	        JsonNode root = mapper.readTree(response);
 
-			if (root.has(ServerConstants.KEY_FAILURE_MESSAGE)) {
-				String failureMessage = root.get(ServerConstants.KEY_FAILURE_MESSAGE).asText();
-				throw new RuntimeException("Add food failed: " + failureMessage);
-			}
+	        if (root.has(ServerConstants.KEY_FAILURE_MESSAGE)) {
+	            String failureMessage = root.get(ServerConstants.KEY_FAILURE_MESSAGE).asText();
+	            throw new RuntimeException("Add food failed: " + failureMessage);
+	        }
 
-			String status = root.get(ServerConstants.KEY_STATUS).asText();
-			if (!status.equals(ServerConstants.SUCCESS_STATUS)) {
-				throw new RuntimeException("Add food failed with status: " + status);
-			}
+	        String status = root.get(ServerConstants.KEY_STATUS).asText();
+	        if (!status.equals(ServerConstants.SUCCESS_STATUS)) {
+	            throw new RuntimeException("Add food failed with status: " + status);
+	        }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("Failed to handle add food request", e);
-		}
+	    } catch (RuntimeException e) {
+	        throw e;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw new RuntimeException("Failed to handle add food request", e);
+	    }
 	}
 }

@@ -1,28 +1,27 @@
 package edu.westga.cs3212.group5.nutritiontracker.viewmodel;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
-import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
+import edu.westga.cs3212.group5.nutritiontracker.server.AddFoodRequestHandler;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
-
+/**
+ * Create base food view model.
+ * 
+ * @author Justin, Yeni
+ * @version Spring 2026
+ */
 public class CreateBaseFoodPageViewModel {
-	private static final String FOOD_ALREADY_EXISTS_ERROR_MESSAGE = "A food with this name already exists. Please enter a unique name, or edit the existing food.";
 	private StringProperty description;
 	private ListProperty<QuantityCategory> quantityCategoriesList;
 	private ObjectProperty<QuantityCategory> selectedQuantityCategory;
@@ -33,14 +32,12 @@ public class CreateBaseFoodPageViewModel {
 	private DoubleProperty sugar;
 	private DoubleProperty carbohydrates;
 	private DoubleProperty sodium;
-	private String filePath;
-	private ObjectMapper objectMapper;
 
 	/**
 	 * Instantiates a new creates the base food page view model.
 	 */
 	public CreateBaseFoodPageViewModel() {
-		this.description = new javafx.beans.property.SimpleStringProperty();
+		this.description = new SimpleStringProperty();
 
 		ArrayList<QuantityCategory> quantityCategories = new ArrayList<>();
 		quantityCategories.add(QuantityCategory.QUANTITY);
@@ -51,38 +48,12 @@ public class CreateBaseFoodPageViewModel {
 				FXCollections.observableArrayList(quantityCategories));
 		this.selectedQuantityCategory = new SimpleObjectProperty<QuantityCategory>();
 		this.portionSize = 1.0;
-		this.calories = new javafx.beans.property.SimpleDoubleProperty();
-		this.protein = new javafx.beans.property.SimpleDoubleProperty();
-		this.fat = new javafx.beans.property.SimpleDoubleProperty();
-		this.sugar = new javafx.beans.property.SimpleDoubleProperty();
-		this.carbohydrates = new javafx.beans.property.SimpleDoubleProperty();
-		this.sodium = new javafx.beans.property.SimpleDoubleProperty();
-		this.filePath = FoodItem.FOOD_ITEMS_JSON_FILE;
-		this.objectMapper = new ObjectMapper();
-	}
-
-	/**
-	 * Instantiates a new creates the base food page view model. FOR TESTING
-	 * PURPOSES ONLY - allows injection of a custom file path to simulate file I/O
-	 * exceptions.
-	 *
-	 * @param filePath the file path
-	 */
-	public CreateBaseFoodPageViewModel(String filePath) {
-		this();
-		this.filePath = filePath;
-	}
-
-	/**
-	 * Instantiates a new creates the base food page view model. FOR TESTING
-	 * PURPOSES ONLY - allows injection of a mock ObjectMapper to simulate JSON
-	 * processing exceptions.
-	 *
-	 * @param objectMapper the object mapper
-	 */
-	public CreateBaseFoodPageViewModel(ObjectMapper objectMapper) {
-		this();
-		this.objectMapper = objectMapper;
+		this.calories = new SimpleDoubleProperty();
+		this.protein = new SimpleDoubleProperty();
+		this.fat = new SimpleDoubleProperty();
+		this.sugar = new SimpleDoubleProperty();
+		this.carbohydrates = new SimpleDoubleProperty();
+		this.sodium = new SimpleDoubleProperty();
 	}
 
 	/**
@@ -176,71 +147,24 @@ public class CreateBaseFoodPageViewModel {
 	}
 
 	/**
-	 * Creates a new the base food and saves it.
+	 * Creates a new base food and sends it to the server.
 	 *
 	 * @throws IllegalArgumentException if a food with the same name already exists
-	 * @throws JsonProcessingException  if there is an error processing the JSON
-	 *                                  data
-	 * @throws IOException              Signals that an I/O exception has occurred.
+	 * @throws RuntimeException         if the server call fails
 	 */
-	public void createBaseFood() throws IllegalArgumentException, JsonProcessingException, IOException {
-		try {
-			if (this.checkForExistingFood(this.description.get())) {
-				throw new IllegalArgumentException(FOOD_ALREADY_EXISTS_ERROR_MESSAGE);
-			}
-		} catch (Exception e) {
-			throw e;
-		}
-
-		BaseFood baseFood = new BaseFood(this.description.get(), this.selectedQuantityCategory.get(), this.portionSize,
-				this.calories.get(), this.protein.get(), this.fat.get(), this.sugar.get(), this.carbohydrates.get(),
+	public void createBaseFood() {
+		BaseFood baseFood = new BaseFood(
+				this.description.get(),
+				this.selectedQuantityCategory.get(),
+				this.portionSize,
+				this.calories.get(),
+				this.protein.get(),
+				this.fat.get(),
+				this.sugar.get(),
+				this.carbohydrates.get(),
 				this.sodium.get());
-		String jsonString = "";
 
-		try {
-			jsonString = this.objectMapper.writeValueAsString(baseFood);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-			throw e;
-		}
-
-		try {
-			// TODO: Send jsonString to server
-			Files.write(Paths.get(this.filePath), (jsonString + System.lineSeparator()).getBytes(),
-					StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw e;
-		}
+		String request = AddFoodRequestHandler.createAddFoodRequest(baseFood);
+		AddFoodRequestHandler.handleAddFoodRequest(request);
 	}
-
-	private boolean checkForExistingFood(String foodName) throws IOException, JsonProcessingException{
-		HashSet<String> existingFoodNames = new HashSet<>();
-		
-		if (!Files.exists(Paths.get(this.filePath))) {
-			return false;
-		}
-		
-		try (var lines = Files.lines(Paths.get(this.filePath))){
-			for (String line : (Iterable<String>) lines::iterator) {
-				if (!line.trim().isEmpty()) {
-					try {
-						FoodItem food = this.objectMapper.readValue(line, FoodItem.class);
-						if (food != null) {
-							existingFoodNames.add(food.getDescription());
-						}
-					} catch (JsonProcessingException e) {
-						e.printStackTrace();
-						throw e;
-					}
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-		return existingFoodNames.contains(foodName);
-	}
-
 }
