@@ -1,9 +1,6 @@
 package edu.westga.cs3212.group5.nutritiontracker;
 
 import java.io.IOException;
-
-import edu.westga.cs3212.group5.nutritiontracker.server.LoginRequestHandler;
-import edu.westga.cs3212.group5.nutritiontracker.server.ServerClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,11 +9,12 @@ import javafx.stage.Stage;
 
 /**
  * Main Application class.
+ * 
  * @author Justin Smith
  * @version Spring 2026
  */
 public class App extends Application {
-	
+
 	private static final String WINDOW_TITLE = "Login";
 	private static final String GUI_FXML = "view/LoginPage.fxml";
 
@@ -47,7 +45,5 @@ public class App extends Application {
 	 */
 	public static void main(String[] args) {
 		launch(args);
-		LoginRequestHandler.handleLoginRequest(LoginRequestHandler.createLoginRequest("johndoe", "password123"));
-		ServerClient.close();
 	}
 }

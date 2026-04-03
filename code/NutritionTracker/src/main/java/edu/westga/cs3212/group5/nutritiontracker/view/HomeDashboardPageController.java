@@ -10,6 +10,7 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.User;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,11 +28,10 @@ import javafx.stage.Stage;
  * @author vfilpo + Emi :)
  * @version Spring 2026
  */
-public class HomeDashboardPageController {
+public class HomeDashboardPageController implements ViewModelAware {
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("M-d-yyyy");
     
     private HomeDashboardViewModel viewModel;
-    private User currentUser;
     
     @FXML
     private JFXHamburger hamburgerMenu;
@@ -87,21 +87,14 @@ public class HomeDashboardPageController {
     @FXML
     private Label totalCaloriesLabel;
     
+    @FXML
+    private Label nameLabel;
+    
     @FXML private void goHome() { switchTo("HomeDashboardPage.fxml"); }
 
     @FXML private void goCreateFood() { switchTo("CreateFoodItemTypeSelectionPage.fxml"); }
 
     @FXML private void goAddFood() { switchTo("SearchPage.fxml"); }
-    
-    /**
-     * Receives the logged-in user from the login controller and stores it.
-     * Call this immediately after loader.load() before the stage is shown.
-     *
-     * @param user the User returned from the server after successful login
-     */
-    public void initUser(User user) {
-        this.currentUser = user;
-    }
         
     /**
      * Sets the ViewModel that data will be pulled from.
@@ -111,7 +104,8 @@ public class HomeDashboardPageController {
      * 
      * @param viewModel the HomeDashboardViewModel instance to bind to this controller
      */
-    private void setViewModel(HomeDashboardViewModel viewModel) {
+    @Override
+    public void setViewModel(HomeDashboardViewModel viewModel) {
         this.viewModel = viewModel;
         this.bindProperties();
     }
@@ -119,14 +113,10 @@ public class HomeDashboardPageController {
     private void bindProperties() {
         this.totalCaloriesLabel.textProperty().bind(Bindings.format("%.0f kcal", this.viewModel.totalCaloriesProperty()));
         this.calendarPicker.valueProperty().bindBidirectional(this.viewModel.getSelectedDateProperty()); 
-    }
+        this.nameLabel.textProperty().bind(this.viewModel.getUsersNameProperty());
+//        this.nameLabel.setText(this.viewModel.getUsersNameProperty().get());
 
-    @FXML
-    private void initialize() {
-    	this.setViewModel(new HomeDashboardViewModel());
-    	this.setupDateLabel();
-    	
-    	this.handleHamburgerMenuClick();
+        this.setupDateLabel();
     	
     	this.breakfastListView.setItems(this.viewModel.getBreakfastItems());
     	this.lunchListView.setItems(this.viewModel.getLunchItems());
@@ -137,7 +127,12 @@ public class HomeDashboardPageController {
         this.lunchListView.setCellFactory(lv -> new FoodItemCell(item -> this.viewModel.removeFromLunch(item)));
         this.dinnerListView.setCellFactory(lv -> new FoodItemCell(item -> this.viewModel.removeFromDinner(item)));
         this.snacksListView.setCellFactory(lv -> new FoodItemCell(item -> this.viewModel.removeFromSnacks(item)));
-            
+    }
+
+    @FXML
+    private void initialize() {
+    	this.handleHamburgerMenuClick();
+
         // Uncomment when we have AddFood page
         //  this.addBreakfastButton.setOnAction(e -> this.goToAddFood("Breakfast"));
         //  this.addLunchButton.setOnAction(e -> this.goToAddFood("Lunch"));
@@ -207,19 +202,23 @@ public class HomeDashboardPageController {
     	}
     }
     
-    private void switchTo(String fxml) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
-            Parent root = loader.load();
+	    private void switchTo(String fxml) {
+	        try {
+	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+	            Parent root = loader.load();
 
-            Stage stage = (Stage) this.hamburgerMenu.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+	            Object controller = loader.getController();
+	            if (controller instanceof ViewModelAware) {
+	                ((ViewModelAware) controller).setViewModel(this.viewModel);
+	            }
 
-        } catch (IOException exception) {
-        	exception.printStackTrace();
-        }
-    }
+	            Stage stage = (Stage) this.hamburgerMenu.getScene().getWindow();
+	            stage.setScene(new Scene(root));
+	            stage.show();
+	        } catch (IOException exception) {
+	            exception.printStackTrace();
+	        }
+	    }
     
     @FunctionalInterface
     private interface RemoveHandler {

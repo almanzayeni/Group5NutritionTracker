@@ -59,6 +59,14 @@ class TestCreateAccountRequestHandler(unittest.TestCase):
                 constants.KEY_USERNAME: "johndoe",
                 constants.KEY_PASSWORD: "password123",
                 constants.KEY_NAME: "John Doe",
+                constants.KEY_PRIMARY_GOAL: "CALORIE",
+                constants.KEY_CALORIE_GOAL: 2000,
+                constants.KEY_PROTEIN_GOAL: 150,
+                constants.KEY_FAT_GOAL: 70,
+                constants.KEY_SUGAR_GOAL: 50,
+                constants.KEY_SODIUM_GOAL: 2300,
+                constants.KEY_CARBS_GOAL: 250,
+                constants.KEY_OTHER_GOALS: ["Eat more vegetables"]
             }
         )
 
@@ -74,6 +82,14 @@ class TestCreateAccountRequestHandler(unittest.TestCase):
                 constants.KEY_USERNAME: "janedoe",
                 constants.KEY_PASSWORD: "secret",
                 constants.KEY_NAME: "Jane Doe",
+                constants.KEY_PRIMARY_GOAL: "CALORIE",
+                constants.KEY_CALORIE_GOAL: 2000,
+                constants.KEY_PROTEIN_GOAL: 150,
+                constants.KEY_FAT_GOAL: 70,
+                constants.KEY_SUGAR_GOAL: 50,
+                constants.KEY_SODIUM_GOAL: 2300,
+                constants.KEY_CARBS_GOAL: 250,
+                constants.KEY_OTHER_GOALS: ["Eat more vegetables"]
             }
         )
 
