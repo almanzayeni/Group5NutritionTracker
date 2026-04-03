@@ -51,7 +51,7 @@ public class FoodDatabase {
      */
     FoodDatabase(String filePath) {
         this.filePath = filePath;
-        this.objectMapper = new ObjectMapper();
+        this.objectMapper = JsonMapperFactory.create();
     }
 
     /**
