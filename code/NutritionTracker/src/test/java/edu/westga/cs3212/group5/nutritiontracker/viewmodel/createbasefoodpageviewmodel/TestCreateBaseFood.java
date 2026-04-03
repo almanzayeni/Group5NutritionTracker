@@ -1,148 +1,167 @@
 package edu.westga.cs3212.group5.nutritiontracker.viewmodel.createbasefoodpageviewmodel;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mockStatic;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
+import edu.westga.cs3212.group5.nutritiontracker.server.AddFoodRequestHandler;
+import edu.westga.cs3212.group5.nutritiontracker.server.ServerClient;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateBaseFoodPageViewModel;
 
+/**
+ * Tests for CreateBaseFoodPageViewModel.
+ *
+ * @author (your name)
+ * @version Spring 2026
+ */
 public class TestCreateBaseFood {
-	private static final Path TARGET = Path.of("test.json");
 
-	@AfterEach
-	void tearDown() throws IOException {
-		if (Files.exists(TARGET)) {
-			Files.delete(TARGET);
-		}
-	}
+    private CreateBaseFoodPageViewModel viewModel;
 
-	@Test
-	void createBaseFoodShouldThrowIOException() {
-		if (Files.exists(TARGET)) {
-			try {
-				Files.delete(TARGET);
-			} catch (IOException e) {
-				throw new RuntimeException("Failed to delete existing test file: " + e.getMessage(), e);
-			}
-		}
-		try {
-			Files.createDirectory(TARGET);
-		} catch (IOException e) {
-			throw new RuntimeException("Failed to create directory for test: " + e.getMessage(), e);
-		}
+    @BeforeEach
+    public void setUp() {
+        this.viewModel = new CreateBaseFoodPageViewModel();
+    }
 
-		CreateBaseFoodPageViewModel vm = new CreateBaseFoodPageViewModel("test.json");
-		vm.getDescriptionProperty().set("Strawberry");
-		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.WEIGHT);
-		vm.getCaloriesProperty().set(10);
-		vm.getProteinProperty().set(1);
-		vm.getFatProperty().set(1);
-		vm.getSugarProperty().set(1);
-		vm.getCarbohydratesProperty().set(1);
-		vm.getSodiumProperty().set(1);
+    @Test
+    public void testConstructor_descriptionPropertyInitializedEmpty() {
+        assertTrue(this.viewModel.getDescriptionProperty().get() == null
+                || this.viewModel.getDescriptionProperty().get().isEmpty());
+    }
 
-		assertThrows(IOException.class, () -> {
-			vm.createBaseFood();
-		});
-	}
+    @Test
+    public void testConstructor_quantityCategoriesListContainsThreeItems() {
+        assertEquals(3, this.viewModel.getQuantityCategoriesListProperty().size());
+    }
 
-	@Test
-	void createBaseFoodShouldThrowJsonProcessingException() throws JsonProcessingException {
+    @Test
+    public void testConstructor_quantityCategoriesListContainsQuantity() {
+        assertTrue(this.viewModel.getQuantityCategoriesListProperty().contains(QuantityCategory.QUANTITY));
+    }
 
-		ObjectMapper mockMapper = mock(ObjectMapper.class);
+    @Test
+    public void testConstructor_quantityCategoriesListContainsWeight() {
+        assertTrue(this.viewModel.getQuantityCategoriesListProperty().contains(QuantityCategory.WEIGHT));
+    }
 
-		when(mockMapper.writeValueAsString(any())).thenThrow(new JsonProcessingException("Serialization failed") {
-		});
+    @Test
+    public void testConstructor_quantityCategoriesListContainsServing() {
+        assertTrue(this.viewModel.getQuantityCategoriesListProperty().contains(QuantityCategory.SERVING));
+    }
 
-		CreateBaseFoodPageViewModel vm = new CreateBaseFoodPageViewModel(mockMapper);
+    @Test
+    public void testConstructor_portionSizeDefaultsToOne() {
+        assertEquals(1.0, this.viewModel.getPortionSize());
+    }
 
-		vm.getDescriptionProperty().set("UniqueFood");
-		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.WEIGHT);
-		vm.getCaloriesProperty().set(10);
-		vm.getProteinProperty().set(1);
-		vm.getFatProperty().set(1);
-		vm.getSugarProperty().set(1);
-		vm.getCarbohydratesProperty().set(1);
-		vm.getSodiumProperty().set(1);
+    @Test
+    public void testConstructor_caloriesPropertyInitializedToZero() {
+        assertEquals(0.0, this.viewModel.getCaloriesProperty().get());
+    }
 
-		assertThrows(JsonProcessingException.class, () -> {
-			vm.createBaseFood();
-		});
-	}
+    @Test
+    public void testConstructor_proteinPropertyInitializedToZero() {
+        assertEquals(0.0, this.viewModel.getProteinProperty().get());
+    }
 
-	@Test
-	void createValidBaseFood() {
-		CreateBaseFoodPageViewModel vm = new CreateBaseFoodPageViewModel("test.json");
-		vm.getDescriptionProperty().set("Strawberry");
-		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.WEIGHT);
-		vm.getCaloriesProperty().set(10);
-		vm.getProteinProperty().set(1);
-		vm.getFatProperty().set(1);
-		vm.getSugarProperty().set(1);
-		vm.getCarbohydratesProperty().set(1);
-		vm.getSodiumProperty().set(1);
+    @Test
+    public void testConstructor_fatPropertyInitializedToZero() {
+        assertEquals(0.0, this.viewModel.getFatProperty().get());
+    }
 
-		try {
-			vm.createBaseFood();
-		} catch (Exception e) {
-			throw new RuntimeException("Unexpected exception: " + e.getMessage(), e);
-		}
+    @Test
+    public void testConstructor_sugarPropertyInitializedToZero() {
+        assertEquals(0.0, this.viewModel.getSugarProperty().get());
+    }
 
-		BaseFood createdFood = null;
-		try {
-			String jsonString = Files.readString(TARGET);
-			ObjectMapper objectMapper = new ObjectMapper();
-			createdFood = objectMapper.readValue(jsonString, BaseFood.class);
-		} catch (IOException e) {
-			throw new RuntimeException("Failed to read created food: " + e.getMessage(), e);
-		}
+    @Test
+    public void testConstructor_carbohydratesPropertyInitializedToZero() {
+        assertEquals(0.0, this.viewModel.getCarbohydratesProperty().get());
+    }
 
-		assertNotNull(createdFood);
-		assertEquals("Strawberry", createdFood.getDescription());
-		assertEquals(QuantityCategory.WEIGHT, createdFood.getQuantityCategory());
-		assertEquals(10, createdFood.getCalories());
-		assertEquals(1, createdFood.getProtein());
-		assertEquals(1, createdFood.getFat());
-		assertEquals(1, createdFood.getSugar());
-		assertEquals(1, createdFood.getCarbohydrates());
-		assertEquals(1, createdFood.getSodium());
-	}
+    @Test
+    public void testConstructor_sodiumPropertyInitializedToZero() {
+        assertEquals(0.0, this.viewModel.getSodiumProperty().get());
+    }
 
-	@Test
-	void createDuplicateBaseFoodShouldThrowIllegalArgumentException() {
-		CreateBaseFoodPageViewModel vm = new CreateBaseFoodPageViewModel("test.json");
-		vm.getDescriptionProperty().set("Strawberry");
-		vm.getSelectedQuantityCategoryProperty().set(QuantityCategory.WEIGHT);
-		vm.getCaloriesProperty().set(10);
-		vm.getProteinProperty().set(1);
-		vm.getFatProperty().set(1);
-		vm.getSugarProperty().set(1);
-		vm.getCarbohydratesProperty().set(1);
-		vm.getSodiumProperty().set(1);
+    @Test
+    public void testConstructor_selectedQuantityCategoryInitializedToNull() {
+        assertNull(this.viewModel.getSelectedQuantityCategoryProperty().get());
+    }
 
-		try {
-			vm.createBaseFood();
-		} catch (Exception e) {
-			throw new RuntimeException("Unexpected exception: " + e.getMessage(), e);
-		}
+    @Test
+    public void testCreateBaseFood_validFood_serverCalledSuccessfully() {
+        try (MockedStatic<ServerClient> mockClient = mockStatic(ServerClient.class)) {
+            mockClient.when(() -> ServerClient.send(anyString()))
+                      .thenReturn("{\"status\":\"1\"}");
 
-		assertThrows(IllegalArgumentException.class, () -> {
-			vm.createBaseFood();
-		});
-	}
+            this.viewModel.getDescriptionProperty().set("oatmeal");
+            this.viewModel.getSelectedQuantityCategoryProperty().set(QuantityCategory.SERVING);
+            this.viewModel.getCaloriesProperty().set(150);
+            this.viewModel.getProteinProperty().set(5);
+            this.viewModel.getFatProperty().set(3);
+            this.viewModel.getSugarProperty().set(1);
+            this.viewModel.getCarbohydratesProperty().set(27);
+            this.viewModel.getSodiumProperty().set(0);
+
+            assertDoesNotThrow(() -> this.viewModel.createBaseFood());
+        } catch (Exception e) {
+            fail("Unexpected exception: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateBaseFood_serverReturnsFailure_throwsRuntimeException() {
+        try (MockedStatic<ServerClient> mockClient = mockStatic(ServerClient.class)) {
+            mockClient.when(() -> ServerClient.send(anyString()))
+                      .thenReturn("{\"status\":\"-1\",\"failure_message\":\"food already exists\"}");
+
+            this.viewModel.getDescriptionProperty().set("oatmeal");
+            this.viewModel.getSelectedQuantityCategoryProperty().set(QuantityCategory.SERVING);
+            this.viewModel.getCaloriesProperty().set(150);
+
+            assertThrows(RuntimeException.class, () -> this.viewModel.createBaseFood());
+        } catch (Exception e) {
+            fail("Unexpected exception: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateBaseFood_serverUnreachable_throwsRuntimeException() {
+        try (MockedStatic<ServerClient> mockClient = mockStatic(ServerClient.class)) {
+            mockClient.when(() -> ServerClient.send(anyString()))
+                      .thenThrow(new Exception("connection refused"));
+
+            this.viewModel.getDescriptionProperty().set("oatmeal");
+            this.viewModel.getSelectedQuantityCategoryProperty().set(QuantityCategory.SERVING);
+            this.viewModel.getCaloriesProperty().set(150);
+
+            assertThrows(RuntimeException.class, () -> this.viewModel.createBaseFood());
+        } catch (Exception e) {
+            fail("Unexpected exception: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateBaseFood_nullDescription_throwsException() {
+        this.viewModel.getDescriptionProperty().set(null);
+        this.viewModel.getSelectedQuantityCategoryProperty().set(QuantityCategory.SERVING);
+        this.viewModel.getCaloriesProperty().set(150);
+
+        assertThrows(Exception.class, () -> this.viewModel.createBaseFood());
+    }
+
+    @Test
+    public void testCreateBaseFood_nullQuantityCategory_throwsException() {
+        this.viewModel.getDescriptionProperty().set("oatmeal");
+        this.viewModel.getSelectedQuantityCategoryProperty().set(null);
+        this.viewModel.getCaloriesProperty().set(150);
+
+        assertThrows(Exception.class, () -> this.viewModel.createBaseFood());
+    }
 }
