@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
 import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
-import edu.westga.cs3212.group5.nutritiontracker.viewmodel.PreferencesVM;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.DietGoalsViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -61,7 +61,7 @@ public class PreferencesController {
     @FXML
     private Label warningLabel;
 
-    private PreferencesVM viewModel;
+    private DietGoalsViewModel viewModel;
 
     @FXML
     void handleCreateAccount(ActionEvent event) {
@@ -72,7 +72,7 @@ public class PreferencesController {
         }
 
         String otherGoals = this.otherGoalsTextField.getText();
-        DietGoals prefs = this.viewModel.createPreferences(selectedGoal, otherGoals);
+        DietGoals prefs = this.viewModel.createDietGoals(selectedGoal, otherGoals);
 
         if (prefs != null) {
             // TODO: pass prefs to account-creation logic / navigate to next screen
@@ -93,7 +93,7 @@ public class PreferencesController {
         assert this.sugarTextField != null       : "fx:id=\"sugarTextField\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
         assert this.warningLabel != null         : "fx:id=\"warningLabel\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
 
-        this.viewModel = new PreferencesVM();
+        this.viewModel = new DietGoalsViewModel();
 
         this.primaryGoalComboBox.getItems().setAll(PrimaryGoal.values());
         this.primaryGoalComboBox.setValue(PrimaryGoal.CALORIE);

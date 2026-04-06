@@ -185,7 +185,7 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
 	private void setUpListeners() {
 		this.setupPortionSizeUnitLabelListener();
 		this.handleHamburgerMenuClick();
-		// this.setUpListenerForLogoutButton();
+		this.setUpListenerForLogoutButton();
 		this.setUpListenerForHomeButton();
 		this.setUpListenerForCreateMealButton();
 		this.setupListenerForAddFoodButton();
@@ -261,30 +261,30 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
 		});
 	}
 
-//    private void setUpListenerForLogoutButton() {
-//		this.logoutButton.setOnAction((ActionEvent event) -> {
-//			try {
-//				//this.viewModel.saveData();
-//
-//				FXMLLoader loader = new FXMLLoader();
-//				loader.setLocation(LandingPage.class.getResource("LoginView.fxml"));
-//				loader.load();
-//
-//				Parent parent = loader.getRoot();
-//				Scene scene = new Scene(parent);
-//
-//				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-//				stage.setScene(scene);
-//				stage.setTitle("Login");
-//				stage.show();
-//
-//			} catch (Exception ex) {
-//				ex.printStackTrace();
-//				Alert alert = new Alert(Alert.AlertType.ERROR, "Error logging user out.");
-//				alert.showAndWait();
-//			}
-//		});
-//	}
+    private void setUpListenerForLogoutButton() {
+		this.logoutButton.setOnAction((ActionEvent event) -> {
+			try {
+				//this.viewModel.saveData();
+
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(LoginPageController.class.getResource("LoginPage.fxml"));
+				loader.load();
+
+				Parent parent = loader.getRoot();
+				Scene scene = new Scene(parent);
+
+				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+				stage.setScene(scene);
+				stage.setTitle("Login");
+				stage.show();
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Error logging user out.");
+				alert.showAndWait();
+			}
+		});
+	}
 
 	private void setUpListenerForHomeButton() {
 		this.homeButton.setOnAction((ActionEvent event) -> {
