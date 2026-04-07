@@ -68,12 +68,25 @@ public class LoginPageController {
 
     @FXML
     void handleCreateAccount() {
-        // TODO: this.switchTo("CreateAccountPage.fxml");
-        this.errorLabel.setText("Account creation coming soon!");
-        this.errorLabel.setStyle("-fx-text-fill: #1f5c33; -fx-font-size: 12px;");
+        this.switchTo("CreateAccountPage.fxml");
     }
 
-    private void switchToDashboard(User user) {
+    private void switchTo(String fxmlFile) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) this.createAccountButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            this.errorLabel.setText("Navigation error: " + e.getMessage());
+        }
+		
+	}
+
+	private void switchToDashboard(User user) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeDashboardPage.fxml"));
             Parent root = loader.load();
