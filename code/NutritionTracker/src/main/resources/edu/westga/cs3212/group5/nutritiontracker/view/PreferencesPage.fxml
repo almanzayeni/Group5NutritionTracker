@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?xml-model href="PreferencesPage.fxml"?>
 
-<AnchorPane prefHeight="640.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.PreferencesController">
+<AnchorPane prefHeight="640.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.DietGoalsController">
     <children>
       <ComboBox fx:id="primaryGoalComboBox" layoutX="196.0" layoutY="115.0" prefHeight="25.0" prefWidth="138.0" />
         <TextField fx:id="calorieTextField" alignment="CENTER_RIGHT" layoutX="221.0" layoutY="161.0" prefHeight="25.0" prefWidth="91.0" promptText="e.g. 2000" />

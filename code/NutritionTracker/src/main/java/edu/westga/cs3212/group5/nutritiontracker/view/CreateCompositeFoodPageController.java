@@ -81,7 +81,7 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
 	private FoodSearchPanelController searchPanelController;
 
 	private CreateCompositeFoodPageViewModel viewModel;
-    private HomeDashboardViewModel hdViewModel;
+	private HomeDashboardViewModel hdViewModel;
 
 	@FXML
 	void initialize() {
@@ -143,7 +143,7 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
 			}
 		});
 	}
-	
+
 	@Override
 	public void setViewModel(HomeDashboardViewModel viewModel) {
 		this.hdViewModel = viewModel;
@@ -261,10 +261,10 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
 		});
 	}
 
-    private void setUpListenerForLogoutButton() {
+	private void setUpListenerForLogoutButton() {
 		this.logoutButton.setOnAction((ActionEvent event) -> {
 			try {
-				//this.viewModel.saveData();
+				// this.viewModel.saveData();
 
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(LoginPageController.class.getResource("LoginPage.fxml"));
@@ -292,11 +292,11 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(HomeDashboardPageController.class.getResource("HomeDashboardPage.fxml"));
 				loader.load();
-				
-	            Object controller = loader.getController();
-	            if (controller instanceof ViewModelAware) {
-	                ((ViewModelAware) controller).setViewModel(this.hdViewModel);
-	            }
+
+				Object controller = loader.getController();
+				if (controller instanceof ViewModelAware) {
+					((ViewModelAware) controller).setViewModel(this.hdViewModel);
+				}
 
 				Parent parent = loader.getRoot();
 				Scene scene = new Scene(parent);
@@ -313,7 +313,7 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
 			}
 		});
 	}
-	
+
 	private void setUpListenerForCreateMealButton() {
 		this.createMealButton.setOnAction((ActionEvent event) -> {
 			try {
@@ -323,11 +323,11 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
 
 				Parent parent = loader.getRoot();
 				Scene scene = new Scene(parent);
-				
-	            Object controller = loader.getController();
-	            if (controller instanceof ViewModelAware) {
-	                ((ViewModelAware) controller).setViewModel(this.hdViewModel);
-	            }
+
+				Object controller = loader.getController();
+				if (controller instanceof ViewModelAware) {
+					((ViewModelAware) controller).setViewModel(this.hdViewModel);
+				}
 
 				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
 				stage.setScene(scene);

@@ -70,7 +70,7 @@ public class CreateBaseFoodPageController implements ViewModelAware {
 	private boolean sugarIsBound;
 	private boolean carbohydratesIsBound;
 	private boolean sodiumIsBound;
-    private HomeDashboardViewModel hdViewModel;
+	private HomeDashboardViewModel hdViewModel;
 
 	@FXML
 	void initialize() {
@@ -323,8 +323,8 @@ public class CreateBaseFoodPageController implements ViewModelAware {
 		});
 	}
 
-    private void setUpListenerForLogoutButton() {
- 		this.logoutButton.setOnAction((ActionEvent event) -> {
+	private void setUpListenerForLogoutButton() {
+		this.logoutButton.setOnAction((ActionEvent event) -> {
 			try {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(LoginPageController.class.getResource("LoginPage.fxml"));
@@ -355,12 +355,12 @@ public class CreateBaseFoodPageController implements ViewModelAware {
 
 				Parent parent = loader.getRoot();
 				Scene scene = new Scene(parent);
-				
-	            Object controller = loader.getController();
-	            if (controller instanceof ViewModelAware) {
-	                ((ViewModelAware) controller).setViewModel(this.hdViewModel);
-	            }
-	            
+
+				Object controller = loader.getController();
+				if (controller instanceof ViewModelAware) {
+					((ViewModelAware) controller).setViewModel(this.hdViewModel);
+				}
+
 				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
 				stage.setScene(scene);
 				stage.setTitle("Home");
@@ -373,7 +373,7 @@ public class CreateBaseFoodPageController implements ViewModelAware {
 			}
 		});
 	}
-	
+
 	private void setUpListenerForCreateMealButton() {
 		this.createMealButton.setOnAction((ActionEvent event) -> {
 			try {
