@@ -9,6 +9,7 @@ from model import database
 from server import constants, login_authentication_request_handler
 from server import create_account_request_handler
 from server import search_request_handler
+from server import create_food_request_handler
 
 def log(message):
     print("SERVER::{0}".format(message))
@@ -42,6 +43,9 @@ def run(protocol, ipAddress, port):
             sendResponse(socket, response)
         elif(request[constants.KEY_REQUEST_TYPE] == constants.SEARCH_REQUEST_TYPE):
             response = search_request_handler.handleRequest(request)
+            sendResponse(socket, response)
+        elif request[constants.KEY_REQUEST_TYPE] == constants.CREATE_FOOD_REQUEST_TYPE:
+            response = create_food_request_handler.handleRequest(request)
             sendResponse(socket, response)
         else:
             response = {constants.KEY_STATUS:constants.UNSUPPORTED_OPERATION_STATUS, constants.KEY_FAILURE_MESSAGE:"unsupported request type"}
