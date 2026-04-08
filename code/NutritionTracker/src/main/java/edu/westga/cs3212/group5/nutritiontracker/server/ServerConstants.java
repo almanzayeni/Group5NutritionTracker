@@ -20,7 +20,6 @@ public class ServerConstants {
 	public static final String KEY_USER = "user";
 	public static final String KEY_USERNAME = "username";
 	public static final String KEY_PASSWORD = "password";
-	public static final String KEY_FOOD_ITEM = "food_item";
 	public static final String KEY_NAME = "name";
 	public static final String KEY_DIET_GOALS = "dietGoals";
 	public static final String KEY_PRIMARY_GOAL = "primaryGoal";
@@ -33,7 +32,8 @@ public class ServerConstants {
 	public static final String KEY_OTHER_GOALS = "otherGoals";
 	public static final String KEY_QUERY = "query";
 	public static final String KEY_SEARCH_RESULTS = "search_results";
-
+	public static final String KEY_FOOD_ITEM = "food_item";
+	
 	public static final String SUCCESS_STATUS = "1";
 	public static final String BAD_MESSAGE_STATUS = "-1";
 	public static final String UNSUPPORTED_OPERATION_STATUS = "-1";
@@ -42,20 +42,4 @@ public class ServerConstants {
 	public static final String ADD_FOOD_REQUEST_TYPE = "ADD_FOOD";
 	public static final String CREATE_ACCOUNT_REQUEST_TYPE = "CREATE_ACCOUNT";
 	public static final String SEARCH_REQUEST_TYPE = "SEARCH";
-	
-	public static final String KEY_FOOD_DESCRIPTION = "description";
-	public static final String KEY_FOOD_QUANTITY_CATEGORY = "quantityCategory";
-	public static final String KEY_FOOD_PORTION_SIZE = "portionSize";
-	public static final String KEY_FOOD_CALORIES = "calories";
-	public static final String KEY_FOOD_PROTEIN = "protein";
-	public static final String KEY_FOOD_FAT = "fat";
-	public static final String KEY_FOOD_SUGAR = "sugar";
-	public static final String KEY_FOOD_CARBS = "carbs";
-	public static final String KEY_FOOD_SODIUM = "sodium";
-
-	public static final String CREATE_FOOD_REQUEST_TYPE = "CREATE_FOOD";
-
-	public static final String QUANTITY_CATEGORY_SERVING = "SERVING";
-	public static final String QUANTITY_CATEGORY_WEIGHT = "WEIGHT";
-	public static final String QUANTITY_CATEGORY_QUANTITY = "QUANTITY";
 }
