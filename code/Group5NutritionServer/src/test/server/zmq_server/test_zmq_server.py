@@ -9,6 +9,7 @@ import runpy
 import sys
 import types
 import unittest
+from unittest.mock import call
 from unittest.mock import patch
 
 from server import constants
@@ -103,12 +104,24 @@ class TestZmqServer(unittest.TestCase):
         ) as send_response, patch("builtins.print"):
             zmq_server.run("tcp", "127.0.0.1", "5555")
 
-        send_response.assert_called_once_with(
-            socket,
-            {
-                constants.KEY_STATUS: constants.BAD_MESSAGE_STATUS,
-                constants.KEY_FAILURE_MESSAGE: "no request type",
-            },
+        self.assertEqual(
+            [
+                call(
+                    socket,
+                    {
+                        constants.KEY_STATUS: constants.BAD_MESSAGE_STATUS,
+                        constants.KEY_FAILURE_MESSAGE: "no request type",
+                    },
+                ),
+                call(
+                    socket,
+                    {
+                        constants.KEY_STATUS: constants.SUCCESS_STATUS,
+                        constants.KEY_SUCCESS_MESSAGE: constants.KEY_SERVER_EXIT,
+                    },
+                ),
+            ],
+            send_response.call_args_list,
         )
 
     def test_run_dispatches_login_requests(self):
@@ -132,7 +145,19 @@ class TestZmqServer(unittest.TestCase):
             zmq_server.run("tcp", "127.0.0.1", "5555")
 
         handle_request.assert_called_once_with(request)
-        send_response.assert_called_once_with(socket, response)
+        self.assertEqual(
+            [
+                call(socket, response),
+                call(
+                    socket,
+                    {
+                        constants.KEY_STATUS: constants.SUCCESS_STATUS,
+                        constants.KEY_SUCCESS_MESSAGE: constants.KEY_SERVER_EXIT,
+                    },
+                ),
+            ],
+            send_response.call_args_list,
+        )
 
     def test_run_dispatches_create_account_requests(self):
         request = {
@@ -156,7 +181,19 @@ class TestZmqServer(unittest.TestCase):
             zmq_server.run("tcp", "127.0.0.1", "5555")
 
         handle_request.assert_called_once_with(request)
-        send_response.assert_called_once_with(socket, response)
+        self.assertEqual(
+            [
+                call(socket, response),
+                call(
+                    socket,
+                    {
+                        constants.KEY_STATUS: constants.SUCCESS_STATUS,
+                        constants.KEY_SUCCESS_MESSAGE: constants.KEY_SERVER_EXIT,
+                    },
+                ),
+            ],
+            send_response.call_args_list,
+        )
 
     def test_run_dispatches_search_requests(self):
         request = {
@@ -178,7 +215,19 @@ class TestZmqServer(unittest.TestCase):
             zmq_server.run("tcp", "127.0.0.1", "5555")
 
         handle_request.assert_called_once_with(request)
-        send_response.assert_called_once_with(socket, response)
+        self.assertEqual(
+            [
+                call(socket, response),
+                call(
+                    socket,
+                    {
+                        constants.KEY_STATUS: constants.SUCCESS_STATUS,
+                        constants.KEY_SUCCESS_MESSAGE: constants.KEY_SERVER_EXIT,
+                    },
+                ),
+            ],
+            send_response.call_args_list,
+        )
 
     def test_run_returns_unsupported_operation_for_unknown_request_types(self):
         request = {
@@ -193,12 +242,24 @@ class TestZmqServer(unittest.TestCase):
         ) as send_response, patch("builtins.print"):
             zmq_server.run("tcp", "127.0.0.1", "5555")
 
-        send_response.assert_called_once_with(
-            socket,
-            {
-                constants.KEY_STATUS: constants.UNSUPPORTED_OPERATION_STATUS,
-                constants.KEY_FAILURE_MESSAGE: "unsupported request type",
-            },
+        self.assertEqual(
+            [
+                call(
+                    socket,
+                    {
+                        constants.KEY_STATUS: constants.UNSUPPORTED_OPERATION_STATUS,
+                        constants.KEY_FAILURE_MESSAGE: "unsupported request type",
+                    },
+                ),
+                call(
+                    socket,
+                    {
+                        constants.KEY_STATUS: constants.SUCCESS_STATUS,
+                        constants.KEY_SUCCESS_MESSAGE: constants.KEY_SERVER_EXIT,
+                    },
+                ),
+            ],
+            send_response.call_args_list,
         )
 
     def test_module_entry_point_runs_server_with_default_constants(self):
