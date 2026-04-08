@@ -27,13 +27,12 @@ import javafx.stage.Stage;
  * @version Spring 2026
  */
 public class SearchPageController implements ViewModelAware {
+
     private HomeDashboardViewModel viewModel;
 
     @FXML private ResourceBundle resources;
     @FXML private URL location;
-
     @FXML private FoodSearchPanelController searchPanelController;
-
     @FXML private JFXHamburger hamburgerMenu;
     @FXML private Button homeButton;
     @FXML private Button logoutButton;
@@ -41,10 +40,10 @@ public class SearchPageController implements ViewModelAware {
 
     @FXML
     void initialize() {
-        assert this.searchPanelController != null : "searchPanelController not injected — check fx:id in FXML";
+        assert this.searchPanelController != null
+                : "searchPanelController not injected — check fx:id in SearchPage.fxml";
 
         this.searchPanelController.enableStandaloneMode();
-
         this.setUpListeners();
     }
 
@@ -83,28 +82,28 @@ public class SearchPageController implements ViewModelAware {
                 loader.setLocation(HomeDashboardPageController.class.getResource("HomeDashboardPage.fxml"));
                 loader.load();
 
-                Parent parent = loader.getRoot();
-                Scene scene = new Scene(parent);
-                
                 Object controller = loader.getController();
                 if (controller instanceof ViewModelAware) {
                     ((ViewModelAware) controller).setViewModel(this.viewModel);
                 }
-                
+
+                Parent parent = loader.getRoot();
                 Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-                stage.setScene(scene);
+                stage.setScene(new Scene(parent));
                 stage.setTitle("Home");
                 stage.show();
-
             } catch (Exception ex) {
                 ex.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Error navigating to home page.").showAndWait();
+                Alert alert = new Alert(Alert.AlertType.ERROR,
+                        "Unable to navigate to the home page. Please try again.");
+                alert.setHeaderText("Navigation Error");
+                alert.showAndWait();
             }
         });
     }
 
-	@Override
-	public void setViewModel(HomeDashboardViewModel viewModel) {
-		this.viewModel = viewModel;
-	}
+    @Override
+    public void setViewModel(HomeDashboardViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 }

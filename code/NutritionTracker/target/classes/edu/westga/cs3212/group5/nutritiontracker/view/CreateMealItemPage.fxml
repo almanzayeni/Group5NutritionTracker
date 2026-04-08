@@ -37,12 +37,12 @@
             </VBox>
 
             <!-- Selection feedback label -->
-            <Label fx:id="searchSelectionLabel" layoutX="21.0" layoutY="477.0" prefWidth="310.0" style="-fx-font-style: italic;" text="No food selected from search." textFill="#555555">
+            <Label fx:id="searchSelectionLabel" layoutX="21.0" layoutY="480.0" prefWidth="310.0" style="-fx-font-style: italic;" text="No food selected from search." textFill="#555555">
                <font><Font size="12.0" /></font>
             </Label>
 
             <!-- SEPARATE Add Ingredient button — only adds, does not search -->
-            <Button fx:id="addFoodButton" layoutX="21.0" layoutY="503.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="310.0" style="-fx-background-color: #3a7d44; -fx-text-fill: white;" text="+ Add Selected Food">
+            <Button fx:id="addFoodButton" layoutX="21.0" layoutY="514.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="310.0" style="-fx-background-color: #3a7d44; -fx-text-fill: white;" text="+ Add Selected Food">
                <font><Font name="System Bold" size="14.0" /></font>
             </Button>
 
