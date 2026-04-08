@@ -12,9 +12,10 @@ from model.diet_goals import DietGoals
 from server import constants
 from datetime import date as dateTime
 
-
-
-
+def _require_key(data, key, message):
+    if not isinstance(data, dict) or key not in data:
+        raise Exception(message)
+    return data[key]
 
 def handleRequest(request):
     '''
@@ -32,10 +33,17 @@ def handleRequest(request):
     '''
     if request is None:
         raise Exception("request is None")
-    if constants.KEY_USER not in request:
-        raise Exception("request does not contain user.")
-
-    username = request[constants.KEY_USER][constants.KEY_USERNAME]
+    
+    user_request = _require_key(
+        request,
+        constants.KEY_USER,
+        "request does not contain user.",
+    )
+    username = _require_key(
+        user_request,
+        constants.KEY_USERNAME,
+        "request does not contain username",
+    )
 
     if username in database.getUsers():
         return {
@@ -43,18 +51,63 @@ def handleRequest(request):
             constants.KEY_FAILURE_MESSAGE: "username already exists"
         }
         
-    password = request[constants.KEY_USER][constants.KEY_PASSWORD]
-    name     = request[constants.KEY_USER][constants.KEY_NAME]
+    password = _require_key(
+        user_request,
+        constants.KEY_PASSWORD,
+        "request does not contain password",
+    )
+    name = _require_key(
+        user_request,
+        constants.KEY_NAME,
+        "request does not contain name",
+    )
+    diet_goals_request = _require_key(
+        user_request,
+        constants.KEY_DIET_GOALS,
+        "request does not contain dietGoals",
+    )
 
     diet_goals = DietGoals(
-        primaryGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_PRIMARY_GOAL],
-        calorieGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_CALORIE_GOAL],
-        proteinGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_PROTEIN_GOAL],
-        fatGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_FAT_GOAL],
-        sugarGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_SUGAR_GOAL],
-        sodiumGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_SODIUM_GOAL],
-        carbsGoal=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_CARBS_GOAL],
-        otherGoals=request[constants.KEY_USER][constants.KEY_DIET_GOALS][constants.KEY_OTHER_GOALS]
+        primaryGoal=_require_key(
+            diet_goals_request,
+            constants.KEY_PRIMARY_GOAL,
+            "request does not contain primaryGoal",
+        ),
+        calorieGoal=_require_key(
+            diet_goals_request,
+            constants.KEY_CALORIE_GOAL,
+            "request does not contain calorieGoal",
+        ),
+        proteinGoal=_require_key(
+            diet_goals_request,
+            constants.KEY_PROTEIN_GOAL,
+            "request does not contain proteinGoal",
+        ),
+        fatGoal=_require_key(
+            diet_goals_request,
+            constants.KEY_FAT_GOAL,
+            "request does not contain fatGoal",
+        ),
+        sugarGoal=_require_key(
+            diet_goals_request,
+            constants.KEY_SUGAR_GOAL,
+            "request does not contain sugarGoal",
+        ),
+        sodiumGoal=_require_key(
+            diet_goals_request,
+            constants.KEY_SODIUM_GOAL,
+            "request does not contain sodiumGoal",
+        ),
+        carbsGoal=_require_key(
+            diet_goals_request,
+            constants.KEY_CARBS_GOAL,
+            "request does not contain carbsGoal",
+        ),
+        otherGoals=_require_key(
+            diet_goals_request,
+            constants.KEY_OTHER_GOALS,
+            "request does not contain otherGoals",
+        ),
     )
 
     food_log = FoodLog(

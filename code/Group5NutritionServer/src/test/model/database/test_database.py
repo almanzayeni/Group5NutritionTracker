@@ -51,7 +51,7 @@ class TestDatabase(unittest.TestCase):
         with self.assertRaisesRegex(Exception, "food item is None"):
             database.addFoodItem(None)
 
-    def test_add_food_item_raises_attribute_error_for_non_none_food_with_current_storage_shape(self):
+    def test_add_food_item_stores_food_by_description(self):
         food = BaseFood(
             "banana",
             QuantityCategory.QUANTITY,
@@ -64,8 +64,9 @@ class TestDatabase(unittest.TestCase):
             1,
         )
 
-        with self.assertRaises(AttributeError):
-            database.addFoodItem(food)
+        database.addFoodItem(food)
+
+        self.assertEqual(food, database.getFoodItems()["banana"])
 
     def test_search_food_item_by_description_rejects_none_query(self):
         with self.assertRaisesRegex(Exception, "query is None"):
@@ -97,10 +98,10 @@ class TestDatabase(unittest.TestCase):
             25,
             2,
         )
-        database._foodItems = [
-            ("Banana", banana),
-            ("apple", apple),
-        ]
+        database._foodItems = {
+            "Banana": banana,
+            "apple": apple,
+        }
 
         self.assertEqual([banana], database.searchFoodItemByDescription("nAn"))
 
