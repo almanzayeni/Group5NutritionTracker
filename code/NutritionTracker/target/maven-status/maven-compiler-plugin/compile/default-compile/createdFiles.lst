@@ -2,6 +2,7 @@ edu\westga\cs3212\group5\nutritiontracker\model\BaseFood.class
 edu\westga\cs3212\group5\nutritiontracker\view\CreateCompositeFoodPageController$1.class
 edu\westga\cs3212\group5\nutritiontracker\model\FoodDatabase.class
 edu\westga\cs3212\group5\nutritiontracker\view\CreateBaseFoodPageController.class
+edu\westga\cs3212\group5\nutritiontracker\view\CreateAccountPageController$1.class
 edu\westga\cs3212\group5\nutritiontracker\view\FoodSearchPanelController$1.class
 edu\westga\cs3212\group5\nutritiontracker\view\CreateCompositeFoodPageController$2.class
 edu\westga\cs3212\group5\nutritiontracker\model\FoodItem.class
