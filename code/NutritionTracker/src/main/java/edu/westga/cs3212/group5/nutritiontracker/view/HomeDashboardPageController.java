@@ -155,7 +155,7 @@ public class HomeDashboardPageController implements ViewModelAware {
     private void setupMenuButtons() {
         homeButton.setOnAction(e -> this.switchTo("HomeDashboardPage.fxml"));
         createFoodButton.setOnAction(e -> this.switchTo("CreateFoodItemTypeSelectionPage.fxml"));
-        addFoodButton.setOnAction(e -> this.switchTo("SearchPage.fxml"));
+        //addFoodButton.setOnAction(e -> this.switchTo("SearchPage.fxml"));
         logoutButton.setOnAction(e -> this.handleLogout());
     }
 
@@ -165,8 +165,7 @@ public class HomeDashboardPageController implements ViewModelAware {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.YES) {
-            Stage stage = (Stage) this.hamburgerMenu.getScene().getWindow();
-            stage.close(); // or navigate to login page
+            this.switchTo("loginPage.fxml");
         }
     }
 
