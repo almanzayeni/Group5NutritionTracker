@@ -4,128 +4,105 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="800.0" prefWidth="360.0"
-            style="-fx-background-color: #F3EDE4;"
-            xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateAccountPageController">
+<ScrollPane fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateAccountPageController">
 
-   <children>
+   <content>
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;">
+         <children>
 
-      <Label alignment="CENTER" layoutX="44.0" layoutY="45.0" prefHeight="37.0" prefWidth="272.0"
-             text="NutritionTracker" textFill="#1f5c33">
-         <font>
-            <Font name="Bookman Old Style Bold" size="30.0" />
-         </font>
-      </Label>
+            <!-- App Title -->
+            <Label alignment="CENTER" layoutX="44.0" layoutY="30.0" prefHeight="40.0" prefWidth="272.0" text="NutritionTracker" textFill="#1f5c33">
+               <font><Font name="Bookman Old Style Bold" size="28.0" /></font>
+            </Label>
 
-      <Label alignment="CENTER" layoutX="44.0" layoutY="90.0" prefHeight="25.0" prefWidth="272.0"
-             text="Create Account" textFill="#1f5c33">
-         <font>
-            <Font name="Bookman Old Style Bold" size="18.0" />
-         </font>
-      </Label>
+            <!-- Page Title -->
+            <Label alignment="CENTER" layoutX="44.0" layoutY="76.0" prefHeight="28.0" prefWidth="272.0" text="Create Account" textFill="#1f5c33">
+               <font><Font name="Bookman Old Style Bold" size="20.0" /></font>
+            </Label>
 
-      <Label layoutX="40.0" layoutY="140.0" text="Username *" textFill="#1f5c33">
-         <font>
-            <Font name="Bookman Old Style Bold" size="14.0" />
-         </font>
-      </Label>
+            <!-- Username -->
+            <Label layoutX="40.0" layoutY="122.0" text="Username *" textFill="#1f5c33">
+               <font><Font name="System Bold" size="14.0" /></font>
+            </Label>
+            <TextField fx:id="usernameField" layoutX="40.0" layoutY="144.0" prefHeight="38.0" prefWidth="280.0" promptText="Choose a username" style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.5; -fx-font-size: 13px;" />
 
-      <TextField fx:id="usernameField" layoutX="40.0" layoutY="162.0" prefHeight="38.0" prefWidth="280.0"
-                 promptText="Choose a username"
-                 style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.5; -fx-font-size: 13px;" />
+            <!-- Password -->
+            <Label layoutX="40.0" layoutY="198.0" text="Password *" textFill="#1f5c33">
+               <font><Font name="System Bold" size="14.0" /></font>
+            </Label>
+            <PasswordField fx:id="passwordField" layoutX="40.0" layoutY="220.0" prefHeight="38.0" prefWidth="280.0" promptText="Create a password" style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.5; -fx-font-size: 13px;" />
 
-      <Label layoutX="40.0" layoutY="220.0" text="Password *" textFill="#1f5c33">
-         <font>
-            <Font name="Bookman Old Style Bold" size="14.0" />
-         </font>
-      </Label>
+            <!-- Primary Goal -->
+            <Label layoutX="40.0" layoutY="274.0" text="Primary Goal *" textFill="#1f5c33">
+               <font><Font name="System Bold" size="14.0" /></font>
+            </Label>
+            <ComboBox fx:id="primaryGoalComboBox" layoutX="40.0" layoutY="296.0" prefHeight="38.0" prefWidth="280.0" promptText="Select your primary goal" style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.5; -fx-font-size: 13px;" />
 
-      <PasswordField fx:id="passwordField" layoutX="40.0" layoutY="242.0" prefHeight="38.0" prefWidth="280.0"
-                     promptText="Create a password"
-                     style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.5; -fx-font-size: 13px;" />
+            <!-- Goal Targets section header -->
+            <Label layoutX="40.0" layoutY="352.0" prefWidth="280.0" text="Goal Targets (Optional unless selected above)" textFill="#1f5c33" wrapText="true">
+               <font><Font name="System Bold" size="13.0" /></font>
+            </Label>
 
-      <Label layoutX="40.0" layoutY="300.0" text="Primary Goal *" textFill="#1f5c33">
-         <font>
-            <Font name="Bookman Old Style Bold" size="14.0" />
-         </font>
-      </Label>
+            <!-- Calories -->
+            <Label layoutX="40.0" layoutY="392.0" prefWidth="110.0" text="Calories" textFill="#1f5c33">
+               <font><Font size="13.0" /></font>
+            </Label>
+            <TextField fx:id="calorieField" layoutX="160.0" layoutY="388.0" prefHeight="32.0" prefWidth="160.0" promptText="e.g. 1800" style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
 
-      <ComboBox fx:id="primaryGoalComboBox" layoutX="40.0" layoutY="322.0" prefHeight="38.0" prefWidth="280.0"
-                promptText="Select your primary goal"
-                style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.5; -fx-font-size: 13px;" />
+            <!-- Protein -->
+            <Label layoutX="40.0" layoutY="436.0" prefWidth="110.0" text="Protein (g)" textFill="#1f5c33">
+               <font><Font size="13.0" /></font>
+            </Label>
+            <TextField fx:id="proteinField" layoutX="160.0" layoutY="432.0" prefHeight="32.0" prefWidth="160.0" promptText="e.g. 120" style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
 
-      <Label layoutX="40.0" layoutY="390.0" text="Goal Targets (Optional unless selected above)" textFill="#1f5c33">
-         <font>
-            <Font name="Bookman Old Style Bold" size="13.0" />
-         </font>
-      </Label>
+            <!-- Carbs -->
+            <Label layoutX="40.0" layoutY="480.0" prefWidth="110.0" text="Carbs (g)" textFill="#1f5c33">
+               <font><Font size="13.0" /></font>
+            </Label>
+            <TextField fx:id="carbsField" layoutX="160.0" layoutY="476.0" prefHeight="32.0" prefWidth="160.0" promptText="e.g. 200" style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
 
-      <Label fx:id="calorieLabel" layoutX="40.0" layoutY="425.0" text="Calories" textFill="#1f5c33" />
-      <TextField fx:id="calorieField" layoutX="160.0" layoutY="420.0" prefHeight="30.0" prefWidth="160.0"
-                 promptText="ex: 1800"
-                 style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
+            <!-- Sugar -->
+            <Label layoutX="40.0" layoutY="524.0" prefWidth="110.0" text="Sugar (g)" textFill="#1f5c33">
+               <font><Font size="13.0" /></font>
+            </Label>
+            <TextField fx:id="sugarField" layoutX="160.0" layoutY="520.0" prefHeight="32.0" prefWidth="160.0" promptText="e.g. 30" style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
 
-      <Label fx:id="proteinLabel" layoutX="40.0" layoutY="465.0" text="Protein" textFill="#1f5c33" />
-      <TextField fx:id="proteinField" layoutX="160.0" layoutY="460.0" prefHeight="30.0" prefWidth="160.0"
-                 promptText="ex: 120"
-                 style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
+            <!-- Sodium -->
+            <Label layoutX="40.0" layoutY="568.0" prefWidth="110.0" text="Sodium (mg)" textFill="#1f5c33">
+               <font><Font size="13.0" /></font>
+            </Label>
+            <TextField fx:id="sodiumField" layoutX="160.0" layoutY="564.0" prefHeight="32.0" prefWidth="160.0" promptText="e.g. 2300" style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
 
-      <Label fx:id="carbsLabel" layoutX="40.0" layoutY="505.0" text="Carbs" textFill="#1f5c33" />
-      <TextField fx:id="carbsField" layoutX="160.0" layoutY="500.0" prefHeight="30.0" prefWidth="160.0"
-                 promptText="ex: 200"
-                 style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
+            <!-- Fat -->
+            <Label layoutX="40.0" layoutY="612.0" prefWidth="110.0" text="Fat (g)" textFill="#1f5c33">
+               <font><Font size="13.0" /></font>
+            </Label>
+            <TextField fx:id="fatField" layoutX="160.0" layoutY="608.0" prefHeight="32.0" prefWidth="160.0" promptText="e.g. 70" style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
 
-      <Label fx:id="sugarLabel" layoutX="40.0" layoutY="545.0" text="Sugar" textFill="#1f5c33" />
-      <TextField fx:id="sugarField" layoutX="160.0" layoutY="540.0" prefHeight="30.0" prefWidth="160.0"
-                 promptText="ex: 30"
-                 style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
+            <!-- Error Label -->
+            <Label fx:id="errorLabel" layoutX="40.0" layoutY="648.0" prefWidth="280.0" text="" textFill="#c0392b" wrapText="true">
+               <font><Font size="12.0" /></font>
+            </Label>
 
-      <Label fx:id="sodiumLabel" layoutX="40.0" layoutY="585.0" text="Sodium" textFill="#1f5c33" />
-      <TextField fx:id="sodiumField" layoutX="160.0" layoutY="580.0" prefHeight="30.0" prefWidth="160.0"
-                 promptText="ex: 2300"
-                 style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
+            <!-- Create Account Button -->
+            <Button fx:id="createAccountButton" layoutX="40.0" layoutY="673.0" mnemonicParsing="false" onAction="#handleCreateAccount" prefHeight="44.0" prefWidth="280.0" style="-fx-background-color: #87b442; -fx-text-fill: white; -fx-background-radius: 10;" text="Create Account">
+               <font><Font name="System Bold" size="15.0" /></font>
+            </Button>
 
-      <Label fx:id="fatLabel" layoutX="40.0" layoutY="625.0" text="Fat" textFill="#1f5c33" />
-      <TextField fx:id="fatField" layoutX="160.0" layoutY="620.0" prefHeight="30.0" prefWidth="160.0"
-                 promptText="ex: 70"
-                 style="-fx-background-color: #DECFBD; -fx-background-radius: 8; -fx-border-color: rgba(31,92,51,0.35); -fx-border-radius: 8; -fx-border-width: 1.2; -fx-font-size: 12px;" />
+            <!-- Login link -->
+            <Label layoutX="63.0" layoutY="738.0" text="Already have an account?">
+               <font><Font size="13.0" /></font>
+            </Label>
+            <Button fx:id="backToLoginButton" layoutX="191.0" layoutY="736.0" mnemonicParsing="false" onAction="#handleBackToLogin" prefHeight="24.0" prefWidth="80.0" style="-fx-background-color: transparent; -fx-text-fill: #1f5c33; -fx-underline: true; -fx-font-size: 13px; -fx-cursor: hand; -fx-padding: 0;" text="Login">
+               <font><Font name="System Bold" size="13.0" /></font>
+            </Button>
 
-      <Label fx:id="errorLabel" layoutX="40.0" layoutY="665.0" prefWidth="280.0" text="" textFill="#c0392b" wrapText="true">
-         <font>
-            <Font size="12.0" />
-         </font>
-      </Label>
-
-      <Button fx:id="createAccountButton" layoutX="40.0" layoutY="705.0" mnemonicParsing="false"
-              onAction="#handleCreateAccount" prefHeight="44.0" prefWidth="280.0"
-              style="-fx-background-color: #87b442; -fx-text-fill: white; -fx-background-radius: 10;"
-              text="Create Account">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
-
-      <Label layoutX="74.0" layoutY="765.0" text="Already have an account?">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Label>
-
-      <Button fx:id="backToLoginButton" layoutX="214.0" layoutY="765.0" mnemonicParsing="false"
-              onAction="#handleBackToLogin" prefHeight="19.0" prefWidth="50.0"
-              style="-fx-background-color: transparent; -fx-text-fill: #1f5c33; -fx-underline: true; -fx-font-size: 13px; -fx-cursor: hand; -fx-padding: 0;"
-              text="Login">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-
-   </children>
-</AnchorPane>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>
