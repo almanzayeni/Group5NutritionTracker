@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateBaseFoodPageController">
+<ScrollPane fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateBaseFoodPageController">
    <content>
-      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;">
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;">
          <children>
 
             <!-- Title -->
@@ -87,7 +87,7 @@
             </Button>
 
             <!-- Logout -->
-            <Button fx:id="logoutButton" layoutX="275.0" layoutY="10.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="70.0" style="-fx-background-color: #b8d5a3;" text="Logout">
+            <Button fx:id="logoutButton" layoutX="287.0" layoutY="12.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="70.0" style="-fx-background-color: #b8d5a3;" text="Logout">
                <font><Font name="System Bold" size="13.0" /></font>
             </Button>
 
@@ -97,7 +97,7 @@
                   <Button fx:id="homeButton" layoutY="55.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Home" textFill="#1f5c33">
                      <font><Font name="Bookman Old Style Bold" size="22.0" /></font>
                   </Button>
-                  <Button fx:id="createMealButton" layoutY="112.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Create Meal" textFill="#1f5c33">
+                  <Button fx:id="createMealButton" disable="true" layoutY="112.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Create Meal" textFill="#1f5c33" visible="false">
                      <font><Font name="Bookman Old Style Bold" size="22.0" /></font>
                   </Button>
                </children>

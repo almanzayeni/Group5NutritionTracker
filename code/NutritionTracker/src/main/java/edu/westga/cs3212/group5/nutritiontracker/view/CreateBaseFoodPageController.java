@@ -74,13 +74,14 @@ public class CreateBaseFoodPageController implements ViewModelAware {
     private void setUpListeners() {
         this.handleHamburgerMenuClick();
         this.setUpListenerForHomeButton();
-        this.setUpListenerForCreateMealButton();
+        //this.setUpListenerForCreateMealButton();
         this.setupPortionSizeUnitLabelListener();
-        //this.setUpListenerForLogoutButton();
+        this.setUpListenerForLogoutButton();
         this.setupNumericFieldListener(this.caloriesTextField,
                 this.viewModel.getCaloriesProperty(), () -> this.caloriesIsBound,
                 () -> this.caloriesIsBound = true,
                 this.viewModel.getCaloriesProperty());
+        this.setupCaloriesListener();
         this.setupProteinListener();
         this.setupFatListener();
         this.setupSugarListener();
@@ -342,30 +343,28 @@ public class CreateBaseFoodPageController implements ViewModelAware {
         });
     }
 
-//    private void setUpListenerForLogoutButton() {
-// 		this.logoutButton.setOnAction((ActionEvent event) -> {
-//			try {
-//				//this.viewModel.saveData();
-//
-//				FXMLLoader loader = new FXMLLoader();
-//				loader.setLocation(LandingPage.class.getResource("LoginView.fxml"));
-//				loader.load();
-//
-//				Parent parent = loader.getRoot();
-//				Scene scene = new Scene(parent);
-//
-//				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-//				stage.setScene(scene);
-//				stage.setTitle("Login");
-//				stage.show();
-//
-//			} catch (Exception ex) {
-//				ex.printStackTrace();
-//				Alert alert = new Alert(Alert.AlertType.ERROR, "Error logging user out.");
-//				alert.showAndWait();
-//			}
-//		});
-//	}
+    private void setUpListenerForLogoutButton() {
+ 		this.logoutButton.setOnAction((ActionEvent event) -> {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(LoginPageController.class.getResource("LoginPage.fxml"));
+				loader.load();
+
+				Parent parent = loader.getRoot();
+				Scene scene = new Scene(parent);
+
+				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+				stage.setScene(scene);
+				stage.setTitle("Login");
+				stage.show();
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Error logging user out.");
+				alert.showAndWait();
+			}
+		});
+	}
 
     private void setUpListenerForHomeButton() {
         this.homeButton.setOnAction((ActionEvent event) -> {
@@ -394,32 +393,32 @@ public class CreateBaseFoodPageController implements ViewModelAware {
         });
     }
 
-    private void setUpListenerForCreateMealButton() {
-        this.createMealButton.setOnAction((ActionEvent event) -> {
-            try {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(CreateMealItemPageController.class.getResource("CreateMealItemPage.fxml"));
-                loader.load();
-
-                Object controller = loader.getController();
-                if (controller instanceof ViewModelAware) {
-                    ((ViewModelAware) controller).setViewModel(this.hdViewModel);
-                }
-
-                Parent parent = loader.getRoot();
-                Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-                stage.setScene(new Scene(parent));
-                stage.setTitle("Create Meal");
-                stage.show();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR,
-                        "Unable to navigate to the Create Meal page. Please try again.");
-                alert.setHeaderText("Navigation Error");
-                alert.showAndWait();
-            }
-        });
-    }
+//    private void setUpListenerForCreateMealButton() {
+//        this.createMealButton.setOnAction((ActionEvent event) -> {
+//            try {
+//                FXMLLoader loader = new FXMLLoader();
+//                loader.setLocation(CreateMealItemPageController.class.getResource("CreateMealItemPage.fxml"));
+//                loader.load();
+//
+//                Object controller = loader.getController();
+//                if (controller instanceof ViewModelAware) {
+//                    ((ViewModelAware) controller).setViewModel(this.hdViewModel);
+//                }
+//
+//                Parent parent = loader.getRoot();
+//                Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+//                stage.setScene(new Scene(parent));
+//                stage.setTitle("Create Meal");
+//                stage.show();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                Alert alert = new Alert(Alert.AlertType.ERROR,
+//                        "Unable to navigate to the Create Meal page. Please try again.");
+//                alert.setHeaderText("Navigation Error");
+//                alert.showAndWait();
+//            }
+//        });
+//    }
 
     private void setupListenerForAddFoodButton() {
         this.addFoodButton.setOnAction((ActionEvent event) -> {
