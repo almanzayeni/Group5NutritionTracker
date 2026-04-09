@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: edu.westga.cs3212.group5.nutritiontracker.viewmodel.TestPreferencesVM
--------------------------------------------------------------------------------
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in edu.westga.cs3212.group5.nutritiontracker.viewmodel.TestPreferencesVM
