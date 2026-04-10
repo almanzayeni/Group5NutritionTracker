@@ -21,79 +21,84 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class CreateFoodItemTypeSelectionPageController implements ViewModelAware {
-	@FXML
-	private ResourceBundle resources;
-	@FXML
-	private URL location;
-	@FXML
-	private JFXHamburger hamburgerMenu;
-	@FXML
-	private Button homeButton;
-	@FXML
-	private Button createMealButton;
-	@FXML
-	private Button logoutButton;
-	@FXML
-	private Pane menuPane;
-	@FXML
-	private Button selectBaseFoodButton;
-	@FXML
-	private Button selectCompositFoodButton;
 
-	private HomeDashboardViewModel viewModel;
+    @FXML private ResourceBundle resources;
+    @FXML private URL location;
+    @FXML private JFXHamburger hamburgerMenu;
+    @FXML private Button homeButton;
+    @FXML private Button createMealButton;
+    @FXML private Button logoutButton;
+    @FXML private Pane menuPane;
+    @FXML private Button selectBaseFoodButton;
+    @FXML private Button selectCompositFoodButton;
 
-	@FXML
-	void initialize() {
-		assert hamburgerMenu != null
-				: "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'CreateFoodItemTypeSelectionPage.fxml'.";
-		assert homeButton != null
-				: "fx:id=\"homeButton\" was not injected: check your FXML file 'CreateFoodItemTypeSelectionPage.fxml'.";
-		assert createMealButton != null
-				: "fx:id=\"createMealButton\" was not injected: check your FXML file 'CreateFoodItemTypeSelectionPage.fxml'.";
-		assert logoutButton != null
-				: "fx:id=\"logoutButton\" was not injected: check your FXML file 'CreateFoodItemTypeSelectionPage.fxml'.";
-		assert menuPane != null
-				: "fx:id=\"menuPane\" was not injected: check your FXML file 'CreateFoodItemTypeSelectionPage.fxml'.";
-		assert selectBaseFoodButton != null
-				: "fx:id=\"selectBaseFoodButton\" was not injected: check your FXML file 'CreateFoodItemTypeSelectionPage.fxml'.";
-		assert selectCompositFoodButton != null
-				: "fx:id=\"selectCompositFoodButton\" was not injected: check your FXML file 'CreateFoodItemTypeSelectionPage.fxml'.";
-		setUpListeners();
-	}
+    private HomeDashboardViewModel viewModel;
 
-	private void setUpListeners() {
-		this.handleHamburgerMenuClick();
+    @FXML
+    void initialize() {
+        this.setUpListeners();
+    }
+
+    private void setUpListeners() {
+        this.handleHamburgerMenuClick();
+        this.setUpListenerForHomeButton();
 		this.setUpListenerForLogoutButton();
-		this.setUpListenerForHomeButton();
-		this.setUpListenerForCreateMealButton();
-		this.setUpListenerForSelectBaseFoodButton();
-		this.setUpListenerForSelectCompositeFoodButton();
-	}
+        //this.setUpListenerForCreateMealButton();
+        this.setUpListenerForSelectBaseFoodButton();
+        this.setUpListenerForSelectCompositeFoodButton();
+    }
 
-	private void handleHamburgerMenuClick() {
-		HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(this.hamburgerMenu);
-		transition.setRate(-1);
-		this.hamburgerMenu.setOnMouseClicked(event -> {
-			try {
-				transition.setRate(transition.getRate() * -1);
-				transition.play();
-				if (menuPane.isVisible()) {
-					menuPane.setVisible(false);
-					homeButton.disableProperty().set(true);
-				} else {
-					menuPane.setVisible(true);
-					homeButton.disableProperty().set(false);
-					menuPane.toFront();
-					hamburgerMenu.toFront();
-					homeButton.toFront();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
+    private void handleHamburgerMenuClick() {
+        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(this.hamburgerMenu);
+        transition.setRate(-1);
+        this.hamburgerMenu.setOnMouseClicked(event -> {
+            try {
+                transition.setRate(transition.getRate() * -1);
+                transition.play();
+                if (this.menuPane.isVisible()) {
+                    this.menuPane.setVisible(false);
+                    this.homeButton.disableProperty().set(true);
+                } else {
+                    this.menuPane.setVisible(true);
+                    this.homeButton.disableProperty().set(false);
+                    this.menuPane.toFront();
+                    this.hamburgerMenu.toFront();
+                    this.homeButton.toFront();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
-	private void setUpListenerForLogoutButton() {
+    private void setUpListenerForHomeButton() {
+        this.homeButton.setOnAction((ActionEvent event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(HomeDashboardPageController.class.getResource("HomeDashboardPage.fxml"));
+                loader.load();
+
+                Object controller = loader.getController();
+                if (controller instanceof ViewModelAware) {
+                    ((ViewModelAware) controller).setViewModel(this.viewModel);
+                }
+
+                Parent parent = loader.getRoot();
+                Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+                stage.setScene(new Scene(parent));
+                stage.setTitle("Home");
+                stage.show();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR,
+                        "Unable to navigate to the home page. Please try again.");
+                alert.setHeaderText("Navigation Error");
+                alert.showAndWait();
+            }
+        });
+    }
+    
+  private void setUpListenerForLogoutButton() {
 		this.logoutButton.setOnAction((ActionEvent event) -> {
 			try {
 				FXMLLoader loader = new FXMLLoader();
@@ -116,122 +121,91 @@ public class CreateFoodItemTypeSelectionPageController implements ViewModelAware
 		});
 	}
 
-	private void setUpListenerForHomeButton() {
-		this.homeButton.setOnAction((ActionEvent event) -> {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(HomeDashboardPageController.class.getResource("HomeDashboardPage.fxml"));
-				loader.load();
+//    private void setUpListenerForCreateMealButton() {
+//        this.createMealButton.setOnAction((ActionEvent event) -> {
+//            try {
+//                FXMLLoader loader = new FXMLLoader();
+//                loader.setLocation(CreateMealItemPageController.class.getResource("CreateMealItemPage.fxml"));
+//                loader.load();
+//
+//                Object controller = loader.getController();
+//                if (controller instanceof ViewModelAware) {
+//                    ((ViewModelAware) controller).setViewModel(this.viewModel);
+//                }
+//
+//                Parent parent = loader.getRoot();
+//                Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+//                stage.setScene(new Scene(parent));
+//                stage.setTitle("Create Meal");
+//                stage.show();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                Alert alert = new Alert(Alert.AlertType.ERROR,
+//                        "Unable to navigate to the Create Meal page. Please try again.");
+//                alert.setHeaderText("Navigation Error");
+//                alert.showAndWait();
+//            }
+//        });
+//    }
 
-				Parent parent = loader.getRoot();
-				Scene scene = new Scene(parent);
+    private void setUpListenerForSelectBaseFoodButton() {
+        this.selectBaseFoodButton.setOnAction((ActionEvent event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(
+                        CreateBaseFoodPageController.class.getResource("CreateBaseFoodPage.fxml"));
+                loader.load();
 
-				Object controller = loader.getController();
-				if (controller instanceof ViewModelAware) {
-					((ViewModelAware) controller).setViewModel(this.viewModel);
-				}
+                Object controller = loader.getController();
+                if (controller instanceof ViewModelAware) {
+                    ((ViewModelAware) controller).setViewModel(this.viewModel);
+                }
 
-				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-				stage.setScene(scene);
-				stage.setTitle("Home");
-				stage.show();
+                Parent parent = loader.getRoot();
+                Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+                stage.setScene(new Scene(parent));
+                stage.setTitle("Create Base Food Item");
+                stage.show();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR,
+                        "Unable to open the Create Base Food page. Please try again.");
+                alert.setHeaderText("Navigation Error");
+                alert.showAndWait();
+            }
+        });
+    }
 
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to home page.");
-				alert.showAndWait();
-			}
-		});
-	}
+    private void setUpListenerForSelectCompositeFoodButton() {
+        this.selectCompositFoodButton.setOnAction((ActionEvent event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(CreateCompositeFoodPageController.class
+                        .getResource("CreateCompositeFoodPage.fxml"));
+                loader.load();
 
-	private void setUpListenerForCreateMealButton() {
-		this.createMealButton.setOnAction((ActionEvent event) -> {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(CreateMealItemPageController.class.getResource("CreateMealItemPage.fxml"));
-				loader.load();
+                Object controller = loader.getController();
+                if (controller instanceof ViewModelAware) {
+                    ((ViewModelAware) controller).setViewModel(this.viewModel);
+                }
 
-				Parent parent = loader.getRoot();
-				Scene scene = new Scene(parent);
+                Parent parent = loader.getRoot();
+                Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+                stage.setScene(new Scene(parent));
+                stage.setTitle("Create Composite Food Item");
+                stage.show();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR,
+                        "Unable to open the Create Composite Food page. Please try again.");
+                alert.setHeaderText("Navigation Error");
+                alert.showAndWait();
+            }
+        });
+    }
 
-				Object controller = loader.getController();
-				if (controller instanceof ViewModelAware) {
-					((ViewModelAware) controller).setViewModel(this.viewModel);
-				}
-
-				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-				stage.setScene(scene);
-				stage.setTitle("Create Meal");
-				stage.show();
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to home page.");
-				alert.showAndWait();
-			}
-		});
-	}
-
-	private void setUpListenerForSelectBaseFoodButton() {
-		this.selectBaseFoodButton.setOnAction((ActionEvent event) -> {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(CreateBaseFoodPageController.class.getResource("CreateBaseFoodPage.fxml"));
-				loader.load();
-
-				Parent parent = loader.getRoot();
-				Scene scene = new Scene(parent);
-
-				Object controller = loader.getController();
-				if (controller instanceof ViewModelAware) {
-					((ViewModelAware) controller).setViewModel(this.viewModel);
-				}
-
-				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-				stage.setScene(scene);
-				stage.setTitle("Create Base Food Item");
-				stage.show();
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to create base food item page.");
-				alert.showAndWait();
-			}
-		});
-	}
-
-	private void setUpListenerForSelectCompositeFoodButton() {
-		this.selectCompositFoodButton.setOnAction((ActionEvent event) -> {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(CreateCompositeFoodPageController.class.getResource("CreateCompositeFoodPage.fxml"));
-				loader.load();
-
-				Parent parent = loader.getRoot();
-				Scene scene = new Scene(parent);
-
-				Object controller = loader.getController();
-				if (controller instanceof ViewModelAware) {
-					((ViewModelAware) controller).setViewModel(this.viewModel);
-				}
-
-				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-				stage.setScene(scene);
-				stage.setTitle("Create Base Food Item");
-				stage.show();
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to create base food item page.");
-				alert.showAndWait();
-			}
-		});
-	}
-
-	@Override
-	public void setViewModel(HomeDashboardViewModel viewModel) {
-		this.viewModel = viewModel;
-
-	}
-
+    @Override
+    public void setViewModel(HomeDashboardViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 }

@@ -20,7 +20,6 @@ public class ServerConstants {
 	public static final String KEY_USER = "user";
 	public static final String KEY_USERNAME = "username";
 	public static final String KEY_PASSWORD = "password";
-	public static final String KEY_FOOD_ITEM = "food_item";
 	public static final String KEY_NAME = "name";
 	public static final String KEY_DIET_GOALS = "dietGoals";
 	public static final String KEY_PRIMARY_GOAL = "primaryGoal";
@@ -33,7 +32,8 @@ public class ServerConstants {
 	public static final String KEY_OTHER_GOALS = "otherGoals";
 	public static final String KEY_QUERY = "query";
 	public static final String KEY_SEARCH_RESULTS = "search_results";
-
+	public static final String KEY_FOOD_ITEM = "food_item";
+	
 	public static final String SUCCESS_STATUS = "1";
 	public static final String BAD_MESSAGE_STATUS = "-1";
 	public static final String UNSUPPORTED_OPERATION_STATUS = "-1";

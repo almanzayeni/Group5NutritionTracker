@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateCompositeFoodPageController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateCompositeFoodPageController">
 
    <content>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1260.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;">
@@ -36,7 +36,7 @@
             <ComboBox fx:id="quantityCategoryComboBox" layoutX="141.0" layoutY="146.0" prefHeight="26.0" prefWidth="166.0" promptText="Select a Portion Type" />
 
             <!-- Portion Size -->
-            <Label alignment="CENTER_RIGHT" layoutX="-6.0" layoutY="186.0" prefHeight="27.0" prefWidth="135.0" text="Portion Size:" textAlignment="RIGHT" textFill="#6e2316">
+            <Label alignment="CENTER_RIGHT" layoutX="-6.0" layoutY="196.0" prefHeight="27.0" prefWidth="135.0" text="Portion Size:" textAlignment="RIGHT" textFill="#6e2316">
                <font><Font name="System Bold" size="16.0" /></font>
             </Label>
 
@@ -54,12 +54,12 @@
             </VBox>
 
             <!-- Selection feedback label -->
-            <Label fx:id="searchSelectionLabel" layoutX="23.0" layoutY="603.0" prefWidth="310.0" style="-fx-font-style: italic;" text="No food selected from search." textFill="#555555">
+            <Label fx:id="searchSelectionLabel" layoutX="23.0" layoutY="590.0" prefWidth="306.0" style="-fx-font-style: italic;" text="No food selected from search." textFill="#555555">
                <font><Font size="12.0" /></font>
             </Label>
 
             <!-- Add Ingredient button -->
-            <Button fx:id="addIngredientButton" layoutX="23.0" layoutY="629.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="310.0" style="-fx-background-color: #3a7d44; -fx-text-fill: white;" text="+ Add Selected Food as Ingredient">
+            <Button fx:id="addIngredientButton" layoutX="23.0" layoutY="648.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="310.0" style="-fx-background-color: #3a7d44; -fx-text-fill: white;" text="+ Add Selected Food as Ingredient">
                <font><Font name="System Bold" size="14.0" /></font>
             </Button>
 
@@ -126,13 +126,14 @@
                   <Button fx:id="homeButton" layoutY="55.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Home" textFill="#1f5c33">
                      <font><Font name="Bookman Old Style Bold" size="24.0" /></font>
                   </Button>
-                  <Button fx:id="createMealButton" layoutY="112.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Create Meal" textFill="#1f5c33">
+                  <Button fx:id="createMealButton" disable="true" layoutY="112.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Create Meal" textFill="#1f5c33" visible="false">
                      <font>
                         <Font name="Bookman Old Style Bold" size="24.0" />
                      </font>
                   </Button>
                </children>
             </Pane>
+
 
             <JFXHamburger fx:id="hamburgerMenu" layoutX="15.0" layoutY="15.0" prefHeight="20.0" prefWidth="33.0" />
 
