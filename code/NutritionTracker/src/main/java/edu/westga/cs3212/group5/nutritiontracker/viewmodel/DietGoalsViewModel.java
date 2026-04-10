@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @author Yeni Almanza
  * @version spring 2026
  */
-public class PreferencesVM {
+public class DietGoalsViewModel {
 
     private final DoubleProperty calorie  = new SimpleDoubleProperty(0.0);
     private final DoubleProperty protein  = new SimpleDoubleProperty(0.0);
@@ -94,7 +94,7 @@ public class PreferencesVM {
     }
 
     /**
-     * Creates a UserPreferences from the current property values.
+     * Creates a DietGoals from the current property values.
      *
      * @precondition primaryGoal != null
      *
@@ -102,7 +102,7 @@ public class PreferencesVM {
      * @param otherGoalsText comma-separated string of additional goals (may be blank)
      * @return a new {@link DietGoals}, or {@code null} if validation fails
      */
-    public DietGoals createPreferences(PrimaryGoal primaryGoal, String otherGoalsText) {
+    public DietGoals createDietGoals(PrimaryGoal primaryGoal, String otherGoalsText) {
         try {
             List<String> otherGoals = (otherGoalsText == null || otherGoalsText.isBlank())
                     ? List.of()
@@ -111,7 +111,7 @@ public class PreferencesVM {
                             .filter(s -> !s.isEmpty())
                             .collect(Collectors.toList());
 
-            DietGoals prefs = new DietGoals(
+            DietGoals dietGoals = new DietGoals(
                     primaryGoal,
                     this.calorie.get(),
                     this.protein.get(),
@@ -123,7 +123,7 @@ public class PreferencesVM {
             );
 
             this.warning.set("");
-            return prefs;
+            return dietGoals;
 
         } catch (Exception e) {
             this.warning.set(e.getMessage());

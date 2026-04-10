@@ -191,6 +191,7 @@ public class CompositeFood implements FoodItem {
 	 *
 	 * @return the quantity category
 	 */
+	@Override
 	public QuantityCategory getQuantityCategory() {
 		return this.quantityCategory;
 	}
@@ -203,6 +204,7 @@ public class CompositeFood implements FoodItem {
 	 * @param quantityCategory the new quantity category
 	 * @throws IllegalArgumentException if quantity category is null
 	 */
+	@Override
 	public void setQuantityCategory(QuantityCategory quantityCategory) {
 		if (quantityCategory == null) {
 			throw new IllegalArgumentException("Quantity category cannot be null");
@@ -228,6 +230,7 @@ public class CompositeFood implements FoodItem {
 	 * @param portionSize the new quantity value
 	 * @throws IllegalArgumentException if quantity value is less than 1
 	 */
+	@Override
 	public void setPortionSize(double portionSize) {
 		if (portionSize < 1) {
 			throw new IllegalArgumentException("Portion size must be 1 or greater");

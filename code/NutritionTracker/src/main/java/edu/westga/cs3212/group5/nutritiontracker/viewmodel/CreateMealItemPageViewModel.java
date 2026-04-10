@@ -1,15 +1,10 @@
 package edu.westga.cs3212.group5.nutritiontracker.viewmodel;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.CompositeFood;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
@@ -23,7 +18,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 
 public class CreateMealItemPageViewModel {
-	private static final String MEAL_ALREADY_EXISTS_ERROR_MESSAGE = "A meal with this name already exists. Please enter a unique name, or edit the existing meal.";
 	private StringProperty description;
 	private double portionSize;
 	private DoubleProperty totalCalories;
@@ -34,8 +28,6 @@ public class CreateMealItemPageViewModel {
 	private DoubleProperty totalSodium;
 	private ListProperty<FoodItem> foods;
 	private CompositeFood mealItem;
-	private String filePath;
-	private ObjectMapper objectMapper;
 
 	/**
 	 * Instantiates a new creates the composite food page view model.
@@ -58,33 +50,6 @@ public class CreateMealItemPageViewModel {
 		this.totalSodium.set(this.mealItem.getSodium());
 		this.foods = new SimpleListProperty<FoodItem>(
 				FXCollections.observableArrayList(new ArrayList<FoodItem>()));
-		this.filePath = FoodItem.FOOD_ITEMS_JSON_FILE;
-		this.objectMapper = new ObjectMapper();
-	}
-
-	/**
-	 * Instantiates a new creates the composite food page view model. FOR TESTING
-	 * PURPOSES ONLY - allows for custom file path to be set for testing without
-	 * affecting production data
-	 *
-	 * @param filePath the file path
-	 */
-	public CreateMealItemPageViewModel(String filePath) {
-		this();
-		this.filePath = filePath;
-	}
-
-	/**
-	 * Instantiates a new creates the composite food page view model. FOR TESTING
-	 * PURPOSES ONLY - allows injection of a mock ObjectMapper to simulate JSON
-	 * processing exceptions.
-	 *
-	 * @param objectMapper the object mapper
-	 */
-	public CreateMealItemPageViewModel(ObjectMapper objectMapper, String filePath) {
-		this();
-		this.filePath = filePath;
-		this.objectMapper = objectMapper;
 	}
 
 	/**
@@ -187,29 +152,11 @@ public class CreateMealItemPageViewModel {
 		if (this.mealItem.getIngredients().isEmpty()) {
 			throw new IllegalArgumentException("At least one food must be added.");
 		}
-		if (this.checkForExistingMeal(this.description.get())) {
-			throw new IllegalArgumentException(MEAL_ALREADY_EXISTS_ERROR_MESSAGE);
-		}
 
-		String jsonString = "";
 		this.mealItem.setDescription(this.description.get());
 		this.mealItem.setQuantityCategory(QuantityCategory.SERVING);
-
-		try {
-			jsonString = this.objectMapper.writeValueAsString(this.mealItem);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-			throw e;
-		}
-
-		try {
-			// TODO: Send jsonString to server
-			Files.write(Paths.get(this.filePath), (jsonString + System.lineSeparator()).getBytes(),
-					StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw e;
-		}
+		
+		//TODO: Create server request and handle response.
 
 		this.clearFields();
 	}
@@ -276,24 +223,6 @@ public class CreateMealItemPageViewModel {
 		}
 
 		return this.mealItem.getIngredientByDescription(foodToFind.getDescription());
-	}
-
-	private boolean checkForExistingMeal(String mealName) throws IOException {
-		HashSet<String> existingMealNames = new HashSet<>();
-		try (var lines = Files.lines(Paths.get(this.filePath))) {
-			lines.forEach(line -> {
-				try {
-					CompositeFood food = this.objectMapper.readValue(line, CompositeFood.class);
-					existingMealNames.add(food.getDescription());
-				} catch (JsonProcessingException e) {
-					e.printStackTrace();
-				}
-			});
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw e;
-		}
-		return existingMealNames.contains(mealName);
 	}
 
 	private void updateDisplayInfo() {

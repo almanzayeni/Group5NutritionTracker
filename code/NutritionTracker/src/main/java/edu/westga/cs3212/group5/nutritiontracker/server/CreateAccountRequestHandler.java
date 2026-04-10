@@ -12,6 +12,18 @@ import edu.westga.cs3212.group5.nutritiontracker.model.JsonMapperFactory;
 import edu.westga.cs3212.group5.nutritiontracker.model.User;
 
 public class CreateAccountRequestHandler {
+	
+	/**
+	 * Creates the create account request.
+	 *
+	 * @param username 						the username for the new account
+	 * @param password 						the password for the new account
+	 * @param name 							the name of the user
+	 * @param dietGoals 					the diet goals for the new account
+	 * @return the JSON String representing the create account request
+	 * @throws IllegalArgumentException 	if username or password is null or blank, or if dietGoals is null
+	 * @throws RuntimeException         	if there is an error creating the JSON request
+	 */
 	public static String createCreateAccountRequest(String username, String password, String name,
 			DietGoals dietGoals) {
 		if (username == null || username.isBlank()) {
@@ -45,6 +57,14 @@ public class CreateAccountRequestHandler {
 
 	}
 
+	/**
+	 * Handle create account request.
+	 *
+	 * @param request 						the request as a JSON string
+	 * @return the user created by the server if the request was successful
+	 * @throws IllegalArgumentException 	if request is null or blank
+	 * @throws RuntimeException         	if the server returns a failure or cannot be reached.
+	 */
 	public static User handleCreateAccountRequest(String request) {
 		if (request == null || request.isBlank()) {
 			throw new IllegalArgumentException("Request cannot be null or blank");
