@@ -1,0 +1,133 @@
+In the edu.westga.cs3212.group5.nutritiontracker.model.foodlog package's Constructor class add test cases that reach 100% branch coverage for the FoodLog class. Follow the format in the edu.westga.cs3212.group5.nutritiontracker.model.basefood package's Constructor class.
+
+
+Worked for 4m 25s
+Added FoodLog constructor coverage tests in Constructor.java. The new tests cover:
+
+zero-arg constructor default date/list initialization
+single-date constructor initialization
+full-parameter constructor pass-through for all stored fields
+I also added TestFoodLogConstructor.java as a tiny Surefire-discoverable wrapper, so the test methods can stay in the requested Constructor class while still running under Maven.
+
+Verification passed with:
+
+$env:MAVEN_OPTS='-Duser.home=.'; & 'C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1.1\plugins\maven\lib\maven3\bin\mvn.cmd' -Dtest=TestFoodLogConstructor test
+Result: Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+
+One note: that verification created an untracked local Maven cache at code/NutritionTracker/.m2/.
+
+
+2 files changed
++68
+-5
+Undo
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/model/foodlog/Constructor.java
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/model/foodlog/TestFoodLogConstructor.java
+Please add test cases that reach 100% branch coverage for the User class to the TestUserConstructor class.
+
+
+Worked for 1m 31s
+Updated TestUserConstructor.java with constructor tests that exercise every User constructor branch: null and blank username, password, and name, plus null dietGoals, null currentFoodLog, and a valid-construction case that checks all getters.
+
+Verification passed with:
+
+$env:MAVEN_OPTS='-Duser.home=.'; & 'C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1.1\plugins\maven\lib\maven3\bin\mvn.cmd' -Dtest=TestUserConstructor test
+Result: Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
+
+
+1 file changed
+Undo
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/model/user/TestUserConstructor.java
+Create test cases for the JsonMapperFactory create method so that they will reach 100% branch coverage in the TestCreate class.
+
+
+Worked for 42s
+Updated TestCreate.java with tests that verify JsonMapperFactory.create():
+
+returns a non-null ObjectMapper
+disables WRITE_DATES_AS_TIMESTAMPS
+serializes LocalDate as an ISO string
+deserializes LocalDate correctly via the registered Java time module
+Verification passed with:
+
+$env:MAVEN_OPTS='-Duser.home=.'; & 'C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1.1\plugins\maven\lib\maven3\bin\maven3\bin\mvn.cmd' -Dtest=TestCreate test
+Result: Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+
+One small note: the command I actually ran successfully used ...\plugins\maven\lib\maven3\bin\mvn.cmd.
+
+
+1 file changed
+Undo
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/model/jsonmapperfactory/TestCreate.java
+Add test cases to the TestSend and TestClose classes so that they reach 100% branch coverage for the ServerClient class.
+
+
+Worked for 6m 34s
+Updated TestSend.java and TestClose.java to cover all ServerClient branches.
+
+TestSend now covers null request, blank request, and the successful send/receive path with mocked ZeroMQ context/socket. TestClose now covers the normal exit-command path with a lightweight in-test REP server, plus the exception-catching branch by mocking ObjectMapper construction to throw.
+
+Verification passed with:
+
+$env:MAVEN_OPTS='-Duser.home=.'; & 'C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1.1\plugins\maven\lib\maven3\bin\mvn.cmd' '-Dtest=TestSend,TestClose' test
+Result: Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
+
+
+2 files changed
++129
+-10
+Undo
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/serverclient/TestClose.java
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/serverclient/TestSend.java
+Next please add test cases to TestCreateLoginRequest and TestHandleLoginRequest so that they reach 100% branch coverage for the LoginRequestHandler class.
+
+
+I’m reading LoginRequestHandler and the two current test shells first so we can target each branch in createLoginRequest and handleLoginRequest precisely, rather than guessing at coverage gaps.
+
+Ran Get-Content -Path "code/NutritionTracker/src/main/java/edu/westga/cs3212/group5/nutritiontracker/server/LoginRequestHandler.java"
+
+
+Ran Get-Content -Path "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/loginrequesthandler/TestHandleLoginRequest.java"
+
+
+Ran Get-Content -Path "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/loginrequesthandler/TestCreateLoginRequest.java"
+
+
+I’ve mapped the missing branches:
+
+createLoginRequest: null/blank username, null/blank password, valid serialization, and the serialization-failure catch path
+handleLoginRequest: null/blank request, null/blank server response, failure message present, missing user payload, and successful user parsing
+I’m adding those directly to the two login-request handler test classes now.
+
+Edited
+TestCreateLoginRequest.java
++71
+-5
+Edited
+TestHandleLoginRequest.java
++118
+-5
+The login-request handler tests are in place. I’m running those two classes now to catch any JSON-shape or Mockito edge cases before we move on.
+
+Ran $env:MAVEN_OPTS='-Duser.home=.'; & 'C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1.1\plugins\maven\lib\maven3\bin\mvn.cmd' '-Dtest=TestCreateLoginRequest,TestHandleLoginRequest' test for 19s
+
+
+Worked for 1m 43s
+Updated TestCreateLoginRequest.java and TestHandleLoginRequest.java to exercise all LoginRequestHandler branches.
+
+TestCreateLoginRequest now covers null/blank username, null/blank password, successful JSON creation, and the serialization-failure catch path. TestHandleLoginRequest now covers null/blank request, null/blank server response, login failure message, missing user payload, and successful user deserialization.
+
+Verification passed with:
+
+$env:MAVEN_OPTS='-Duser.home=.'; & 'C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1.1\plugins\maven\lib\maven3\bin\mvn.cmd' '-Dtest=TestCreateLoginRequest,TestHandleLoginRequest' test
+Result: Tests run: 13, Failures: 0, Errors: 0, Skipped: 0
+
+One note: these methods call printStackTrace() on their error paths, so the successful test run still produces stack-trace output for the negative-case tests.
+
+
+2 files changed
++189
+-10
+Undo
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/loginrequesthandler/TestCreateLoginRequest.java
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/loginrequesthandler/TestHandleLoginRequest.java
