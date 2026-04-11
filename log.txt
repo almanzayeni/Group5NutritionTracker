@@ -1,0 +1,1808 @@
+commit e97a32402c215c899d2a576852fcf603c3881301
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Sat Apr 11 08:44:00 2026 -0400
+
+    Exported Class Diagrams As Images
+
+commit ea083d07915785ddaee03287b8d44b15b9f5e2dd
+Merge: ae1c7a9 a1715ea
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Sat Apr 11 02:16:41 2026 -0400
+
+    Merge pull request #51 from almanzayeni/documentation-SprintRetrospective
+    
+    Documentation sprint retrospective
+
+commit a1715eae60d155ffb0e4ac4fd05f46c08c51c78e
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Sat Apr 11 01:40:21 2026 -0400
+
+    Added my parts to the sprint retrospective for sprint 2
+
+commit 8c420aed493a7c2c4f3fac2b3d60893494419e08
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 10 23:03:09 2026 -0400
+
+    Updated Sprint Retrospective
+    
+    I updated the sprint retrospective with my parts.
+
+commit 65369e3f518981442536f2fe896a03886b718df6
+Author: vf00004 <vf00004@my.westga.edu>
+Date:   Fri Apr 10 21:23:47 2026 -0400
+
+    Update server class diagram
+
+commit 0b83d902d001360598987d144fa40a3671b6ea8c
+Author: vf00004 <vf00004@my.westga.edu>
+Date:   Fri Apr 10 20:48:27 2026 -0400
+
+    Update Sprint Retrospective, Add VF chat files
+
+commit 7ca9d578547f427aa5df76e1525e9773e2ed2092
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Apr 10 17:58:58 2026 -0400
+
+    Update Sprint backlog
+    
+    Updated hours to spint backlog
+
+commit 4cdb8564657f1422b752581d97511f9c072cd53e
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Apr 10 17:49:29 2026 -0400
+
+    Filled in spint retrospective
+    
+    Added my part to the sprint retrospective and included
+    documents used for AI promts.
+
+commit dac7cfa59b29b2650bf00747cf16ece83b94b643
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Apr 10 17:05:32 2026 -0400
+
+    Add some info to retrospective
+
+commit ae1c7a9abfa64d355a8dc2648041227341b726cb
+Merge: 5bff933 23673f0
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Fri Apr 10 16:44:41 2026 -0400
+
+    Merge pull request #47 from almanzayeni/documentation-ClassDiagram
+    
+    Documentation class diagram
+
+commit 23673f041c6797ed9c63185b642929c7684c5d8c
+Merge: 0376c3a 5bff933
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Fri Apr 10 16:44:25 2026 -0400
+
+    Merge branch 'main' into documentation-ClassDiagram
+
+commit 6239b14a3ee017c7f2b241c497f5338e2b9f34f5
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 10 13:01:53 2026 -0400
+
+    Added Sprint Retrospective Updated Backlog
+    
+    I added the sprint retrospective from our meeting.
+    I updated the Sprint Backlog to the most recent info.
+
+commit 5bff93335ed9af37b9426a6b026f1f1d83bf2d81
+Merge: 8e862ef ef460c0
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Thu Apr 9 12:00:54 2026 -0400
+
+    Merge pull request #49 from almanzayeni/feature-RemoveCreateMeal
+    
+    Removed Not Setup Buttons and Fixed Logout/Spacing
+
+commit ef460c0256c17a1993bf7e476d6e521b261bce57
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Apr 9 11:36:13 2026 -0400
+
+    Removed Not Setup Buttons and Fixed Logout/Spacing
+    
+    I removed the create meal and add food buttons from the hamburger menu
+    since they were not configured.
+    I updated all logout functions to go back to the login page.
+    I fixed the spacing on some of the fxml pages so that they were all
+    consistent.
+
+commit 8e862efd2697c772ae5fc39b6a8d1066b541a163
+Merge: 247a616 71fb672
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Apr 9 10:59:56 2026 -0400
+
+    Merge pull request #48 from almanzayeni/feature-PythonClassDiagram
+    
+    Feature python class diagram
+
+commit 71fb67212a4a03d0b79174f21baac16e36497d46
+Merge: 4ae73aa 247a616
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Apr 9 10:58:38 2026 -0400
+
+    Merge branch 'main' into feature-PythonClassDiagram
+    
+    Fixed merge conflicts with .gitignore and removed
+    __pycache__ folders.
+
+commit 4ae73aaef45f9471f5cc8e295b1c64e356259ceb
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Apr 9 10:38:45 2026 -0400
+
+    Added .gitignore & removed target & __pycache__
+    
+    Added the .gitignore file
+    Removed the target folder from the Java project.
+    Removed the __pycache__ folder from the Python project.
+
+commit 0376c3a331a6c87b70d11e3b6522a45e2f9b4ebe
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Apr 9 10:01:14 2026 -0400
+
+    Added the .gitignore and removed the target folder
+    
+    Added the .gitignore file and removed the target folder.
+
+commit 247a616fe2eb744d9c292307c1ffc5f93584a64f
+Merge: 7416849 4d44acc
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Apr 9 09:57:38 2026 -0400
+
+    Merge pull request #46 from almanzayeni/feature-UpdateUI
+    
+    Feature update UI
+
+commit 4d44acc6b70360390dce7a86054a11d44c269076
+Merge: 771df9c 7416849
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Apr 9 09:41:45 2026 -0400
+
+    Merge branch 'main' into feature-UpdateUI
+
+commit 771df9c61784fd9ab333c5d55e9619136a903c13
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Apr 9 09:39:54 2026 -0400
+
+    Removed target folder
+    
+    Removed the target folder.
+
+commit 4e87b67a36d4e84dc4fd97dc59712a368baa273f
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Apr 9 09:37:53 2026 -0400
+
+    Added gitignore
+    
+    Added the gitignore file.
+
+commit f19a48a8d303dee8a0df56b6783570a2b20bceef
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Apr 9 09:31:59 2026 -0400
+
+    Added gitignore file
+    
+    I added the gitignore file
+
+commit 91f0ff2b67fd24365e46e0ec06685dc511da52cb
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Thu Apr 9 01:09:41 2026 -0400
+
+    Updated Python class diagram to include server classes and relationships, as well as the database.
+
+commit 7416849aa63ccb2fc45eb426c9a55c40fe101e84
+Merge: e39dc87 812a0b5
+Author: Emily Collins <ecollin7@my.westga.edu>
+Date:   Wed Apr 8 15:02:48 2026 -0400
+
+    Merge pull request #45 from almanzayeni/feature-create-food-server
+    
+    Create food feature server-side complete
+
+commit 812a0b5090d8ba5eb7f0fa18bce55fa2b17c210f
+Merge: e2b128f e39dc87
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Wed Apr 8 14:32:58 2026 -0400
+
+    Resolve merge conflicts by ignoring target build files
+
+commit 9ba5eed2907250cc64ace74a476b4885e5851fc9
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Apr 8 12:15:04 2026 -0400
+
+    Add python class diagram
+    
+    Started the python class diagram
+
+commit e2b128fa1af86d8e508e57f80d0dcadeefca638e
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 8 10:52:56 2026 -0400
+
+    Added Testing for add_food_request_handler
+    
+    I added testing fo rthe add_food_request_handler.
+    I fixed any other failing tests.
+    Used OpenAI Codex to create the new tests and fix the existing tests.
+
+commit 4a8508ab195f707264eb0d1995f0c679b62baa70
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 8 10:30:24 2026 -0400
+
+    Fixed AddFood Server Request
+    
+    I removed the duplicate client for the AddFood request type.
+    I updated the server side setup to work with the original client
+    and create both base and composite foods.
+
+commit aa1485fea37dd73cc910085dd46b0e0cc6f844d6
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 8 09:31:24 2026 -0400
+
+    JavaDocs & Added Server Class Diagram
+    
+    I added JavaDocs to the CreateAccountRequestHandler class.
+    I added the classes in the Server Package to the class diagram.
+
+commit 79c2274bfaa45c39b7e97a10181c12a121d77fda
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Apr 7 23:33:24 2026 -0400
+
+    Fix some error handling in UI pages
+    
+    Fix error handling, add user warning on dashboard, make enter
+    key work when logging in.
+
+commit f933d2290c3c243e4782975e80d882caa0affede
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Apr 7 20:48:04 2026 -0400
+
+    Fix spacing issues
+    
+    Fix spacing issues in UI pages.
+
+commit 376aecc5f1daf5042f94c664c6f311511ad0a5d7
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Apr 7 15:49:15 2026 -0400
+
+    Added View Classes to Class Diagram & Formatting
+    
+    I added the view classes to the class diagram and connected them all.
+    
+    I also updated the formatting of the code in the view classes using
+    the format tool and removed some unused code.
+
+commit e39dc87d8bbb2ac1657e829f57bae89f7dba8d77
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Apr 7 14:25:34 2026 -0400
+
+    No changes made
+
+commit 88d8cf5c8ab0343c90524e5d00258bffef6a7bed
+Merge: 8333ae2 9ac6a87
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Apr 7 10:10:53 2026 -0400
+
+    Merge pull request #44 from almanzayeni/feature-CBCreateAccount
+    
+    Add codebehind for create account
+
+commit 00b705706e58e1061de398045c94b14f036f894d
+Author: vf00004 <vf00004@my.westga.edu>
+Date:   Mon Apr 6 21:26:54 2026 -0400
+
+    Create food feature server-side complete
+    
+    - update database/server
+    - Unfinished tests
+    - add Client-side Request Handler
+    - Update constants
+    - GenAI: Writing tests, Javadocs. Helped structuring server and client relationship.
+
+commit c4fc2ce33f9eab515ab2aa46d9fdf098d981e911
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Apr 6 15:36:38 2026 -0400
+
+    Update Class Diagram & Refactor Code
+    
+    I aded the classes for the Java model and viewmodel packages to the class
+    diagram and started on the view Package.
+    I also renamed the classes in model and view model that are for the
+    diet goals from being named preferences to being named DietGoals.
+    I also removed some unused bits of code.
+
+commit 9ac6a8734e1a75dc0a76621cca2d74bc9436efdd
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Apr 3 16:16:17 2026 -0400
+
+    Add codebehind for create account
+    
+    Requires user to make a username, password, pick a goal,
+    and enter a value for that goal. Other fields set to 0.0
+    if no value is entered.
+
+commit 123b8613ca253cf23287b4f98256b90e802d47c5
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 3 13:15:19 2026 -0400
+
+    Updated Class Diagram
+    
+    I added a few more classes to the class diagram.
+
+commit 8333ae2a9bfa2b5917f99bdd986cb30e50b42b84
+Merge: dbc97b4 731820f
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 3 09:36:40 2026 -0400
+
+    Merge pull request #43 from almanzayeni/feature-FoodClient
+    
+    Feature food client
+
+commit 731820fd2e0ac3185c3a7253a6713c30666803a7
+Merge: de385c8 dbc97b4
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 3 09:36:07 2026 -0400
+
+    Merge branch 'main' into feature-FoodClient
+
+commit dbc97b467f737e6b113f125338dae8b931881594
+Merge: c7fabc2 3a7361c
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Wed Apr 1 18:41:45 2026 -0400
+
+    Merge pull request #42 from almanzayeni/Feature-CreateAccountClient
+    
+    Feature create account client
+
+commit de385c8a92d00fb291f0b7205895b593f4c0607a
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Apr 1 14:17:16 2026 -0400
+
+    Add tests and rewrite classes
+    
+    Rewrite create base and create compotise view model classes
+    so that they don't write to a file but to server. Also rewrite tests for
+    viewmodel classes and addfoodhandler.
+
+commit 3a7361c9ed874bc2e180d0e5ba1c72d54ba188b0
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 1 13:51:01 2026 -0400
+
+    Testing For CreateAccountClient
+    
+    Added testing for CreateAccountRequestHandler so that it reaches
+    coverage requierments and all tests pass.
+    Used OpenAI Codex to generate test cases.
+
+commit abb9d2b6d25976b97fec5b935a9a1d40a5e62b64
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 1 13:25:31 2026 -0400
+
+    Implemented CreateAccount Java Client
+    
+    I implemented the CreateAccountRequestHandler to manage sending a
+    request to create a new user and recieve back the created user from
+    the server.
+    I also updated the server side to function with the new format of
+    the create account request.
+
+commit c7fabc2ede151379d0a6f57d60aab42a2eccac5e
+Merge: 8691a5f fe2bb1b
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 1 10:00:49 2026 -0400
+
+    Merge pull request #41 from almanzayeni/feature-populate-user-info-dashboard
+    
+    DashBoard populates User name and FoodLog once logged in
+
+commit 62c0b688212716e2d9165c00099af4b9df048107
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Mar 31 19:35:15 2026 -0400
+
+    Add create food client
+    
+    Add create food handler and server constants.
+
+commit b7f860212535a47e419a287bbd3c90fc2f9f3271
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Mar 31 18:03:23 2026 -0400
+
+    No changes made
+
+commit 1af10384f9aa89013ff1893e874f9dd75315abd3
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Mar 31 18:02:49 2026 -0400
+
+    Add python files no changes
+    
+    Added python files but made no changes to any of them.
+
+commit 8691a5f67af5439cbfa549bb1226d71d38f3cab7
+Merge: 3f37d05 0009fbd
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Tue Mar 31 17:54:33 2026 -0400
+
+    Merge pull request #38 from almanzayeni/feature-ServerSearch
+    
+    Feature server search
+
+commit fe2bb1ba01b989044352c7c3751390ae77671eee
+Author: vf00004 <vf00004@my.westga.edu>
+Date:   Tue Mar 31 17:01:18 2026 -0400
+
+    DashBoard populates User name and FoodLog once logged in
+    
+    - Added Name box on DashBoard
+    - Tests unfinished
+    - Documentation not updated
+    - ViewModelAware interface introduced for user persistence
+    - Pages connected to Home implements ViewModelAware
+    - GenAI: Brainstorming patterns for MVVM User persistence
+
+commit 0009fbd101345bc0c9d6fbe7389962c5d9f0e469
+Merge: bcd00a7 3f37d05
+Author: Victor Filpo <vf00004@my.westga.edu>
+Date:   Tue Mar 31 16:30:43 2026 -0400
+
+    Merge branch 'main' into feature-ServerSearch
+
+commit 3f37d05f9ebb6a24f5ca5f2930a656a3ae4fa06b
+Merge: 8ca4b5c 7c23139
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Tue Mar 31 15:49:02 2026 -0400
+
+    Merge pull request #39 from almanzayeni/feature-ComProtocols
+    
+    Added the Communication Protocols to the Notes
+
+commit 7c231395cff89167133ba85975a7acb4903f0a97
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Mar 31 11:46:17 2026 -0400
+
+    Added the Communication Protocols to the Notes
+    
+    I added the request and response for all the communication protocols
+    to the sprint Planning Meeting Notes.
+
+commit 8ca4b5c300c0a740ce14feb4a97a6b26de4e3787
+Merge: 6d4fb60 7b5baa2
+Author: Victor Filpo <vf00004@my.westga.edu>
+Date:   Mon Mar 30 19:40:25 2026 -0400
+
+    Merge pull request #36 from almanzayeni/feature-updateLogin
+    
+    Feature update login
+
+commit 7b5baa2e87844012d4a5f5f04c820935318541ce
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Mar 30 16:30:27 2026 -0400
+
+    Update diet goal info
+    
+    Remove default values and recieve user values for diet goals.
+
+commit 4464ad85d2ae579216921abd093504a36bb368d5
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Mar 30 16:28:56 2026 -0400
+
+    Update values of diet goal
+    
+    Had default diet values but changed that them to retrieve values
+    the user enters.
+
+commit bcd00a7d3cef0ed805c63673e8a3ca93801aa62b
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 30 14:01:00 2026 -0400
+
+    Updated Communication Protecols Formatting
+    
+    Updated the formatting of the Communication Protecols in the sprint
+    notes to match with exactly how it is done in the program.
+
+commit 856400d0e6e1eb157d4ef1cca8a2f52096df3d12
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 30 13:47:46 2026 -0400
+
+    Updated Sprint Backlog & Communication Protecols
+    
+    Updated the sprint back log with times.
+    Added Communication Protecols for create account and search
+
+commit 6d4fb6006f7760d215f97009a66299b21e2c27f2
+Merge: 321204b 96b50fe
+Author: Emily Collins <ecollin7@my.westga.edu>
+Date:   Mon Mar 30 13:29:49 2026 -0400
+
+    Merge pull request #37 from almanzayeni/feature-ServerSearch
+    
+    Feature server search
+
+commit d991a45b81a53b93d069feeb6af669dfe0e4b712
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 30 13:23:27 2026 -0400
+
+    Added Constant to Denote Search Results
+    
+    Added a constant that denotes the search result in the response JSON
+    string.
+
+commit 321204ba0d57e570261ebed7596bb411597f0a34
+Merge: 01740f1 c3575d0
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 30 13:17:56 2026 -0400
+
+    Merge pull request #35 from almanzayeni/feature-createCreateAccountPageUI
+    
+    Made the UI for the Create Account Page. Page has a field for usernam…
+
+commit 1d72ffbf23b8989433d81b668bb6a30cf7b088d1
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 30 13:14:11 2026 -0400
+
+    Won't Be Pushed
+
+commit c3575d02044a764f8b28f793d53825f61fc2f981
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Mon Mar 30 12:50:47 2026 -0400
+
+    Updated Create Account UI to have fields for all goals instead of just primary, so the user can chose to set those during initialization of account.
+
+commit 96b50fea6339ed4e4343fa4428472ff081cd9be2
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 30 12:38:02 2026 -0400
+
+    Added Testing For Search On Server
+    
+    Added Unit testing for the search function on the Server side.
+    Used OpenAI Codex to create unit tests.
+
+commit 7e2b83cd7190e5f97a34cd1e9efd85d2702609fa
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 30 11:34:59 2026 -0400
+
+    Added Search Food Handling For Server
+    
+    I added a handler class and search functionality to the database so
+    that it can take a search string from a reqeust and return a list of
+    foods that contain that string in their description.
+
+commit 3c5c387e321670eba3cbb5dbe7fce9bf19b07e3b
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Mar 27 21:21:32 2026 -0400
+
+    Created tests for create account handler
+    
+    Used ai to help me create tests for the create account
+    server
+
+commit bb29a97444db33ab4947be7ba6a9ca0032678955
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Mar 27 21:18:09 2026 -0400
+
+    Update login codebehind
+    
+    Add connection to recieve user and load user to
+    dashboard when logging in.
+
+commit a4dd2c0d6853608a0a64b76bf3ac21bb3661499c
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Thu Mar 26 01:57:51 2026 -0400
+
+    Made the UI for the Create Account Page. Page has a field for username and password, as well as the option to select initial dietary goal and amount. Can navigate back to login page if needed once hooked up
+
+commit 01740f16f79ad7bf4b18835ec38ea17feb36c558
+Merge: de59f80 297f6d8
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Mar 25 22:32:30 2026 -0400
+
+    Merge pull request #33 from almanzayeni/feature-ServerAccount
+    
+    Add Create account server authentication
+
+commit 297f6d82983386030f7f5ecd69de711707b2d68a
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Mar 25 22:00:17 2026 -0400
+
+    Add Create account server authentication
+    
+    Add contstants, handler and elif in server for create
+    account authentication.
+
+commit de59f806544f831fdbcf97e4216c6bcb42e5dbf6
+Merge: 534a826 857164b
+Author: Victor Filpo <vf00004@my.westga.edu>
+Date:   Wed Mar 25 15:39:50 2026 -0400
+
+    Merge pull request #32 from almanzayeni/feature-ServerTesting
+    
+    Feature server testing
+
+commit 857164b37ce2d109f7b72ef4e6096989442bcc1b
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Mar 25 15:27:13 2026 -0400
+
+    Added Testing For Python Project
+    
+    I added testing for all of the model and server classes in the python
+    project.
+    I used OpenAI Codex to generate the test cases. I then verified the
+    test cases and made sure they are all passing when run.
+
+commit f14c3f881d92ed2a8417eff9e3b597b2d2cebf6f
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Mar 25 14:53:05 2026 -0400
+
+    Added JavaDocs
+    
+    Added JavaDocs to all the new classes for the model and server.
+
+commit fd487ce71e242b17a7ef02fe5547fc8a9452ef50
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Mar 25 14:17:33 2026 -0400
+
+    Added Testing
+    
+    Added testing for the FoodLog, User, JsonMapperFactory, ServerClient,
+    and LoginRequestHandler classes so that they all reach 100% branch
+    Coverage. Confirmed that all test cases are passing.
+    Used OpenAI Codex to generate the test cases.
+
+commit 59e8ce622cc0ec214df9f010b0899cbeaf173bc2
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Mar 25 13:35:55 2026 -0400
+
+    Fixed Exsisting Test Cases
+    
+    There were a few test case that had broken that I fixed so all tests
+    are now passing again.
+
+commit 534a8269a4bed40de7f84881bb512fe4c4281c1d
+Merge: 543f977 e93083a
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Tue Mar 24 22:36:40 2026 -0400
+
+    Merge pull request #31 from almanzayeni/feature-ClientLogin
+    
+    Feature client login
+
+commit e93083a2ff9ede483a19b1b9b9f39527573bafc0
+Author: Justin Smith <jsmith90@my.westga.edu>
+Date:   Tue Mar 24 13:11:37 2026 -0400
+
+    Implemented Server Client and Login Auth
+    
+    I updated the Python project to include model classes for food items
+    Added food items to the python database.
+    Fixed python server issues with Json string building. Used ChatGPT
+    to troubleshoot issues with Json strings
+    Updated the client in the Java project to work with any string for
+    all requests
+    Updated added handling for the login authorization process to build
+    Json string and build user from Json string. Used ChatGPT to figure
+    out how to create the Json string for the request and also to help
+    with how to generate a user from the response Json string.
+
+commit 543f9779362716bafca71f0cbb17539c5af0eec7
+Merge: 52d5b27 9866af3
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Mar 11 16:22:53 2026 -0400
+
+    Merge pull request #29 from almanzayeni/feature-LoginUI
+    
+    Feature login UI
+
+commit 2b47932c2a9de44b40bacb57d6ab1fd4a1f0c642
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Mar 11 16:10:31 2026 -0400
+
+    Added Server Response For Unsupported Request Type
+    
+    I added a final response to the server to handle if a request is sent
+    that doesn't have a request type that matches any of the defined request
+    types.
+
+commit 9263a9b752b23d83a37228743625bcdc8082c4ac
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Mar 11 16:02:49 2026 -0400
+
+    Setup Login Handling on Python Server
+    
+    I setup the set of constants for use with the send and receive messages.
+    I implemented a user data class to manage the user's data.
+    I implemented a food_log data class to manage the log of foods eaten by
+    the user for a given date.
+    I implemented a diet_goals data class to hold the user's diet goal
+    information.
+    I added a database static module that will hold all the users and food
+    items on the server side.
+    I updated the zmq_server module to check for the nessisary flags on
+    incoming messages to then start the validation process and send the
+    appropriate response.
+    I created the login_authentication_request_handler module to handle
+    validating the user name and password and return the appropriate user if
+    the credentials are valid.
+
+commit 9866af380ca58b607d63d74119d7fcd7bff7dbc3
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Mar 10 11:57:57 2026 -0400
+
+    Add login cobehind and edit fxml
+    
+    Added a basic login UI and hardcoded a username
+    and password for testing. Also, added codebehind
+    for the logn page to handle login button, create
+    account link and login error label.
+
+commit 1b7cd699697576edc79d26dd9403d1adf9be7eaa
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Mar 9 23:21:15 2026 -0400
+
+    Add login ui page
+    
+    Create a basic login UI.
+
+commit cf252e4e2923a13566b1a5afaab726e4dc6df4ac
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Mar 9 23:20:08 2026 -0400
+
+    Quickly fix searhc fxml alignment
+    
+    Title was not aligned properly just centered it.
+
+commit 52d5b27c60f23b83d6e014790d58658927b6fc8c
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Mon Mar 9 19:40:03 2026 -0400
+
+    Added my contribution to the Sprint 1 Sprint Retrospective
+
+commit ffc0455fabe5462271ce083396aaad84ab3ad26d
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Mar 9 10:55:29 2026 -0400
+
+    Update sprint retrospective file
+    
+    Added my information onto the sprint retrospective file.
+    Also, added ai convos.
+
+commit 8577e1781d24d72fef9354d0564ed712034687cb
+Merge: 6c072ae cf598bf
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 9 10:28:23 2026 -0400
+
+    Merge pull request #28 from almanzayeni/feature-SetUpServer
+    
+    Feature set up server
+
+commit cf598bf7c106ba1a76ae50f7bf8fbe84df2d099f
+Merge: dd3785b 6c072ae
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 9 10:21:44 2026 -0400
+
+    Merge branch 'main' into feature-SetUpServer
+
+commit 6c072ae24f886755dc65bc06d8c46e54b9610e47
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Sat Mar 7 01:50:08 2026 -0500
+
+    Emi added hours to Sprint Backlog
+
+commit 4e03aafb4e877725aea810553f34b5ee008cdc20
+Merge: 001293a 68f086f
+Author: Emily Collins <ecollin7@my.westga.edu>
+Date:   Sat Mar 7 01:46:24 2026 -0500
+
+    Merge pull request #26 from almanzayeni/documentation-use-case-scenarios
+    
+    Add use-case scenarios for major user features
+
+commit 001293ad59593c2951d82ec3e52e6fbbd075f81b
+Merge: 9ee4992 19b87c4
+Author: Victor Filpo <vf00004@my.westga.edu>
+Date:   Sat Mar 7 01:43:52 2026 -0500
+
+    Merge pull request #27 from almanzayeni/featureClassDiagram
+    
+    Partially Updated The Class Diagram
+
+commit 19b87c4390ecadad5e8f68ed173b59cd431bfb2e
+Author: Justin Smith <jsmith90@my.westga.edu>
+Date:   Sat Mar 7 01:38:16 2026 -0500
+
+    Partially Updated The Class Diagram
+    
+    Added some additional classes to the class diagram.
+
+commit 68f086f9ee6b31a7468dc3560b4cdfa6a1436fe7
+Author: vf00004 <vf00004@my.westga.edu>
+Date:   Sat Mar 7 00:13:06 2026 -0500
+
+    Add use-case scenarios for major user features
+
+commit 9ee4992182087cc4137d07b594ecb28963a9eae7
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Mar 6 23:52:15 2026 -0500
+
+    Update sprint backlog
+    
+    Added hours to sprint backlog.
+
+commit 82c2b9147d22422533ef567199b61df260ddb580
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Fri Mar 6 23:46:36 2026 -0500
+
+    Delete sprints/sprint1/Sprint Retrospective/~$rint Retrospective Report.docx
+
+commit 9833fa2bb62a8171b2a5c00402a39bf51a36097c
+Merge: 58692f3 002f6a4
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Fri Mar 6 23:42:09 2026 -0500
+
+    Merge pull request #25 from almanzayeni/documentation-sprintretro-update
+    
+    Update sprint retro for Victor, add genAI files
+
+commit 002f6a4d69b89bea3e8dd60e811da6b57e8d10e1
+Author: vf00004 <vf00004@my.westga.edu>
+Date:   Fri Mar 6 23:32:48 2026 -0500
+
+    Update sprint retro for Victor, add genAI files
+
+commit 58692f3f30c436242e9245152804ca0503f4b772
+Merge: 7d2d4f4 a2de0c3
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Fri Mar 6 23:24:59 2026 -0500
+
+    Merge pull request #24 from almanzayeni/featureClassDiagram
+    
+    Add nutition class diagram
+
+commit a2de0c3dbbe1342561375caf2b8a6e8ef0ff40cc
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Fri Mar 6 23:24:25 2026 -0500
+
+    Add nutition class diagram
+
+commit 7d2d4f49f69e1042f8ba0ff2e6d9459f875ef4a8
+Merge: 99196be cb5d7a8
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Mar 6 23:09:08 2026 -0500
+
+    Merge pull request #23 from almanzayeni/featureUpdateDocumentation
+    
+    Feature update documentation
+
+commit 99196be364414ec062e6513f4bb08cbda99981ef
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Fri Mar 6 22:09:32 2026 -0500
+
+    Delete documentation/NutritionTrackerClassDiagram.vsdx
+
+commit cb5d7a892e220384183a19257870941d39c8ef8e
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Mar 6 21:49:16 2026 -0500
+
+    Add some retrospecrtive info
+    
+    Add some of my retrospective info.
+
+commit e4cfce5fbccc3e717b6dfa35fc3875283e12100b
+Merge: 0acdbe2 bd45f1a
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Mar 6 21:35:24 2026 -0500
+
+    Merge pull request #14 from almanzayeni/featureSearch
+    
+    Feature search
+
+commit 0acdbe2c51d6b327958861ddce0c6928bf1ea355
+Merge: c3fcd69 79de575
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Fri Mar 6 21:23:19 2026 -0500
+
+    Merge pull request #20 from almanzayeni/test-HomeDashboardVM
+    
+    Add Dashboard tests, delete sample data, applied checkstyle to Dashboard
+
+commit c3fcd69fffb19acf9b8314eee30d664f19ec7715
+Merge: de8a136 abc930e
+Author: Victor Filpo <vf00004@my.westga.edu>
+Date:   Fri Mar 6 21:14:41 2026 -0500
+
+    Merge pull request #18 from almanzayeni/featureCreateFoodItem
+    
+    Fixed Exception Handling and Input Validation
+
+commit 79de575cfcaf0163c7682478f3a12942dc10482e
+Author: vf00004 <vf00004@my.westga.edu>
+Date:   Fri Mar 6 21:05:30 2026 -0500
+
+    Add Dashboard tests, delete sample data, applied checkstyle to Dashboard
+    
+    - GenAI: helped me plan test cases I missed
+
+commit de8a1366bab5380146541e09932f67ea53c73676
+Merge: 5516a18 c5bd5a3
+Author: Victor Filpo <vf00004@my.westga.edu>
+Date:   Fri Mar 6 19:20:42 2026 -0500
+
+    Merge pull request #19 from almanzayeni/documentation-updateDocumentation
+    
+    Updated the class diagram to include FoodItemCell, HomeDashboardPageC…
+
+commit c5bd5a3103300aac02aaa50e27b58575f045eb37
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Fri Mar 6 18:27:05 2026 -0500
+
+    Updated the class diagram to include FoodItemCell, HomeDashboardPageController, and HomeDashboardViewModel
+
+commit bd45f1aaafde349959092219a2a5a4422b63f848
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Mar 6 17:32:33 2026 -0500
+
+    Fix merge conflicts on feature
+    
+    Correct merge errors form main to feature.
+
+commit 08badcea54e6d306f58f8713620015adb035fe87
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Mar 6 16:26:04 2026 -0500
+
+    Updated Sprint 2 Backlog & Sprint 1 Retrospective
+    
+    I updated the sprint 2 backlog with the remaining tasks for the rest of
+    the sprint.
+    I added the tasks for sprint 2 to the sprint retrospective.
+
+commit 00a51d9dbb001605c1545aa7b28404f573dfbf18
+Merge: 7d72260 5516a18
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Mar 6 15:13:41 2026 -0500
+
+    Mege main into feature
+    
+    Merge changes from main.
+
+commit 3f0e9751e9ed3c0bbc3bbb4a3202b7baa003172a
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Mar 6 15:03:45 2026 -0500
+
+    Updated Sprint Retrospective
+    
+    Finished adding my gen AI comments to the sprint retrospective and added
+    in communication comments.
+
+commit d4d1eda29dff03765599d2d14e84c4ecdc24960b
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Mar 6 14:35:57 2026 -0500
+
+    Added Sprint Retrospective
+    
+    Added the sprint retrospective and my gen AI sessions files to the
+    repository.
+
+commit f8c648ecc57e4cb194604b9f0f907d45c4beb46c
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Mar 6 14:33:44 2026 -0500
+
+    Updated Sprint Backlog
+    
+    I updated the sprint backlog with my hours.
+
+commit 5516a180535f7df19a71e8ae5e2445bd8cce8f9c
+Merge: 737e2c3 31a19e6
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Mar 6 14:17:32 2026 -0500
+
+    Merge pull request #17 from almanzayeni/feature-touchUpDashboard
+    
+    Added functionality so that the hamburger menu opens and has other bu…
+
+commit 7d7226048e1928500868eea84e077cf5c32a5446
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Mar 6 11:55:24 2026 -0500
+
+    Update search page
+    
+    Add suggested updates.
+
+commit abc930ed6c0fa57a85397286c06141e3cfcff750
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Mar 6 11:00:52 2026 -0500
+
+    Fixed Exception Handling and Input Validation
+    
+    I fixed the exeption handling where exceptions from the
+    checkForExistingFood method in both CreateBaseFoodPageViewModel and
+    CreateCompositeFoodPageViewModel were not being caught in the
+    createBaseFood and createCompositeFood methods.
+    
+    I also addded input validation to not allow the addFoodButton to be
+    pressed until the required fields area filled in.
+
+commit 31a19e64fe6b9f2b55ce570989d4e04beb11f452
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Thu Mar 5 13:56:07 2026 -0500
+
+    Added functionality so that the hamburger menu opens and has other buttons for different pages, so they are accessible. This may be improved upon later down the line.
+
+commit 737e2c3601068905eb9fe04dcdc9658d2bf0a33c
+Merge: a18db14 2dc1095
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Thu Mar 5 13:08:16 2026 -0500
+
+    Merge pull request #15 from almanzayeni/featureCreateMealItem
+    
+    Feature create meal item
+
+commit a18db147197cae65b3c990a21a6f1e8c1fd3602b
+Merge: fc13047 714a484
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Mar 5 12:28:24 2026 -0500
+
+    Merge pull request #16 from almanzayeni/feature/calendar-dashboard-component
+    
+    Feature/calendar dashboard component
+
+commit 2dc1095369c0abadfa960250824adf793774d073
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Mar 4 22:43:02 2026 -0500
+
+    Configured and Tested CreateMealItemPageViewModel
+    
+    I created CreateMealItemPageViewModel as a copy of
+    CreateCompositeFoodPageViewModel with some small changes to not have
+    selection of a QuantityCategory and naming.
+    I also reconfigured all the test cases in a new test package that
+    reaches 100% code coverage and all tests pass.
+
+commit 714a48466598f27827f6b0b7cd41625ad77bb0fd
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Wed Mar 4 22:28:01 2026 -0500
+
+    Finished UI for Today's Food feature. Initialized new componenets in controller, bound, and added methods to View Model so that the page works properly with the features it has. The items in the list can be removed, but as of right now, the add button will not navigate since we do not have an add food page. A date can be selected, but the list will not yet update to that day based on data.
+
+commit 97a1d76d34d96c9a3a19c3f5b155b7041c8f9a40
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Mar 4 21:41:54 2026 -0500
+
+    Added CreateMealItemPage.fxml and Controller
+    
+    I setup the CreateMealItemPage.fxml to basically mimic the
+    CreateCompositeFoodPage.fxml without the ablity to select a
+    QuantityCategory since meals will always be by serving.
+    I also configured the CreateMealItemPageController to mimic the
+    CreateCompositeFoodPageController since it will provide basically the
+    same functionality with some small adjustments.
+
+commit 4dec28df700cb79dd6b11f0e7fbc8a0da14c58af
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Wed Mar 4 21:01:18 2026 -0500
+
+    Adjusted UI to have an organized list of today's food
+
+commit 346b0a85329d8e929f7c6ebea2361023ce5ac9bc
+Author: vf00004 <vf00004@my.westga.edu>
+Date:   Wed Mar 4 19:45:09 2026 -0500
+
+    Add DataPicker to Dashboard page, finish basic Dashboard functionality/UI
+
+commit 16031d4b74d1960870ea25a1ca7942e6ea0674fe
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Mar 4 18:09:14 2026 -0500
+
+    Change info in json file
+    
+    Change calories in json file for all foods.
+
+commit e81d521d4556eee9f30616512aac701836f4b95e
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Mar 4 18:02:10 2026 -0500
+
+    Fix overlap in compositefood
+    
+    Some items ovelap so fix overlap.
+
+commit b69d1f8241bcc009a49a41ae57fcc11f6afb2c2b
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Mar 4 17:47:39 2026 -0500
+
+    Add portion for selected food in search
+    
+    Craete potrion size for selcted food
+
+commit feb63e5170c3fe6640073e33e1b12f589d95bc91
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Mar 4 17:33:46 2026 -0500
+
+    Change search data to json
+    
+    Read and write from json file
+
+commit fc13047cdd4e244500c8f80876daae65cf6f02b3
+Author: vf00004 <vf00004@my.westga.edu>
+Date:   Wed Mar 4 16:30:03 2026 -0500
+
+    Update dashboard wireframe
+
+commit ff2cb3819a722ddbd818b63887541fa5845290d7
+Merge: 5b4f1f4 959a4b0
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Wed Mar 4 15:46:05 2026 -0500
+
+    Merge pull request #13 from almanzayeni/featureCreateFoodItem
+    
+    Updated Documentation and Naming
+
+commit 959a4b051f14b21aa1d3425ebdabd440ad97d7a1
+Author: Justin Smith <jsmith90@my.westga.edu>
+Date:   Wed Mar 4 14:22:21 2026 -0500
+
+    Updated Documentation and Naming
+    
+    I updated the naming of the name variables to description to match
+    with the variables in the BaseFood and CompositeFood classes.
+    I also started to update the class diagram with the new classes.
+
+commit 5b4f1f4a37301c1ff5a2c3b1bfb6c1115d02466a
+Merge: 3e83673 318d877
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Mon Mar 2 20:09:04 2026 -0500
+
+    Merge pull request #11 from almanzayeni/featureCreateFoodItem
+    
+    Feature create food item
+
+commit 318d877b8fc1358aae13d8779b9328b62ae3244b
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 2 14:49:24 2026 -0500
+
+    Fixed Formatting and JavaDocs
+    
+    Went through all classes that I've worked on and updated the formatting
+    and made sure correct JavaDocs were there.
+
+commit 200c7a8d3ab0af6b784cd42f34350ac76ee3ea95
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 2 14:33:16 2026 -0500
+
+    Added createCompositeFood Testing & Fixed Json
+    
+    I used ChatGPT to write test cases that would hit full coverage.
+    Confirmed test cases all pass and coverage is 100%.
+    I also updated the FoodItem interface and CompositeFood class to
+    fix issues with Json read and write.
+
+commit e5256d3b59340ebda7e638113317c2d5361b2d7b
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 2 12:42:37 2026 -0500
+
+    Tested CreateCompositeFoodPageVM removeIngredient
+    
+    Added testing for the removeIngredient method in
+    CreateCompositeFoodPageViewModel.
+    All tests pass and 100% coverage reached.
+    Had to update the getIngredient method and it's testing due to an issue
+    found when testing removeIngredient.
+
+commit e64c5b37b3691904957231e4f0deddf0859b9359
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 2 12:13:43 2026 -0500
+
+    Tested CreateCompostieFoodPageVM getIngredient
+    
+    Added testing for the getIngredient method in
+    CreateCompositeFoodPageViewModel with all tests passing and 100%
+    coverage.
+
+commit 1ccede213da8ee8b3fd331cb14af9e4587632e2d
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 2 12:06:47 2026 -0500
+
+    Fixed Testing For CompositeFood
+    
+    Due to the changes that I made some of the tests broke for CompositeFood
+    I updated the tests to make sure they are all passing again and 100%
+    coverage is achived.
+
+commit e1ef609afbf0337c7f61a0904ad303100171d7cc
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 2 11:22:20 2026 -0500
+
+    Updated How CompositeFoods Are Created
+    
+    I updated the way composite foods are created to start empty and update
+    with ingredients added.
+    I also fixed an issue with how the nutritionalvalues were being set in
+    the CompositeFood class.
+    Also Added testing for CreateCompositeFoodPageViewModel addIngredients.
+
+commit 1f74c68d334b7e6e17667270d9a638f648ee5c83
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 2 10:44:51 2026 -0500
+
+    Testing CreateCompositeFoodPageVM addIngredient
+    
+    Added testing for the addIngredient method in
+    CreateCompositeFoodPageViewModel
+
+commit 38d744b0d2b830e125ff3878eef1e4f90db64d46
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Mar 2 10:31:38 2026 -0500
+
+    Added testing for the CreateBaseFoodPageViewModel
+    
+    I added testing for the CreateBaseFoodPageViewModel and confirmed
+    that all test are passing.
+    Used ChatGPT to help figure out mock tests to test IOExceptions and
+    JasonProcessingExceptions
+
+commit 0faad1f9a49e86c325f5b736f38c71dab206425d
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Feb 27 10:43:37 2026 -0500
+
+    Merged CreateCompositeFoodPageController
+    
+    I finished merging the changes to CreateCompositeFoodPageController from
+    what Yeni had made and what I had setup.
+    Removed the duplicate classes and fixed the spelling.
+
+commit 2c0eef5a61786ccd13bcead4755f50b16aea83b2
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Feb 27 09:47:25 2026 -0500
+
+    Fixed CreateCompositeFoodPage Spacing
+    
+    Updated the spacing of some of the elements on the
+    CreateCompositeFoodPage so that nothing overlaps.
+
+commit 3e836735cdd3431bd6d19dfaa9a42e534513ff56
+Merge: b582500 b0b5b2b
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Feb 27 09:28:22 2026 -0500
+
+    Merge branch 'featureSearch'
+
+commit b0b5b2bd789c8b2b04f8e2931a2fbb0248719a07
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Feb 27 08:58:53 2026 -0500
+
+    remove combobox
+
+commit a44caf21fcae70453d7c8ad33ff572d4547c4949
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Feb 27 08:57:05 2026 -0500
+
+    remove binding
+
+commit c953e299c2fbea2a8b0f8fc3a34e3005d0d71f00
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Feb 27 08:53:52 2026 -0500
+
+    Remove view model implementation
+
+commit b58250025d3bb13bfd31cfe17663c0199e1678ca
+Merge: bb3d5bc 18dcdea
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Fri Feb 27 08:53:37 2026 -0500
+
+    Merge pull request #10 from almanzayeni/foodItemViewModelFeatuer
+    
+    Food item view model featuer
+
+commit 18dcdea428c963da9eb4c30b79112f6cb1c76071
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Feb 25 17:50:53 2026 -0500
+
+    Setup CreateCompositeFood Controller & ViewModel
+    
+    I added most of the functionality to the CreateCompositeFood
+    Controller and ViewModel classes.
+    I also updated the BaseFood and CompositeFood Classes to remove
+    unused constructors and updated the testing to ensure that all
+    tests still pass and code coverage is still 100%
+    Used copilot to auto complete some of the methods in both clases and
+    the test classes.
+
+commit 54a672393af8f219d94240f64b721dc1a6e312e0
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Feb 25 16:51:28 2026 -0500
+
+    Add food base tests
+    
+    Add tests for the food base model class.
+
+commit 793693ed70665b0b283ae0c9703e0fcbdbf5671c
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Feb 25 16:30:57 2026 -0500
+
+    Create search page and add ingredients
+    
+    Add search page so ingredients/foods can be added to a list
+    .
+
+commit 3b92281f103b01142817870dab70b88227f5a212
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Feb 25 13:53:38 2026 -0500
+
+    Test Commit For Permissions Error
+    
+    No changes testing fix for git permissions error.
+
+commit 1bcb63f7154b74eb4b758803f776184669a2d318
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Feb 25 13:48:51 2026 -0500
+
+    Test commit to fix permissions error
+    
+    no changes
+
+commit 85ab3703f728bd7437d8ea8d93006925171d307c
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Feb 25 13:40:42 2026 -0500
+
+    Added Handling for Add Food Button
+    
+    Added the handeling for the addFoodButton on the
+    CreateBaseFoodPage Controller and ViewModel.
+    Currently saves the food item to a Json file but will be updated
+    to send out to server later.
+
+commit 555e113691e99febc736463d04f153fd462bb6f4
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Feb 24 23:31:49 2026 -0500
+
+    Add search functionality
+    
+    Search function when adding an exisiting food. Fields are populated
+    and calculate the amount of ingredients added.
+
+commit 6cdff42fb13000da5f2870b62f7cf7d572a270c4
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Feb 24 23:00:54 2026 -0500
+
+    Add search data class and UI elements
+    
+    Added data for searching food, and fxml ui elements for searching.
+
+commit bc16efb007741ae61788edff2aa53ae9f99f61b8
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Feb 23 22:01:36 2026 -0500
+
+    Ceate Search page file
+    
+    Add a blank fxml file for Search page
+
+commit dd3785b27e75eb3f54308084ca58fa73ae7c2b81
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Mon Feb 23 16:04:05 2026 -0500
+
+    Adjusted the python server to work with the JSON, and wrote a test main class to test that the java server and python server interact correctly.
+
+commit 1f299d1edd25c0f60c5b043d2a9098cb824c6d1b
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Feb 23 15:58:31 2026 -0500
+
+    Added Input Validation to CreateBaseFoodPage
+    
+    I added input validation to the fields on the
+    CreateBaseFoodPageController and to only allow numeric values.
+
+commit bca000b963d5d965255f834f8bf4938afb208b42
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Mon Feb 23 15:49:12 2026 -0500
+
+    Added the python project into the repository files
+
+commit b7f7f87c724beda5b30bf2a36e41f2ce386af4c1
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Mon Feb 23 15:47:49 2026 -0500
+
+    Added base ServerClient and set up a Python project. Using Json to parse and unparse information since we have more than just username and password associated with an account.
+
+commit 5779290bebd06b66d2ab6e33a67c30fe89ae5eeb
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Feb 23 13:07:23 2026 -0500
+
+    Added CreateBaseFoodPage Data Binding
+    
+    Added the properties to the CreateBaseFoodPageViewModel and bound
+    them to the correct fields in the CreateBaseFoodPageController.
+
+commit bb3d5bcc36ac3e600cf211416c55ca734b09704b
+Merge: b799256 2ace72d
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Feb 18 22:24:08 2026 -0500
+
+    Merge pull request #7 from almanzayeni/featureDietPlan
+    
+    Everything looks good now with the updates.
+
+commit 2ace72dc650caf117f33337d1ec4e58f151f85c4
+Merge: 92a6b0e b799256
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Feb 18 22:22:59 2026 -0500
+
+    Merge branch 'main' into featureDietPlan
+
+commit 92a6b0e95207a810644bb4cb23c288a9bd4f3c71
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Feb 18 22:19:54 2026 -0500
+
+    Make minor chnage to primary goal enum
+    
+    Change values of the primary goal enum class
+
+commit abac93c154558749ae11f194969bd44e3997eb7d
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Feb 18 21:22:29 2026 -0500
+
+    Resize preferences page
+    
+    Change soze of [age ot match other pages.
+
+commit b799256c299584a7a26ed340ba65afa2eb263ee1
+Merge: 2940ee9 cf13432
+Author: Emily Collins <ecollin7@my.westga.edu>
+Date:   Wed Feb 18 21:18:14 2026 -0500
+
+    Merge pull request #8 from almanzayeni/AddFoodItemUIFeature
+    
+    Add food item UI feature
+
+commit 997f9e71972ea83fde847e59c5b4cc0d8b9c9220
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Feb 18 19:47:47 2026 -0500
+
+    Edit UserPreferences class
+    
+    Edit javadoc comments
+
+commit 5c490b0c7334bb21cf5e782e3ebbfb793d17aa98
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Feb 18 18:03:54 2026 -0500
+
+    Make changes to model, controller, and Vm
+    
+    Add chnages to MVVM classes and add test cases for model and viewmodel
+    classes.
+
+commit cf13432850fa39d673f9f8e1762d87fd3a69c87e
+Author: Justin Smith <jsmith90@my.westga.edu>
+Date:   Wed Feb 18 17:29:56 2026 -0500
+
+    Added CreateCompositFoodPage & Controller
+    
+    I added the CreateCompositFoodPage and skeleton controller.
+    I added the functionality to the navigation portion as well.
+    I also stubbed the HomeDashboardPage and viewmodel classes.
+
+commit 421fc3a46afa07c1bb1f60e29bd9c22974a6d59c
+Author: Justin Smith <jsmith90@my.westga.edu>
+Date:   Wed Feb 18 16:16:45 2026 -0500
+
+    Added Functionality to Navigation Buttons
+    
+    Added functionality to the hamburger menu, home button and logout button.
+    Also added functionality to the selectBaseFood button and
+    selectCompositFood buttons.
+
+commit bd79784e01a35030477fce5db79b34120ecc138a
+Author: Justin Smith <jsmith90@my.westga.edu>
+Date:   Wed Feb 18 14:52:27 2026 -0500
+
+    Added Navigation Buttons
+    
+    I added navigation buttons to the pages for selecting a type of food
+    item to create and to the page for creating the BaseFoodItem.
+    I also updated the skeletons of the controller classes for both.
+
+commit f5e11e1d386d8365cc15da82d5f0ce0c90f4b690
+Author: Justin Smith <jsmith90@my.westga.edu>
+Date:   Wed Feb 18 12:39:47 2026 -0500
+
+    Added Type Selection Page & Create Base Food Page
+    
+    Added a UI page to select how the user wants to add a new food item
+    and the base structure of the controller class.
+    Also added the UI page to create a BaseFoodItem and the base structure
+    of the controller class.
+
+commit d6e8c9998682a755f25e9f13ad6e3e9304ffc96c
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Feb 17 16:27:15 2026 -0500
+
+    Add Preferences page
+    
+    Add fxml, codebheind, and vm. Haven't implemented
+    binding yet.
+
+commit dcec9eb1291e18c1da6901c109f9847fbf135fbe
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Feb 16 21:18:03 2026 -0500
+
+    Add Business Logic UI
+    
+    Add BL for prefernces page
+
+commit 2940ee91881c8bbc4b50964dc5852a5f3b7c1df2
+Merge: b9fe01b 821b58a
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Feb 16 17:24:08 2026 -0500
+
+    Update sprint backlog
+    
+    Add my updated sprint backlog
+
+commit b9fe01b1502dc44bd2b20f6b56499e2caecfa86e
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Feb 16 17:19:23 2026 -0500
+
+    Update Sprint backlog
+    
+    Update description and time on sprint backlog
+
+commit 821b58a02b1504b95db2e22680fa150037e67787
+Merge: 3176c30 df3b946
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Feb 12 11:34:29 2026 -0500
+
+    Merge pull request #6 from almanzayeni/createfooditemfeature
+    
+    Readding Sprint Backlog
+
+commit df3b946fff4048ffd30688d2510fe5fbc0c40419
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Feb 12 11:33:04 2026 -0500
+
+    Readding Sprint Backlog
+    
+    Readding the sprint backlog after fixing merge issues between branches.
+
+commit 3176c306849901d1e3590f10391b160513132fd6
+Merge: c8da497 102f639
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Feb 12 11:31:30 2026 -0500
+
+    Merge pull request #5 from almanzayeni/createfooditemfeature
+    
+    Fixing sprint backlog issues.
+
+commit c8da4974bc8cdc2dd592693e2fc1966c42558f4c
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Feb 12 11:30:04 2026 -0500
+
+    Fixing issues with sprint backlog merge
+    
+    fixing issues with spint backlog merge.
+
+commit 102f63952ee61413c2cc77df247899bcfa9f7c0b
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Feb 12 11:28:11 2026 -0500
+
+    Fixing merge issuse with sprint backlog
+    
+    Fixing merge issues with sprint backlog
+
+commit b6b3a074e152934dbcf481d7a64be0231592c37b
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Feb 12 11:26:38 2026 -0500
+
+    Updated Merge Issues
+    
+    fixed merge issues for branch.
+
+commit b6b3d359e30c310ba0f29cea9607bbc49478ab8a
+Merge: e2729a2 a163bde
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Feb 12 11:24:40 2026 -0500
+
+    Merge branch 'createfooditemfeature' of https://github.com/almanzayeni/Group5NutritionTracker into createfooditemfeature
+
+commit 93d07bface257ffe3c594e677c3edcee43d62e73
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Feb 12 11:23:12 2026 -0500
+
+    Sprint Backlog Update
+    
+    Updated work hours.
+
+commit d6ac38c1915b2ae97da5b25f48ad440d5c9ee8f9
+Merge: 4d2a363 afaa1fb
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Feb 12 11:21:43 2026 -0500
+
+    Merge branch 'main' of https://github.com/almanzayeni/Group5NutritionTracker
+
+commit 4d2a3637a3809120bb6e698a270a3d8b74ba1403
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Feb 12 11:15:59 2026 -0500
+
+    Updated Sprint Backlog
+    
+    Updated the sprint backlog with hours worked this week.
+
+commit e2729a2fbd16d3946035da8e9b8eb90376ea5683
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Thu Feb 12 11:13:19 2026 -0500
+
+    Updated Sprint Backlog
+    
+    I updated the sprint backlog with my hours worked.
+
+commit afaa1fb27cba2c637f20366eb235cc0784250850
+Merge: af7bc14 a163bde
+Author: Emily Collins <ecollin7@my.westga.edu>
+Date:   Wed Feb 11 14:39:50 2026 -0500
+
+    Merge pull request #3 from almanzayeni/createfooditemfeature
+    
+    Createfooditemfeature
+
+commit a163bde48e601b8111e768f31690640a6cff4b8a
+Author: Justin Smith <jsmith90@my.westga.edu>
+Date:   Wed Feb 11 13:49:36 2026 -0500
+
+    Added Class Diagram
+    
+    Added the class diagram and current classes I made.
+
+commit 6f964721ffcdf0edb7cb96246856fe46c3085bf9
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Feb 11 11:59:23 2026 -0500
+
+    Updated PortionSize & Added CompositeFood Testing
+    
+    I updated from using QuantityValue to using PortionSize for food Items.
+    PortionSize's default value will be 1 and used as a multiplyer for
+    nutritional values.
+    I used Copilot to update javadocs
+    I also added test classes to fully test the CompositeFood class.
+    I confirmed that all tests are passing successfully with 100%
+    code coverage.
+    I made use of copilot to auto complet test cases and then manually
+    corrected them for any checks that were missing and correcting
+    values.
+
+commit 89b1b1bcd1c80701a3013a641d6cfdd19c69e5b3
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Feb 10 21:46:15 2026 -0500
+
+    Added Testing For BaseFood Constructor
+    
+    Confirmed that BaseFood constructor is fully tested and passing all
+    test cases.
+
+commit af7bc14ae4720b490ea29cd841d9dd46f1ba7494
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Feb 10 20:25:33 2026 -0500
+
+    Edit sprint backlog
+    
+    Add my task description and time estimation
+
+commit 9a30992eb1a0e58e89347fc03d41c36f71b906dd
+Merge: ba26470 b97f3a0
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Tue Feb 10 18:37:10 2026 -0500
+
+    Merge pull request #2 from almanzayeni/add-wireframes
+    
+    Add initial wireframe design pngs to documentation. Made a new folder…
+
+commit 0c105bc2a4fc64d606bb5f3d1502f47eb8c12fbf
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Feb 10 17:28:31 2026 -0500
+
+    Added BaseFood and CompositFood
+    
+    Added the BaseFood class to model foods that don't have any other
+    foods that make them up (raw ingredients)
+    Added the CompositFood class to model foods that are comprised of
+    other foods (raw ingredients)
+    Made use of Copilot AI to generate java docs and parts of the
+    constructor for each class. Also used it to auto complete condition
+    checks and exception handling.
+
+commit b97f3a05ace277e2559beee0b758c7e77386f30e
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Tue Feb 10 15:54:49 2026 -0500
+
+    Add initial wireframe design pngs to documentation. Made a new folder to hold all wireframes.
+
+commit 9378dc96d07ec060c50d80781dd0924ae4eb8a4d
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Feb 10 15:24:28 2026 -0500
+
+    Created FoodItem Interface
+    
+    Created the FoodItem interface to define the base details of a food.
+
+commit e6662a29675bf46e35cc0bd891ceb2a00170d9d0
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Feb 10 15:19:01 2026 -0500
+
+    Added Enum for Defining Quantity type
+    
+    Added Quantity Category enum to represent the types of quantity that
+    the user can use.
+
+commit ba2647028304384a7d90eb1454166aa4841cb739
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Feb 10 13:22:20 2026 -0500
+
+    Updated Package Names
+    
+    Updated the naming of the packages within the project.
+
+commit 1d97c481a0e96cc86ef48e07256640b5c55f4b5e
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Feb 10 11:22:04 2026 -0500
+
+    Created Maven Base Project
+    
+    I added the base maven project.
+
+commit 3ede6dc47fcd079c57400d170a5084c2b78c5914
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Feb 10 10:37:45 2026 -0500
+
+    Updated Sprint Backlog
+    
+    Added estimate times and task descriptions to my tasks within the
+    sprint backlog.
+
+commit 0fc773751403fcddce8fad7651b8e21c0f3c5970
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Feb 6 12:09:34 2026 -0500
+
+    Design Implementation Meeting Updates
+    
+    Updated planning notes with more detailed descriptions of the system.
+    Updated the sprint back log with new task assigments
+
+commit ebc3062db44765fadbb73633a4d73ca0ada81ca9
+Author: Justin Smith <jsmith90@my.westga.edu>
+Date:   Fri Feb 6 09:43:18 2026 -0500
+
+    Updated Product Backlog
+    
+    Uploading the updated product backlog from meeting.
+
+commit 9e2347c72d718913598cc49aa369affb114e798d
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Feb 4 23:46:12 2026 -0500
+
+    Added Product Backlog and Sprint Backlog
+    
+    Added the Product Backlog and Sprint Backlog from planning meeting.
+
+commit a99b842c594cbeeecbaa67492c39910e1c5416e5
+Merge: 7b82813 9f4d229
+Author: Emily Collins <ecollin7@my.westga.edu>
+Date:   Wed Feb 4 11:35:15 2026 -0500
+
+    Merge pull request #1 from almanzayeni/featureDiagram
+    
+    Add the user case diagram
+
+commit 9f4d229ab7fbed5aefb4b3b33b098ec4cb5c7652
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Feb 4 11:29:54 2026 -0500
+
+    Add the user case diagram
+    
+    Create and add the user case diagram
+
+commit 7b82813dd64aa399dfd2a0cb14ead33ef758e54b
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Feb 3 21:06:46 2026 -0500
+
+    Set up group repository
+    
+    Set up the structure of the repo
+
+commit 127eda8889130deb280e1cabc4aba70c43692b85
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Tue Feb 3 20:56:30 2026 -0500
+
+    Initial commit
