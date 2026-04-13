@@ -1,4 +1,4 @@
-package edu.westga.cs3212.group5.nutritiontracker.viewmodel;
+package edu.westga.cs3212.group5.nutritiontracker.viewmodel.dietgoalsviewmodel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
+import edu.westga.cs3212.group5.nutritiontracker.viewmodel.DietGoalsViewModel;
 import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
 
 /**
@@ -16,7 +17,7 @@ import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
  * @author Yeni Almanza
  * @version spring 2026
  */
-class TestPreferencesVM {
+class TestDietGoalsViewModel {
 
     private DietGoalsViewModel viewModel;
 

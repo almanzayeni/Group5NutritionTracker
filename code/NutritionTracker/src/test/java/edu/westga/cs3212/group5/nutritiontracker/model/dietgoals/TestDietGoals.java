@@ -1,4 +1,4 @@
-package edu.westga.cs3212.group5.nutritiontracker.model.userpreferences;
+package edu.westga.cs3212.group5.nutritiontracker.model.dietgoals;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +15,7 @@ import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
  * @author Yeni Almanza
  * @version spring 2026
  */
-public class TestUserPreferences {
+public class TestDietGoals {
 
     @Test
     void testConstructorValidAllGoals() {
