@@ -40,8 +40,8 @@ public class HomeDashboardViewModel {
     /**
      * HomeDashboard VM Constructor.
      * Binds calorie totals to foods added.
-     * 
-     * TODO update javadocs
+     *
+     * @param user the currently logged in user
      */
     public HomeDashboardViewModel(User user) {
         this.currentUser.set(user);
@@ -86,14 +86,29 @@ public class HomeDashboardViewModel {
         this.currentUser.set(user);
     }
     
+    /**
+     * Gets the users name property.
+     *
+     * @return the users name property
+     */
     public StringProperty getUsersNameProperty() {
     	return this.usersName;
     }
     
+    /**
+     * User food log property.
+     *
+     * @return the object property
+     */
     public ObjectProperty<FoodLog> userFoodLogProperty() {
     	return this.currentFoodLog;
     }
     
+    /**
+     * User diet goals property.
+     *
+     * @return the object property
+     */
     public ObjectProperty<DietGoals> userDietGoalsProperty() {
     	return this.usersDietGoals;
     }
