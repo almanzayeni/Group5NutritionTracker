@@ -36,6 +36,7 @@ KEY_COMPOSITE_FOOD_TYPE = "composite"
 KEY_INGREDIENTS = "ingredients"
 
 KEY_FOOD_DESCRIPTION = "description"
+KEY_FOOD_QUANTITY_CATEGORY = "quantityCategory"
 KEY_FOOD_PORTION_SIZE = "portionSize"
 KEY_FOOD_CALORIES = "calories"
 KEY_FOOD_PROTEIN = "protein"
@@ -43,8 +44,6 @@ KEY_FOOD_FAT = "fat"
 KEY_FOOD_SUGAR = "sugar"
 KEY_FOOD_CARBS = "carbohydrates"
 KEY_FOOD_SODIUM = "sodium"
-
-KEY_FOOD_QUANTITY_CATEGORY = "quantityCategory"
 
 SUCCESS_STATUS = 1
 BAD_MESSAGE_STATUS = -1

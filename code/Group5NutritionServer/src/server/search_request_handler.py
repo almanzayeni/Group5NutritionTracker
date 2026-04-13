@@ -25,4 +25,4 @@ def handleRequest(request):
     
     matchingFoodItems = database.searchFoodItemByDescription(query)
     
-    return {constants.KEY_STATUS:constants.SUCCESS_STATUS, constants.KEY_SEARCH_RESULTS:[foodItem.toDict() for foodItem in matchingFoodItems]}
+    return {constants.KEY_STATUS:constants.SUCCESS_STATUS, constants.KEY_SEARCH_RESULTS:[foodItem.to_dict() for foodItem in matchingFoodItems]}
