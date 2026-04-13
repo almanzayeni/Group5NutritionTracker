@@ -17,9 +17,9 @@ import edu.westga.cs3212.group5.nutritiontracker.model.User;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
 
 public class TestAdd {
-    HomeDashboardViewModel vm;
-    BaseFood testFood;
-    BaseFood testFood2;		
+    private HomeDashboardViewModel vm;
+    private BaseFood testFood;
+    private BaseFood testFood2;		
     
 	private DietGoals createDietGoals() {
 		return new DietGoals(PrimaryGoal.CALORIE, 2000, 100, 60, 50, 2300, 250, Collections.emptyList());
@@ -50,6 +50,7 @@ public class TestAdd {
         assertEquals(2, this.vm.getLunchItems().size());
         assertEquals(testFood, this.vm.getLunchItems().get(0));
         assertEquals(testFood2, this.vm.getLunchItems().get(1));
+        assertEquals(8.0, this.vm.totalCaloriesProperty().get(), 0.001);
     }
     
     @Test
@@ -60,6 +61,7 @@ public class TestAdd {
         assertEquals(2, this.vm.getBreakfastItems().size());
         assertEquals(testFood, this.vm.getBreakfastItems().get(0));
         assertEquals(testFood2, this.vm.getBreakfastItems().get(1));
+        assertEquals(8.0, this.vm.totalCaloriesProperty().get(), 0.001);
     }
     
     @Test
@@ -70,6 +72,7 @@ public class TestAdd {
         assertEquals(2, this.vm.getDinnerItems().size());
         assertEquals(testFood, this.vm.getDinnerItems().get(0));
         assertEquals(testFood2, this.vm.getDinnerItems().get(1));
+        assertEquals(8.0, this.vm.totalCaloriesProperty().get(), 0.001);
     }
     
     @Test
@@ -80,5 +83,6 @@ public class TestAdd {
         assertEquals(2, this.vm.getSnacksItems().size());
         assertEquals(testFood, this.vm.getSnacksItems().get(0));
         assertEquals(testFood2, this.vm.getSnacksItems().get(1));
+        assertEquals(8.0, this.vm.totalCaloriesProperty().get(), 0.001);
     }
 }

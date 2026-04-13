@@ -13,7 +13,7 @@ from server import add_food_request_handler
 from server import constants
 
 
-class TestAddFoodRequestHandler(unittest.TestCase):
+class AddFoodRequestHandlerTestCaseMixin(object):
 
     def setUp(self):
         self._original_food_items = database._foodItems
@@ -21,6 +21,42 @@ class TestAddFoodRequestHandler(unittest.TestCase):
 
     def tearDown(self):
         database._foodItems = self._original_food_items
+
+    def _create_base_food_request(self, description, quantity_category):
+        return {
+            constants.KEY_FOOD_ITEM: {
+                constants.KEY_FOOD_TYPE: constants.KEY_BASE_FOOD_TYPE,
+                constants.KEY_FOOD_DESCRIPTION: description,
+                constants.KEY_FOOD_QUANTITY_CATEGORY: quantity_category,
+                constants.KEY_FOOD_PORTION_SIZE: 1,
+                constants.KEY_FOOD_CALORIES: 120,
+                constants.KEY_FOOD_PROTEIN: 15,
+                constants.KEY_FOOD_FAT: 0,
+                constants.KEY_FOOD_SUGAR: 7,
+                constants.KEY_FOOD_CARBS: 9,
+                constants.KEY_FOOD_SODIUM: 55,
+            }
+        }
+
+    def _create_composite_food_request(self, description, ingredients):
+        return {
+            constants.KEY_FOOD_ITEM: {
+                constants.KEY_FOOD_TYPE: constants.KEY_COMPOSITE_FOOD_TYPE,
+                constants.KEY_FOOD_DESCRIPTION: description,
+                constants.KEY_FOOD_QUANTITY_CATEGORY: QuantityCategory.SERVING,
+                constants.KEY_FOOD_PORTION_SIZE: 1,
+                constants.KEY_FOOD_CALORIES: 255,
+                constants.KEY_FOOD_PROTEIN: 6,
+                constants.KEY_FOOD_FAT: 3,
+                constants.KEY_FOOD_SUGAR: 15,
+                constants.KEY_FOOD_CARBS: 54,
+                constants.KEY_FOOD_SODIUM: 1,
+                constants.KEY_INGREDIENTS: ingredients,
+            }
+        }
+
+
+class TestHandleRequestBaseFood(AddFoodRequestHandlerTestCaseMixin, unittest.TestCase):
 
     def test_returns_failure_when_food_item_missing(self):
         response = add_food_request_handler.handleRequest({})
@@ -106,38 +142,14 @@ class TestAddFoodRequestHandler(unittest.TestCase):
         self.assertEqual(constants.BAD_MESSAGE_STATUS, response[constants.KEY_STATUS])
         self.assertEqual("invalid food type", response[constants.KEY_FAILURE_MESSAGE])
 
-    def _create_base_food_request(self, description, quantity_category):
-        return {
-            constants.KEY_FOOD_ITEM: {
-                constants.KEY_FOOD_TYPE: constants.KEY_BASE_FOOD_TYPE,
-                constants.KEY_FOOD_DESCRIPTION: description,
-                constants.KEY_FOOD_QUANTITY_CATEGORY: quantity_category,
-                constants.KEY_FOOD_PORTION_SIZE: 1,
-                constants.KEY_FOOD_CALORIES: 120,
-                constants.KEY_FOOD_PROTEIN: 15,
-                constants.KEY_FOOD_FAT: 0,
-                constants.KEY_FOOD_SUGAR: 7,
-                constants.KEY_FOOD_CARBS: 9,
-                constants.KEY_FOOD_SODIUM: 55,
-            }
-        }
 
-    def _create_composite_food_request(self, description, ingredients):
-        return {
-            constants.KEY_FOOD_ITEM: {
-                constants.KEY_FOOD_TYPE: constants.KEY_COMPOSITE_FOOD_TYPE,
-                constants.KEY_FOOD_DESCRIPTION: description,
-                constants.KEY_FOOD_QUANTITY_CATEGORY: QuantityCategory.SERVING,
-                constants.KEY_FOOD_PORTION_SIZE: 1,
-                constants.KEY_FOOD_CALORIES: 255,
-                constants.KEY_FOOD_PROTEIN: 6,
-                constants.KEY_FOOD_FAT: 3,
-                constants.KEY_FOOD_SUGAR: 15,
-                constants.KEY_FOOD_CARBS: 54,
-                constants.KEY_FOOD_SODIUM: 1,
-                constants.KEY_INGREDIENTS: ingredients,
-            }
-        }
+class TestHandleRequestCompositeFood(AddFoodRequestHandlerTestCaseMixin, unittest.TestCase):
+
+    def test_returns_failure_when_food_item_missing(self):
+        response = add_food_request_handler.handleRequest({})
+
+        self.assertEqual(constants.BAD_MESSAGE_STATUS, response[constants.KEY_STATUS])
+        self.assertEqual("no food item", response[constants.KEY_FAILURE_MESSAGE])
 
 
 if __name__ == "__main__":

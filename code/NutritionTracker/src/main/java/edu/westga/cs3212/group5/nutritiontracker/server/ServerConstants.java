@@ -33,6 +33,20 @@ public class ServerConstants {
 	public static final String KEY_QUERY = "query";
 	public static final String KEY_SEARCH_RESULTS = "search_results";
 	public static final String KEY_FOOD_ITEM = "food_item";
+	public static final String KEY_FOOD_TYPE = "type";
+	public static final String KEY_BASE_FOOD_TYPE = "base";
+	public static final String KEY_COMPOSITE_FOOD_TYPE = "composite";
+	public static final String KEY_INGREDIENTS = "ingredients";
+	
+	public static final String KEY_FOOD_DESCRIPTION = "description";
+	public static final String KEY_FOOD_QUANTITY_CATEGORY = "quantityCategory";
+	public static final String KEY_FOOD_PORTION_SIZE = "portionSize";
+	public static final String KEY_FOOD_CALORIES = "calories";
+	public static final String KEY_FOOD_PROTEIN = "protein";
+	public static final String KEY_FOOD_FAT = "fat";
+	public static final String KEY_FOOD_SUGAR = "sugar";
+	public static final String KEY_FOOD_CARBS = "carbohydrates";
+	public static final String KEY_FOOD_SODIUM = "sodium";
 	
 	public static final String SUCCESS_STATUS = "1";
 	public static final String BAD_MESSAGE_STATUS = "-1";

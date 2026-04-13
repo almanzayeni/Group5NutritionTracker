@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * The Class UserPreferences.
+ * The Class DietGoals.
  * Represents a user's diet plan preferences and macro goals.
  *
  * The primaryGoal is one of the known PrimaryGoal options that
