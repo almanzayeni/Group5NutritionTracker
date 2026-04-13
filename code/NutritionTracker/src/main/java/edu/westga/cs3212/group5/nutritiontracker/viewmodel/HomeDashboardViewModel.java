@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
+import edu.westga.cs3212.group5.nutritiontracker.model.MealType;
 import edu.westga.cs3212.group5.nutritiontracker.model.User;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
@@ -19,8 +20,8 @@ import javafx.collections.ObservableList;
 
 /**
  * Dashboard VM
- * 
- * @author vfilpo + Emi :)
+ *
+ * @author vfilpo + Emi :), Yeni Almanza
  * @version Spring 2026
  */
 public class HomeDashboardViewModel {
@@ -29,93 +30,149 @@ public class HomeDashboardViewModel {
     private final ObservableList<FoodItem> lunchItems;
     private final ObservableList<FoodItem> dinnerItems;
     private final ObservableList<FoodItem> snacksItems;
-    
+
     private final ReadOnlyDoubleWrapper totalCalories = new ReadOnlyDoubleWrapper();
-    
+
     private final ObjectProperty<User> currentUser = new SimpleObjectProperty<>();
     private final ObjectProperty<DietGoals> usersDietGoals;
     private final ObjectProperty<FoodLog> currentFoodLog;
     private final StringProperty usersName;
 
+    private MealType pendingMealType = null;
+
     /**
-     * HomeDashboard VM Constructor.
-     * Binds calorie totals to foods added.
+     * HomeDashboard VM Constructor. Binds calorie totals to foods added.
      *
-     * @param user the currently logged in user
+     * @param user the logged-in user
      */
     public HomeDashboardViewModel(User user) {
         this.currentUser.set(user);
         this.usersName = new SimpleStringProperty(this.currentUser.get().getName());
         this.currentFoodLog = new SimpleObjectProperty<>(this.currentUser.get().getCurrentFoodLog());
         this.usersDietGoals = new SimpleObjectProperty<>(this.currentUser.get().getDietGoals());
-        
+
         var breakfastList = this.currentUser.get().getCurrentFoodLog().getBreakfast();
         this.breakfastItems = FXCollections.observableArrayList(breakfastList);
-        
+
         var lunchList = this.currentUser.get().getCurrentFoodLog().getLunch();
         this.lunchItems = FXCollections.observableArrayList(lunchList);
-        
+
         var dinnerList = this.currentUser.get().getCurrentFoodLog().getDinner();
         this.dinnerItems = FXCollections.observableArrayList(dinnerList);
-        
+
         var snackList = this.currentUser.get().getCurrentFoodLog().getSnacks();
         this.snacksItems = FXCollections.observableArrayList(snackList);
-        
+
         DoubleBinding total = Bindings.createDoubleBinding(
-            this::computeTotalCalories, 
+            this::computeTotalCalories,
             breakfastItems, lunchItems, dinnerItems, snacksItems
         );
         this.totalCalories.bind(total);
     }
 
     /**
+     * Sets the meal type that should receive the next food the user picks.
+     *
+     * @precondition mealType != null
+     * @param mealType the target meal
+     * @throws IllegalArgumentException if mealType is null
+     */
+    public void setPendingMealType(MealType mealType) {
+        if (mealType == null) {
+            throw new IllegalArgumentException("Meal type cannot be null");
+        }
+        this.pendingMealType = mealType;
+    }
+
+    /**
+     * Returns the meal type the user is currently adding food to, or null if none
+     * is set.
+     *
+     * @return the pending meal type
+     */
+    public MealType getPendingMealType() {
+        return this.pendingMealType;
+    }
+
+    /**
+     * Clears the pending meal type after the food has been added.
+     */
+    public void clearPendingMealType() {
+        this.pendingMealType = null;
+    }
+
+    /**
+     * Adds a food item to the meal list indicated by {@link #getPendingMealType()}.
+     *
+     * @precondition food != null && pendingMealType != null
+     * @param food the food item to add
+     * @throws IllegalArgumentException if food is null
+     * @throws IllegalStateException    if no pending meal type has been set
+     */
+    public void addFoodToPendingMeal(FoodItem food) {
+        if (food == null) {
+            throw new IllegalArgumentException("Food item cannot be null");
+        }
+        if (this.pendingMealType == null) {
+            throw new IllegalStateException("No pending meal type set");
+        }
+        switch (this.pendingMealType) {
+            case BREAKFAST -> this.breakfastItems.add(food);
+            case LUNCH     -> this.lunchItems.add(food);
+            case DINNER    -> this.dinnerItems.add(food);
+            case SNACKS    -> this.snacksItems.add(food);
+        }
+        this.pendingMealType = null;
+    }
+
+    /**
      * Get User object.
-     * 
+     *
      * @return user object.
      */
     public User getCurrentUser() {
         return this.currentUser.get();
     }
-    
+
     /**
      * Set User object.
-     * 
+     *
      * @param user to be set.
      */
     public void setCurrentUser(User user) {
         this.currentUser.set(user);
     }
-    
+
     /**
-     * Gets the users name property.
+     * Gets users name property.
      *
      * @return the users name property
      */
     public StringProperty getUsersNameProperty() {
-    	return this.usersName;
+        return this.usersName;
     }
-    
+
     /**
-     * User food log property.
+     * Gets user food log property.
      *
-     * @return the object property
+     * @return the user food log property
      */
     public ObjectProperty<FoodLog> userFoodLogProperty() {
-    	return this.currentFoodLog;
+        return this.currentFoodLog;
     }
-    
+
     /**
-     * User diet goals property.
+     * Gets user diet goals property.
      *
-     * @return the object property
+     * @return the user diet goals property
      */
     public ObjectProperty<DietGoals> userDietGoalsProperty() {
-    	return this.usersDietGoals;
+        return this.usersDietGoals;
     }
-    
+
     /**
      * Get selected date property.
-     * 
+     *
      * @return ObjectProperty<LocalDate> selected date property.
      */
     public ObjectProperty<LocalDate> getSelectedDateProperty() {
@@ -124,7 +181,7 @@ public class HomeDashboardViewModel {
 
     /**
      * Get selected date.
-     * 
+     *
      * @return selected date.
      */
     public LocalDate getSelectedDate() {
@@ -133,15 +190,16 @@ public class HomeDashboardViewModel {
 
     /**
      * Set selected date.
-     * 
+     *
      * @param date to set the selected date to.
      */
     public void setSelectedDate(LocalDate date) {
-    	this.selectedDate.set(date);
+        this.selectedDate.set(date);
     }
-    
+
     /**
      * Get the user's breakfast food items list.
+     *
      * @return ObservableList of food items.
      */
     public ObservableList<FoodItem> getBreakfastItems() {
@@ -150,6 +208,7 @@ public class HomeDashboardViewModel {
 
     /**
      * Get the user's lunch food items list.
+     *
      * @return ObservableList of food items.
      */
     public ObservableList<FoodItem> getLunchItems() {
@@ -158,6 +217,7 @@ public class HomeDashboardViewModel {
 
     /**
      * Get the user's dinner food items list.
+     *
      * @return ObservableList of food items.
      */
     public ObservableList<FoodItem> getDinnerItems() {
@@ -166,6 +226,7 @@ public class HomeDashboardViewModel {
 
     /**
      * Get the user's snack food items list.
+     *
      * @return ObservableList of food items.
      */
     public ObservableList<FoodItem> getSnacksItems() {
@@ -180,9 +241,9 @@ public class HomeDashboardViewModel {
     public ReadOnlyDoubleProperty totalCaloriesProperty() {
         return this.totalCalories.getReadOnlyProperty();
     }
-    
+
     /**
-     * Adds a food item to the user's  breakfast list.
+     * Adds a food item to the user's breakfast list.
      *
      * @param item the food item to add
      */
@@ -191,7 +252,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Adds a food item to the user's  lunch list.
+     * Adds a food item to the user's lunch list.
      *
      * @param item the food item to add
      */
@@ -200,7 +261,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Adds a food item to the user's  dinner list.
+     * Adds a food item to the user's dinner list.
      *
      * @param item the food item to add
      */
@@ -209,7 +270,7 @@ public class HomeDashboardViewModel {
     }
 
     /**
-     * Adds a food item to the user's  snacks list.
+     * Adds a food item to the user's snacks list.
      *
      * @param item the food item to add
      */
@@ -252,7 +313,7 @@ public class HomeDashboardViewModel {
     public void removeFromSnacks(FoodItem item) {
         this.snacksItems.remove(item);
     }
-    
+
     private double computeTotalCalories() {
         return this.sumCalories(this.breakfastItems)
             + this.sumCalories(this.lunchItems)

@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
+import edu.westga.cs3212.group5.nutritiontracker.model.MealType;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
@@ -29,14 +30,15 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * Dashboard View Controller
+ * Dashboard View Controller.
  *
- * @author vfilpo + Emi
+ * @author vfilpo + Emi + Group 5
  * @version Spring 2026
  */
 public class HomeDashboardPageController implements ViewModelAware {
 
-    private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("M-d-yyyy");
+    private static final DateTimeFormatter DATE_FMT =
+            DateTimeFormatter.ofPattern("M-d-yyyy");
 
     private HomeDashboardViewModel viewModel;
 
@@ -72,10 +74,12 @@ public class HomeDashboardPageController implements ViewModelAware {
 
     private void bindProperties() {
         this.totalCaloriesLabel.textProperty()
-                .bind(Bindings.format("%.0f kcal", this.viewModel.totalCaloriesProperty()));
+                .bind(Bindings.format("%.0f kcal",
+                        this.viewModel.totalCaloriesProperty()));
         this.calendarPicker.valueProperty()
                 .bindBidirectional(this.viewModel.getSelectedDateProperty());
-        this.nameLabel.textProperty().bind(this.viewModel.getUsersNameProperty());
+        this.nameLabel.textProperty()
+                .bind(this.viewModel.getUsersNameProperty());
 
         this.setupDateLabel();
 
@@ -101,32 +105,65 @@ public class HomeDashboardPageController implements ViewModelAware {
         this.bindListViewHeight(this.lunchListView);
         this.bindListViewHeight(this.dinnerListView);
         this.bindListViewHeight(this.snacksListView);
+
+        // Wire the meal "+" add buttons now that we have a VM
+        this.setupAddMealButtons();
     }
 
     private void setupDateLabel() {
-        this.todayDateLabel.setText(DATE_FMT.format(this.viewModel.getSelectedDate()));
-        this.viewModel.getSelectedDateProperty().addListener((obs, oldDate, newDate) -> {
-            if (newDate != null) {
-                this.todayDateLabel.setText(DATE_FMT.format(newDate));
-            } else {
-                this.todayDateLabel.setText("");
-            }
-        });
+        this.todayDateLabel.setText(
+                DATE_FMT.format(this.viewModel.getSelectedDate()));
+        this.viewModel.getSelectedDateProperty().addListener(
+                (obs, oldDate, newDate) -> {
+                    if (newDate != null) {
+                        this.todayDateLabel.setText(DATE_FMT.format(newDate));
+                    } else {
+                        this.todayDateLabel.setText("");
+                    }
+                });
     }
 
     private void bindListViewHeight(ListView<FoodItem> listView) {
         double cellSize = 35;
         listView.setFixedCellSize(cellSize);
         listView.prefHeightProperty().bind(
-            listView.fixedCellSizeProperty().multiply(Bindings.size(listView.getItems()).add(1))
+            listView.fixedCellSizeProperty()
+                    .multiply(Bindings.size(listView.getItems()).add(1))
         );
     }
 
-    private void confirmAndRemove(FoodItem item, String mealName, Runnable removeAction) {
+    /**
+     * Wires each meal "+" button to navigate to the Search page with the
+     * appropriate {@link MealType} stored in the VM.
+     */
+    private void setupAddMealButtons() {
+        this.addBreakfastButton.setOnAction(e ->
+                this.navigateToSearchPage(MealType.BREAKFAST));
+        this.addLunchButton.setOnAction(e ->
+                this.navigateToSearchPage(MealType.LUNCH));
+        this.addDinnerButton.setOnAction(e ->
+                this.navigateToSearchPage(MealType.DINNER));
+        this.addSnacksButton.setOnAction(e ->
+                this.navigateToSearchPage(MealType.SNACKS));
+    }
+
+    /**
+     * Stores the target meal in the VM then navigates to the Search page.
+     *
+     * @param mealType the meal the user wants to add food to
+     */
+    private void navigateToSearchPage(MealType mealType) {
+        this.viewModel.setPendingMealType(mealType);
+        this.switchTo("SearchPage.fxml");
+    }
+
+    private void confirmAndRemove(FoodItem item, String mealName,
+            Runnable removeAction) {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Remove Food Item");
         confirm.setHeaderText("Remove \"" + item.getDescription() + "\"?");
-        confirm.setContentText("Are you sure you want to remove \"" + item.getDescription() + "\" from " + mealName + "?");
+        confirm.setContentText("Are you sure you want to remove \""
+                + item.getDescription() + "\" from " + mealName + "?");
         confirm.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
 
         Optional<ButtonType> result = confirm.showAndWait();
@@ -142,10 +179,11 @@ public class HomeDashboardPageController implements ViewModelAware {
     }
 
     private void setupHamburger() {
-        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(this.hamburgerMenu);
+        HamburgerSlideCloseTransition transition =
+                new HamburgerSlideCloseTransition(this.hamburgerMenu);
         transition.setRate(-1);
 
-        this.menuPane.setVisible(false); // start hidden
+        this.menuPane.setVisible(false);
 
         this.hamburgerMenu.setOnMouseClicked(event -> {
             transition.setRate(transition.getRate() * -1);
@@ -162,14 +200,15 @@ public class HomeDashboardPageController implements ViewModelAware {
     }
 
     private void setupMenuButtons() {
-        homeButton.setOnAction(e -> this.switchTo("HomeDashboardPage.fxml"));
-        createFoodButton.setOnAction(e -> this.switchTo("CreateFoodItemTypeSelectionPage.fxml"));
-        //addFoodButton.setOnAction(e -> this.switchTo("SearchPage.fxml"));
-        logoutButton.setOnAction(e -> this.handleLogout());
+        this.homeButton.setOnAction(e -> this.switchTo("HomeDashboardPage.fxml"));
+        this.createFoodButton.setOnAction(
+                e -> this.switchTo("CreateFoodItemTypeSelectionPage.fxml"));
+        this.logoutButton.setOnAction(e -> this.handleLogout());
     }
 
     private void handleLogout() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to logout?");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to logout?");
         alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -193,7 +232,8 @@ public class HomeDashboardPageController implements ViewModelAware {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to page: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    "Error navigating to page: " + e.getMessage());
             alert.setHeaderText("Navigation Error");
             alert.showAndWait();
         }
