@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
+import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
 import javafx.beans.binding.Bindings;
@@ -15,12 +16,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -47,6 +51,11 @@ public class HomeDashboardPageController implements ViewModelAware {
     @FXML private Button addDinnerButton;
     @FXML private Button addSnacksButton;
     @FXML private DatePicker calendarPicker;
+    @FXML private ComboBox<PrimaryGoal> chartGoalComboBox;
+    @FXML private Label chartGoalLabel;
+    @FXML private Label goalUnitLabel;
+    @FXML private TextField remainingGoalValueTextField;
+    @FXML private PieChart statPieChart;
     @FXML private ListView<FoodItem> breakfastListView;
     @FXML private ListView<FoodItem> lunchListView;
     @FXML private ListView<FoodItem> dinnerListView;
@@ -188,5 +197,17 @@ public class HomeDashboardPageController implements ViewModelAware {
             alert.setHeaderText("Navigation Error");
             alert.showAndWait();
         }
+    }
+    
+    private void updateChart() {
+    	//TODO: Implement this method to update the PieChart based on the selected goal in chartGoalComboBox and current foodLog data
+    }
+    
+    private void setChartGoalLabels() {
+    	//TODO: Implement this method to update the chartGoalLabel and goalUnitLabel based on the selected goal in chartGoalComboBox
+    }
+    
+    private void updateRemainingGoalValue() {
+    	//TODO: Implement this method to calculate and display the remaining value for the selected goal in remainingGoalValueTextField
     }
 }
