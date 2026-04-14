@@ -106,7 +106,6 @@ public class HomeDashboardPageController implements ViewModelAware {
         this.bindListViewHeight(this.dinnerListView);
         this.bindListViewHeight(this.snacksListView);
 
-        // Wire the meal "+" add buttons now that we have a VM
         this.setupAddMealButtons();
     }
 
@@ -213,7 +212,7 @@ public class HomeDashboardPageController implements ViewModelAware {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.YES) {
-            this.switchTo("loginPage.fxml");
+            this.switchTo("LoginPage.fxml");
         }
     }
 

@@ -7,6 +7,7 @@ import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewMode
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -59,7 +61,7 @@ public class SearchPageController implements ViewModelAware {
                 return;
             }
             this.viewModel.addFoodToPendingMeal(food);
-            this.navigateToHome();
+            this.navigateTo("HomeDashboardPage.fxml");
         });
     }
 
@@ -67,9 +69,23 @@ public class SearchPageController implements ViewModelAware {
         this.handleHamburgerMenuClick();
         this.setUpListenerForHomeButton();
         this.setUpListenerForBackButton();
+        this.setUpListenerForLogoutButton();
     }
 
-    private void handleHamburgerMenuClick() {
+    private void setUpListenerForLogoutButton() {
+        this.logoutButton.setOnAction((ActionEvent event) -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Are you sure you want to logout?");
+            alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.YES) {
+                this.navigateTo("LoginPage.fxml");
+            }
+        });
+    }
+
+	private void handleHamburgerMenuClick() {
         HamburgerSlideCloseTransition transition =
                 new HamburgerSlideCloseTransition(this.hamburgerMenu);
         transition.setRate(-1);
@@ -90,18 +106,17 @@ public class SearchPageController implements ViewModelAware {
     }
 
     private void setUpListenerForHomeButton() {
-        this.homeButton.setOnAction((ActionEvent event) -> this.navigateToHome());
+        this.homeButton.setOnAction((ActionEvent event) -> this.navigateTo("HomeDashboardPage.fxml"));
     }
 
     private void setUpListenerForBackButton() {
-        this.backButton.setOnAction((ActionEvent event) -> this.navigateToHome());
+        this.backButton.setOnAction((ActionEvent event) -> this.navigateTo("HomeDashboardPage.fxml"));
     }
 
-    private void navigateToHome() {
+    private void navigateTo(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(
-                    HomeDashboardPageController.class.getResource("HomeDashboardPage.fxml"));
+            loader.setLocation(getClass().getResource(fxml));
             loader.load();
 
             Object controller = loader.getController();
@@ -115,7 +130,7 @@ public class SearchPageController implements ViewModelAware {
             stage.show();
         } catch (Exception ex) {
             ex.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Error navigating to home page.").showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Error navigating to page.").showAndWait();
         }
     }
 }
