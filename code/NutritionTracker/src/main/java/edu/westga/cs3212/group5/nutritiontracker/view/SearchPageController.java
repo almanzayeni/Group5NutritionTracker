@@ -36,6 +36,7 @@ public class SearchPageController implements ViewModelAware {
     @FXML private FoodSearchPanelController searchPanelController;
 
     @FXML private JFXHamburger hamburgerMenu;
+    @FXML private Button createFoodButton;
     @FXML private Button homeButton;
     @FXML private Button backButton;
     @FXML private Button logoutButton;
@@ -70,9 +71,16 @@ public class SearchPageController implements ViewModelAware {
         this.setUpListenerForHomeButton();
         this.setUpListenerForBackButton();
         this.setUpListenerForLogoutButton();
+        this.setUpListenerForCreateFoodButton();
     }
 
-    private void setUpListenerForLogoutButton() {
+    private void setUpListenerForCreateFoodButton() {
+        this.createFoodButton.setOnAction((ActionEvent event) -> 
+            this.navigateTo("CreateFoodItemTypeSelectionPage.fxml")
+        );
+    }
+
+	private void setUpListenerForLogoutButton() {
         this.logoutButton.setOnAction((ActionEvent event) -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                     "Are you sure you want to logout?");
