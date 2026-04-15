@@ -201,7 +201,7 @@ public class HomeDashboardPageController implements ViewModelAware {
     private void setupMenuButtons() {
         this.homeButton.setOnAction(e -> this.switchTo("HomeDashboardPage.fxml"));
         this.createFoodButton.setOnAction(e -> this.switchTo("CreateFoodItemTypeSelectionPage.fxml"));
-        this.addFoodButton.setOnAction(e -> this.switchTo("SearchPage.fxml"));
+        //this.addFoodButton.setOnAction(e -> this.switchTo("SearchPage.fxml"));
         this.logoutButton.setOnAction(e -> this.handleLogout());
         
     }
