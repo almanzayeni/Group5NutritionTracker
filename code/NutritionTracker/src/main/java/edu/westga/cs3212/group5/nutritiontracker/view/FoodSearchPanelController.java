@@ -130,8 +130,6 @@ public class FoodSearchPanelController {
         }
     }
 
-    // ─── Public API ───────────────────────────────────────────────────────────
-
     /**
      * Registers a callback that fires whenever the user selects a food item.
      *
@@ -206,8 +204,6 @@ public class FoodSearchPanelController {
         return this.statusLabel.textProperty();
     }
 
-    // ─── Private helpers ──────────────────────────────────────────────────────
-
     private void fireAddSelectedFood() {
         if (this.onAddSelectedFood != null) {
             this.onAddSelectedFood.accept(this.currentlySelectedFood);
@@ -268,7 +264,7 @@ public class FoodSearchPanelController {
             this.resultsListView.setItems(FXCollections.observableArrayList());
         }
     }
-
+    
     private static class FoodCell extends ListCell<FoodItem> {
 
         @Override
