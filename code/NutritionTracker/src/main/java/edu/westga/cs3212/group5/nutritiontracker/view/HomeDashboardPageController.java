@@ -12,6 +12,7 @@ import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -101,6 +102,24 @@ public class HomeDashboardPageController implements ViewModelAware {
         this.bindListViewHeight(this.lunchListView);
         this.bindListViewHeight(this.dinnerListView);
         this.bindListViewHeight(this.snacksListView);
+        
+        this.chartGoalComboBox.setItems(FXCollections.observableArrayList(PrimaryGoal.values()));
+        
+        this.chartGoalComboBox.valueProperty().bindBidirectional(this.viewModel.selectedGoalProperty());
+        this.viewModel.selectedGoalProperty().addListener((obs, oldVal, newVal) -> {
+            this.updateChart();
+            this.setChartGoalLabels();
+            this.updateRemainingGoalValue();
+        });
+        
+        this.viewModel.getSelectedDateProperty().addListener((obs, oldVal, newVal) -> {
+            this.updateChart();
+            this.updateRemainingGoalValue();
+        });
+        
+        this.updateChart();
+        this.setChartGoalLabels();
+        this.updateRemainingGoalValue();
     }
 
     private void setupDateLabel() {
@@ -200,14 +219,72 @@ public class HomeDashboardPageController implements ViewModelAware {
     }
     
     private void updateChart() {
-    	//TODO: Implement this method to update the PieChart based on the selected goal in chartGoalComboBox and current foodLog data
+    	PrimaryGoal goal = this.chartGoalComboBox.getValue();
+        if (goal == null) return;
+
+        var calculations = HomeDashboardViewModel.create(
+            this.viewModel.getCurrentUser(),
+            goal
+        );
+
+        System.out.println("Goal: " + goal);
+        System.out.println("Consumed: " + calculations.getConsumedAmount());
+        System.out.println("Target: " + calculations.getTargetAmount());
+        System.out.println("Remaining: " + calculations.getRemainingAmount());
+        System.out.println("Percent used: " + calculations.getPercentUsed());
+
+        var data = FXCollections.observableArrayList(
+            new PieChart.Data("Used", calculations.getConsumedAmount()),
+            new PieChart.Data("Remaining", calculations.getRemainingAmount())
+        );
+
+        this.statPieChart.setData(data);
     }
     
     private void setChartGoalLabels() {
-    	//TODO: Implement this method to update the chartGoalLabel and goalUnitLabel based on the selected goal in chartGoalComboBox
+    	PrimaryGoal goal = this.chartGoalComboBox.getValue();
+    	if (goal == null) {
+    		return;
+    	}
+    	this.chartGoalLabel.setText(formatGoal(goal));
+    	this.goalUnitLabel.setText(getUnit(goal));
+    }
+    
+    private String formatGoal(PrimaryGoal goal) {
+        switch (goal) {
+        case CALORIE: return "Calories";
+        case PROTEIN: return "Protein";
+        case FAT: return "Fat";
+        case SUGAR: return "Sugar";
+        case SODIUM: return "Sodium";
+        case CARBS: return "Carbs";
+        case OTHER: return "Other";
+        default: return goal.toString();
+        }
+    }
+
+    private String getUnit(PrimaryGoal goal) {
+        switch (goal) {
+        case CALORIE: return "cals";
+        case PROTEIN: return "g";
+        case FAT: return "g";
+        case SUGAR: return "g";
+        case SODIUM: return "mg";
+        case CARBS: return "g";
+        default: return "";
+        }
     }
     
     private void updateRemainingGoalValue() {
-    	//TODO: Implement this method to calculate and display the remaining value for the selected goal in remainingGoalValueTextField
+    	PrimaryGoal goal = this.chartGoalComboBox.getValue();
+    	if (goal == null) {
+    		return;
+    	}
+    	
+    	var calculations = HomeDashboardViewModel.create(this.viewModel.getCurrentUser(), goal);
+    	
+    	double remaining = calculations.getRemainingAmount();
+    	
+    	this.remainingGoalValueTextField.setText(String.format("%.1f", remaining));
     }
 }
