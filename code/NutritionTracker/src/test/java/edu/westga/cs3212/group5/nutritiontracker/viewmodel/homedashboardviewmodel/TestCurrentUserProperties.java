@@ -56,4 +56,9 @@ public class TestCurrentUserProperties {
     	assertSame(this.initialUser.getCurrentFoodLog(), this.vm.userFoodLogProperty().get());
     	assertSame(this.initialUser.getDietGoals(), this.vm.userDietGoalsProperty().get());
     }
+    
+    @Test
+    void testSelectedGoalProperty() {
+    	assertEquals(this.vm.getCurrentUser().getDietGoals().getPrimaryGoal(), this.vm.selectedGoalProperty().get());
+    }
 }
