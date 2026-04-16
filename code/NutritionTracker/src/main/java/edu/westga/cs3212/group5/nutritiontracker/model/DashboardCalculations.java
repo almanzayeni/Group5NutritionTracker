@@ -35,7 +35,7 @@ public class DashboardCalculations {
 	}
 	
 	public double getRemainingAmount() {
-		return Math.max(0, this.targetAmount = this.consumedAmount);
+		return Math.max(0, this.targetAmount - this.consumedAmount);
 	}
 	
 	public double getPercentUsed() {
