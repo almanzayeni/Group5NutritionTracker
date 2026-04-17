@@ -129,6 +129,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <PieChart fx:id="statPieChart" layoutX="37.0" layoutY="103.0" prefHeight="150.0" prefWidth="178.0" />
 
                </children>
             </AnchorPane>
