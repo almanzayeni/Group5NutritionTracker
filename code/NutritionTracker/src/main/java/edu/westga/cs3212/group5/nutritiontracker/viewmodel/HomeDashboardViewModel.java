@@ -8,6 +8,7 @@ import edu.westga.cs3212.group5.nutritiontracker.model.DashboardCalculations;
 import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
+import edu.westga.cs3212.group5.nutritiontracker.model.MealType;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
 import edu.westga.cs3212.group5.nutritiontracker.model.User;
 import javafx.beans.binding.Bindings;
@@ -23,8 +24,8 @@ import javafx.collections.ObservableList;
 
 /**
  * Dashboard VM
- * 
- * @author vfilpo + Emi :)
+ *
+ * @author vfilpo + Emi :), Yeni Almanza
  * @version Spring 2026
  */
 public class HomeDashboardViewModel {
@@ -43,6 +44,8 @@ public class HomeDashboardViewModel {
 	private final ObjectProperty<FoodLog> currentFoodLog;
 	private final StringProperty usersName;
 
+  private MealType pendingMealType = null;
+  
 	/**
 	 * HomeDashboard VM Constructor. Binds calorie totals to foods added.
 	 *
@@ -88,6 +91,61 @@ public class HomeDashboardViewModel {
 	public ObjectProperty<PrimaryGoal> selectedGoalProperty() {
 	    return this.selectedGoal;
 	}
+  
+  /**
+   * Sets the meal type that should receive the next food the user picks.
+   *
+   * @precondition mealType != null
+   * @param mealType the target meal
+   * @throws IllegalArgumentException if mealType is null
+   */
+  public void setPendingMealType(MealType mealType) {
+      if (mealType == null) {
+          throw new IllegalArgumentException("Meal type cannot be null");
+      }
+      this.pendingMealType = mealType;
+  }
+
+  /**
+   * Returns the meal type the user is currently adding food to, or null if none
+   * is set.
+   *
+   * @return the pending meal type
+   */
+  public MealType getPendingMealType() {
+      return this.pendingMealType;
+  }
+
+  /**
+   * Clears the pending meal type after the food has been added.
+   */
+  public void clearPendingMealType() {
+      this.pendingMealType = null;
+  }
+
+  /**
+   * Adds a food item to the meal list indicated by {@link #getPendingMealType()}.
+   *
+   * @precondition food != null && pendingMealType != null
+   * @param food the food item to add
+   * @throws IllegalArgumentException if food is null
+   * @throws IllegalStateException    if no pending meal type has been set
+   */
+  public void addFoodToPendingMeal(FoodItem food) {
+      if (food == null) {
+          throw new IllegalArgumentException("Food item cannot be null");
+      }
+      if (this.pendingMealType == null) {
+          throw new IllegalStateException("No pending meal type set");
+      }
+      switch (this.pendingMealType) {
+          case BREAKFAST -> this.breakfastItems.add(food);
+          case LUNCH     -> this.lunchItems.add(food);
+          case DINNER    -> this.dinnerItems.add(food);
+          case SNACKS    -> this.snacksItems.add(food);
+      }
+      this.pendingMealType = null;
+  }
 
 	/**
 	 * Get User object.
@@ -291,83 +349,83 @@ public class HomeDashboardViewModel {
 		double consumedAmount = calculateConsumedAmount(log, selectedGoal);
 		double targetAmount = getTargetAmount(user.getDietGoals(), selectedGoal);
 
-		return new DashboardCalculations(selectedGoal, consumedAmount, targetAmount);
-	}
+    return new DashboardCalculations(selectedGoal, consumedAmount, targetAmount);
+}
 
-	private static double calculateConsumedAmount(FoodLog log, PrimaryGoal selectedGoal) {
-		double total = 0.0;
+private static double calculateConsumedAmount(FoodLog log, PrimaryGoal selectedGoal) {
+	double total = 0.0;
 
-		for (FoodItem item : getAllFoods(log)) {
-			switch (selectedGoal) {
-			case CALORIE:
-				total += item.getCalories();
-				break;
-			case PROTEIN:
-				total += item.getProtein();
-				break;
-			case FAT:
-				total += item.getFat();
-				break;
-			case SUGAR:
-				total += item.getSugar();
-				break;
-			case SODIUM:
-				total += item.getSodium();
-				break;
-			case CARBS:
-				total += item.getCarbohydrates();
-				break;
-			case OTHER:
-				break;
-			}
-		}
-		return total;
-	}
-	
-	private static double getTargetAmount(DietGoals goals, PrimaryGoal selectedGoal) {
+  for (FoodItem item : getAllFoods(log)) {
 		switch (selectedGoal) {
-	    case CALORIE:
-	        return goals.getCalorieGoal();
-	    case PROTEIN:
-	        return goals.getProteinGoal();
-	    case FAT:
-	        return goals.getFatGoal();
-	    case SUGAR:
-	        return goals.getSugarGoal();
-	    case SODIUM:
-	        return goals.getSodiumGoal();
-	    case CARBS:
-	        return goals.getCarbsGoal();
-	    case OTHER:
-	        return 0;
-	    default:
-	        return 0;
-	    }
-	}
-
-	private double computeTotalCalories() {
-		return this.sumCalories(this.breakfastItems) + this.sumCalories(this.lunchItems)
-				+ this.sumCalories(this.dinnerItems) + this.sumCalories(this.snacksItems);
-	}
-
-	private double sumCalories(ObservableList<FoodItem> items) {
-		double total = 0;
-		for (FoodItem item : items) {
+		case CALORIE:
 			total += item.getCalories();
+			break;
+		case PROTEIN:
+			total += item.getProtein();
+			break;
+		case FAT:
+			total += item.getFat();
+			break;
+		case SUGAR:
+			total += item.getSugar();
+			break;
+		case SODIUM:
+			total += item.getSodium();
+			break;
+		case CARBS:
+			total += item.getCarbohydrates();
+			break;
+		case OTHER:
+			break;
 		}
-		return total;
 	}
+	return total;
+}
 	
-	private static List<FoodItem> getAllFoods(FoodLog log) {
-	    List<FoodItem> all = new ArrayList<>();
-	    all.addAll(log.getBreakfast());
-	    all.addAll(log.getLunch());
-	    all.addAll(log.getDinner());
-	    all.addAll(log.getSnacks());
-	    return all;
-	}
+private static double getTargetAmount(DietGoals goals, PrimaryGoal selectedGoal) {
+	switch (selectedGoal) {
+    case CALORIE:
+        return goals.getCalorieGoal();
+    case PROTEIN:
+        return goals.getProteinGoal();
+    case FAT:
+        return goals.getFatGoal();
+    case SUGAR:
+        return goals.getSugarGoal();
+    case SODIUM:
+        return goals.getSodiumGoal();
+    case CARBS:
+	       return goals.getCarbsGoal();
+	   case OTHER:
+	       return 0;
+	   default:
+	       return 0;
+	   }
+}
 
-	// TODO: remove if unused
+private double computeTotalCalories() {
+	return this.sumCalories(this.breakfastItems) + this.sumCalories(this.lunchItems)
+			+ this.sumCalories(this.dinnerItems) + this.sumCalories(this.snacksItems);
+}
+
+private double sumCalories(ObservableList<FoodItem> items) {
+	double total = 0;
+	for (FoodItem item : items) {
+		total += item.getCalories();
+	}
+	return total;
+}
+	
+ private static List<FoodItem> getAllFoods(FoodLog log) {
+	   List<FoodItem> all = new ArrayList<>();
+	   all.addAll(log.getBreakfast());
+	   all.addAll(log.getLunch());
+	   all.addAll(log.getDinner());
+	   all.addAll(log.getSnacks());
+	   return all;
+}
+
+// TODO: remove if unused
 //    private FoodItem makeFood(String description, double calories) {
 //        BaseFood food = new BaseFood();
 //        food.setDescription(description);
