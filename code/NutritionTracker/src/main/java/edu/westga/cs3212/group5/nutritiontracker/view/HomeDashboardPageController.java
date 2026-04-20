@@ -119,6 +119,12 @@ public class HomeDashboardPageController implements ViewModelAware {
         });
         
         this.viewModel.getSelectedDateProperty().addListener((obs, oldVal, newVal) -> {
+        	if (newVal != null) {
+        		System.out.println("Date changed to: " + newVal);
+        	}
+        	// TEMP UNTIL SERVER SET UP
+        	this.viewModel.loadFoodLog(this.viewModel.getCurrentUser().getCurrentFoodLog());
+        	
             this.updateChart();
             this.updateRemainingGoalValue();
         });

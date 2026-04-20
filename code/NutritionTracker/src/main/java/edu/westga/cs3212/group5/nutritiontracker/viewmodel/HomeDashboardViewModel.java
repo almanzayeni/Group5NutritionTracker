@@ -351,6 +351,19 @@ public class HomeDashboardViewModel {
 
     return new DashboardCalculations(selectedGoal, consumedAmount, targetAmount);
 }
+	
+	public void loadFoodLog(FoodLog foodLog) {
+		if (foodLog == null) {
+			throw new IllegalArgumentException("foodLog cannot be null");
+		}
+		
+		this.currentFoodLog.set(foodLog);
+		
+		this.breakfastItems.setAll(foodLog.getBreakfast());
+		this.lunchItems.setAll(foodLog.getLunch());
+		this.dinnerItems.setAll(foodLog.getDinner());
+		this.snacksItems.setAll(foodLog.getSnacks());
+	}
 
 private static double calculateConsumedAmount(FoodLog log, PrimaryGoal selectedGoal) {
 	double total = 0.0;
