@@ -49,7 +49,6 @@ public class ServerConstants {
 	public static final String KEY_FOOD_SUGAR = "sugar";
 	public static final String KEY_FOOD_CARBS = "carbohydrates";
 	public static final String KEY_FOOD_SODIUM = "sodium";
-	public static final String KEY_CURRENT_FOOD_LOG = "currentFoodLog";
 	
 	public static final String SUCCESS_STATUS = "1";
 	public static final String BAD_MESSAGE_STATUS = "-1";

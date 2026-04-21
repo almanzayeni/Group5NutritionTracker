@@ -41,7 +41,7 @@ public class UpdateFoodLogRequestHandler {
             Map<String, Object> requestMap = new HashMap<>();
             requestMap.put(ServerConstants.KEY_REQUEST_TYPE, ServerConstants.UPDATE_FOODLOG_REQUEST_TYPE);
             requestMap.put(ServerConstants.KEY_USERNAME, username);
-            requestMap.put(ServerConstants.KEY_CURRENT_FOOD_LOG, foodLogNode);
+            requestMap.put(ServerConstants.KEY_FOOD_LOG, foodLogNode);
 
             return mapper.writeValueAsString(requestMap);
         } catch (Exception e) {
