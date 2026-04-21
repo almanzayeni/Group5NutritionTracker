@@ -10,7 +10,7 @@ class User(object):
     '''
 
 
-    def __init__(self, name, username, password, foodLog, dietGoals):
+    def __init__(self, name, username, password, currentFoodLog, dietGoals):
         '''
         Create a new User with the provided information.
         
@@ -23,13 +23,13 @@ class User(object):
         @postcondition getName() == name &&
                        getUsername() == username &&
                        getPassword() == password &&
-                       getCurrentFoodLog() == foodLog &&
+                       getCurrentFoodLog() == currentFoodLog &&
                        getDietGoals() == dietGoals
                        
         @param name name of the user
         @param username username for the user
         @param password password for the user
-        @param foodLog food log for the user
+        @param currentFoodLog food log for the user
         @param dietGoals diet goals for the user
         '''
         if (name == None):
@@ -38,7 +38,7 @@ class User(object):
             raise Exception("username is None")
         if (password == None):
             raise Exception("password is None")
-        if (foodLog == None):
+        if (currentFoodLog == None):
             raise Exception("food log is None")
         if (dietGoals == None):
             raise Exception("diet goals is None")
@@ -46,8 +46,9 @@ class User(object):
         self._name = name
         self._username = username
         self._password = password
-        self._currentFoodLog = foodLog
+        self._currentFoodLog = currentFoodLog
         self._dietGoals = dietGoals
+        self._storedFoodLogs = {currentFoodLog.getDate(): currentFoodLog}
         
     def getName(self):
         '''
@@ -80,6 +81,38 @@ class User(object):
         @return the current food log of the user
         '''
         return self._currentFoodLog
+    
+    def setCurrentFoodLog(self, foodLog):
+        '''
+        Set the current food log of the user.
+        
+        @precondition foodLog != None
+        
+        @param foodLog the food log to set as the current food log of the user
+        '''
+        if (foodLog == None):
+            raise Exception("food log is None")
+        self._currentFoodLog = foodLog
+    
+    def getStoredFoodLogs(self):
+        '''
+        Get the stored food logs of the user.
+        
+        @return the stored food logs of the user
+        '''
+        return self._storedFoodLogs
+    
+    def addFoodLog(self, foodLog):
+        '''
+        Add a food log to the stored food logs of the user.
+        
+        @precondition foodLog != None
+        
+        @param foodLog the food log to add to the stored food logs of the user
+        '''
+        if (foodLog == None):
+            raise Exception("food log is None")
+        self._storedFoodLogs[foodLog.getDate()] = foodLog
     
     def getDietGoals(self):
         '''

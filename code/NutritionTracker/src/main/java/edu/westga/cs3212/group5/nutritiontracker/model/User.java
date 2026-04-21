@@ -103,4 +103,17 @@ public class User {
 	public FoodLog getCurrentFoodLog() {
 		return this.currentFoodLog;
 	}
+
+	/**
+	 * Sets the current food log.
+	 *
+	 * @param log the new current food log
+	 * @throws IllegalArgumentException if log is null
+	 */
+	public void setCurrentFoodLog(FoodLog log) {
+		if (log == null) {
+			throw new IllegalArgumentException("Current food log cannot be null");
+		}
+		this.currentFoodLog = log;
+	}
 }

@@ -77,7 +77,7 @@ public class TestUpdateFoodLogRequestHandler {
     void testCreateRequest_validArgs_containsFoodLogKey() {
         String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(
             VALID_USERNAME, this.validFoodLog);
-        assertTrue(request.contains(ServerConstants.KEY_CURRENT_FOOD_LOG));
+        assertTrue(request.contains(ServerConstants.KEY_FOOD_LOG));
     }
 
     @Test
