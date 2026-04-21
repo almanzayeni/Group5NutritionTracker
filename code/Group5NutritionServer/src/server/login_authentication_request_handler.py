@@ -3,7 +3,9 @@ Created on Mar 9, 2026
 
 @author: Justin Smith
 '''
+from datetime import date
 from model import database
+from model.food_log import FoodLog
 from server import constants
 
 def handleRequest(request):
@@ -29,5 +31,11 @@ def handleRequest(request):
         user = database.getUsers()[username][password]
     except KeyError:
         return {constants.KEY_STATUS:constants.BAD_MESSAGE_STATUS, constants.KEY_FAILURE_MESSAGE:"invalid username or password"}
+    
+    if user.getCurrentFoodLog().getDate() != date.today():
+        user._currentFoodLog = database.searchFoodLogByDate(username, date.today())
+        if user.getCurrentFoodLog() == None:
+            user._currentFoodLog = FoodLog(date.today(), [], [], [], [])
+            database.addFoodLog(username, user.getCurrentFoodLog())
     
     return {constants.KEY_STATUS:constants.SUCCESS_STATUS, constants.KEY_USER:user.toDict()}

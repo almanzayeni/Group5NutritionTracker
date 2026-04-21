@@ -229,6 +229,75 @@ class TestZmqServer(unittest.TestCase):
             send_response.call_args_list,
         )
 
+    def test_run_dispatches_add_food_requests(self):
+        request = {
+            constants.KEY_REQUEST_TYPE: constants.ADD_FOOD_REQUEST_TYPE,
+            constants.KEY_FOOD_ITEM: {"description": "banana"},
+        }
+        response = {constants.KEY_STATUS: constants.SUCCESS_STATUS}
+        zmq_server, socket = self._run_server_with_messages(
+            [json.dumps(request), json.dumps(constants.EXIT_COMMAND)]
+        )
+
+        with patch.object(zmq_server.database, "loadDefaultData"), patch.object(
+            zmq_server.add_food_request_handler,
+            "handleRequest",
+            return_value=response,
+        ) as handle_request, patch.object(zmq_server, "sendResponse") as send_response, patch(
+            "builtins.print"
+        ):
+            zmq_server.run("tcp", "127.0.0.1", "5555")
+
+        handle_request.assert_called_once_with(request)
+        self.assertEqual(
+            [
+                call(socket, response),
+                call(
+                    socket,
+                    {
+                        constants.KEY_STATUS: constants.SUCCESS_STATUS,
+                        constants.KEY_SUCCESS_MESSAGE: constants.KEY_SERVER_EXIT,
+                    },
+                ),
+            ],
+            send_response.call_args_list,
+        )
+
+    def test_run_dispatches_update_foodlog_requests(self):
+        request = {
+            constants.KEY_REQUEST_TYPE: constants.UPDATE_FOODLOG_REQUEST_TYPE,
+            constants.KEY_USERNAME: "johndoe",
+            constants.KEY_FOOD_LOG: {"date": "2026-04-21"},
+        }
+        response = {constants.KEY_STATUS: constants.SUCCESS_STATUS}
+        zmq_server, socket = self._run_server_with_messages(
+            [json.dumps(request), json.dumps(constants.EXIT_COMMAND)]
+        )
+
+        with patch.object(zmq_server.database, "loadDefaultData"), patch.object(
+            zmq_server.update_foodlog_request_handler,
+            "handleRequest",
+            return_value=response,
+        ) as handle_request, patch.object(zmq_server, "sendResponse") as send_response, patch(
+            "builtins.print"
+        ):
+            zmq_server.run("tcp", "127.0.0.1", "5555")
+
+        handle_request.assert_called_once_with(request)
+        self.assertEqual(
+            [
+                call(socket, response),
+                call(
+                    socket,
+                    {
+                        constants.KEY_STATUS: constants.SUCCESS_STATUS,
+                        constants.KEY_SUCCESS_MESSAGE: constants.KEY_SERVER_EXIT,
+                    },
+                ),
+            ],
+            send_response.call_args_list,
+        )
+
     def test_run_returns_unsupported_operation_for_unknown_request_types(self):
         request = {
             constants.KEY_REQUEST_TYPE: "DELETE_ACCOUNT",
