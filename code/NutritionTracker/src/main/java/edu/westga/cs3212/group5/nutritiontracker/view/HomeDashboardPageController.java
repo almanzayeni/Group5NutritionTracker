@@ -2,6 +2,8 @@ package edu.westga.cs3212.group5.nutritiontracker.view;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.jfoenix.controls.JFXHamburger;
@@ -110,7 +112,14 @@ public class HomeDashboardPageController implements ViewModelAware {
 
         this.setupAddMealButtons();
         
-        this.chartGoalComboBox.setItems(FXCollections.observableArrayList(PrimaryGoal.values()));
+        List<PrimaryGoal> validGoals = new ArrayList<PrimaryGoal>();
+        for (PrimaryGoal goal : PrimaryGoal.values()) {
+			if (goal != PrimaryGoal.OTHER) {
+				validGoals.add(goal);
+			}
+		}
+        
+        this.chartGoalComboBox.setItems(FXCollections.observableArrayList(validGoals));
         
         this.chartGoalComboBox.valueProperty().bindBidirectional(this.viewModel.selectedGoalProperty());
         this.viewModel.selectedGoalProperty().addListener((obs, oldVal, newVal) -> {
