@@ -4,7 +4,7 @@ package edu.westga.cs3212.group5.nutritiontracker.server;
  * The Class ServerConstants. Holds all of the constant values used by the
  * server.
  * 
- * @author Justin Smith
+ * @author Justin Smith, Emi Collins
  * @version spring 2026
  */
 public class ServerConstants {
@@ -37,6 +37,8 @@ public class ServerConstants {
 	public static final String KEY_BASE_FOOD_TYPE = "base";
 	public static final String KEY_COMPOSITE_FOOD_TYPE = "composite";
 	public static final String KEY_INGREDIENTS = "ingredients";
+	public static final String KEY_DATE = "date";
+	public static final String KEY_FOOD_LOG = "foodLog";
 	
 	public static final String KEY_FOOD_DESCRIPTION = "description";
 	public static final String KEY_FOOD_QUANTITY_CATEGORY = "quantityCategory";
@@ -56,5 +58,6 @@ public class ServerConstants {
 	public static final String ADD_FOOD_REQUEST_TYPE = "ADD_FOOD";
 	public static final String CREATE_ACCOUNT_REQUEST_TYPE = "CREATE_ACCOUNT";
 	public static final String SEARCH_REQUEST_TYPE = "SEARCH";
+	public static final String GET_DAY_OF_FOOD_REQUEST_TYPE = "GET_DAY_OF_FOOD";
 	public static final String EDIT_DIET_GOALS_REQUEST_TYPE = "EDIT_DIET_GOALS";
 }

@@ -10,6 +10,7 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.MealType;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
+import edu.westga.cs3212.group5.nutritiontracker.server.GetDayOfFoodRequestHandler;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
 import javafx.beans.binding.Bindings;
@@ -119,6 +120,20 @@ public class HomeDashboardPageController implements ViewModelAware {
         });
         
         this.viewModel.getSelectedDateProperty().addListener((obs, oldVal, newVal) -> {
+        	if (newVal != null) {
+        		System.out.println("Date changed to: " + newVal);
+        	}
+        	// TEMP UNTIL SERVER SET UP
+        	try {
+        		var log = GetDayOfFoodRequestHandler.handleRequest(
+        				this.viewModel.getCurrentUser().getUsername(), newVal);
+        	
+        	this.viewModel.loadFoodLog(log);
+        	
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        	}
+        	
             this.updateChart();
             this.updateRemainingGoalValue();
         });

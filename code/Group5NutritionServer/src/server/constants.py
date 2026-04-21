@@ -1,7 +1,7 @@
 '''
 Created on Mar 9, 2026
 
-@author: Justin Smith, Yeni Almanza
+@author: Justin Smith, Yeni Almanza, Emi Collins
 '''
 
 PROTOCOL = "tcp"
@@ -34,6 +34,8 @@ KEY_FOOD_TYPE = "type"
 KEY_BASE_FOOD_TYPE = "base"
 KEY_COMPOSITE_FOOD_TYPE = "composite"
 KEY_INGREDIENTS = "ingredients"
+KEY_DATE = "date"
+KEY_FOOD_LOG = "foodLog"
 
 KEY_FOOD_DESCRIPTION = "description"
 KEY_FOOD_QUANTITY_CATEGORY = "quantityCategory"
@@ -53,3 +55,4 @@ AUTHENTICATE_LOGIN_REQUEST_TYPE = "AUTH"
 ADD_FOOD_REQUEST_TYPE = "ADD_FOOD"
 CREATE_ACCOUNT_REQUEST_TYPE = "CREATE_ACCOUNT"
 SEARCH_REQUEST_TYPE = "SEARCH"
+GET_DAY_OF_FOOD_REQUEST_TYPE = "GET_DAY_OF_FOOD"
