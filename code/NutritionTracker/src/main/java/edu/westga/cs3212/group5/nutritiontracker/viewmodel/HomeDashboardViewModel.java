@@ -47,7 +47,7 @@ public class HomeDashboardViewModel {
   private MealType pendingMealType = null;
   
 	/**
-	 * HomeDashboard VM Constructor. Binds calorie totals to foods added.
+	 * HomeDashboard VM Constructor. Binds calorie totals to foods added. Sets User for session.
 	 *
 	 * @param user the currently logged in user
 	 */
@@ -336,7 +336,18 @@ public class HomeDashboardViewModel {
 	public void removeFromSnacks(FoodItem item) {
 		this.snacksItems.remove(item);
 	}
-
+	
+	/**
+	 * Creates a {@link DashboardCalculations} instance for the given user and goal.
+	 * <p>
+	 * Derives consumed and target amounts from the user's current food log and diet
+	 * goals, scoped to the specified {@link PrimaryGoal}.
+	 *
+	 * @param user         the user whose food log and diet goals are used; must not be null
+	 * @param selectedGoal the goal to calculate consumption and targets for; must not be null
+	 * @return a new {@link DashboardCalculations} populated with the derived values
+	 * @throws IllegalArgumentException if {@code user} or {@code selectedGoal} is null
+	 */
 	public static DashboardCalculations create(User user, PrimaryGoal selectedGoal) {
 		if (user == null) {
 			throw new IllegalArgumentException("User cannot be null!");
