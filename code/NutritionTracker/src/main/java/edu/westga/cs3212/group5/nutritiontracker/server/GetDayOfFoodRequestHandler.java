@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
 import edu.westga.cs3212.group5.nutritiontracker.model.JsonMapperFactory;
 
@@ -42,40 +44,66 @@ public class GetDayOfFoodRequestHandler {
 	 * Sends request and returns FoodLog
 	 */
 	public static FoodLog handleRequest(String username, LocalDate date) {
-        if (username == null || username.isBlank()) {
-            throw new IllegalArgumentException("Username cannot be null or blank");
-        }
-        if (date == null) {
-            throw new IllegalArgumentException("Date cannot be null");
-        }
+	    if (username == null || username.isBlank()) {
+	        throw new IllegalArgumentException("Username cannot be null or blank");
+	    }
+	    if (date == null) {
+	        throw new IllegalArgumentException("Date cannot be null");
+	    }
 
-        ObjectMapper mapper = JsonMapperFactory.create();
+	    ObjectMapper mapper = JsonMapperFactory.create();
+	    try {
+	        Map<String, Object> requestMap = new HashMap<>();
+	        requestMap.put(ServerConstants.KEY_REQUEST_TYPE, ServerConstants.GET_DAY_OF_FOOD_REQUEST_TYPE);
+	        requestMap.put(ServerConstants.KEY_USERNAME, username);
+	        requestMap.put(ServerConstants.KEY_DATE, date.toString());
 
-        try {
-            String request = createRequest(username, date);
+	        String request = mapper.writeValueAsString(requestMap);
+	        String response = ServerClient.send(request);
 
-            String response = ServerClient.send(request);
-            if (response == null || response.isBlank()) {
-                throw new RuntimeException("Received empty response from server");
-            }
+	        if (response == null || response.isBlank()) {
+	            throw new RuntimeException("Received empty response from server");
+	        }
 
-            var root = mapper.readTree(response);
+	        JsonNode root = mapper.readTree(response);
 
-            if (root.has(ServerConstants.KEY_FAILURE_MESSAGE)) {
-                String failureMessage = root.get(ServerConstants.KEY_FAILURE_MESSAGE).asText();
-                throw new RuntimeException("DayOfFood failed: " + failureMessage);
-            }
+	        if (root.has(ServerConstants.KEY_FAILURE_MESSAGE)) {
+	            throw new RuntimeException("Get food log failed: " + root.get(ServerConstants.KEY_FAILURE_MESSAGE).asText());
+	        }
 
-            if (!root.has(ServerConstants.KEY_FOOD_LOG)) {
-                throw new RuntimeException("FoodLog missing from response");
-            }
+	        String status = root.get(ServerConstants.KEY_STATUS).asText();
+	        if (!status.equals(ServerConstants.SUCCESS_STATUS)) {
+	            throw new RuntimeException("Get food log failed with status: " + status);
+	        }
 
-            FoodLog log = mapper.treeToValue(root.get(ServerConstants.KEY_FOOD_LOG), FoodLog.class);
-            return log;
+	        JsonNode logNode = root.get(ServerConstants.KEY_FOOD_LOG);
+	        FoodLog foodLog = new FoodLog(date);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to handle DayOfFood request", e);
-        }
-    }
+	        for (JsonNode item : logNode.get("breakfast")) {
+	            foodLog.getBreakfast().add(deserializeFoodItem(item));
+	        }
+	        for (JsonNode item : logNode.get("lunch")) {
+	            foodLog.getLunch().add(deserializeFoodItem(item));
+	        }
+	        for (JsonNode item : logNode.get("dinner")) {
+	            foodLog.getDinner().add(deserializeFoodItem(item));
+	        }
+	        for (JsonNode item : logNode.get("snacks")) {
+	            foodLog.getSnacks().add(deserializeFoodItem(item));
+	        }
+
+	        return foodLog;
+
+	    } catch (RuntimeException e) {
+	        throw e;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw new RuntimeException("Failed to handle get day of food request", e);
+	    }
+	}
+	
+	private static FoodItem deserializeFoodItem(JsonNode node) throws Exception {
+	    ObjectMapper mapper = JsonMapperFactory.create();
+	    return mapper.treeToValue(node, FoodItem.class);
+	}
 }

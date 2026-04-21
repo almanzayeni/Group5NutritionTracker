@@ -10,6 +10,7 @@ from server import constants, login_authentication_request_handler
 from server import create_account_request_handler
 from server import search_request_handler
 from server import add_food_request_handler
+from server import get_day_food_log_request_handler
 
 def log(message):
     print("SERVER::{0}".format(message))
@@ -49,6 +50,9 @@ def run(protocol, ipAddress, port):
         elif request[constants.KEY_REQUEST_TYPE] == constants.ADD_FOOD_REQUEST_TYPE:
             response = add_food_request_handler.handleRequest(request)
             sendResponse(socket, response)
+        elif request[constants.KEY_REQUEST_TYPE] == constants.GET_DAY_OF_FOOD_REQUEST_TYPE:
+            response = get_day_food_log_request_handler.handleRequest(request)
+            sendResponse(socket, response) 
         else:
             response = {constants.KEY_STATUS:constants.UNSUPPORTED_OPERATION_STATUS, constants.KEY_FAILURE_MESSAGE:"unsupported request type"}
             sendResponse(socket, response)
