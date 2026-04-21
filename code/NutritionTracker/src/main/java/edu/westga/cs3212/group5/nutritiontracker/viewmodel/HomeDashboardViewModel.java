@@ -11,6 +11,7 @@ import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
 import edu.westga.cs3212.group5.nutritiontracker.model.MealType;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
 import edu.westga.cs3212.group5.nutritiontracker.model.User;
+import edu.westga.cs3212.group5.nutritiontracker.server.UpdateFoodLogRequestHandler;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.ObjectProperty;
@@ -132,20 +133,26 @@ public class HomeDashboardViewModel {
    * @throws IllegalStateException    if no pending meal type has been set
    */
   public void addFoodToPendingMeal(FoodItem food) {
-      if (food == null) {
-          throw new IllegalArgumentException("Food item cannot be null");
-      }
-      if (this.pendingMealType == null) {
-          throw new IllegalStateException("No pending meal type set");
-      }
-      switch (this.pendingMealType) {
-          case BREAKFAST -> this.breakfastItems.add(food);
-          case LUNCH     -> this.lunchItems.add(food);
-          case DINNER    -> this.dinnerItems.add(food);
-          case SNACKS    -> this.snacksItems.add(food);
-      }
-      this.pendingMealType = null;
-  }
+	    if (food == null) {
+	        throw new IllegalArgumentException("Food item cannot be null");
+	    }
+	    if (this.pendingMealType == null) {
+	        throw new IllegalStateException("No pending meal type set");
+	    }
+	    switch (this.pendingMealType) {
+	        case BREAKFAST -> this.breakfastItems.add(food);
+	        case LUNCH     -> this.lunchItems.add(food);
+	        case DINNER    -> this.dinnerItems.add(food);
+	        case SNACKS    -> this.snacksItems.add(food);
+	    }
+	    this.pendingMealType = null;
+
+	    String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(
+	        this.getCurrentUser().getUsername(),
+	        this.getCurrentUser().getCurrentFoodLog()
+	    );
+	    UpdateFoodLogRequestHandler.handleUpdateFoodLogRequest(request);
+	}
 
 	/**
 	 * Get User object.

@@ -49,6 +49,7 @@ public class ServerConstants {
 	public static final String KEY_FOOD_SUGAR = "sugar";
 	public static final String KEY_FOOD_CARBS = "carbohydrates";
 	public static final String KEY_FOOD_SODIUM = "sodium";
+	public static final String KEY_CURRENT_FOOD_LOG = "currentFoodLog";
 	
 	public static final String SUCCESS_STATUS = "1";
 	public static final String BAD_MESSAGE_STATUS = "-1";
@@ -60,4 +61,5 @@ public class ServerConstants {
 	public static final String SEARCH_REQUEST_TYPE = "SEARCH";
 	public static final String GET_DAY_OF_FOOD_REQUEST_TYPE = "GET_DAY_OF_FOOD";
 	public static final String EDIT_DIET_GOALS_REQUEST_TYPE = "EDIT_DIET_GOALS";
+	public static final String UPDATE_FOODLOG_REQUEST_TYPE = "UPDATE_FOODLOG";
 }
