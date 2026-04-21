@@ -56,4 +56,5 @@ public class ServerConstants {
 	public static final String ADD_FOOD_REQUEST_TYPE = "ADD_FOOD";
 	public static final String CREATE_ACCOUNT_REQUEST_TYPE = "CREATE_ACCOUNT";
 	public static final String SEARCH_REQUEST_TYPE = "SEARCH";
+	public static final String EDIT_DIET_GOALS_REQUEST_TYPE = "EDIT_DIET_GOALS";
 }
