@@ -170,7 +170,7 @@ public class CreateCompositeFoodPageViewModel {
 	 *                                  has been selected
 	 * @throws RuntimeException         if the server call fails
 	 */
-	public void createCompositeFood() {
+	public FoodItem createCompositeFood() {
 		if (this.description.get() == null || this.description.get().isEmpty()) {
 			throw new IllegalArgumentException("Food name cannot be empty.");
 		}
@@ -186,8 +186,9 @@ public class CreateCompositeFoodPageViewModel {
 
 		String request = AddFoodRequestHandler.createAddFoodRequest(this.compositeFood);
 		AddFoodRequestHandler.handleAddFoodRequest(request);
-
+		
 		this.clearFields();
+		return this.compositeFood;
 	}
 
 	/**

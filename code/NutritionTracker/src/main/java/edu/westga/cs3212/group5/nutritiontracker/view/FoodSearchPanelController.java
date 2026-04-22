@@ -247,7 +247,7 @@ public class FoodSearchPanelController {
 		SortOption sort = this.sortComboBox.getValue();
 
 		try {
-			String request = SearchRequestHandler.createSearchRequest(query == null || query.isBlank() ? "a" : query);
+			String request = SearchRequestHandler.createSearchRequest(query == null  ? "" : query);
 			List<FoodItem> results = SearchRequestHandler.handleSearchRequest(request);
 
 			if (sort != null) {

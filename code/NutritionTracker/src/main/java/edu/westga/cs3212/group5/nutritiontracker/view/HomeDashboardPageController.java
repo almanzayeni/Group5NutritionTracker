@@ -1,6 +1,8 @@
 package edu.westga.cs3212.group5.nutritiontracker.view;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.jfoenix.controls.JFXHamburger;
@@ -123,7 +125,7 @@ public class HomeDashboardPageController implements ViewModelAware {
 		this.setupHamburger();
 		this.listViewSetup();
 		this.setupAddMealButtons();
-		this.setupChartGoalComboBoxListener();
+		this.setupChartGoalComboBox();
 		this.setupCalendarPickerListener();
 		this.updateChart();
 		this.setChartGoalLabels();
@@ -137,15 +139,21 @@ public class HomeDashboardPageController implements ViewModelAware {
 		this.nameLabel.textProperty().bind(this.viewModel.getUsersNameProperty());
 		this.todayDateLabel.textProperty().bind(this.viewModel.getDateStringProperty());
 		this.breakfastListView.itemsProperty().bind(this.viewModel.getBreakfastItems());
-		this.lunchListView.setItems(this.viewModel.getLunchItems());
-		this.dinnerListView.setItems(this.viewModel.getDinnerItems());
-		this.snacksListView.setItems(this.viewModel.getSnacksItems());
-		this.chartGoalComboBox.setItems(FXCollections.observableArrayList(PrimaryGoal.values()));
+		this.lunchListView.itemsProperty().bind(this.viewModel.getLunchItems());
+		this.dinnerListView.itemsProperty().bind(this.viewModel.getDinnerItems());
+		this.snacksListView.itemsProperty().bind(this.viewModel.getSnacksItems());
 		this.chartGoalComboBox.valueProperty().bindBidirectional(this.viewModel.selectedGoalProperty());
 	}
 
-	private void setupChartGoalComboBoxListener() {
-		this.chartGoalComboBox.selectionModelProperty().addListener((obs, oldVal, newVal) -> {
+	private void setupChartGoalComboBox() {
+		List<PrimaryGoal> validGoals = new ArrayList<>();
+		for (PrimaryGoal goal : PrimaryGoal.values()) {
+			if (goal != PrimaryGoal.OTHER) {
+				validGoals.add(goal);
+			}
+		}
+		this.chartGoalComboBox.setItems(FXCollections.observableArrayList(validGoals));
+		this.chartGoalComboBox.valueProperty().addListener((obs, oldVal, newVal) -> {
 			this.updateChart();
 			this.setChartGoalLabels();
 			this.updateRemainingGoalValue();
@@ -217,6 +225,8 @@ public class HomeDashboardPageController implements ViewModelAware {
 		Optional<ButtonType> result = confirm.showAndWait();
 		if (result.isPresent() && result.get() == ButtonType.YES) {
 			removeAction.run();
+			this.updateChart();
+			this.updateRemainingGoalValue();
 		}
 	}
 

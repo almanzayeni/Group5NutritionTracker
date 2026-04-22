@@ -22,12 +22,19 @@ class AddFoodRequestHandlerTestCaseMixin(object):
     def tearDown(self):
         database._foodItems = self._original_food_items
 
+    def _get_quantity_category_value(self, quantity_category):
+        if isinstance(quantity_category, QuantityCategory):
+            return quantity_category.value
+        return quantity_category
+
     def _create_base_food_request(self, description, quantity_category):
         return {
             constants.KEY_FOOD_ITEM: {
                 constants.KEY_FOOD_TYPE: constants.KEY_BASE_FOOD_TYPE,
                 constants.KEY_FOOD_DESCRIPTION: description,
-                constants.KEY_FOOD_QUANTITY_CATEGORY: quantity_category,
+                constants.KEY_FOOD_QUANTITY_CATEGORY: self._get_quantity_category_value(
+                    quantity_category
+                ),
                 constants.KEY_FOOD_PORTION_SIZE: 1,
                 constants.KEY_FOOD_CALORIES: 120,
                 constants.KEY_FOOD_PROTEIN: 15,
@@ -43,7 +50,7 @@ class AddFoodRequestHandlerTestCaseMixin(object):
             constants.KEY_FOOD_ITEM: {
                 constants.KEY_FOOD_TYPE: constants.KEY_COMPOSITE_FOOD_TYPE,
                 constants.KEY_FOOD_DESCRIPTION: description,
-                constants.KEY_FOOD_QUANTITY_CATEGORY: QuantityCategory.SERVING,
+                constants.KEY_FOOD_QUANTITY_CATEGORY: QuantityCategory.SERVING.value,
                 constants.KEY_FOOD_PORTION_SIZE: 1,
                 constants.KEY_FOOD_CALORIES: 255,
                 constants.KEY_FOOD_PROTEIN: 6,
@@ -110,7 +117,13 @@ class TestHandleRequestBaseFood(AddFoodRequestHandlerTestCaseMixin, unittest.Tes
         self.assertEqual(15, added_food.get_sugar())
         self.assertEqual(54, added_food.get_carbohydrates())
         self.assertEqual(1, added_food.get_sodium())
-        self.assertEqual([banana, oats], added_food.get_ingredients())
+        self.assertEqual(
+            {
+                banana.get_description(): banana,
+                oats.get_description(): oats,
+            },
+            added_food.get_ingredients(),
+        )
 
     def test_returns_failure_when_composite_ingredient_missing_from_database(self):
         banana = BaseFood("banana", QuantityCategory.QUANTITY, 1, 105, 1, 0, 14, 27, 1)
@@ -135,6 +148,7 @@ class TestHandleRequestBaseFood(AddFoodRequestHandlerTestCaseMixin, unittest.Tes
             {
                 constants.KEY_FOOD_ITEM: {
                     constants.KEY_FOOD_TYPE: "invalid",
+                    constants.KEY_FOOD_QUANTITY_CATEGORY: QuantityCategory.SERVING.value,
                 }
             }
         )
