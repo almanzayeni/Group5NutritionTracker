@@ -8,8 +8,10 @@ from datetime import date
 
 from model import database
 from model.base_food import BaseFood
+from model.diet_goals import DietGoals
 from model.food_log import FoodLog
 from model.quantity_category import QuantityCategory
+from model.user import User
 from server import constants
 from server import update_foodlog_request_handler
 
@@ -18,7 +20,7 @@ class TestUpdateFoodLogHandleRequest(unittest.TestCase):
 
     def setUp(self):
         self._original_food_items = database._foodItems
-        self._original_food_logs = database._foodLogs
+        self._original_users = database._users
 
         self.oatmeal = self._create_food("oatmeal")
         self.salad = self._create_food("salad")
@@ -31,21 +33,21 @@ class TestUpdateFoodLogHandleRequest(unittest.TestCase):
             self.soup.get_description(): self.soup,
             self.apple.get_description(): self.apple,
         }
-        database._foodLogs = {
-            "johndoe": {
-                date(2026, 4, 20): FoodLog(
-                    date(2026, 4, 20),
-                    [self.apple],
-                    [],
-                    [],
-                    [],
-                )
-            }
-        }
+
+        current_food_log = FoodLog(
+            date(2026, 4, 20),
+            [self.apple],
+            [],
+            [],
+            [],
+        )
+        diet_goals = DietGoals("CALORIE", 2000, 150, 70, 50, 2300, 250, [])
+        user = User("John Doe", "johndoe", "password123", current_food_log, diet_goals)
+        database._users = {user.getUsername(): {user.getPassword(): user}}
 
     def tearDown(self):
         database._foodItems = self._original_food_items
-        database._foodLogs = self._original_food_logs
+        database._users = self._original_users
 
     def _create_food(self, description):
         return BaseFood(
@@ -69,8 +71,9 @@ class TestUpdateFoodLogHandleRequest(unittest.TestCase):
     ):
         return {
             constants.KEY_USERNAME: "johndoe",
+            constants.KEY_PASSWORD: "password123",
             constants.KEY_FOOD_LOG: {
-                constants.KEY_DATE: date(2026, 4, 20),
+                constants.KEY_DATE: "2026-04-20",
                 constants.KEY_BREAKFAST: breakfast or [],
                 constants.KEY_LUNCH: lunch or [],
                 constants.KEY_DINNER: dinner or [],
@@ -89,10 +92,19 @@ class TestUpdateFoodLogHandleRequest(unittest.TestCase):
         with self.assertRaisesRegex(Exception, "request does not contain username"):
             update_foodlog_request_handler.handleRequest({})
 
+    def test_requires_password(self):
+        with self.assertRaisesRegex(Exception, "request does not contain password"):
+            update_foodlog_request_handler.handleRequest(
+                {constants.KEY_USERNAME: "johndoe"}
+            )
+
     def test_requires_food_log(self):
         with self.assertRaisesRegex(Exception, "request does not contain food log"):
             update_foodlog_request_handler.handleRequest(
-                {constants.KEY_USERNAME: "johndoe"}
+                {
+                    constants.KEY_USERNAME: "johndoe",
+                    constants.KEY_PASSWORD: "password123",
+                }
             )
 
     def test_returns_failure_when_breakfast_item_is_not_found(self):
@@ -153,11 +165,13 @@ class TestUpdateFoodLogHandleRequest(unittest.TestCase):
 
         self.assertEqual(constants.SUCCESS_STATUS, response[constants.KEY_STATUS])
 
-        updated_food_log = database._foodLogs["johndoe"][date(2026, 4, 20)]
+        user = database.getUsers()["johndoe"]["password123"]
+        updated_food_log = user.getStoredFoodLogs()[date(2026, 4, 20)]
         self.assertEqual([self.oatmeal], updated_food_log.getBreakfast())
         self.assertEqual([self.salad], updated_food_log.getLunch())
         self.assertEqual([self.soup], updated_food_log.getDinner())
         self.assertEqual([self.apple], updated_food_log.getSnacks())
+        self.assertIs(updated_food_log, user.getCurrentFoodLog())
 
 
 if __name__ == "__main__":
