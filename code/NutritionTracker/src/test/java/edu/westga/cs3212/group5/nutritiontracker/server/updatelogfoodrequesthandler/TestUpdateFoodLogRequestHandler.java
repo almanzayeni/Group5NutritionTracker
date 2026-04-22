@@ -2,16 +2,28 @@ package edu.westga.cs3212.group5.nutritiontracker.server.updatelogfoodrequesthan
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mockStatic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
+import edu.westga.cs3212.group5.nutritiontracker.model.JsonMapperFactory;
+import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
+import edu.westga.cs3212.group5.nutritiontracker.model.User;
 import edu.westga.cs3212.group5.nutritiontracker.server.ServerClient;
 import edu.westga.cs3212.group5.nutritiontracker.server.ServerConstants;
 import edu.westga.cs3212.group5.nutritiontracker.server.UpdateFoodLogRequestHandler;
@@ -25,7 +37,9 @@ import edu.westga.cs3212.group5.nutritiontracker.server.UpdateFoodLogRequestHand
 public class TestUpdateFoodLogRequestHandler {
 
     private static final String VALID_USERNAME = "johndoe";
+    private static final String VALID_PASSWORD = "password123";
     private FoodLog validFoodLog;
+    private User validUser;
 
     @BeforeEach
     void setUp() {
@@ -36,55 +50,87 @@ public class TestUpdateFoodLogRequestHandler {
             new ArrayList<>(),
             new ArrayList<>()
         );
-    }
-
-    @Test
-    void testCreateRequest_nullUsername_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () ->
-            UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(null, this.validFoodLog)
+        DietGoals goals = new DietGoals(
+            PrimaryGoal.CALORIE,
+            2000,
+            150,
+            70,
+            50,
+            2300,
+            250,
+            Collections.emptyList()
+        );
+        this.validUser = new User(
+            VALID_USERNAME,
+            VALID_PASSWORD,
+            "John Doe",
+            goals,
+            this.validFoodLog
         );
     }
 
     @Test
-    void testCreateRequest_blankUsername_throwsIllegalArgumentException() {
+    void testCreateRequest_nullUser_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () ->
-            UpdateFoodLogRequestHandler.createUpdateFoodLogRequest("   ", this.validFoodLog)
-        );
-    }
-
-    @Test
-    void testCreateRequest_nullFoodLog_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () ->
-            UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(VALID_USERNAME, null)
+            UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(null)
         );
     }
 
     @Test
     void testCreateRequest_validArgs_containsRequestType() {
         String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(
-            VALID_USERNAME, this.validFoodLog);
+            this.validUser);
         assertTrue(request.contains(ServerConstants.UPDATE_FOODLOG_REQUEST_TYPE));
     }
 
     @Test
     void testCreateRequest_validArgs_containsUsername() {
         String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(
-            VALID_USERNAME, this.validFoodLog);
+            this.validUser);
         assertTrue(request.contains(VALID_USERNAME));
+    }
+
+    @Test
+    void testCreateRequest_validArgs_containsPassword() {
+        String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(
+            this.validUser);
+        assertTrue(request.contains(VALID_PASSWORD));
     }
 
     @Test
     void testCreateRequest_validArgs_containsFoodLogKey() {
         String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(
-            VALID_USERNAME, this.validFoodLog);
+            this.validUser);
         assertTrue(request.contains(ServerConstants.KEY_FOOD_LOG));
     }
 
     @Test
     void testCreateRequest_validArgs_containsDate() {
         String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(
-            VALID_USERNAME, this.validFoodLog);
+            this.validUser);
         assertTrue(request.contains("2026-03-30"));
+    }
+
+    @Test
+    void testCreateRequest_mapperFailure_wrapsInRuntimeException() throws Exception {
+        ObjectMapper mapper = mock(ObjectMapper.class);
+        JsonNode foodLogNode = mock(JsonNode.class);
+
+        when(mapper.valueToTree(this.validFoodLog)).thenReturn(foodLogNode);
+        when(mapper.writeValueAsString(any())).thenThrow(new JsonProcessingException("boom") {
+            private static final long serialVersionUID = 1L;
+        });
+
+        try (MockedStatic<JsonMapperFactory> mockFactory = mockStatic(JsonMapperFactory.class)) {
+            mockFactory.when(JsonMapperFactory::create).thenReturn(mapper);
+
+            RuntimeException ex = assertThrows(RuntimeException.class, () ->
+                UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(this.validUser)
+            );
+
+            assertEquals("Failed to create update food log request", ex.getMessage());
+            assertTrue(ex.getCause() instanceof JsonProcessingException);
+        }
     }
 
     @Test
@@ -199,7 +245,7 @@ public class TestUpdateFoodLogRequestHandler {
                       .thenReturn("{\"status\":\"1\"}");
 
             String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(
-                VALID_USERNAME, this.validFoodLog);
+                this.validUser);
 
             assertDoesNotThrow(() ->
                 UpdateFoodLogRequestHandler.handleUpdateFoodLogRequest(request)

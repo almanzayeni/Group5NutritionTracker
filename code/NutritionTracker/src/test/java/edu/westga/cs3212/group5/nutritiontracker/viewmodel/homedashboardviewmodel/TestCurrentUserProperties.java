@@ -53,7 +53,7 @@ public class TestCurrentUserProperties {
     @Test
     void testUserPropertiesReflectConstructorValues() {
     	assertEquals("name", this.vm.getUsersNameProperty().get());
-    	assertSame(this.initialUser.getCurrentFoodLog(), this.vm.userFoodLogProperty().get());
+    	assertSame(this.initialUser.getCurrentFoodLog(), this.vm.getCurrentUser().getCurrentFoodLog());
     	assertSame(this.initialUser.getDietGoals(), this.vm.userDietGoalsProperty().get());
     }
     

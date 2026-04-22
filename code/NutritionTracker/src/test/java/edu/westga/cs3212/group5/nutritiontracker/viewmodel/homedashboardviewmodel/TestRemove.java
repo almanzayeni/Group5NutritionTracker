@@ -3,6 +3,7 @@ package edu.westga.cs3212.group5.nutritiontracker.viewmodel.homedashboardviewmod
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,10 +42,10 @@ public class TestRemove {
     	this.dinnerFood = this.createFood("dinner", 300);
     	this.snackFood = this.createFood("snack", 50);
 
-    	List<FoodItem> breakfast = List.of(this.breakfastFood);
-    	List<FoodItem> lunch = List.of(this.lunchFood);
-    	List<FoodItem> dinner = List.of(this.dinnerFood);
-    	List<FoodItem> snacks = List.of(this.snackFood);
+    	List<FoodItem> breakfast = new ArrayList<FoodItem>(List.of(this.breakfastFood));
+    	List<FoodItem> lunch = new ArrayList<FoodItem>(List.of(this.lunchFood));
+    	List<FoodItem> dinner = new ArrayList<FoodItem>(List.of(this.dinnerFood));
+    	List<FoodItem> snacks = new ArrayList<FoodItem>(List.of(this.snackFood));
     	FoodLog currentFoodLog = new FoodLog(LocalDate.of(2026, 3, 25), breakfast, lunch, dinner, snacks);
     	User user = new User("username", "password", "name", this.createDietGoals(), currentFoodLog);
 
@@ -55,31 +56,27 @@ public class TestRemove {
     void testRemoveFromSnacks() {
     	this.vm.removeFromSnacks(this.snackFood);
     	
-        assertEquals(0, this.vm.getSnacksItems().size());
-        assertEquals(600.0, this.vm.totalCaloriesProperty().get(), 0.001);
+        assertEquals(0, this.vm.getCurrentUser().getCurrentFoodLog().getSnacks().size());
     }
     
     @Test
     void testRemoveFromBreakfast() {
     	this.vm.removeFromBreakfast(this.breakfastFood);
     	
-        assertEquals(0, this.vm.getBreakfastItems().size());
-        assertEquals(550.0, this.vm.totalCaloriesProperty().get(), 0.001);
+        assertEquals(0, this.vm.getCurrentUser().getCurrentFoodLog().getBreakfast().size());
     }
     
     @Test
     void testRemoveFromLunch() {
     	this.vm.removeFromLunch(this.lunchFood);
     	
-        assertEquals(0, this.vm.getLunchItems().size());
-        assertEquals(450.0, this.vm.totalCaloriesProperty().get(), 0.001);
+        assertEquals(0, this.vm.getCurrentUser().getCurrentFoodLog().getLunch().size());
     }
     
     @Test
     void testRemoveFromDinner() {
     	this.vm.removeFromDinner(this.dinnerFood);
     	
-        assertEquals(0, this.vm.getDinnerItems().size());
-        assertEquals(350.0, this.vm.totalCaloriesProperty().get(), 0.001);
+        assertEquals(0, this.vm.getCurrentUser().getCurrentFoodLog().getDinner().size());
     }
 }

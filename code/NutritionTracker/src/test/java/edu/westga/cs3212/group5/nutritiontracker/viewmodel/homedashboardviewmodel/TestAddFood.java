@@ -5,12 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mockStatic;
 
 import java.time.LocalDate;
 import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
 import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
@@ -20,6 +22,7 @@ import edu.westga.cs3212.group5.nutritiontracker.model.MealType;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import edu.westga.cs3212.group5.nutritiontracker.model.User;
+import edu.westga.cs3212.group5.nutritiontracker.server.UpdateFoodLogRequestHandler;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
 
 /**
@@ -109,58 +112,70 @@ public class TestAddFood {
 
     @Test
     void testAddFoodToPendingMeal_addsToBreakfast_andClearsPending() {
-        this.viewModel.setPendingMealType(MealType.BREAKFAST);
-        this.viewModel.addFoodToPendingMeal(this.apple);
+        try (MockedStatic<UpdateFoodLogRequestHandler> mockHandler = this.mockUpdateHandler()) {
+            this.viewModel.setPendingMealType(MealType.BREAKFAST);
+            this.viewModel.addFoodToPendingMeal(this.apple);
 
-        assertTrue(this.viewModel.getBreakfastItems().contains(this.apple));
-        assertNull(this.viewModel.getPendingMealType());
+            assertTrue(this.viewModel.getBreakfastItems().contains(this.apple));
+            assertNull(this.viewModel.getPendingMealType());
+        }
     }
 
     @Test
     void testAddFoodToPendingMeal_addsToLunch_andClearsPending() {
-        this.viewModel.setPendingMealType(MealType.LUNCH);
-        this.viewModel.addFoodToPendingMeal(this.apple);
+        try (MockedStatic<UpdateFoodLogRequestHandler> mockHandler = this.mockUpdateHandler()) {
+            this.viewModel.setPendingMealType(MealType.LUNCH);
+            this.viewModel.addFoodToPendingMeal(this.apple);
 
-        assertTrue(this.viewModel.getLunchItems().contains(this.apple));
-        assertNull(this.viewModel.getPendingMealType());
+            assertTrue(this.viewModel.getLunchItems().contains(this.apple));
+            assertNull(this.viewModel.getPendingMealType());
+        }
     }
 
     @Test
     void testAddFoodToPendingMeal_addsToDinner_andClearsPending() {
-        this.viewModel.setPendingMealType(MealType.DINNER);
-        this.viewModel.addFoodToPendingMeal(this.apple);
+        try (MockedStatic<UpdateFoodLogRequestHandler> mockHandler = this.mockUpdateHandler()) {
+            this.viewModel.setPendingMealType(MealType.DINNER);
+            this.viewModel.addFoodToPendingMeal(this.apple);
 
-        assertTrue(this.viewModel.getDinnerItems().contains(this.apple));
-        assertNull(this.viewModel.getPendingMealType());
+            assertTrue(this.viewModel.getDinnerItems().contains(this.apple));
+            assertNull(this.viewModel.getPendingMealType());
+        }
     }
 
     @Test
     void testAddFoodToPendingMeal_addsToSnacks_andClearsPending() {
-        this.viewModel.setPendingMealType(MealType.SNACKS);
-        this.viewModel.addFoodToPendingMeal(this.apple);
+        try (MockedStatic<UpdateFoodLogRequestHandler> mockHandler = this.mockUpdateHandler()) {
+            this.viewModel.setPendingMealType(MealType.SNACKS);
+            this.viewModel.addFoodToPendingMeal(this.apple);
 
-        assertTrue(this.viewModel.getSnacksItems().contains(this.apple));
-        assertNull(this.viewModel.getPendingMealType());
+            assertTrue(this.viewModel.getSnacksItems().contains(this.apple));
+            assertNull(this.viewModel.getPendingMealType());
+        }
     }
 
     @Test
     void testAddFoodToPendingMeal_doesNotAddToOtherMeals() {
-        this.viewModel.setPendingMealType(MealType.BREAKFAST);
-        this.viewModel.addFoodToPendingMeal(this.apple);
+        try (MockedStatic<UpdateFoodLogRequestHandler> mockHandler = this.mockUpdateHandler()) {
+            this.viewModel.setPendingMealType(MealType.BREAKFAST);
+            this.viewModel.addFoodToPendingMeal(this.apple);
 
-        assertFalse(this.viewModel.getLunchItems().contains(this.apple));
-        assertFalse(this.viewModel.getDinnerItems().contains(this.apple));
-        assertFalse(this.viewModel.getSnacksItems().contains(this.apple));
+            assertFalse(this.viewModel.getLunchItems().contains(this.apple));
+            assertFalse(this.viewModel.getDinnerItems().contains(this.apple));
+            assertFalse(this.viewModel.getSnacksItems().contains(this.apple));
+        }
     }
 
     @Test
     void testAddFoodToPendingMeal_totalCaloriesUpdated() {
-        this.viewModel.setPendingMealType(MealType.BREAKFAST);
-        double before = this.viewModel.totalCaloriesProperty().get();
-        this.viewModel.addFoodToPendingMeal(this.apple);
+        try (MockedStatic<UpdateFoodLogRequestHandler> mockHandler = this.mockUpdateHandler()) {
+            this.viewModel.setPendingMealType(MealType.BREAKFAST);
+            double before = this.viewModel.totalCaloriesProperty().get();
+            this.viewModel.addFoodToPendingMeal(this.apple);
 
-        assertEquals(before + this.apple.getCalories(),
-                this.viewModel.totalCaloriesProperty().get(), 0.001);
+            assertEquals(before + this.apple.getCalories(),
+                    this.viewModel.totalCaloriesProperty().get(), 0.001);
+        }
     }
 
     @Test
@@ -168,14 +183,25 @@ public class TestAddFood {
         FoodItem banana = new BaseFood("Banana", QuantityCategory.QUANTITY,
                 1, 105, 1, 0, 14, 27, 1);
 
-        this.viewModel.setPendingMealType(MealType.LUNCH);
-        this.viewModel.addFoodToPendingMeal(this.apple);
+        try (MockedStatic<UpdateFoodLogRequestHandler> mockHandler = this.mockUpdateHandler()) {
+            this.viewModel.setPendingMealType(MealType.LUNCH);
+            this.viewModel.addFoodToPendingMeal(this.apple);
 
-        this.viewModel.setPendingMealType(MealType.LUNCH);
-        this.viewModel.addFoodToPendingMeal(banana);
+            this.viewModel.setPendingMealType(MealType.LUNCH);
+            this.viewModel.addFoodToPendingMeal(banana);
 
-        assertEquals(2, this.viewModel.getLunchItems().size());
-        assertTrue(this.viewModel.getLunchItems().contains(this.apple));
-        assertTrue(this.viewModel.getLunchItems().contains(banana));
+            assertEquals(2, this.viewModel.getLunchItems().size());
+            assertTrue(this.viewModel.getLunchItems().contains(this.apple));
+            assertTrue(this.viewModel.getLunchItems().contains(banana));
+        }
+    }
+
+    private MockedStatic<UpdateFoodLogRequestHandler> mockUpdateHandler() {
+        MockedStatic<UpdateFoodLogRequestHandler> mockHandler = mockStatic(UpdateFoodLogRequestHandler.class);
+        mockHandler.when(() -> UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(this.viewModel.getCurrentUser()))
+                .thenReturn("{\"request_type\":\"UPDATE_FOODLOG\"}");
+        mockHandler.when(() -> UpdateFoodLogRequestHandler.handleUpdateFoodLogRequest("{\"request_type\":\"UPDATE_FOODLOG\"}"))
+                .thenAnswer(invocation -> null);
+        return mockHandler;
     }
 }

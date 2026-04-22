@@ -122,21 +122,14 @@ public class FoodLog {
 		if (food == null) {
 			throw new IllegalArgumentException("Food item cannot be null");
 		}
-		switch (mealType) {
-		case BREAKFAST:
+		if (mealType == MealType.BREAKFAST) {
 			this.breakfast.add(food);
-			break;
-		case LUNCH:
+		} else if (mealType == MealType.LUNCH) {
 			this.lunch.add(food);
-			break;
-		case DINNER:
+		} else if (mealType == MealType.DINNER) {
 			this.dinner.add(food);
-			break;
-		case SNACKS:
+		} else {
 			this.snacks.add(food);
-			break;
-		default:
-			throw new IllegalArgumentException("Invalid meal type: " + mealType);
 		}
 	}
 	
@@ -155,21 +148,14 @@ public class FoodLog {
 			throw new IllegalArgumentException("Food item cannot be null");
 		}
 		
-		switch (mealType) {
-		case BREAKFAST:
+		if (mealType == MealType.BREAKFAST) {
 			this.breakfast.remove(food);
-			break;
-		case LUNCH:
+		} else if (mealType == MealType.LUNCH) {
 			this.lunch.remove(food);
-			break;
-		case DINNER:
+		} else if (mealType == MealType.DINNER) {
 			this.dinner.remove(food);
-			break;
-		case SNACKS:
+		} else {
 			this.snacks.remove(food);
-			break;
-		default:
-			throw new IllegalArgumentException("Invalid meal type: " + mealType);
 		}
 	}
 }

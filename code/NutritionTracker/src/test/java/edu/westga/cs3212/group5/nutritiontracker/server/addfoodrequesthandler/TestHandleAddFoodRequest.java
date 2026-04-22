@@ -79,6 +79,18 @@ public class TestHandleAddFoodRequest {
 	}
 
 	@Test
+	public void testServerReturnsNullResponse() {
+		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
+			serverClientMock.when(() -> ServerClient.send("request")).thenReturn(null);
+
+			RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+				AddFoodRequestHandler.handleAddFoodRequest("request");
+			});
+			assertEquals("Received empty response from server", exception.getMessage());
+		}
+	}
+
+	@Test
 	public void testServerThrowsException() {
 		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
 			serverClientMock.when(() -> ServerClient.send("request")).thenThrow(new Exception("connection refused"));

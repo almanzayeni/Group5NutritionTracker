@@ -289,7 +289,7 @@ public class HomeDashboardViewModel {
 			FoodLog log = GetDayOfFoodRequestHandler.handleRequest(this.currentUser.getUsername(), this.selectedDate.get());
 			this.currentUser.setCurrentFoodLog(log);
 			this.updateMealLists();
-;		} catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
@@ -341,21 +341,14 @@ public class HomeDashboardViewModel {
 		if (this.pendingMealType == null) {
 			throw new IllegalStateException("No pending meal type set");
 		}
-		switch (this.pendingMealType) {
-		case BREAKFAST:
+		if (this.pendingMealType == MealType.BREAKFAST) {
 			this.addToBreakfast(food);
-			break;
-		case LUNCH:
+		} else if (this.pendingMealType == MealType.LUNCH) {
 			this.addToLunch(food);
-			 break;
-		case DINNER:
+		} else if (this.pendingMealType == MealType.DINNER) {
 			this.addToDinner(food);
-			break;
-		case SNACKS:
+		} else {
 			this.addToSnacks(food);
-			break;
-		default:
-			throw new IllegalStateException("Invalid meal type: " + this.pendingMealType);
 		}
 		
 		this.pendingMealType = null;
@@ -434,22 +427,19 @@ public class HomeDashboardViewModel {
 	}
 
 	private static double getTargetAmount(DietGoals goals, PrimaryGoal selectedGoal) {
-		switch (selectedGoal) {
-		case CALORIE:
+		if (selectedGoal == PrimaryGoal.CALORIE) {
 			return goals.getCalorieGoal();
-		case PROTEIN:
+		} else if (selectedGoal == PrimaryGoal.PROTEIN) {
 			return goals.getProteinGoal();
-		case FAT:
+		} else if (selectedGoal == PrimaryGoal.FAT) {
 			return goals.getFatGoal();
-		case SUGAR:
+		} else if (selectedGoal == PrimaryGoal.SUGAR) {
 			return goals.getSugarGoal();
-		case SODIUM:
+		} else if (selectedGoal == PrimaryGoal.SODIUM) {
 			return goals.getSodiumGoal();
-		case CARBS:
+		} else if (selectedGoal == PrimaryGoal.CARBS) {
 			return goals.getCarbsGoal();
-		case OTHER:
-			return 0;
-		default:
+		} else {
 			return 0;
 		}
 	}

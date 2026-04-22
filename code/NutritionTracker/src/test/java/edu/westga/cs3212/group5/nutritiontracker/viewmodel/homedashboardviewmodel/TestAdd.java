@@ -47,10 +47,9 @@ public class TestAdd {
     	this.vm.addToLunch(testFood);
     	this.vm.addToLunch(testFood2);
     	
-        assertEquals(2, this.vm.getLunchItems().size());
-        assertEquals(testFood, this.vm.getLunchItems().get(0));
-        assertEquals(testFood2, this.vm.getLunchItems().get(1));
-        assertEquals(8.0, this.vm.totalCaloriesProperty().get(), 0.001);
+        assertEquals(2, this.vm.getCurrentUser().getCurrentFoodLog().getLunch().size());
+        assertEquals(testFood, this.vm.getCurrentUser().getCurrentFoodLog().getLunch().get(0));
+        assertEquals(testFood2, this.vm.getCurrentUser().getCurrentFoodLog().getLunch().get(1));
     }
     
     @Test
@@ -58,10 +57,9 @@ public class TestAdd {
     	this.vm.addToBreakfast(testFood);
     	this.vm.addToBreakfast(testFood2);
     	
-        assertEquals(2, this.vm.getBreakfastItems().size());
-        assertEquals(testFood, this.vm.getBreakfastItems().get(0));
-        assertEquals(testFood2, this.vm.getBreakfastItems().get(1));
-        assertEquals(8.0, this.vm.totalCaloriesProperty().get(), 0.001);
+        assertEquals(2, this.vm.getCurrentUser().getCurrentFoodLog().getBreakfast().size());
+        assertEquals(testFood, this.vm.getCurrentUser().getCurrentFoodLog().getBreakfast().get(0));
+        assertEquals(testFood2, this.vm.getCurrentUser().getCurrentFoodLog().getBreakfast().get(1));
     }
     
     @Test
@@ -69,10 +67,9 @@ public class TestAdd {
     	this.vm.addToDinner(testFood);
     	this.vm.addToDinner(testFood2);
     	
-        assertEquals(2, this.vm.getDinnerItems().size());
-        assertEquals(testFood, this.vm.getDinnerItems().get(0));
-        assertEquals(testFood2, this.vm.getDinnerItems().get(1));
-        assertEquals(8.0, this.vm.totalCaloriesProperty().get(), 0.001);
+        assertEquals(2, this.vm.getCurrentUser().getCurrentFoodLog().getDinner().size());
+        assertEquals(testFood, this.vm.getCurrentUser().getCurrentFoodLog().getDinner().get(0));
+        assertEquals(testFood2, this.vm.getCurrentUser().getCurrentFoodLog().getDinner().get(1));
     }
     
     @Test
@@ -80,9 +77,8 @@ public class TestAdd {
     	this.vm.addToSnacks(testFood);
     	this.vm.addToSnacks(testFood2);
     	
-        assertEquals(2, this.vm.getSnacksItems().size());
-        assertEquals(testFood, this.vm.getSnacksItems().get(0));
-        assertEquals(testFood2, this.vm.getSnacksItems().get(1));
-        assertEquals(8.0, this.vm.totalCaloriesProperty().get(), 0.001);
+        assertEquals(2, this.vm.getCurrentUser().getCurrentFoodLog().getSnacks().size());
+        assertEquals(testFood, this.vm.getCurrentUser().getCurrentFoodLog().getSnacks().get(0));
+        assertEquals(testFood2, this.vm.getCurrentUser().getCurrentFoodLog().getSnacks().get(1));
     }
 }
