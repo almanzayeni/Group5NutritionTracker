@@ -142,10 +142,6 @@ public class HomeDashboardPageController implements ViewModelAware {
 		this.lunchListView.itemsProperty().bind(this.viewModel.getLunchItems());
 		this.dinnerListView.itemsProperty().bind(this.viewModel.getDinnerItems());
 		this.snacksListView.itemsProperty().bind(this.viewModel.getSnacksItems());
-//		this.lunchListView.setItems(this.viewModel.getLunchItems());
-//		this.dinnerListView.setItems(this.viewModel.getDinnerItems());
-//		this.snacksListView.setItems(this.viewModel.getSnacksItems());
-		
 		this.chartGoalComboBox.valueProperty().bindBidirectional(this.viewModel.selectedGoalProperty());
 	}
 
@@ -229,6 +225,8 @@ public class HomeDashboardPageController implements ViewModelAware {
 		Optional<ButtonType> result = confirm.showAndWait();
 		if (result.isPresent() && result.get() == ButtonType.YES) {
 			removeAction.run();
+			this.updateChart();
+			this.updateRemainingGoalValue();
 		}
 	}
 
