@@ -130,32 +130,35 @@
                      </font>
                   </Label>
                   <PieChart fx:id="statPieChart" layoutX="37.0" layoutY="103.0" prefHeight="150.0" prefWidth="178.0" />
+            
+                  <!-- Side Menu -->
+                  <Pane fx:id="menuPane" prefHeight="640.0" prefWidth="207.0" style="-fx-background-color: #87b442;" visible="false">
+                     <children>
+                        <Button fx:id="homeButton" layoutY="55.0" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Home" textFill="#1f5c33">
+                           <font>
+                              <Font name="Bookman Old Style Bold" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="createFoodButton" layoutY="110.0" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Create Food" textFill="#1f5c33">
+                           <font>
+                              <Font name="Bookman Old Style Bold" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="addFoodButton" disable="true" layoutY="165.0" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Add Food" textFill="#1f5c33" visible="false">
+                           <font>
+                              <Font name="Bookman Old Style Bold" size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+            
+                  <!-- Hamburger -->
+                  <JFXHamburger fx:id="hamburgerMenu" layoutX="15.0" layoutY="15.0" prefHeight="20.0" prefWidth="33.0" />
 
                </children>
             </AnchorPane>
          </content>
       </ScrollPane>
-
-      <!-- Side Menu -->
-      <Pane fx:id="menuPane" prefHeight="640.0" prefWidth="207.0" style="-fx-background-color: #87b442;" visible="false">
-         <children>
-            <Button fx:id="homeButton" layoutY="55.0" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Home" textFill="#1f5c33">
-               <font>
-                  <Font name="Bookman Old Style Bold" size="24.0" />
-               </font></Button>
-            <Button fx:id="createFoodButton" layoutY="110.0" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Create Food" textFill="#1f5c33">
-               <font>
-                  <Font name="Bookman Old Style Bold" size="24.0" />
-               </font></Button>
-            <Button fx:id="addFoodButton" disable="true" layoutY="165.0" prefHeight="45.0" prefWidth="208.0" style="-fx-background-color: #DECFBD;" text="Add Food" textFill="#1f5c33" visible="false">
-               <font>
-                  <Font name="Bookman Old Style Bold" size="24.0" />
-               </font></Button>
-         </children>
-      </Pane>
-
-      <!-- Hamburger -->
-      <JFXHamburger fx:id="hamburgerMenu" layoutX="15.0" layoutY="15.0" />
 
    </children>
 </AnchorPane>
