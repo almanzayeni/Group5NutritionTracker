@@ -158,7 +158,7 @@ def searchFoodItemByDescription(query):
     if query is None:
         raise Exception("query is None")
     if query == "":
-        return []
+        return _foodItems.values()
 
     foodItems = []
     for key, value in _foodItems.items():

@@ -328,9 +328,9 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
     private void setupListenerForAddFoodButton() {
         this.addFoodButton.setOnAction((ActionEvent event) -> {
             try {
-                this.viewModel.createCompositeFood();
+                FoodItem createdFood = this.viewModel.createCompositeFood();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                        "\"" + this.descriptionTextField.getText() + "\" was created successfully.");
+                        "\"" + createdFood.getDescription() + "\" was created successfully.");
                 alert.setHeaderText("Food Created");
                 alert.showAndWait();
             } catch (IllegalArgumentException ex) {

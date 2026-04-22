@@ -24,11 +24,11 @@ public class SearchRequestHandler {
 	 *
 	 * @param query the search query
 	 * @return the search request as a JSON string
-	 * @throws IllegalArgumentException if query is null or blank
+	 * @throws IllegalArgumentException if query is null
 	 */
 	public static String createSearchRequest(String query) {
-		if (query == null || query.isBlank()) {
-			throw new IllegalArgumentException("Query cannot be null or blank");
+		if (query == null) {
+			throw new IllegalArgumentException("Query cannot be null");
 		}
 
 		Map<String, String> requestMap = new HashMap<>();

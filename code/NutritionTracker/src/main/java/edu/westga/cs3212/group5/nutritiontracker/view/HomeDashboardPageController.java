@@ -145,7 +145,7 @@ public class HomeDashboardPageController implements ViewModelAware {
 	}
 
 	private void setupChartGoalComboBoxListener() {
-		this.chartGoalComboBox.selectionModelProperty().addListener((obs, oldVal, newVal) -> {
+		this.chartGoalComboBox.valueProperty().addListener((obs, oldVal, newVal) -> {
 			this.updateChart();
 			this.setChartGoalLabels();
 			this.updateRemainingGoalValue();
