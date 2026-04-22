@@ -154,13 +154,13 @@ public class HomeDashboardPageController implements ViewModelAware {
 
 	private void listViewSetup() {
 		this.breakfastListView.setCellFactory(lv -> new FoodItemCell(
-				item -> this.confirmAndRemove(item, "breakfast", () -> this.viewModel.removeFromBreakfast(item))));
+				item -> this.confirmAndRemove(item, "breakfast", () -> this.viewModel.removeFoodFromMeal(item, MealType.BREAKFAST))));
 		this.lunchListView.setCellFactory(lv -> new FoodItemCell(
-				item -> this.confirmAndRemove(item, "lunch", () -> this.viewModel.removeFromLunch(item))));
+				item -> this.confirmAndRemove(item, "lunch", () -> this.viewModel.removeFoodFromMeal(item, MealType.LUNCH))));
 		this.dinnerListView.setCellFactory(lv -> new FoodItemCell(
-				item -> this.confirmAndRemove(item, "dinner", () -> this.viewModel.removeFromDinner(item))));
+				item -> this.confirmAndRemove(item, "dinner", () -> this.viewModel.removeFoodFromMeal(item, MealType.DINNER))));
 		this.snacksListView.setCellFactory(lv -> new FoodItemCell(
-				item -> this.confirmAndRemove(item, "snacks", () -> this.viewModel.removeFromSnacks(item))));
+				item -> this.confirmAndRemove(item, "snacks", () -> this.viewModel.removeFoodFromMeal(item, MealType.SNACKS))));
 		this.bindListViewHeight(this.breakfastListView);
 		this.bindListViewHeight(this.lunchListView);
 		this.bindListViewHeight(this.dinnerListView);

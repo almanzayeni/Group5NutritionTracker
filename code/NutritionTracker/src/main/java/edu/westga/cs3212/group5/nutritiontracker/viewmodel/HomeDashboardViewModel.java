@@ -206,77 +206,19 @@ public class HomeDashboardViewModel {
 	public ReadOnlyDoubleProperty totalCaloriesProperty() {
 		return this.totalCalories.getReadOnlyProperty();
 	}
-
+	
 	/**
-	 * Adds a food item to the user's breakfast list.
+	 * Removes a food item from the specified meal type list.
 	 *
-	 * @param item the food item to add
+	 * @param item     the food item to remove
+	 * @param mealType the meal type to remove from
 	 */
-	public void addToBreakfast(FoodItem item) {
-		this.currentUser.getCurrentFoodLog().addFoodToMeal(MealType.BREAKFAST, item);
-	}
-
-	/**
-	 * Adds a food item to the user's lunch list.
-	 *
-	 * @param item the food item to add
-	 */
-	public void addToLunch(FoodItem item) {
-		this.currentUser.getCurrentFoodLog().addFoodToMeal(MealType.LUNCH, item);
-	}
-
-	/**
-	 * Adds a food item to the user's dinner list.
-	 *
-	 * @param item the food item to add
-	 */
-	public void addToDinner(FoodItem item) {
-		this.currentUser.getCurrentFoodLog().addFoodToMeal(MealType.DINNER, item);
-	}
-
-	/**
-	 * Adds a food item to the user's snacks list.
-	 *
-	 * @param item the food item to add
-	 */
-	public void addToSnacks(FoodItem item) {
-		this.currentUser.getCurrentFoodLog().addFoodToMeal(MealType.SNACKS, item);
-	}
-
-	/**
-	 * Removes a food item from the user's breakfast list.
-	 *
-	 * @param item the food item to remove
-	 */
-	public void removeFromBreakfast(FoodItem item) {
-		this.currentUser.getCurrentFoodLog().removeFoodFromMeal(MealType.BREAKFAST, item);
-	}
-
-	/**
-	 * Removes a food item from the user's lunch list.
-	 *
-	 * @param item the food item to remove
-	 */
-	public void removeFromLunch(FoodItem item) {
-		this.currentUser.getCurrentFoodLog().removeFoodFromMeal(MealType.LUNCH, item);
-	}
-
-	/**
-	 * Removes a food item from the user's dinner list.
-	 *
-	 * @param item the food item to remove
-	 */
-	public void removeFromDinner(FoodItem item) {
-		this.currentUser.getCurrentFoodLog().removeFoodFromMeal(MealType.DINNER, item);
-	}
-
-	/**
-	 * Removes a food item from the user's snacks list.
-	 *
-	 * @param item the food item to remove
-	 */
-	public void removeFromSnacks(FoodItem item) {
-		this.currentUser.getCurrentFoodLog().removeFoodFromMeal(MealType.SNACKS, item);
+	public void removeFoodFromMeal(FoodItem item, MealType mealType) {
+		this.currentUser.getCurrentFoodLog().removeFoodFromMeal(mealType, item);
+		
+		String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(this.getCurrentUser());
+		UpdateFoodLogRequestHandler.handleUpdateFoodLogRequest(request);
+		this.updateMealLists();
 	}
 	
 	/**
@@ -341,15 +283,7 @@ public class HomeDashboardViewModel {
 		if (this.pendingMealType == null) {
 			throw new IllegalStateException("No pending meal type set");
 		}
-		if (this.pendingMealType == MealType.BREAKFAST) {
-			this.addToBreakfast(food);
-		} else if (this.pendingMealType == MealType.LUNCH) {
-			this.addToLunch(food);
-		} else if (this.pendingMealType == MealType.DINNER) {
-			this.addToDinner(food);
-		} else {
-			this.addToSnacks(food);
-		}
+		this.currentUser.getCurrentFoodLog().addFoodToMeal(this.pendingMealType, food);
 		
 		this.pendingMealType = null;
 
