@@ -38,11 +38,11 @@ def handleRequest(request):
         database.addFoodItem(base_food)
         
     elif request[constants.KEY_FOOD_ITEM][constants.KEY_FOOD_TYPE] == constants.KEY_COMPOSITE_FOOD_TYPE:
-        ingredients_list = []
+        ingredients_dict = {}
         for ingredient_description in request[constants.KEY_FOOD_ITEM][constants.KEY_INGREDIENTS]:
             if ingredient_description not in database.getFoodItems():
                 return {constants.KEY_STATUS: constants.BAD_MESSAGE_STATUS, constants.KEY_FAILURE_MESSAGE: f"ingredient '{ingredient_description}' not found in database"}
-            ingredients_list.append(database.getFoodItems()[ingredient_description])
+            ingredients_dict[ingredient_description] = database.getFoodItems()[ingredient_description]
         
         composite_food = CompositeFood(
             description=request[constants.KEY_FOOD_ITEM][constants.KEY_FOOD_DESCRIPTION],
@@ -54,7 +54,7 @@ def handleRequest(request):
             sugar=request[constants.KEY_FOOD_ITEM][constants.KEY_FOOD_SUGAR],
             carbohydrates=request[constants.KEY_FOOD_ITEM][constants.KEY_FOOD_CARBS],
             sodium=request[constants.KEY_FOOD_ITEM][constants.KEY_FOOD_SODIUM],
-            ingredients= ingredients_list
+            ingredients= ingredients_dict
         )
         
         database.addFoodItem(composite_food)

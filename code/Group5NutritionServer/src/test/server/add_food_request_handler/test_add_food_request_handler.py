@@ -117,7 +117,13 @@ class TestHandleRequestBaseFood(AddFoodRequestHandlerTestCaseMixin, unittest.Tes
         self.assertEqual(15, added_food.get_sugar())
         self.assertEqual(54, added_food.get_carbohydrates())
         self.assertEqual(1, added_food.get_sodium())
-        self.assertEqual([banana, oats], added_food.get_ingredients())
+        self.assertEqual(
+            {
+                banana.get_description(): banana,
+                oats.get_description(): oats,
+            },
+            added_food.get_ingredients(),
+        )
 
     def test_returns_failure_when_composite_ingredient_missing_from_database(self):
         banana = BaseFood("banana", QuantityCategory.QUANTITY, 1, 105, 1, 0, 14, 27, 1)
