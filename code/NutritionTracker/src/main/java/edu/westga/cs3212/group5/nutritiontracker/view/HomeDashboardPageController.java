@@ -15,6 +15,7 @@ import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewMode
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +28,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -40,6 +42,8 @@ import javafx.stage.Stage;
 public class HomeDashboardPageController implements ViewModelAware {
 	private HomeDashboardViewModel viewModel;
 
+    @FXML
+    private MenuButton accountMenu;
 	@FXML
 	private JFXHamburger hamburgerMenu;
 	@FXML
@@ -112,6 +116,23 @@ public class HomeDashboardPageController implements ViewModelAware {
         assert statPieChart != null : "fx:id=\"statPieChart\" was not injected: check your FXML file 'HomeDashboardPage.fxml'.";
         assert todayDateLabel != null : "fx:id=\"todayDateLabel\" was not injected: check your FXML file 'HomeDashboardPage.fxml'.";
         assert totalCaloriesLabel != null : "fx:id=\"totalCaloriesLabel\" was not injected: check your FXML file 'HomeDashboardPage.fxml'.";
+    }
+	
+	@FXML
+	void handleEditDietPlan(ActionEvent event) {
+	    this.switchTo("PreferencesPage.fxml");
+	}
+
+    @FXML
+    void handleLogout(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to logout?");
+        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            this.switchTo("LoginPage.fxml");
+        }
     }
 
 	@Override
@@ -251,17 +272,7 @@ public class HomeDashboardPageController implements ViewModelAware {
 		
 		this.homeButton.setOnAction(e -> this.switchTo("HomeDashboardPage.fxml"));
 		this.createFoodButton.setOnAction(e -> this.switchTo("CreateFoodItemTypeSelectionPage.fxml"));
-		this.logoutButton.setOnAction(e -> this.handleLogout());
-	}
-
-	private void handleLogout() {
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to logout?");
-		alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-		Optional<ButtonType> result = alert.showAndWait();
-
-		if (result.isPresent() && result.get() == ButtonType.YES) {
-			this.switchTo("LoginPage.fxml");
-		}
+		this.logoutButton.setOnAction(this::handleLogout);
 	}
 
 	private void switchTo(String fxml) {
