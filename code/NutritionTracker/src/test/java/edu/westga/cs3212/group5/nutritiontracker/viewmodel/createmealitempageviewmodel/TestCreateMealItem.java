@@ -3,36 +3,14 @@ package edu.westga.cs3212.group5.nutritiontracker.viewmodel.createmealitempagevi
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.CALLS_REAL_METHODS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.eq;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-import org.mockito.MockedStatic;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.BaseFood;
-import edu.westga.cs3212.group5.nutritiontracker.model.CompositeFood;
-import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateMealItemPageViewModel;
 
 public class TestCreateMealItem {
-
-	@TempDir
-	Path tempDir;
 
 	private BaseFood food1() {
 		return new BaseFood("Food 1", QuantityCategory.WEIGHT, 1, 100, 10, 1, 1, 1, 1);
@@ -74,34 +52,19 @@ public class TestCreateMealItem {
 		assertThrows(IllegalArgumentException.class, vm::createMealItem);
 	}
 
-//	@Test
-//	void testcreateMealItemDuplicateNameThrowsIllegalArgumentException() {
-//		CompositeFood existing = new CompositeFood();
-//		existing.setDescription("Test Existing Meal");
-//		existing.setQuantityCategory(QuantityCategory.QUANTITY);
-//		existing.addIngredient(food1());
-//		existing.addIngredient(food2());
-//		
-//		//TODO: Call server handler to add existing meal to server data
-//
-//		CreateMealItemPageViewModel vm = buildValidVm();
-//
-//		assertThrows(IllegalArgumentException.class, vm::createMealItem);
-//	}
-//
-//	@Test
-//	void testCreateValidMealSuccessAndFieldsCleared() throws Exception {
-//		CreateMealItemPageViewModel vm = buildValidVm();
-//
-//		vm.createMealItem();
-//
-//		assertEquals("", vm.getDescriptionProperty().get());
-//		assertTrue(vm.getIngredientsListProperty().isEmpty());
-//		assertEquals(0.0, vm.getTotalCaloriesProperty().get(), 0.0001);
-//		assertEquals(0.0, vm.getTotalProteinProperty().get(), 0.0001);
-//		assertEquals(0.0, vm.getTotalFatProperty().get(), 0.0001);
-//		assertEquals(0.0, vm.getTotalSugarProperty().get(), 0.0001);
-//		assertEquals(0.0, vm.getTotalCarbohydratesProperty().get(), 0.0001);
-//		assertEquals(0.0, vm.getTotalSodiumProperty().get(), 0.0001);
-//	}
+	@Test
+	void testCreateValidMealSuccessAndFieldsCleared() throws Exception {
+		CreateMealItemPageViewModel vm = this.buildValidVm();
+
+		vm.createMealItem();
+
+		assertEquals("", vm.getDescriptionProperty().get());
+		assertTrue(vm.getIngredientsListProperty().isEmpty());
+		assertEquals(0.0, vm.getTotalCaloriesProperty().get(), 0.0001);
+		assertEquals(0.0, vm.getTotalProteinProperty().get(), 0.0001);
+		assertEquals(0.0, vm.getTotalFatProperty().get(), 0.0001);
+		assertEquals(0.0, vm.getTotalSugarProperty().get(), 0.0001);
+		assertEquals(0.0, vm.getTotalCarbohydratesProperty().get(), 0.0001);
+		assertEquals(0.0, vm.getTotalSodiumProperty().get(), 0.0001);
+	}
 }

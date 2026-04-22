@@ -35,7 +35,7 @@
                   </Button>
 
                   <!-- Welcome -->
-                  <Label fx:id="welcomeLabel" layoutX="56.0" layoutY="40.0" style="-fx-font-family: 'Bookman Old Style'; -fx-font-size: 22px; -fx-font-weight: bold;" text="Welcome," textFill="#1f5c33" />
+                  <Label layoutX="56.0" layoutY="40.0" style="-fx-font-family: 'Bookman Old Style'; -fx-font-size: 22px; -fx-font-weight: bold;" text="Welcome," textFill="#1f5c33" />
 
                   <Label fx:id="nameLabel" layoutX="176.0" layoutY="40.0" style="-fx-font-family: 'Bookman Old Style'; -fx-font-size: 22px; -fx-font-weight: bold;" text="{name}" textFill="#1f5c33" />
 
@@ -43,7 +43,7 @@
                   <DatePicker fx:id="calendarPicker" layoutX="25.0" layoutY="314.0" prefWidth="116.0" />
 
                   <!-- 🔥 UPDATED Meals Card -->
-                  <VBox fx:id="todayMealsCard" layoutX="25.0" layoutY="350.0" prefWidth="323.0" spacing="10.0" style="-fx-background-color: #DECFBD; -fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: rgba(31,92,51,0.25); -fx-border-width: 2;">
+                  <VBox layoutX="25.0" layoutY="350.0" prefWidth="323.0" spacing="10.0" style="-fx-background-color: #DECFBD; -fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: rgba(31,92,51,0.25); -fx-border-width: 2;">
 
                      <padding>
                         <Insets bottom="12" left="14" right="14" top="12" />

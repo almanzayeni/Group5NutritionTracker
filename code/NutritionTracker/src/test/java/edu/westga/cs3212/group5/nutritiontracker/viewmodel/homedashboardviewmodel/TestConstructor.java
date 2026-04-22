@@ -74,7 +74,7 @@ public class TestConstructor {
     void testConstructorInitializesUserRelatedProperties() {
         assertSame(this.user, this.vm.getCurrentUser());
         assertEquals("name", this.vm.getUsersNameProperty().get());
-        assertSame(this.currentFoodLog, this.vm.userFoodLogProperty().get());
+        assertSame(this.currentFoodLog, this.vm.getCurrentUser().getCurrentFoodLog());
         assertSame(this.dietGoals, this.vm.userDietGoalsProperty().get());
     }
 

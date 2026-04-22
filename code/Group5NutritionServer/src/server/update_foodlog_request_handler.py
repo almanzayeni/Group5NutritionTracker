@@ -4,6 +4,7 @@ Created on April 21, 2026
 @author: Justin Smith
 '''
 
+from datetime import date
 from model import database
 from model.food_log import FoodLog
 from server import constants
@@ -13,12 +14,17 @@ def handleRequest(request):
         raise Exception("request is None")
     if (constants.KEY_USERNAME not in request):
         raise Exception("request does not contain username")
+    if (constants.KEY_PASSWORD not in request):
+        raise Exception("request does not contain password")
     if (constants.KEY_FOOD_LOG not in request):
         raise Exception("request does not contain food log")
     
     username = request[constants.KEY_USERNAME]
+    password = request[constants.KEY_PASSWORD]
     foodLogDict = request[constants.KEY_FOOD_LOG]
-    date = foodLogDict[constants.KEY_DATE]
+    dateString = foodLogDict[constants.KEY_DATE]
+    dateParts = dateString.split("-");
+    request_date = date(int(dateParts[0]), int(dateParts[1]), int(dateParts[2]))
     breakfastItems = []
     lunchItems = []
     dinnerItems = []
@@ -56,8 +62,14 @@ def handleRequest(request):
         
         snackItems.append(snackSearchResults[0])
     
-    foodLog = FoodLog(date, breakfastItems, lunchItems, dinnerItems, snackItems)
+    foodLog = FoodLog(request_date, breakfastItems, lunchItems, dinnerItems, snackItems)
     
-    database.updateFoodLog(username, foodLog)
+    database.addFoodLog(username, password, foodLog)
+    
+    try:
+        user = database.getUsers()[username][password]
+        user.setCurrentFoodLog(foodLog)
+    except KeyError:
+        return {constants.KEY_STATUS:constants.BAD_MESSAGE_STATUS, constants.KEY_FAILURE_MESSAGE:"invalid username or password"}
     
     return {constants.KEY_STATUS: constants.SUCCESS_STATUS}

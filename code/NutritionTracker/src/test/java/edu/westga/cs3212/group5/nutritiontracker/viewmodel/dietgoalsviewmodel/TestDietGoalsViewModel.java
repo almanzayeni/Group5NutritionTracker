@@ -79,6 +79,17 @@ class TestDietGoalsViewModel {
     }
 
     @Test
+    void testCreatePreferencesFiltersBlankOtherGoalEntries() {
+        this.viewModel.calorieProperty().set(1800);
+
+        DietGoals prefs = this.viewModel.createDietGoals(
+                PrimaryGoal.OTHER, "Goal A,   , Goal B, ,");
+
+        assertNotNull(prefs);
+        assertEquals(List.of("Goal A", "Goal B"), prefs.getOtherGoals());
+    }
+
+    @Test
     void testCreatePreferencesBlankOtherGoalsProducesEmptyList() {
         this.viewModel.calorieProperty().set(2200);
 

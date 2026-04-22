@@ -107,4 +107,55 @@ public class FoodLog {
 	public List<FoodItem> getSnacks() {
 		return this.snacks;
 	}
+	
+	/**
+	 * Adds a food item to the specified meal type in the food log.
+	 *
+	 * @param mealType the meal type (BREAKFAST, LUNCH, DINNER, SNACKS)
+	 * @param food     the food item to add
+	 * @throws IllegalArgumentException if the meal type is invalid or if the food item is null
+	 */
+	public void addFoodToMeal(MealType mealType, FoodItem food) {
+		if (mealType == null) {
+			throw new IllegalArgumentException("Meal type cannot be null");
+		}
+		if (food == null) {
+			throw new IllegalArgumentException("Food item cannot be null");
+		}
+		if (mealType == MealType.BREAKFAST) {
+			this.breakfast.add(food);
+		} else if (mealType == MealType.LUNCH) {
+			this.lunch.add(food);
+		} else if (mealType == MealType.DINNER) {
+			this.dinner.add(food);
+		} else {
+			this.snacks.add(food);
+		}
+	}
+	
+	/**
+	 * Removes a food item from the specified meal type in the food log.
+	 *
+	 * @param mealType the meal type (BREAKFAST, LUNCH, DINNER, SNACKS)
+	 * @param food     the food item to remove
+	 * @throws IllegalArgumentException if the meal type is invalid or if the food item is null
+	 */
+	public void removeFoodFromMeal(MealType mealType, FoodItem food) {
+		if (mealType == null) {
+			throw new IllegalArgumentException("Meal type cannot be null");
+		}
+		if (food == null) {
+			throw new IllegalArgumentException("Food item cannot be null");
+		}
+		
+		if (mealType == MealType.BREAKFAST) {
+			this.breakfast.remove(food);
+		} else if (mealType == MealType.LUNCH) {
+			this.lunch.remove(food);
+		} else if (mealType == MealType.DINNER) {
+			this.dinner.remove(food);
+		} else {
+			this.snacks.remove(food);
+		}
+	}
 }

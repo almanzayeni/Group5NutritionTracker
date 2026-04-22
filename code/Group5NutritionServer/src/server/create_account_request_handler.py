@@ -121,7 +121,7 @@ def handleRequest(request):
     new_user = User(name, username, password, food_log, diet_goals)
 
     database.getUsers()[username] = {password: new_user}
-    database.addFoodLog(username, food_log)
+    database.addFoodLog(username, password, food_log)
 
     return {
         constants.KEY_STATUS: constants.SUCCESS_STATUS,

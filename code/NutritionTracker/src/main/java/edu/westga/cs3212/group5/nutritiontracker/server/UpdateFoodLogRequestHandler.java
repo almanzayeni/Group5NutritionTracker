@@ -6,8 +6,8 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
 import edu.westga.cs3212.group5.nutritiontracker.model.JsonMapperFactory;
+import edu.westga.cs3212.group5.nutritiontracker.model.User;
 
 /**
  * Handles UPDATE_FOODLOG requests to the server.
@@ -26,22 +26,20 @@ public class UpdateFoodLogRequestHandler {
      * @param foodLog  the updated food log
      * @return the request as a JSON string
      */
-    public static String createUpdateFoodLogRequest(String username, FoodLog foodLog) {
-        if (username == null || username.isBlank()) {
+    public static String createUpdateFoodLogRequest(User user) {
+        if (user == null) {
             throw new IllegalArgumentException("Username cannot be null or blank");
-        }
-        if (foodLog == null) {
-            throw new IllegalArgumentException("Food log cannot be null");
         }
 
         ObjectMapper mapper = JsonMapperFactory.create();
         try {
-            JsonNode foodLogNode = mapper.valueToTree(foodLog);
+            JsonNode foodLogNode = mapper.valueToTree(user.getCurrentFoodLog());
 
             Map<String, Object> requestMap = new HashMap<>();
             requestMap.put(ServerConstants.KEY_REQUEST_TYPE, ServerConstants.UPDATE_FOODLOG_REQUEST_TYPE);
-            requestMap.put(ServerConstants.KEY_USERNAME, username);
-            requestMap.put(ServerConstants.KEY_CURRENT_FOOD_LOG, foodLogNode);
+            requestMap.put(ServerConstants.KEY_USERNAME, user.getUsername());
+            requestMap.put(ServerConstants.KEY_PASSWORD, user.getPassword());
+            requestMap.put(ServerConstants.KEY_FOOD_LOG, foodLogNode);
 
             return mapper.writeValueAsString(requestMap);
         } catch (Exception e) {

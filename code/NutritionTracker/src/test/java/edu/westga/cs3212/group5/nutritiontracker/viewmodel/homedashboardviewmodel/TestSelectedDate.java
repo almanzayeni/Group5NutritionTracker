@@ -46,4 +46,13 @@ public class TestSelectedDate {
     	
     	assertEquals(date, this.vm.getSelectedDateProperty().get());
     }
+
+    @Test
+    void testDateStringPropertyTracksSelectedDate() {
+    	LocalDate date = LocalDate.of(2026, 3, 3);
+
+    	this.vm.setSelectedDate(date);
+
+    	assertEquals("3-3-2026", this.vm.getDateStringProperty().get());
+    }
 }

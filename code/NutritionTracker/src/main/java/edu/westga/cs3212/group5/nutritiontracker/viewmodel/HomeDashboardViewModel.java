@@ -1,6 +1,7 @@
 package edu.westga.cs3212.group5.nutritiontracker.viewmodel;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +12,15 @@ import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
 import edu.westga.cs3212.group5.nutritiontracker.model.MealType;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
 import edu.westga.cs3212.group5.nutritiontracker.model.User;
+import edu.westga.cs3212.group5.nutritiontracker.server.GetDayOfFoodRequestHandler;
 import edu.westga.cs3212.group5.nutritiontracker.server.UpdateFoodLogRequestHandler;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -26,141 +30,63 @@ import javafx.collections.ObservableList;
 /**
  * Dashboard VM
  *
- * @author vfilpo + Emi :), Yeni Almanza
+ * @author vfilpo + Emi :), Yeni Almanza, Justin Smith
  * @version Spring 2026
  */
 public class HomeDashboardViewModel {
-	private final ObjectProperty<LocalDate> selectedDate = new SimpleObjectProperty<>(LocalDate.now());
-	private final ObservableList<FoodItem> breakfastItems;
-	private final ObservableList<FoodItem> lunchItems;
-	private final ObservableList<FoodItem> dinnerItems;
-	private final ObservableList<FoodItem> snacksItems;
+	private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("M-d-yyyy");
+	private ObjectProperty<LocalDate> selectedDate;
+	private StringProperty dateString;
+	private ListProperty<FoodItem> breakfastItems;
+	private ListProperty<FoodItem> lunchItems;
+	private ListProperty<FoodItem> dinnerItems;
+	private ListProperty<FoodItem> snacksItems;
+	private User currentUser;
+	private ObjectProperty<PrimaryGoal> selectedGoal;
+	private ObjectProperty<DashboardCalculations> calculations;
+	private ObjectProperty<DietGoals> usersDietGoals;
+	private StringProperty usersName;
+	
+	private MealType pendingMealType = null;
+	private final ReadOnlyDoubleWrapper totalCalories;
 
-	private final ReadOnlyDoubleWrapper totalCalories = new ReadOnlyDoubleWrapper();
-
-	private final ObjectProperty<User> currentUser = new SimpleObjectProperty<>();
-	private final ObjectProperty<PrimaryGoal> selectedGoal = new SimpleObjectProperty<>(PrimaryGoal.CALORIE);
-	private final ObjectProperty<DashboardCalculations> calculations = new SimpleObjectProperty<>();
-	private final ObjectProperty<DietGoals> usersDietGoals;
-	private final ObjectProperty<FoodLog> currentFoodLog;
-	private final StringProperty usersName;
-
-  private MealType pendingMealType = null;
-  
 	/**
-	 * HomeDashboard VM Constructor. Binds calorie totals to foods added. Sets User for session.
+	 * HomeDashboard VM Constructor. Binds calorie totals to foods added. Sets User
+	 * for session.
 	 *
 	 * @param user the currently logged in user
 	 */
 	public HomeDashboardViewModel(User user) {
-		this.currentUser.set(user);
-		this.usersName = new SimpleStringProperty(this.currentUser.get().getName());
-		this.currentFoodLog = new SimpleObjectProperty<>(this.currentUser.get().getCurrentFoodLog());
-		this.usersDietGoals = new SimpleObjectProperty<>(this.currentUser.get().getDietGoals());
-
-		var breakfastList = this.currentUser.get().getCurrentFoodLog().getBreakfast();
-		this.breakfastItems = FXCollections.observableArrayList(breakfastList);
-
-		var lunchList = this.currentUser.get().getCurrentFoodLog().getLunch();
-		this.lunchItems = FXCollections.observableArrayList(lunchList);
-
-		var dinnerList = this.currentUser.get().getCurrentFoodLog().getDinner();
-		this.dinnerItems = FXCollections.observableArrayList(dinnerList);
-
-		var snackList = this.currentUser.get().getCurrentFoodLog().getSnacks();
-		this.snacksItems = FXCollections.observableArrayList(snackList);
-
+		this.currentUser = user;
+		this.selectedDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+		this.dateString = new SimpleStringProperty();
+		this.dateString.bind(Bindings.createStringBinding(() -> DATE_FMT.format(this.selectedDate.get()), this.selectedDate));
+		this.breakfastItems = new SimpleListProperty<FoodItem>(FXCollections.observableArrayList(this.currentUser.getCurrentFoodLog().getBreakfast()));
+		this.lunchItems = new SimpleListProperty<FoodItem>(FXCollections.observableArrayList(this.currentUser.getCurrentFoodLog().getLunch()));
+		this.dinnerItems = new SimpleListProperty<FoodItem>(FXCollections.observableArrayList(this.currentUser.getCurrentFoodLog().getDinner()));
+		this.snacksItems = new SimpleListProperty<FoodItem>(FXCollections.observableArrayList(this.currentUser.getCurrentFoodLog().getSnacks()));
+		this.selectedGoal = new SimpleObjectProperty<PrimaryGoal>(PrimaryGoal.CALORIE);
+		this.usersName = new SimpleStringProperty(this.currentUser.getName());
+		this.usersDietGoals = new SimpleObjectProperty<DietGoals>(this.currentUser.getDietGoals());
+		
+		this.totalCalories = new ReadOnlyDoubleWrapper();
 		DoubleBinding total = Bindings.createDoubleBinding(this::computeTotalCalories, breakfastItems, lunchItems,
 				dinnerItems, snacksItems);
 		this.totalCalories.bind(total);
 		
+		this.calculations = new SimpleObjectProperty<DashboardCalculations>();
 		this.calculations.bind(Bindings.createObjectBinding(
-			    () -> create(this.currentUser.get(), this.selectedGoal.get()),
-			    this.currentUser,
-			    this.selectedGoal,
-			    this.breakfastItems,
-			    this.lunchItems,
-			    this.dinnerItems,
-			    this.snacksItems
-			));
+				() -> create(this.currentUser, this.selectedGoal.get()), this.selectedGoal,
+				this.breakfastItems, this.lunchItems, this.dinnerItems, this.snacksItems));
 	}
 	
-	/**
-	 * Gets selected goal property.
-	 * @return currently selected primary goal
-	 */
-	public ObjectProperty<PrimaryGoal> selectedGoalProperty() {
-	    return this.selectedGoal;
-	}
-  
-  /**
-   * Sets the meal type that should receive the next food the user picks.
-   *
-   * @precondition mealType != null
-   * @param mealType the target meal
-   * @throws IllegalArgumentException if mealType is null
-   */
-  public void setPendingMealType(MealType mealType) {
-      if (mealType == null) {
-          throw new IllegalArgumentException("Meal type cannot be null");
-      }
-      this.pendingMealType = mealType;
-  }
-
-  /**
-   * Returns the meal type the user is currently adding food to, or null if none
-   * is set.
-   *
-   * @return the pending meal type
-   */
-  public MealType getPendingMealType() {
-      return this.pendingMealType;
-  }
-
-  /**
-   * Clears the pending meal type after the food has been added.
-   */
-  public void clearPendingMealType() {
-      this.pendingMealType = null;
-  }
-
-  /**
-   * Adds a food item to the meal list indicated by {@link #getPendingMealType()}.
-   *
-   * @precondition food != null && pendingMealType != null
-   * @param food the food item to add
-   * @throws IllegalArgumentException if food is null
-   * @throws IllegalStateException    if no pending meal type has been set
-   */
-  public void addFoodToPendingMeal(FoodItem food) {
-	    if (food == null) {
-	        throw new IllegalArgumentException("Food item cannot be null");
-	    }
-	    if (this.pendingMealType == null) {
-	        throw new IllegalStateException("No pending meal type set");
-	    }
-	    switch (this.pendingMealType) {
-	        case BREAKFAST -> this.breakfastItems.add(food);
-	        case LUNCH     -> this.lunchItems.add(food);
-	        case DINNER    -> this.dinnerItems.add(food);
-	        case SNACKS    -> this.snacksItems.add(food);
-	    }
-	    this.pendingMealType = null;
-
-	    String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(
-	        this.getCurrentUser().getUsername(),
-	        this.getCurrentUser().getCurrentFoodLog()
-	    );
-	    UpdateFoodLogRequestHandler.handleUpdateFoodLogRequest(request);
-	}
-
 	/**
 	 * Get User object.
 	 * 
 	 * @return user object.
 	 */
 	public User getCurrentUser() {
-		return this.currentUser.get();
+		return this.currentUser;
 	}
 
 	/**
@@ -169,7 +95,7 @@ public class HomeDashboardViewModel {
 	 * @param user to be set.
 	 */
 	public void setCurrentUser(User user) {
-		this.currentUser.set(user);
+		this.currentUser = user;
 	}
 
 	/**
@@ -179,15 +105,6 @@ public class HomeDashboardViewModel {
 	 */
 	public StringProperty getUsersNameProperty() {
 		return this.usersName;
-	}
-
-	/**
-	 * User food log property.
-	 *
-	 * @return the object property
-	 */
-	public ObjectProperty<FoodLog> userFoodLogProperty() {
-		return this.currentFoodLog;
 	}
 
 	/**
@@ -225,40 +142,58 @@ public class HomeDashboardViewModel {
 	public void setSelectedDate(LocalDate date) {
 		this.selectedDate.set(date);
 	}
+	
+	/**
+	 * Get selected date string property.
+	 * 
+	 * @return StringProperty of selected date formatted as M-d-yyyy
+	 */
+	public StringProperty getDateStringProperty() {
+		return this.dateString;
+	}
+	
+	/**
+	 * Gets selected goal property.
+	 * 
+	 * @return currently selected primary goal
+	 */
+	public ObjectProperty<PrimaryGoal> selectedGoalProperty() {
+		return this.selectedGoal;
+	}
 
 	/**
 	 * Get the user's breakfast food items list.
 	 * 
-	 * @return ObservableList of food items.
+	 * @return breakfast list property containing food items.
 	 */
-	public ObservableList<FoodItem> getBreakfastItems() {
+	public ListProperty<FoodItem> getBreakfastItems() {
 		return this.breakfastItems;
 	}
 
 	/**
 	 * Get the user's lunch food items list.
 	 * 
-	 * @return ObservableList of food items.
+	 * @return lunch list property containing food items.
 	 */
-	public ObservableList<FoodItem> getLunchItems() {
+	public ListProperty<FoodItem> getLunchItems() {
 		return this.lunchItems;
 	}
 
 	/**
 	 * Get the user's dinner food items list.
 	 * 
-	 * @return ObservableList of food items.
+	 * @return dinner list property containing food items.
 	 */
-	public ObservableList<FoodItem> getDinnerItems() {
+	public ListProperty<FoodItem> getDinnerItems() {
 		return this.dinnerItems;
 	}
 
 	/**
 	 * Get the user's snack food items list.
 	 * 
-	 * @return ObservableList of food items.
+	 * @return snacks list property containing food items.
 	 */
-	public ObservableList<FoodItem> getSnacksItems() {
+	public ListProperty<FoodItem> getSnacksItems() {
 		return this.snacksItems;
 	}
 
@@ -271,89 +206,107 @@ public class HomeDashboardViewModel {
 	public ReadOnlyDoubleProperty totalCaloriesProperty() {
 		return this.totalCalories.getReadOnlyProperty();
 	}
-
+	
 	/**
-	 * Adds a food item to the user's breakfast list.
+	 * Removes a food item from the specified meal type list.
 	 *
-	 * @param item the food item to add
+	 * @param item     the food item to remove
+	 * @param mealType the meal type to remove from
 	 */
-	public void addToBreakfast(FoodItem item) {
-		this.breakfastItems.add(item);
-	}
-
-	/**
-	 * Adds a food item to the user's lunch list.
-	 *
-	 * @param item the food item to add
-	 */
-	public void addToLunch(FoodItem item) {
-		this.lunchItems.add(item);
-	}
-
-	/**
-	 * Adds a food item to the user's dinner list.
-	 *
-	 * @param item the food item to add
-	 */
-	public void addToDinner(FoodItem item) {
-		this.dinnerItems.add(item);
-	}
-
-	/**
-	 * Adds a food item to the user's snacks list.
-	 *
-	 * @param item the food item to add
-	 */
-	public void addToSnacks(FoodItem item) {
-		this.snacksItems.add(item);
-	}
-
-	/**
-	 * Removes a food item from the user's breakfast list.
-	 *
-	 * @param item the food item to remove
-	 */
-	public void removeFromBreakfast(FoodItem item) {
-		this.breakfastItems.remove(item);
-	}
-
-	/**
-	 * Removes a food item from the user's lunch list.
-	 *
-	 * @param item the food item to remove
-	 */
-	public void removeFromLunch(FoodItem item) {
-		this.lunchItems.remove(item);
-	}
-
-	/**
-	 * Removes a food item from the user's dinner list.
-	 *
-	 * @param item the food item to remove
-	 */
-	public void removeFromDinner(FoodItem item) {
-		this.dinnerItems.remove(item);
-	}
-
-	/**
-	 * Removes a food item from the user's snacks list.
-	 *
-	 * @param item the food item to remove
-	 */
-	public void removeFromSnacks(FoodItem item) {
-		this.snacksItems.remove(item);
+	public void removeFoodFromMeal(FoodItem item, MealType mealType) {
+		this.currentUser.getCurrentFoodLog().removeFoodFromMeal(mealType, item);
+		
+		String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(this.getCurrentUser());
+		UpdateFoodLogRequestHandler.handleUpdateFoodLogRequest(request);
+		this.updateMealLists();
 	}
 	
+	/**
+	 * Fetches the food log for the newly selected date from the server and updates
+	 * 
+	 * @throws RuntimeException if the server request fails or returns an invalid response
+	 */
+	public void handleDateChange() {
+		try {
+			FoodLog log = GetDayOfFoodRequestHandler.handleRequest(this.currentUser.getUsername(), this.selectedDate.get());
+			this.currentUser.setCurrentFoodLog(log);
+			this.updateMealLists();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	/**
+	 * Sets the meal type that should receive the next food the user picks.
+	 *
+	 * @precondition mealType != null
+	 * @param mealType the target meal
+	 * @throws IllegalArgumentException if mealType is null
+	 */
+	public void setPendingMealType(MealType mealType) {
+		if (mealType == null) {
+			throw new IllegalArgumentException("Meal type cannot be null");
+		}
+		this.pendingMealType = mealType;
+	}
+
+	/**
+	 * Returns the meal type the user is currently adding food to, or null if none
+	 * is set.
+	 *
+	 * @return the pending meal type
+	 */
+	public MealType getPendingMealType() {
+		return this.pendingMealType;
+	}
+
+	/**
+	 * Clears the pending meal type after the food has been added.
+	 */
+	public void clearPendingMealType() {
+		this.pendingMealType = null;
+	}
+
+	/**
+	 * Adds a food item to the meal list indicated by {@link #getPendingMealType()}.
+	 *
+	 * @precondition food != null && pendingMealType != null
+	 * @param food the food item to add
+	 * @throws IllegalArgumentException if food is null
+	 * @throws IllegalStateException    if no pending meal type has been set
+	 */
+	public void addFoodToPendingMeal(FoodItem food) {
+		if (food == null) {
+			throw new IllegalArgumentException("Food item cannot be null");
+		}
+		if (this.pendingMealType == null) {
+			throw new IllegalStateException("No pending meal type set");
+		}
+		this.currentUser.getCurrentFoodLog().addFoodToMeal(this.pendingMealType, food);
+		
+		this.pendingMealType = null;
+
+		String request = UpdateFoodLogRequestHandler.createUpdateFoodLogRequest(this.getCurrentUser());
+		UpdateFoodLogRequestHandler.handleUpdateFoodLogRequest(request);
+		this.updateMealLists();
+	}
+
+	
+
 	/**
 	 * Creates a {@link DashboardCalculations} instance for the given user and goal.
 	 * <p>
 	 * Derives consumed and target amounts from the user's current food log and diet
 	 * goals, scoped to the specified {@link PrimaryGoal}.
 	 *
-	 * @param user         the user whose food log and diet goals are used; must not be null
-	 * @param selectedGoal the goal to calculate consumption and targets for; must not be null
+	 * @param user         the user whose food log and diet goals are used; must not
+	 *                     be null
+	 * @param selectedGoal the goal to calculate consumption and targets for; must
+	 *                     not be null
 	 * @return a new {@link DashboardCalculations} populated with the derived values
-	 * @throws IllegalArgumentException if {@code user} or {@code selectedGoal} is null
+	 * @throws IllegalArgumentException if {@code user} or {@code selectedGoal} is
+	 *                                  null
 	 */
 	public static DashboardCalculations create(User user, PrimaryGoal selectedGoal) {
 		if (user == null) {
@@ -367,102 +320,83 @@ public class HomeDashboardViewModel {
 		double consumedAmount = calculateConsumedAmount(log, selectedGoal);
 		double targetAmount = getTargetAmount(user.getDietGoals(), selectedGoal);
 
-    return new DashboardCalculations(selectedGoal, consumedAmount, targetAmount);
-}
-	
-	public void loadFoodLog(FoodLog foodLog) {
-		if (foodLog == null) {
-			throw new IllegalArgumentException("foodLog cannot be null");
-		}
-		
-		this.currentFoodLog.set(foodLog);
-		
-		this.breakfastItems.setAll(foodLog.getBreakfast());
-		this.lunchItems.setAll(foodLog.getLunch());
-		this.dinnerItems.setAll(foodLog.getDinner());
-		this.snacksItems.setAll(foodLog.getSnacks());
+		return new DashboardCalculations(selectedGoal, consumedAmount, targetAmount);
 	}
 
-private static double calculateConsumedAmount(FoodLog log, PrimaryGoal selectedGoal) {
-	double total = 0.0;
+	private void updateMealLists() {
+		this.breakfastItems.setAll(this.currentUser.getCurrentFoodLog().getBreakfast());
+		this.lunchItems.setAll(this.currentUser.getCurrentFoodLog().getLunch());
+		this.dinnerItems.setAll(this.currentUser.getCurrentFoodLog().getDinner());
+		this.snacksItems.setAll(this.currentUser.getCurrentFoodLog().getSnacks());
+	}
 
-  for (FoodItem item : getAllFoods(log)) {
-		switch (selectedGoal) {
-		case CALORIE:
+	private static double calculateConsumedAmount(FoodLog log, PrimaryGoal selectedGoal) {
+		double total = 0.0;
+
+		for (FoodItem item : getAllFoods(log)) {
+			switch (selectedGoal) {
+			case CALORIE:
+				total += item.getCalories();
+				break;
+			case PROTEIN:
+				total += item.getProtein();
+				break;
+			case FAT:
+				total += item.getFat();
+				break;
+			case SUGAR:
+				total += item.getSugar();
+				break;
+			case SODIUM:
+				total += item.getSodium();
+				break;
+			case CARBS:
+				total += item.getCarbohydrates();
+				break;
+			case OTHER:
+				break;
+			}
+		}
+		return total;
+	}
+
+	private static double getTargetAmount(DietGoals goals, PrimaryGoal selectedGoal) {
+		if (selectedGoal == PrimaryGoal.CALORIE) {
+			return goals.getCalorieGoal();
+		} else if (selectedGoal == PrimaryGoal.PROTEIN) {
+			return goals.getProteinGoal();
+		} else if (selectedGoal == PrimaryGoal.FAT) {
+			return goals.getFatGoal();
+		} else if (selectedGoal == PrimaryGoal.SUGAR) {
+			return goals.getSugarGoal();
+		} else if (selectedGoal == PrimaryGoal.SODIUM) {
+			return goals.getSodiumGoal();
+		} else if (selectedGoal == PrimaryGoal.CARBS) {
+			return goals.getCarbsGoal();
+		} else {
+			return 0;
+		}
+	}
+
+	private double computeTotalCalories() {
+		return this.sumCalories(this.breakfastItems) + this.sumCalories(this.lunchItems)
+				+ this.sumCalories(this.dinnerItems) + this.sumCalories(this.snacksItems);
+	}
+
+	private double sumCalories(ObservableList<FoodItem> items) {
+		double total = 0;
+		for (FoodItem item : items) {
 			total += item.getCalories();
-			break;
-		case PROTEIN:
-			total += item.getProtein();
-			break;
-		case FAT:
-			total += item.getFat();
-			break;
-		case SUGAR:
-			total += item.getSugar();
-			break;
-		case SODIUM:
-			total += item.getSodium();
-			break;
-		case CARBS:
-			total += item.getCarbohydrates();
-			break;
-		case OTHER:
-			break;
 		}
+		return total;
 	}
-	return total;
-}
-	
-private static double getTargetAmount(DietGoals goals, PrimaryGoal selectedGoal) {
-	switch (selectedGoal) {
-    case CALORIE:
-        return goals.getCalorieGoal();
-    case PROTEIN:
-        return goals.getProteinGoal();
-    case FAT:
-        return goals.getFatGoal();
-    case SUGAR:
-        return goals.getSugarGoal();
-    case SODIUM:
-        return goals.getSodiumGoal();
-    case CARBS:
-	       return goals.getCarbsGoal();
-	   case OTHER:
-	       return 0;
-	   default:
-	       return 0;
-	   }
-}
 
-private double computeTotalCalories() {
-	return this.sumCalories(this.breakfastItems) + this.sumCalories(this.lunchItems)
-			+ this.sumCalories(this.dinnerItems) + this.sumCalories(this.snacksItems);
-}
-
-private double sumCalories(ObservableList<FoodItem> items) {
-	double total = 0;
-	for (FoodItem item : items) {
-		total += item.getCalories();
+	private static List<FoodItem> getAllFoods(FoodLog log) {
+		List<FoodItem> all = new ArrayList<>();
+		all.addAll(log.getBreakfast());
+		all.addAll(log.getLunch());
+		all.addAll(log.getDinner());
+		all.addAll(log.getSnacks());
+		return all;
 	}
-	return total;
-}
-	
- private static List<FoodItem> getAllFoods(FoodLog log) {
-	   List<FoodItem> all = new ArrayList<>();
-	   all.addAll(log.getBreakfast());
-	   all.addAll(log.getLunch());
-	   all.addAll(log.getDinner());
-	   all.addAll(log.getSnacks());
-	   return all;
-}
-
-// TODO: remove if unused
-//    private FoodItem makeFood(String description, double calories) {
-//        BaseFood food = new BaseFood();
-//        food.setDescription(description);
-//        food.setQuantityCategory(QuantityCategory.SERVING); 
-//        food.setPortionSize(1);
-//        food.setCalories(calories);
-//        return food;
-//    }
 }
