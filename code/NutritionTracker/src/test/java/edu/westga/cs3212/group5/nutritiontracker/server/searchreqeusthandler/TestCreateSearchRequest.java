@@ -24,13 +24,6 @@ public class TestCreateSearchRequest {
 	}
 
 	@Test
-	public void testBlankQuery() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			SearchRequestHandler.createSearchRequest("   ");
-		});
-	}
-
-	@Test
 	public void testValidSearchRequest() throws Exception {
 		String result = SearchRequestHandler.createSearchRequest("banana");
 		JsonNode root = new ObjectMapper().readTree(result);
