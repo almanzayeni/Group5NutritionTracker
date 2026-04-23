@@ -55,8 +55,6 @@ public class HomeDashboardPageController implements ViewModelAware {
 	@FXML
 	private Button addFoodButton;
 	@FXML
-	private Button logoutButton;
-	@FXML
 	private Button addBreakfastButton;
 	@FXML
 	private Button addLunchButton;
@@ -107,7 +105,6 @@ public class HomeDashboardPageController implements ViewModelAware {
         assert goalUnitLabel != null : "fx:id=\"goalUnitLabel\" was not injected: check your FXML file 'HomeDashboardPage.fxml'.";
         assert hamburgerMenu != null : "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'HomeDashboardPage.fxml'.";
         assert homeButton != null : "fx:id=\"homeButton\" was not injected: check your FXML file 'HomeDashboardPage.fxml'.";
-        assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'HomeDashboardPage.fxml'.";
         assert lunchListView != null : "fx:id=\"lunchListView\" was not injected: check your FXML file 'HomeDashboardPage.fxml'.";
         assert menuPane != null : "fx:id=\"menuPane\" was not injected: check your FXML file 'HomeDashboardPage.fxml'.";
         assert nameLabel != null : "fx:id=\"nameLabel\" was not injected: check your FXML file 'HomeDashboardPage.fxml'.";
@@ -272,7 +269,6 @@ public class HomeDashboardPageController implements ViewModelAware {
 		
 		this.homeButton.setOnAction(e -> this.switchTo("HomeDashboardPage.fxml"));
 		this.createFoodButton.setOnAction(e -> this.switchTo("CreateFoodItemTypeSelectionPage.fxml"));
-		this.logoutButton.setOnAction(this::handleLogout);
 	}
 
 	private void switchTo(String fxml) {

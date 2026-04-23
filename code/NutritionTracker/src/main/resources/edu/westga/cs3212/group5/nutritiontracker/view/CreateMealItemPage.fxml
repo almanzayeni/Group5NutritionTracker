@@ -10,6 +10,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 
 <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3212.group5.nutritiontracker.view.CreateMealItemPageController">
    <content>
@@ -98,10 +100,20 @@
                <font><Font name="System Bold" size="18.0" /></font>
             </Button>
 
-            <!-- Logout -->
-            <Button fx:id="logoutButton" layoutX="275.0" layoutY="10.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="70.0" style="-fx-background-color: #b8d5a3;" text="Logout">
-               <font><Font name="System Bold" size="14.0" /></font>
-            </Button>
+			<!-- Account Settings Menu -->
+			<MenuButton fx:id="accountMenu" layoutX="292.0"
+				layoutY="11.0" mnemonicParsing="false" prefHeight="27.0"
+				prefWidth="56.0" style="-fx-background-color: #b8d5a3;" text="👤">
+				<items>
+					<MenuItem mnemonicParsing="false"
+						onAction="#handleEditDietPlan" text="Edit Diet Plan" />
+					<MenuItem mnemonicParsing="false" onAction="#handleLogout"
+						text="Logout" />
+				</items>
+				<font>
+					<Font name="System Bold" size="13.0" />
+				</font>
+			</MenuButton>
 
             <!-- Side menu pane -->
             <Pane fx:id="menuPane" prefHeight="640.0" prefWidth="207.0" style="-fx-background-color: #87b442;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">

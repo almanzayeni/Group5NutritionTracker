@@ -7,6 +7,7 @@ import edu.westga.cs3212.group5.nutritiontracker.model.FoodItem;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.CreateMealItemPageViewModel;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -18,9 +19,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -49,8 +52,6 @@ public class CreateMealItemPageController {
 	@FXML
 	private Button createFoodButton;
 	@FXML
-	private Button logoutButton;
-	@FXML
 	private Pane menuPane;
 	@FXML
 	private TextField descriptionTextField;
@@ -66,6 +67,8 @@ public class CreateMealItemPageController {
 	private TextField sodiumTextField;
 	@FXML
 	private TextField sugarTextField;
+    @FXML 
+    private MenuButton accountMenu;
 
 	private CreateMealItemPageViewModel viewModel;
 	private FoodSearchPanelController searchPanelController;
@@ -88,8 +91,6 @@ public class CreateMealItemPageController {
 				: "fx:id=\"homeButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert createFoodButton != null
 				: "fx:id=\"createFoodButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
-		assert logoutButton != null
-				: "fx:id=\"logoutButton\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert menuPane != null
 				: "fx:id=\"menuPane\" was not injected: check your FXML file 'CreateCompositFoodPage.fxml'.";
 		assert descriptionTextField != null
@@ -107,7 +108,57 @@ public class CreateMealItemPageController {
 		this.connectSearchPanel();
 		this.setUpIngredientsListView();
 		this.bindViewModel();
-		setUpListeners();
+		this.setUpListeners();
+	}
+	
+	@FXML
+	void handleEditDietPlan(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("PreferencesPage.fxml"));
+			loader.load();
+
+			Parent parent = loader.getRoot();
+			Scene scene = new Scene(parent);
+
+			Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+			stage.setScene(scene);
+			stage.setTitle("Preferences");
+			stage.show();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Alert alert = new Alert(Alert.AlertType.ERROR, "Error navigating to preferences page.");
+			alert.showAndWait();
+		}
+	}
+
+	@FXML
+	void handleLogout(ActionEvent event) {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to logout?");
+		alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.isPresent() && result.get() == ButtonType.YES) {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(getClass().getResource("LoginPage.fxml"));
+				loader.load();
+
+				Parent parent = loader.getRoot();
+				Scene scene = new Scene(parent);
+
+				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+				stage.setScene(scene);
+				stage.setTitle("Login");
+				stage.show();
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Error navigating to login page.");
+				errorAlert.showAndWait();
+			}
+		}
 	}
 
 	private void connectSearchPanel() {
@@ -159,7 +210,6 @@ public class CreateMealItemPageController {
 
 	private void setUpListeners() {
 		this.handleHamburgerMenuClick();
-		this.setUpListenerForLogoutButton();
 		this.setUpListenerForHomeButton();
 		this.setUpListenerForCreateFoodButton();
 		this.setupListenerForAddMealButton();
@@ -197,29 +247,6 @@ public class CreateMealItemPageController {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
-		});
-	}
-
-	private void setUpListenerForLogoutButton() {
-		this.logoutButton.setOnAction((ActionEvent event) -> {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(LoginPageController.class.getResource("LoginPage.fxml"));
-				loader.load();
-
-				Parent parent = loader.getRoot();
-				Scene scene = new Scene(parent);
-
-				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-				stage.setScene(scene);
-				stage.setTitle("Login");
-				stage.show();
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Error logging user out.");
-				alert.showAndWait();
 			}
 		});
 	}
