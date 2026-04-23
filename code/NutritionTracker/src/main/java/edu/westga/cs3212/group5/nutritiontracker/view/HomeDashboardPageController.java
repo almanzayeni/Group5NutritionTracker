@@ -117,7 +117,7 @@ public class HomeDashboardPageController implements ViewModelAware {
 	
 	@FXML
 	void handleEditDietPlan(ActionEvent event) {
-	    this.switchTo("PreferencesPage.fxml");
+	    this.switchTo("DietGoalsPage.fxml");
 	}
 
     @FXML

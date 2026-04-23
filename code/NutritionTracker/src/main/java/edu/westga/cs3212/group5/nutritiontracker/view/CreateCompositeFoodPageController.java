@@ -78,7 +78,7 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
     void handleEditDietPlan(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("PreferencesPage.fxml"));
+            loader.setLocation(getClass().getResource("DietGoalsPage.fxml"));
             loader.load();
 
             Object controller = loader.getController();

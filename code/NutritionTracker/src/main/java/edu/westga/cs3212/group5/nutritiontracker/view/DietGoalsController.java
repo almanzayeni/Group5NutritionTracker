@@ -92,35 +92,35 @@ public class DietGoalsController implements ViewModelAware {
     @FXML
     void initialize() {
         assert this.calorieTextField != null
-                : "fx:id=\"calorieTextField\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"calorieTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.carbsTextField != null
-                : "fx:id=\"carbsTextField\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"carbsTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.saveButton != null
-                : "fx:id=\"saveButton\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"saveButton\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.fatTextField != null
-                : "fx:id=\"fatTextField\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"fatTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.otherGoalsTextField != null
-                : "fx:id=\"otherGoalsTextField\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"otherGoalsTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.primaryGoalComboBox != null
-                : "fx:id=\"primaryGoalComboBox\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"primaryGoalComboBox\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.proteinTextField != null
-                : "fx:id=\"proteinTextField\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"proteinTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.sodiumTextField != null
-                : "fx:id=\"sodiumTextField\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"sodiumTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.sugarTextField != null
-                : "fx:id=\"sugarTextField\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"sugarTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.warningLabel != null
-                : "fx:id=\"warningLabel\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"warningLabel\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.hamburgerMenu != null
-                : "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.menuPane != null
-                : "fx:id=\"menuPane\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"menuPane\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.homeButton != null
-                : "fx:id=\"homeButton\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"homeButton\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.createFoodButton != null
-                : "fx:id=\"createFoodButton\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"createFoodButton\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
         assert this.accountMenu != null
-                : "fx:id=\"accountMenu\" was not injected: check your FXML file 'PreferencesPage.fxml'.";
+                : "fx:id=\"accountMenu\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
 
         this.viewModel = new DietGoalsViewModel();
 

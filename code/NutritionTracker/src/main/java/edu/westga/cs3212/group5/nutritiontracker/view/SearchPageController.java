@@ -54,7 +54,7 @@ public class SearchPageController implements ViewModelAware {
     
     @FXML
     void handleEditDietPlan(ActionEvent event) {
-        this.navigateTo("PreferencesPage.fxml");
+        this.navigateTo("DietGoalsPage.fxml");
     }
 
     @FXML
