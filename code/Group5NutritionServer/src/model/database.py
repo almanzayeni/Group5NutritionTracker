@@ -100,6 +100,25 @@ def getUsers():
     '''
     return _users
 
+def getUser(username, password):
+    '''
+    Returns the user with the specified username and password if found in the database, otherwise raises an exception if the user is not found or the password is incorrect.
+    
+    @precondition username != None &&
+                  password != None
+                  
+    @return the user with the specified username and password if found in the database.
+    '''
+    if username is None:
+        raise Exception("username is None")
+    if password is None:
+        raise Exception("password is None")
+    if username not in _users:
+        raise KeyError("user not found")
+    if password not in _users[username]:
+        raise KeyError("incorrect password")
+    return _users[username][password]
+
 def getFoodItems():
     '''
     Returns the food items in the database.

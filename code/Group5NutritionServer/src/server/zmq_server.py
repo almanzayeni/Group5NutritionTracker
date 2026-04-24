@@ -6,7 +6,8 @@ Created on Mar 9, 2026
 import zmq
 import json
 from model import database
-from server import constants, login_authentication_request_handler
+from server import constants, login_authentication_request_handler,\
+    edit_diet_goals_request_handler
 from server import create_account_request_handler
 from server import search_request_handler
 from server import add_food_request_handler
@@ -52,6 +53,9 @@ def run(protocol, ipAddress, port):
             sendResponse(socket, response)
         elif request[constants.KEY_REQUEST_TYPE] == constants.UPDATE_FOODLOG_REQUEST_TYPE:
             response = update_foodlog_request_handler.handleRequest(request)
+            sendResponse(socket, response)
+        elif request[constants.KEY_REQUEST_TYPE] == constants.EDIT_DIET_GOALS_REQUEST_TYPE:
+            response = edit_diet_goals_request_handler.handleRequest(request)
             sendResponse(socket, response)
         else:
             response = {constants.KEY_STATUS:constants.UNSUPPORTED_OPERATION_STATUS, constants.KEY_FAILURE_MESSAGE:"unsupported request type"}

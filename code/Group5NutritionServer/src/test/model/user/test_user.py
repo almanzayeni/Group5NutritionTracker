@@ -91,6 +91,32 @@ class TestUser(unittest.TestCase):
             user.toDict(),
         )
 
+    def test_set_current_food_log_rejects_none(self):
+        user = self._create_user()
+
+        with self.assertRaisesRegex(Exception, "food log is None"):
+            user.setCurrentFoodLog(None)
+
+    def test_add_food_log_rejects_none(self):
+        user = self._create_user()
+
+        with self.assertRaisesRegex(Exception, "food log is None"):
+            user.addFoodLog(None)
+
+    def test_set_diet_goals_rejects_none(self):
+        user = self._create_user()
+
+        with self.assertRaisesRegex(Exception, "diet goals is None"):
+            user.setDietGoals(None)
+
+    def test_set_diet_goals_updates_diet_goals(self):
+        user = self._create_user()
+        updated_diet_goals = _FakeDietGoals({"primaryGoal": "PROTEIN"})
+
+        user.setDietGoals(updated_diet_goals)
+
+        self.assertIs(updated_diet_goals, user.getDietGoals())
+
 
 if __name__ == "__main__":
     unittest.main()
