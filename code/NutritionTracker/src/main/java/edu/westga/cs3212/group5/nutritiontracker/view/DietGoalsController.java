@@ -3,12 +3,14 @@ package edu.westga.cs3212.group5.nutritiontracker.view;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
+import edu.westga.cs3212.group5.nutritiontracker.server.EditDietGoalsHandler;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.DietGoalsViewModel;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.ViewModelAware;
@@ -29,7 +31,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 
 /**
- * Controller for the Preferences page.
+ * Controller for the Diet Goals page.
  *
  * @author Yeni Almanza
  * @version Spring 2026
@@ -71,6 +73,7 @@ public class DietGoalsController implements ViewModelAware {
 
     @FXML
     private Label warningLabel;
+
     @FXML
     private JFXHamburger hamburgerMenu;
 
@@ -91,37 +94,6 @@ public class DietGoalsController implements ViewModelAware {
 
     @FXML
     void initialize() {
-        assert this.calorieTextField != null
-                : "fx:id=\"calorieTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.carbsTextField != null
-                : "fx:id=\"carbsTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.saveButton != null
-                : "fx:id=\"saveButton\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.fatTextField != null
-                : "fx:id=\"fatTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.otherGoalsTextField != null
-                : "fx:id=\"otherGoalsTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.primaryGoalComboBox != null
-                : "fx:id=\"primaryGoalComboBox\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.proteinTextField != null
-                : "fx:id=\"proteinTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.sodiumTextField != null
-                : "fx:id=\"sodiumTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.sugarTextField != null
-                : "fx:id=\"sugarTextField\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.warningLabel != null
-                : "fx:id=\"warningLabel\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.hamburgerMenu != null
-                : "fx:id=\"hamburgerMenu\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.menuPane != null
-                : "fx:id=\"menuPane\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.homeButton != null
-                : "fx:id=\"homeButton\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.createFoodButton != null
-                : "fx:id=\"createFoodButton\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-        assert this.accountMenu != null
-                : "fx:id=\"accountMenu\" was not injected: check your FXML file 'DietGoalsPage.fxml'.";
-
         this.viewModel = new DietGoalsViewModel();
 
         this.primaryGoalComboBox.getItems().setAll(PrimaryGoal.values());
@@ -136,15 +108,40 @@ public class DietGoalsController implements ViewModelAware {
         this.carbsTextField.textProperty().bindBidirectional(this.viewModel.carbsProperty(), converter);
 
         this.warningLabel.textProperty().bind(this.viewModel.warningProperty());
+
         this.setUpListeners();
     }
-    
+
     private void setUpListeners() {
         this.handleHamburgerMenuClick();
         this.setUpListenerForHomeButton();
         this.setUpListenerForCreateFoodButton();
     }
-    
+
+    private void populateFieldsFromCurrentUser() {
+        if (this.homeDashboardViewModel == null || this.homeDashboardViewModel.getCurrentUser() == null) {
+            return;
+        }
+
+        DietGoals goals = this.homeDashboardViewModel.getCurrentUser().getDietGoals();
+        if (goals == null) {
+            return;
+        }
+
+        this.primaryGoalComboBox.setValue(goals.getPrimaryGoal());
+        this.viewModel.calorieProperty().set(goals.getCalorieGoal());
+        this.viewModel.proteinProperty().set(goals.getProteinGoal());
+        this.viewModel.fatProperty().set(goals.getFatGoal());
+        this.viewModel.sugarProperty().set(goals.getSugarGoal());
+        this.viewModel.sodiumProperty().set(goals.getSodiumGoal());
+        this.viewModel.carbsProperty().set(goals.getCarbsGoal());
+
+        String otherGoalsText = goals.getOtherGoals()
+                .stream()
+                .collect(Collectors.joining(", "));
+        this.otherGoalsTextField.setText(otherGoalsText);
+    }
+
     private void handleHamburgerMenuClick() {
         HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(this.hamburgerMenu);
         transition.setRate(-1);
@@ -163,53 +160,15 @@ public class DietGoalsController implements ViewModelAware {
             }
         });
     }
-    
+
     private void setUpListenerForHomeButton() {
-        this.homeButton.setOnAction(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeDashboardPage.fxml"));
-                Parent parent = loader.load();
-
-                Object controller = loader.getController();
-                if (controller instanceof ViewModelAware && this.homeDashboardViewModel != null) {
-                    ((ViewModelAware) controller).setViewModel(this.homeDashboardViewModel);
-                }
-
-                Stage stage = (Stage) this.hamburgerMenu.getScene().getWindow();
-                stage.setScene(new Scene(parent));
-                stage.setTitle("Home");
-                stage.show();
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                this.viewModel.warningProperty().set("Could not return to Home page.");
-            }
-        });
+        this.homeButton.setOnAction(event -> this.navigateTo("HomeDashboardPage.fxml", "Home"));
     }
-    
+
     private void setUpListenerForCreateFoodButton() {
-        this.createFoodButton.setOnAction(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateFoodItemTypeSelectionPage.fxml"));
-                Parent parent = loader.load();
-
-                Object controller = loader.getController();
-                if (controller instanceof ViewModelAware && this.homeDashboardViewModel != null) {
-                    ((ViewModelAware) controller).setViewModel(this.homeDashboardViewModel);
-                }
-
-                Stage stage = (Stage) this.hamburgerMenu.getScene().getWindow();
-                stage.setScene(new Scene(parent));
-                stage.setTitle("Create Food");
-                stage.show();
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                this.viewModel.warningProperty().set("Could not open Create Food page.");
-            }
-        });
+        this.createFoodButton.setOnAction(event -> this.navigateTo("CreateFoodItemTypeSelectionPage.fxml", "Create Food"));
     }
-    
+
     @FXML
     void handleLogout(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to logout?");
@@ -217,18 +176,7 @@ public class DietGoalsController implements ViewModelAware {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.YES) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
-                Parent parent = loader.load();
-
-                Stage stage = (Stage) this.accountMenu.getScene().getWindow();
-                stage.setScene(new Scene(parent));
-                stage.setTitle("Login");
-                stage.show();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                this.viewModel.warningProperty().set("Could not return to Login page.");
-            }
+            this.navigateToLogin();
         }
     }
 
@@ -240,17 +188,43 @@ public class DietGoalsController implements ViewModelAware {
             return;
         }
 
-        String otherGoals = this.otherGoalsTextField.getText();
-        DietGoals prefs = this.viewModel.createDietGoals(selectedGoal, otherGoals);
-
+        DietGoals prefs = this.viewModel.createDietGoals(selectedGoal, this.otherGoalsTextField.getText());
         if (prefs == null) {
             return;
         }
 
-        try {
-            // TODO: save prefs to the current user/account here
+        if (this.homeDashboardViewModel == null || this.homeDashboardViewModel.getCurrentUser() == null) {
+            this.viewModel.warningProperty().set("Could not find current user.");
+            return;
+        }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomeDashboardPage.fxml"));
+        DietGoals oldGoals = this.homeDashboardViewModel.getCurrentUser().getDietGoals();
+
+        try {
+            this.homeDashboardViewModel.updateDietGoals(prefs);
+
+            String request = EditDietGoalsHandler.createEditDietGoalsRequest(
+                    this.homeDashboardViewModel.getCurrentUser());
+            EditDietGoalsHandler.handleEditDietGoalsRequest(request);
+
+            Alert confirmation = new Alert(Alert.AlertType.INFORMATION);
+            confirmation.setTitle("Diet Goals Saved");
+            confirmation.setHeaderText("Diet goals have been saved.");
+            confirmation.setContentText("Your updated diet goals were saved successfully.");
+            confirmation.showAndWait();
+
+            this.navigateTo("HomeDashboardPage.fxml", "Home");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            this.homeDashboardViewModel.updateDietGoals(oldGoals);
+            this.viewModel.warningProperty().set("Could not save diet goals.");
+        }
+    }
+
+    private void navigateTo(String fxml, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent parent = loader.load();
 
             Object controller = loader.getController();
@@ -258,19 +232,36 @@ public class DietGoalsController implements ViewModelAware {
                 ((ViewModelAware) controller).setViewModel(this.homeDashboardViewModel);
             }
 
-            Stage stage = (Stage) this.saveButton.getScene().getWindow();
+            Stage stage = (Stage) this.hamburgerMenu.getScene().getWindow();
             stage.setScene(new Scene(parent));
-            stage.setTitle("Home");
+            stage.setTitle(title);
             stage.show();
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            this.viewModel.warningProperty().set("Could not return to Home page.");
+            this.viewModel.warningProperty().set("Could not open page.");
+        }
+    }
+
+    private void navigateToLogin() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
+            Parent parent = loader.load();
+
+            Stage stage = (Stage) this.accountMenu.getScene().getWindow();
+            stage.setScene(new Scene(parent));
+            stage.setTitle("Login");
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            this.viewModel.warningProperty().set("Could not return to Login page.");
         }
     }
 
     @Override
     public void setViewModel(HomeDashboardViewModel viewModel) {
         this.homeDashboardViewModel = viewModel;
+        this.populateFieldsFromCurrentUser();
     }
 }

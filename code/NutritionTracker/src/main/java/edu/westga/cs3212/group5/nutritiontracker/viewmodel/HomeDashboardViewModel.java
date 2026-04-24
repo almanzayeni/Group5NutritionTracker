@@ -399,4 +399,13 @@ public class HomeDashboardViewModel {
 		all.addAll(log.getSnacks());
 		return all;
 	}
+	
+	public void updateDietGoals(DietGoals dietGoals) {
+	    if (dietGoals == null) {
+	        throw new IllegalArgumentException("Diet goals cannot be null");
+	    }
+
+	    this.currentUser.setDietGoals(dietGoals);
+	    this.usersDietGoals.set(dietGoals);
+	}
 }

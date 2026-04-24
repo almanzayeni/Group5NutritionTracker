@@ -94,6 +94,13 @@ public class User {
 	public DietGoals getDietGoals() {
 		return this.dietGoals;
 	}
+	
+	public void setDietGoals(DietGoals dietGoals) {
+	    if (dietGoals == null) {
+	        throw new IllegalArgumentException("Diet goals cannot be null");
+	    }
+	    this.dietGoals = dietGoals;
+	}
 
 	/**
 	 * Gets the current food log.
