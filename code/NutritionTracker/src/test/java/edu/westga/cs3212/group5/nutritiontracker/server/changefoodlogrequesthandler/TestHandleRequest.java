@@ -1,4 +1,4 @@
-package edu.westga.cs3212.group5.nutritiontracker.server.getdayoffoodrequesthandler;
+package edu.westga.cs3212.group5.nutritiontracker.server.changefoodlogrequesthandler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
 import edu.westga.cs3212.group5.nutritiontracker.model.JsonMapperFactory;
-import edu.westga.cs3212.group5.nutritiontracker.server.GetDayOfFoodRequestHandler;
+import edu.westga.cs3212.group5.nutritiontracker.server.ChangeFoodLogRequestHandler;
 import edu.westga.cs3212.group5.nutritiontracker.server.ServerClient;
 import edu.westga.cs3212.group5.nutritiontracker.server.ServerConstants;
 
@@ -21,31 +21,31 @@ public class TestHandleRequest {
 	@Test
 	void testHandleRequestNullUsernameThrowsIllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class,
-				() -> GetDayOfFoodRequestHandler.handleRequest(null, LocalDate.of(2026, 4, 21)));
+				() -> ChangeFoodLogRequestHandler.handleRequest(null, "password", LocalDate.of(2026, 4, 21)));
 	}
 
 	@Test
 	void testHandleRequestBlankUsernameThrowsIllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class,
-				() -> GetDayOfFoodRequestHandler.handleRequest("   ", LocalDate.of(2026, 4, 21)));
+				() -> ChangeFoodLogRequestHandler.handleRequest("   ", "password", LocalDate.of(2026, 4, 21)));
 	}
 
 	@Test
 	void testHandleRequestNullDateThrowsIllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class,
-				() -> GetDayOfFoodRequestHandler.handleRequest("username", null));
+				() -> ChangeFoodLogRequestHandler.handleRequest("username", "password", null));
 	}
 
 	@Test
 	void testHandleRequestNullResponseWrapsRuntimeException() {
 		LocalDate date = LocalDate.of(2026, 4, 21);
-		String request = GetDayOfFoodRequestHandler.createRequest("username", date);
+		String request = ChangeFoodLogRequestHandler.createRequest("username", "password", date);
 
 		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
 			serverClientMock.when(() -> ServerClient.send(request)).thenReturn(null);
 
 			RuntimeException exception = assertThrows(RuntimeException.class,
-					() -> GetDayOfFoodRequestHandler.handleRequest("username", date));
+					() -> ChangeFoodLogRequestHandler.handleRequest("username", "password", date));
 			assertEquals("Failed to handle DayOfFood request", exception.getMessage());
 			assertEquals("Received empty response from server", exception.getCause().getMessage());
 		}
@@ -54,13 +54,13 @@ public class TestHandleRequest {
 	@Test
 	void testHandleRequestBlankResponseWrapsRuntimeException() {
 		LocalDate date = LocalDate.of(2026, 4, 21);
-		String request = GetDayOfFoodRequestHandler.createRequest("username", date);
+		String request = ChangeFoodLogRequestHandler.createRequest("username", "password", date);
 
 		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
 			serverClientMock.when(() -> ServerClient.send(request)).thenReturn("   ");
 
 			RuntimeException exception = assertThrows(RuntimeException.class,
-					() -> GetDayOfFoodRequestHandler.handleRequest("username", date));
+					() -> ChangeFoodLogRequestHandler.handleRequest("username", "password", date));
 			assertEquals("Failed to handle DayOfFood request", exception.getMessage());
 			assertEquals("Received empty response from server", exception.getCause().getMessage());
 		}
@@ -69,14 +69,14 @@ public class TestHandleRequest {
 	@Test
 	void testHandleRequestFailureMessageWrapsRuntimeException() {
 		LocalDate date = LocalDate.of(2026, 4, 21);
-		String request = GetDayOfFoodRequestHandler.createRequest("username", date);
+		String request = ChangeFoodLogRequestHandler.createRequest("username", "password", date);
 		String response = "{\"failure_message\":\"not found\"}";
 
 		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
 			serverClientMock.when(() -> ServerClient.send(request)).thenReturn(response);
 
 			RuntimeException exception = assertThrows(RuntimeException.class,
-					() -> GetDayOfFoodRequestHandler.handleRequest("username", date));
+					() -> ChangeFoodLogRequestHandler.handleRequest("username", "password", date));
 			assertEquals("Failed to handle DayOfFood request", exception.getMessage());
 			assertEquals("DayOfFood failed: not found", exception.getCause().getMessage());
 		}
@@ -85,14 +85,14 @@ public class TestHandleRequest {
 	@Test
 	void testHandleRequestMissingFoodLogWrapsRuntimeException() {
 		LocalDate date = LocalDate.of(2026, 4, 21);
-		String request = GetDayOfFoodRequestHandler.createRequest("username", date);
+		String request = ChangeFoodLogRequestHandler.createRequest("username", "password", date);
 		String response = "{\"status\":\"" + ServerConstants.SUCCESS_STATUS + "\"}";
 
 		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
 			serverClientMock.when(() -> ServerClient.send(request)).thenReturn(response);
 
 			RuntimeException exception = assertThrows(RuntimeException.class,
-					() -> GetDayOfFoodRequestHandler.handleRequest("username", date));
+					() -> ChangeFoodLogRequestHandler.handleRequest("username", "password", date));
 			assertEquals("Failed to handle DayOfFood request", exception.getMessage());
 			assertEquals("FoodLog missing from response", exception.getCause().getMessage());
 		}
@@ -101,7 +101,7 @@ public class TestHandleRequest {
 	@Test
 	void testHandleRequestValidResponseReturnsFoodLog() throws Exception {
 		LocalDate date = LocalDate.of(2026, 4, 21);
-		String request = GetDayOfFoodRequestHandler.createRequest("username", date);
+		String request = ChangeFoodLogRequestHandler.createRequest("username", "password", date);
 		FoodLog expectedLog = new FoodLog(date);
 		String response = JsonMapperFactory.create()
 				.writeValueAsString(java.util.Map.of(ServerConstants.KEY_FOOD_LOG, expectedLog));
@@ -109,7 +109,7 @@ public class TestHandleRequest {
 		try (MockedStatic<ServerClient> serverClientMock = Mockito.mockStatic(ServerClient.class)) {
 			serverClientMock.when(() -> ServerClient.send(request)).thenReturn(response);
 
-			FoodLog result = GetDayOfFoodRequestHandler.handleRequest("username", date);
+			FoodLog result = ChangeFoodLogRequestHandler.handleRequest("username", "password", date);
 
 			assertEquals(expectedLog.getDate(), result.getDate());
 			assertTrue(result.getBreakfast().isEmpty());

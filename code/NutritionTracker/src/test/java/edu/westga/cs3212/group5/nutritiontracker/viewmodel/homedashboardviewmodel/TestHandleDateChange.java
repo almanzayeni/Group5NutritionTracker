@@ -19,7 +19,7 @@ import edu.westga.cs3212.group5.nutritiontracker.model.JsonMapperFactory;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
 import edu.westga.cs3212.group5.nutritiontracker.model.QuantityCategory;
 import edu.westga.cs3212.group5.nutritiontracker.model.User;
-import edu.westga.cs3212.group5.nutritiontracker.server.GetDayOfFoodRequestHandler;
+import edu.westga.cs3212.group5.nutritiontracker.server.ChangeFoodLogRequestHandler;
 import edu.westga.cs3212.group5.nutritiontracker.server.ServerClient;
 import edu.westga.cs3212.group5.nutritiontracker.server.ServerConstants;
 import edu.westga.cs3212.group5.nutritiontracker.viewmodel.HomeDashboardViewModel;
@@ -44,7 +44,7 @@ public class TestHandleDateChange {
 		BaseFood breakfastFood = new BaseFood("Eggs", QuantityCategory.SERVING, 1, 140, 12, 10, 1, 140, 1);
 		replacementLog.getBreakfast().add(breakfastFood);
 		this.viewModel.setSelectedDate(requestedDate);
-		String request = GetDayOfFoodRequestHandler.createRequest(this.user.getUsername(), requestedDate);
+		String request = ChangeFoodLogRequestHandler.createRequest(this.user.getUsername(), this.user.getPassword(), requestedDate);
 
 		try (MockedStatic<ServerClient> serverClientMock = mockStatic(ServerClient.class)) {
 			String response = JsonMapperFactory.create()
@@ -63,7 +63,7 @@ public class TestHandleDateChange {
 	void testHandleDateChangeRethrowsWrappedServerException() {
 		LocalDate requestedDate = LocalDate.of(2026, 4, 22);
 		this.viewModel.setSelectedDate(requestedDate);
-		String request = GetDayOfFoodRequestHandler.createRequest(this.user.getUsername(), requestedDate);
+		String request = ChangeFoodLogRequestHandler.createRequest(this.user.getUsername(), this.user.getPassword(), requestedDate);
 
 		try (MockedStatic<ServerClient> serverClientMock = mockStatic(ServerClient.class)) {
 			serverClientMock.when(() -> ServerClient.send(request)).thenThrow(new Exception("server unavailable"));
