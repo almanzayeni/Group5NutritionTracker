@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
  * The Interface FoodItem.
  */
 public interface FoodItem {
-	public static final String FOOD_ITEMS_JSON_FILE = "food_items.json";
 	
 	String getDescription();
 
