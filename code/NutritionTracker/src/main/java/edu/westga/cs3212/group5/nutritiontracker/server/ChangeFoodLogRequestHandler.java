@@ -13,13 +13,16 @@ import edu.westga.cs3212.group5.nutritiontracker.model.JsonMapperFactory;
  * Handles DayOfFood requests.
  * @author Emi Collins
  */
-public class GetDayOfFoodRequestHandler {
+public class ChangeFoodLogRequestHandler {
 	/**
 	 * Creates the day of food request.
 	 */
-	public static String createRequest(String username, LocalDate date) {
+	public static String createRequest(String username, String password, LocalDate date) {
 		if (username == null || username.isBlank()) {
 			throw new IllegalArgumentException("Username cannot be null or blank");
+		}
+		if (password == null || password.isBlank()) {
+			throw new IllegalArgumentException("Password cannot be null or blank");
 		}
 		if (date == null) {
 			throw new IllegalArgumentException("Date cannot be null");
@@ -28,6 +31,7 @@ public class GetDayOfFoodRequestHandler {
 		Map<String, String> requestMap = new HashMap<>();
 		requestMap.put(ServerConstants.KEY_REQUEST_TYPE, ServerConstants.GET_DAY_OF_FOOD_REQUEST_TYPE);
         requestMap.put(ServerConstants.KEY_USERNAME, username);
+        requestMap.put(ServerConstants.KEY_PASSWORD, password);
         requestMap.put(ServerConstants.KEY_DATE, date.toString());
         
         try {
@@ -41,10 +45,13 @@ public class GetDayOfFoodRequestHandler {
 	/**
 	 * Sends request and returns FoodLog
 	 */
-	public static FoodLog handleRequest(String username, LocalDate date) {
+	public static FoodLog handleRequest(String username, String password, LocalDate date) {
         if (username == null || username.isBlank()) {
             throw new IllegalArgumentException("Username cannot be null or blank");
         }
+        if (password == null || password.isBlank()) {
+			throw new IllegalArgumentException("Password cannot be null or blank");
+		}
         if (date == null) {
             throw new IllegalArgumentException("Date cannot be null");
         }
@@ -52,7 +59,7 @@ public class GetDayOfFoodRequestHandler {
         ObjectMapper mapper = JsonMapperFactory.create();
 
         try {
-            String request = createRequest(username, date);
+            String request = createRequest(username, password, date);
 
             String response = ServerClient.send(request);
             if (response == null || response.isBlank()) {

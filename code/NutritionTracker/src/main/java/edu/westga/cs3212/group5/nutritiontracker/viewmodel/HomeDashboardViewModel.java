@@ -12,7 +12,7 @@ import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
 import edu.westga.cs3212.group5.nutritiontracker.model.MealType;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
 import edu.westga.cs3212.group5.nutritiontracker.model.User;
-import edu.westga.cs3212.group5.nutritiontracker.server.GetDayOfFoodRequestHandler;
+import edu.westga.cs3212.group5.nutritiontracker.server.ChangeFoodLogRequestHandler;
 import edu.westga.cs3212.group5.nutritiontracker.server.UpdateFoodLogRequestHandler;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
@@ -228,7 +228,7 @@ public class HomeDashboardViewModel {
 	 */
 	public void handleDateChange() {
 		try {
-			FoodLog log = GetDayOfFoodRequestHandler.handleRequest(this.currentUser.getUsername(), this.selectedDate.get());
+			FoodLog log = ChangeFoodLogRequestHandler.handleRequest(this.currentUser.getUsername(), this.currentUser.getPassword(), this.selectedDate.get());
 			this.currentUser.setCurrentFoodLog(log);
 			this.updateMealLists();
 		} catch (Exception e) {
