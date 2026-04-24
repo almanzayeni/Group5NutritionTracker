@@ -5,6 +5,7 @@ Created on April 21, 2026
 '''
 import unittest
 from datetime import date
+from unittest.mock import patch
 
 from model import database
 from model.base_food import BaseFood
@@ -172,6 +173,26 @@ class TestUpdateFoodLogHandleRequest(unittest.TestCase):
         self.assertEqual([self.soup], updated_food_log.getDinner())
         self.assertEqual([self.apple], updated_food_log.getSnacks())
         self.assertIs(updated_food_log, user.getCurrentFoodLog())
+
+    def test_returns_failure_when_user_lookup_fails_after_adding_food_log(self):
+        with patch.object(
+            update_foodlog_request_handler.database,
+            "addFoodLog",
+        ) as add_food_log, patch.object(
+            update_foodlog_request_handler.database,
+            "getUsers",
+            return_value={},
+        ):
+            response = update_foodlog_request_handler.handleRequest(
+                self._create_request()
+            )
+
+        add_food_log.assert_called_once()
+        self.assertEqual(constants.BAD_MESSAGE_STATUS, response[constants.KEY_STATUS])
+        self.assertEqual(
+            "invalid username or password",
+            response[constants.KEY_FAILURE_MESSAGE],
+        )
 
 
 if __name__ == "__main__":

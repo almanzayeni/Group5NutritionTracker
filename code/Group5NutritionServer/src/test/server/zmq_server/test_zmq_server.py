@@ -298,6 +298,42 @@ class TestZmqServer(unittest.TestCase):
             send_response.call_args_list,
         )
 
+    def test_run_dispatches_edit_diet_goals_requests(self):
+        request = {
+            constants.KEY_REQUEST_TYPE: constants.EDIT_DIET_GOALS_REQUEST_TYPE,
+            constants.KEY_USERNAME: "johndoe",
+            constants.KEY_PASSWORD: "password123",
+            constants.KEY_DIET_GOALS: {},
+        }
+        response = {constants.KEY_STATUS: constants.SUCCESS_STATUS}
+        zmq_server, socket = self._run_server_with_messages(
+            [json.dumps(request), json.dumps(constants.EXIT_COMMAND)]
+        )
+
+        with patch.object(zmq_server.database, "loadDefaultData"), patch.object(
+            zmq_server.edit_diet_goals_request_handler,
+            "handleRequest",
+            return_value=response,
+        ) as handle_request, patch.object(zmq_server, "sendResponse") as send_response, patch(
+            "builtins.print"
+        ):
+            zmq_server.run("tcp", "127.0.0.1", "5555")
+
+        handle_request.assert_called_once_with(request)
+        self.assertEqual(
+            [
+                call(socket, response),
+                call(
+                    socket,
+                    {
+                        constants.KEY_STATUS: constants.SUCCESS_STATUS,
+                        constants.KEY_SUCCESS_MESSAGE: constants.KEY_SERVER_EXIT,
+                    },
+                ),
+            ],
+            send_response.call_args_list,
+        )
+
     def test_run_returns_unsupported_operation_for_unknown_request_types(self):
         request = {
             constants.KEY_REQUEST_TYPE: "DELETE_ACCOUNT",

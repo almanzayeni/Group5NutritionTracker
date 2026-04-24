@@ -70,6 +70,30 @@ class TestDatabase(unittest.TestCase):
         self.assertIs(database._users, database.getUsers())
         self.assertIs(database._foodItems, database.getFoodItems())
 
+    def test_get_user_rejects_none_username(self):
+        with self.assertRaisesRegex(Exception, "username is None"):
+            database.getUser(None, "password123")
+
+    def test_get_user_rejects_none_password(self):
+        with self.assertRaisesRegex(Exception, "password is None"):
+            database.getUser("johndoe", None)
+
+    def test_get_user_rejects_unknown_user(self):
+        with self.assertRaisesRegex(KeyError, "user not found"):
+            database.getUser("missing-user", "password123")
+
+    def test_get_user_rejects_incorrect_password(self):
+        database.addUser(self._create_user())
+
+        with self.assertRaisesRegex(KeyError, "incorrect password"):
+            database.getUser("johndoe", "wrong-password")
+
+    def test_get_user_returns_user_when_credentials_match(self):
+        user = self._create_user()
+        database.addUser(user)
+
+        self.assertIs(user, database.getUser("johndoe", "password123"))
+
     def test_add_user_rejects_none(self):
         with self.assertRaisesRegex(Exception, "user is None"):
             database.addUser(None)

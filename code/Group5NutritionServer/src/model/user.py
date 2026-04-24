@@ -122,6 +122,18 @@ class User(object):
         '''
         return self._dietGoals
     
+    def setDietGoals(self, dietGoals):
+        '''
+        Set the diet goals of the user.
+        
+        @precondition dietGoals != None
+        
+        @param dietGoals the diet goals to set for the user
+        '''
+        if (dietGoals == None):
+            raise Exception("diet goals is None")
+        self._dietGoals = dietGoals
+    
     def toDict(self):
         return {
             "name": self.getName(),

@@ -91,6 +91,28 @@ class TestHandleRequestBaseFood(AddFoodRequestHandlerTestCaseMixin, unittest.Tes
         self.assertEqual(9, added_food.get_carbohydrates())
         self.assertEqual(55, added_food.get_sodium())
 
+    def test_adds_base_food_with_quantity_category(self):
+        response = add_food_request_handler.handleRequest(
+            self._create_base_food_request("banana", QuantityCategory.QUANTITY)
+        )
+
+        self.assertEqual(constants.SUCCESS_STATUS, response[constants.KEY_STATUS])
+        self.assertEqual(
+            QuantityCategory.QUANTITY,
+            database.getFoodItems()["banana"].get_quantity_category(),
+        )
+
+    def test_adds_base_food_with_weight_category(self):
+        response = add_food_request_handler.handleRequest(
+            self._create_base_food_request("salad greens", QuantityCategory.WEIGHT)
+        )
+
+        self.assertEqual(constants.SUCCESS_STATUS, response[constants.KEY_STATUS])
+        self.assertEqual(
+            QuantityCategory.WEIGHT,
+            database.getFoodItems()["salad greens"].get_quantity_category(),
+        )
+
     def test_adds_composite_food_to_database_when_all_ingredients_exist(self):
         banana = BaseFood("banana", QuantityCategory.QUANTITY, 1, 105, 1, 0, 14, 27, 1)
         oats = BaseFood("oats", QuantityCategory.SERVING, 1, 150, 5, 3, 1, 27, 0)
@@ -149,6 +171,19 @@ class TestHandleRequestBaseFood(AddFoodRequestHandlerTestCaseMixin, unittest.Tes
                 constants.KEY_FOOD_ITEM: {
                     constants.KEY_FOOD_TYPE: "invalid",
                     constants.KEY_FOOD_QUANTITY_CATEGORY: QuantityCategory.SERVING.value,
+                }
+            }
+        )
+
+        self.assertEqual(constants.BAD_MESSAGE_STATUS, response[constants.KEY_STATUS])
+        self.assertEqual("invalid food type", response[constants.KEY_FAILURE_MESSAGE])
+
+    def test_returns_failure_when_food_type_and_quantity_category_are_invalid(self):
+        response = add_food_request_handler.handleRequest(
+            {
+                constants.KEY_FOOD_ITEM: {
+                    constants.KEY_FOOD_TYPE: "invalid",
+                    constants.KEY_FOOD_QUANTITY_CATEGORY: "invalid",
                 }
             }
         )

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Collections;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -14,8 +15,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
+import edu.westga.cs3212.group5.nutritiontracker.model.FoodLog;
 import edu.westga.cs3212.group5.nutritiontracker.model.JsonMapperFactory;
 import edu.westga.cs3212.group5.nutritiontracker.model.PrimaryGoal;
+import edu.westga.cs3212.group5.nutritiontracker.model.User;
 import edu.westga.cs3212.group5.nutritiontracker.server.EditDietGoalsHandler;
 import edu.westga.cs3212.group5.nutritiontracker.server.ServerConstants;
 
@@ -29,29 +32,15 @@ public class TestCreateEditDietGoalsRequest {
 	}
 
 	@Test
-	public void testNullUsername() {
+	public void testNullUser() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			EditDietGoalsHandler.createEditDietGoalsRequest(null, this.createDietGoals());
-		});
-	}
-
-	@Test
-	public void testBlankUsername() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			EditDietGoalsHandler.createEditDietGoalsRequest("   ", this.createDietGoals());
-		});
-	}
-
-	@Test
-	public void testNullDietGoals() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			EditDietGoalsHandler.createEditDietGoalsRequest("username", null);
+			EditDietGoalsHandler.createEditDietGoalsRequest(null);
 		});
 	}
 
 	@Test
 	public void testValidEditDietGoalsRequest() throws Exception {
-		String result = EditDietGoalsHandler.createEditDietGoalsRequest("username", this.createDietGoals());
+		String result = EditDietGoalsHandler.createEditDietGoalsRequest(this.createUser());
 
 		JsonNode root = JsonMapperFactory.create().readTree(result);
 		JsonNode dietGoalsNode = root.get(ServerConstants.KEY_DIET_GOALS);
@@ -80,7 +69,7 @@ public class TestCreateEditDietGoalsRequest {
 					.writeValueAsString(Mockito.any());
 
 			RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-				EditDietGoalsHandler.createEditDietGoalsRequest("username", this.createDietGoals());
+				EditDietGoalsHandler.createEditDietGoalsRequest(this.createUser());
 			});
 			assertEquals("Failed to create add food request", exception.getMessage());
 		}
@@ -89,5 +78,13 @@ public class TestCreateEditDietGoalsRequest {
 	private DietGoals createDietGoals() {
 		return new DietGoals(PrimaryGoal.PROTEIN, 1800, 140, 55, 35, 2000, 175,
 				Collections.singletonList("Build lean muscle"));
+	}
+	
+	private FoodLog createFoodLog() {
+		return new FoodLog(LocalDate.now(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
+	}
+	
+	private User createUser() {
+		return new User("username", "password", "test", this.createDietGoals(), this.createFoodLog());
 	}
 }

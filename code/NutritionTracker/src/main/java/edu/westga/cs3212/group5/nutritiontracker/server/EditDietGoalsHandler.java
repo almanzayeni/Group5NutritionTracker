@@ -6,8 +6,8 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.westga.cs3212.group5.nutritiontracker.model.DietGoals;
 import edu.westga.cs3212.group5.nutritiontracker.model.JsonMapperFactory;
+import edu.westga.cs3212.group5.nutritiontracker.model.User;
 
 public class EditDietGoalsHandler {
 	
@@ -18,22 +18,20 @@ public class EditDietGoalsHandler {
 	 * @param dietGoals 		the diet goals to set for the user
 	 * @return the string JSON request to send to the server
 	 */
-	public static String createEditDietGoalsRequest(String username, DietGoals dietGoals) {
-		if (username == null || username.isBlank()) {
-			throw new IllegalArgumentException("Username cannot be null or blank");
-		}
-		if (dietGoals == null) {
-			throw new IllegalArgumentException("Diet goals cannot be null");
+	public static String createEditDietGoalsRequest(User user) {
+		if (user == null) {
+			throw new IllegalArgumentException("User cannot be null");
 		}
 
 		ObjectMapper mapper = JsonMapperFactory.create();
 
 		try {
-			JsonNode dietGoalsNode = mapper.valueToTree(dietGoals);
+			JsonNode dietGoalsNode = mapper.valueToTree(user.getDietGoals());
 
 			Map<String, Object> requestMap = new HashMap<>();
 			requestMap.put(ServerConstants.KEY_REQUEST_TYPE, ServerConstants.EDIT_DIET_GOALS_REQUEST_TYPE);
-			requestMap.put(ServerConstants.KEY_USERNAME, username);
+			requestMap.put(ServerConstants.KEY_USERNAME, user.getUsername());
+			requestMap.put(ServerConstants.KEY_PASSWORD, user.getPassword());
 			requestMap.put(ServerConstants.KEY_DIET_GOALS, dietGoalsNode);
 
 			return mapper.writeValueAsString(requestMap);
