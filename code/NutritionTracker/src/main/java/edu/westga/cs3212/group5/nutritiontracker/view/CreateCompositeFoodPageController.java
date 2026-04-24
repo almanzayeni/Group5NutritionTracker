@@ -27,6 +27,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -45,7 +46,6 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
     @FXML private JFXHamburger hamburgerMenu;
     @FXML private Button homeButton;
     @FXML private Button createMealButton;
-    @FXML private Button logoutButton;
     @FXML private Pane menuPane;
     @FXML private TextField descriptionTextField;
     @FXML private TextField portionSizeTextField;
@@ -57,6 +57,7 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
     @FXML private Label ingredientStatusLabel;
     @FXML private TextField sodiumTextField;
     @FXML private TextField sugarTextField;
+    @FXML private MenuButton accountMenu;
 
     @FXML private FoodSearchPanelController searchPanelController;
 
@@ -71,6 +72,62 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
         this.setUpIngredientsListView();
         this.bindViewModel();
         this.setUpListeners();
+    }
+    
+    @FXML
+    void handleEditDietPlan(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("DietGoalsPage.fxml"));
+            loader.load();
+
+            Object controller = loader.getController();
+            if (controller instanceof ViewModelAware) {
+                ((ViewModelAware) controller).setViewModel(this.hdViewModel);
+            }
+
+            Parent parent = loader.getRoot();
+            Stage stage = (Stage) this.accountMenu.getScene().getWindow();
+            stage.setScene(new Scene(parent));
+            stage.setTitle("Preferences");
+            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    "Unable to open the Preferences page. Please try again.");
+            alert.setHeaderText("Navigation Error");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void handleLogout(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to logout?");
+        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("LoginPage.fxml"));
+                loader.load();
+
+                Parent parent = loader.getRoot();
+                Stage stage = (Stage) this.accountMenu.getScene().getWindow();
+                stage.setScene(new Scene(parent));
+                stage.setTitle("Login");
+                stage.show();
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR,
+                        "Unable to navigate to the Login page. Please try again.");
+                errorAlert.setHeaderText("Navigation Error");
+                errorAlert.showAndWait();
+            }
+        }
     }
 
     private void connectSearchPanel() {
@@ -149,7 +206,6 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
         this.setupPortionSizeUnitLabelListener();
         this.handleHamburgerMenuClick();
         this.setUpListenerForHomeButton();
-        this.setUpListenerForLogoutButton();
         //this.setUpListenerForCreateMealButton();
         this.setupListenerForAddFoodButton();
         this.setUpListenerForAddIngredientButton();
@@ -244,29 +300,6 @@ public class CreateCompositeFoodPageController implements ViewModelAware {
             }
         });
     }
-
-    private void setUpListenerForLogoutButton() {
-		this.logoutButton.setOnAction((ActionEvent event) -> {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(LoginPageController.class.getResource("LoginPage.fxml"));
-				loader.load();
-
-				Parent parent = loader.getRoot();
-				Scene scene = new Scene(parent);
-
-				Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-				stage.setScene(scene);
-				stage.setTitle("Login");
-				stage.show();
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Error logging user out.");
-				alert.showAndWait();
-			}
-		});
-	}
 	
 //    private void setUpListenerForCreateMealButton() {
 //        this.createMealButton.setOnAction((ActionEvent event) -> {

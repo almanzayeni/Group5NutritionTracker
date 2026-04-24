@@ -8,6 +8,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -28,11 +30,6 @@
             <AnchorPane prefHeight="900.0" prefWidth="360.0" style="-fx-background-color: #F3EDE4;">
 
                <children>
-
-                  <!-- Logout -->
-                  <Button fx:id="logoutButton" layoutX="275.0" layoutY="10.0" prefHeight="20.0" prefWidth="70.0" style="-fx-background-color: #b8d5a3;" text="Logout">
-                     <font><Font name="System Bold" size="14.0" /></font>
-                  </Button>
 
                   <!-- Welcome -->
                   <Label layoutX="56.0" layoutY="40.0" style="-fx-font-family: 'Bookman Old Style'; -fx-font-size: 22px; -fx-font-weight: bold;" text="Welcome," textFill="#1f5c33" />
@@ -154,6 +151,17 @@
             
                   <!-- Hamburger -->
                   <JFXHamburger fx:id="hamburgerMenu" layoutX="15.0" layoutY="15.0" prefHeight="20.0" prefWidth="33.0" />
+                  
+                  <!--Account Settings Menu -->
+                  <MenuButton fx:id="accountMenu" layoutX="292.0" layoutY="11.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" style="-fx-background-color: #b8d5a3;" text="👤">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#handleEditDietPlan" text="Edit Diet Plan" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+                    </items>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </MenuButton>
 
                </children>
             </AnchorPane>

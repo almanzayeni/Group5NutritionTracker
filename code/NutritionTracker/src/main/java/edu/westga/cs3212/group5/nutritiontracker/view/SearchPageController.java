@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -39,8 +40,8 @@ public class SearchPageController implements ViewModelAware {
     @FXML private Button createFoodButton;
     @FXML private Button homeButton;
     @FXML private Button backButton;
-    @FXML private Button logoutButton;
     @FXML private Pane menuPane;
+    @FXML private MenuButton accountMenu;
 
     @FXML
     void initialize() {
@@ -49,6 +50,23 @@ public class SearchPageController implements ViewModelAware {
 
         this.searchPanelController.enableStandaloneMode();
         this.setUpListeners();
+    }
+    
+    @FXML
+    void handleEditDietPlan(ActionEvent event) {
+        this.navigateTo("DietGoalsPage.fxml");
+    }
+
+    @FXML
+    void handleLogout(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to logout?");
+        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            this.navigateTo("LoginPage.fxml");
+        }
     }
 
     @Override
@@ -70,7 +88,6 @@ public class SearchPageController implements ViewModelAware {
         this.handleHamburgerMenuClick();
         this.setUpListenerForHomeButton();
         this.setUpListenerForBackButton();
-        this.setUpListenerForLogoutButton();
         this.setUpListenerForCreateFoodButton();
     }
 
@@ -78,19 +95,6 @@ public class SearchPageController implements ViewModelAware {
         this.createFoodButton.setOnAction((ActionEvent event) -> 
             this.navigateTo("CreateFoodItemTypeSelectionPage.fxml")
         );
-    }
-
-	private void setUpListenerForLogoutButton() {
-        this.logoutButton.setOnAction((ActionEvent event) -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                    "Are you sure you want to logout?");
-            alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-            Optional<ButtonType> result = alert.showAndWait();
-
-            if (result.isPresent() && result.get() == ButtonType.YES) {
-                this.navigateTo("LoginPage.fxml");
-            }
-        });
     }
 
 	private void handleHamburgerMenuClick() {
