@@ -1,3 +1,663 @@
+commit 48563e841cd416614d78953d8f7435d8ccfb7843
+Merge: 487013b 1499264
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Sat Apr 25 00:14:31 2026 -0400
+
+    Merge pull request #74 from almanzayeni/documentation-UpdateClassDiagram
+    
+    Documentation update class diagram
+
+commit 1499264def3b8559b5edfbe770d7a62ba9cb9770
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Sat Apr 25 00:10:36 2026 -0400
+
+    Updated Class Diagram and Sprint Backlog
+    
+    I created new pictures of the class diagrams and updated the sprint
+    backlog.
+
+commit 6067e18126d0329f76bd7496f097936b99222877
+Merge: fa60876 9325669
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 24 23:38:01 2026 -0400
+
+    Merge branch 'documentation-UpdateClassDiagram' of https://github.com/almanzayeni/Group5NutritionTracker into documentation-UpdateClassDiagram
+
+commit fa6087610d5ec9806c81ae6c07ad8d88cde10aae
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 24 23:36:37 2026 -0400
+
+    Added Java Server Classes To Diagram
+    
+    I added the server classes to the Java class diagram. Started to add the
+    view package classes.
+
+commit 93256690194f16073529c4a31a7576cb0e771a12
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Apr 24 23:27:31 2026 -0400
+
+    Update python class diagram
+    
+    Updated diagram and connections.
+
+commit ee54f7d70dd889cc5fe2d7ab8b473ac839adf398
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Apr 24 22:45:27 2026 -0400
+
+    Update Sprint 3 backlog
+    
+    Added my hours to the sprint backlog
+
+commit 009b6495194822681565e00e68cc2fe4af014d5e
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 24 22:38:08 2026 -0400
+
+    Updated Java Class Diagram Server Package
+    
+    Updated the Java Class Diagram to start adding in the updated classes
+    from the server package.
+
+commit 487013b54b3ef26cc22263632c06d990ab28b454
+Merge: 2ce14f6 fcb0e02
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 24 22:22:30 2026 -0400
+
+    Merge pull request #72 from almanzayeni/featureTestCases
+    
+    Add few missing tests
+
+commit fcb0e0219dc9b7d21e00463b16789295c9c2f58a
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Apr 24 21:52:47 2026 -0400
+
+    Add few missing tests
+    
+    Added a couple of test cases.
+    Used chat to make the test cases.
+
+commit 2ce14f6f8ec6e564b7f80988f20e563c41f7b64b
+Merge: 52805f1 000b038
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 24 16:05:34 2026 -0400
+
+    Merge pull request #71 from almanzayeni/feature-EditDietGoalsCB
+    
+    Edit the diet goals codebehind
+
+commit 52805f1b8ab893625e54eb2c56dbcfa03c4958f1
+Merge: 0c4fb27 b3230bf
+Author: Victor Filpo <vf00004@my.westga.edu>
+Date:   Fri Apr 24 15:55:59 2026 -0400
+
+    Merge pull request #70 from almanzayeni/feature-ChangeFoodLogSever
+    
+    Added Change FoodLog Request Server
+
+commit a69fb5cbcc00575a9910d49f1502ca487fcf6acb
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 24 15:53:18 2026 -0400
+
+    Updated Java Model Package
+    
+    Updated the class diagram for the Model package of the Java project.
+
+commit 000b038b603dfa39b49ee1c8f7b069a7b1c0b35c
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Fri Apr 24 15:46:08 2026 -0400
+
+    Edit the diet goals codebehind
+    
+    Update codebheind to save the current users new diet goals.
+    Populated the diet goal fields with current goals of the user.
+
+commit b3230bf23b2574803278700a59bc61223ede772c
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 24 14:21:55 2026 -0400
+
+    Added Change FoodLog Request Server
+    
+    I added the server side for changing FoodLogs when a new date is
+    selected.
+    I also updated the client side to sync with the server side and updated
+    the testing for it.
+    I then used Codex to add testing for the change_foodlog_request_handler.
+
+commit 0c4fb2717e30a98f6001fa1fcd6641e28e4b044f
+Merge: d26d332 7440dc4
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Fri Apr 24 13:33:34 2026 -0400
+
+    Merge pull request #69 from almanzayeni/feature-EditDietGoalsServer
+    
+    Added Edit DietGoals Server Setup
+
+commit 7440dc411c496fa2fe74cb4ec5ed64e6de45e3e8
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 24 13:15:49 2026 -0400
+
+    Added Edit DietGoals Server Setup
+    
+    I added the server setup for editing the DietGoals for a user.
+    I updated the client side to sync up with the server side.
+    Updated the test cases for the client side.
+    Had Codex add testing for the server side and update the rest of the
+    test cases on the server project to match new changes.
+
+commit d26d332aaa494412b04828d421bd4e6dfd7d75ae
+Merge: 877024e 8a88616
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 24 09:43:50 2026 -0400
+
+    Merge pull request #68 from almanzayeni/feature-AccountUI
+    
+    Feature account UI
+
+commit 8a8861628064e83fc3949faf12bb1098a6ad0cc7
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Thu Apr 23 17:33:23 2026 -0400
+
+    Rename preferences to diet goals
+    
+    Changed PreferencesPage.fxml to DietGoalsPage.fxml
+    and its references to it.
+
+commit 1a16e9775a2400ab864e716ff5bc6128f270eb8f
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Thu Apr 23 16:12:46 2026 -0400
+
+    Add menus to edit diet plan page
+    
+    Add the hamburger menu and the account menu to the
+    diet goals page.
+
+commit 03c9d8eb58f457a173bf245b5271da8183308109
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Apr 22 23:48:39 2026 -0400
+
+    Edited preferences/diet goal page
+    
+    Cahnged title to Diet Goals, removed create account button and
+    back label. Instead added a save button that return to the
+    dashbaord page. No diet goals actually save for the current user.
+
+commit efed0a06a0895cfda06a56992184feb909f04c8d
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Apr 22 23:14:42 2026 -0400
+
+    Change logout to settings menu
+    
+    Removed logotu buttons to pages that had them and replaced
+    them with an account menu that has menu items for logging out
+    or for editing the users diet plan.
+
+commit 20a446a8054b817717c44efa711f771bac7cc1a1
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Apr 22 19:57:56 2026 -0400
+
+    UI for homedashbiard set
+    
+    Added Ui account menu for dashboard page.
+
+commit 877024e6f99ac7ff532bcd32b767533e56db2ccf
+Merge: 1b2cdee c4b7b2e
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Wed Apr 22 17:16:30 2026 -0400
+
+    Merge pull request #67 from almanzayeni/feature-DashboardDropDownError
+    
+    Feature dashboard drop down error
+
+commit c4b7b2ee172b29a9fd69a8590c87852517957f49
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 22 12:22:14 2026 -0400
+
+    Removed Other From Dashboard Chart Dropdown
+    
+    I removed the option for Other from the goals on the combobox on the
+    Dashboard for selecting what goal is represented by the chart.
+
+commit 5c9de233ca93e5759402eaf89b0cb625ed9c9daf
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 22 12:08:53 2026 -0400
+
+    Fixed Issue With Adding Composite Food To Server
+    
+    The composite food when being added to the server was storing the
+    ingredients as a list but they should have been stored as dict so I
+    updated it and corrected the testing using Codex.
+
+commit 878cc856796d434df030dff1fb0cb80c278dc25a
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 22 11:35:33 2026 -0400
+
+    Fixed Failing Server Tests
+    
+    I fixed the server tests that were failing so that they are all passing.
+    Used Codex to update the failing tests.
+
+commit bfd6b7b84742ae55943acff7a05bb5ef0ab0f40b
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 22 11:20:13 2026 -0400
+
+    Removed Not Needed Test
+    
+    I removed the test that was tesing that blank querys threw an exception
+    since this is not how the system is setup now.
+
+commit fc2f79eb76248d3183dd3ba053bd4d55e78899b8
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 22 11:15:52 2026 -0400
+
+    Fixed Bugs
+    
+    I fixed the bug where the list of foods on the search were not
+    displaying all options.
+    I fixed the issue where the alert when a composite food is created
+    wasn't displaying the name of the food.
+    I fixed the issue where when foods were being added to the database
+    the quantity category was being added as a string rather than the enum.
+
+commit 1b2cdeef3c1546ff9647bd6a859732de225a7444
+Merge: 0ed3acd 48c365b
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Wed Apr 22 10:31:53 2026 -0400
+
+    Merge pull request #64 from almanzayeni/feature-UpdateFoodLogServer
+    
+    Fixed Server/Client Constants
+
+commit 48c365b3ccf90d6cb0bf7126adcab0a584d939df
+Merge: 7e989b0 0ed3acd
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Wed Apr 22 10:31:40 2026 -0400
+
+    Merge branch 'main' into feature-UpdateFoodLogServer
+
+commit 7e989b0b1fd76eb832a57c0d9ee28e77991e0ef1
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 22 10:06:03 2026 -0400
+
+    Fixed Issue With Create Account Server Setup
+    
+    Fixed issue where the database.addFoodLog() method was missing a
+    parameter on it's call.
+
+commit 29fbd6cd3b6dd7fbda8dee1d579b0a4709078203
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Wed Apr 22 09:41:40 2026 -0400
+
+    Fixed Issue With Remove Button Not Working
+    
+    Updated the removal methods in the HomeDashboardViewModel to use a
+    single method and update the server and display.
+    I also updated the add functionality to use a single method instead of
+    individual ones for each meal type.
+    Used Codex to update the test cases.
+
+commit 0ed3acde2a37b40e067d23d071c0238b585e5da3
+Merge: 28a84a6 691ca9e
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Wed Apr 22 08:59:00 2026 -0400
+
+    Merge pull request #63 from almanzayeni/feature-FixBugs
+    
+    Feature fix bugs
+
+commit 4ab61a12081de3c5156aa7c2315a8351a5d07756
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Apr 21 22:42:58 2026 -0400
+
+    Added Testing
+    
+    Updated the test classes to update with the new changes I made.
+    Made sure all tests pass and are hitting 100% branch coverage.
+    Used codex to create test cases.
+
+commit a146919c88d0e2c0233eff51c26933c7d409865e
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Apr 21 17:07:01 2026 -0400
+
+    Fixed Issue With FoodLog Not Updating
+    
+    I refactored the HomeDashboardPage and HomeDashboardViewModel to
+    separate view and viewmodel concerns and simplify the setup.
+    I updated the process for updating a food log so that it persists
+    when logging out and back in.
+    Moved the storing of foodlogs from the database to the user.
+
+commit 763dc939062863f6ce676d3f4ede1165a8738b61
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Apr 21 11:38:52 2026 -0400
+
+    Fixed Server/Client Constants
+    
+    Updated teh UpdateFoodLogRequestHandler class to use the KEY_FOOD_LOG
+    rather than KEY_CURRENT_FOOD_LOG to keep it consistent through out.
+    Removed the KEY_CURRENT_FOOD_LOG constant since it wasn't needed.
+
+commit 691ca9edc817726d8123afa142fcfb33b59fb239
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Apr 21 11:10:30 2026 -0400
+
+    Fixed Bug Where Hamburger Menu Wasn't Stationary
+    
+    The hamburger menu on the dashboard moved up and down on the screen
+    as you scrolled so I attached it to the anchor pane so that it would
+    stay stationary at the top of the page.
+
+commit 28a84a6511724f1a4919eaa11452cba8567af756
+Merge: 0906f29 d83f50f
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Tue Apr 21 11:06:22 2026 -0400
+
+    Merge pull request #62 from almanzayeni/feature-UpdateFoodLogServer
+    
+    Update FoodLog Request Handler
+
+commit a5e9bb80a05dc5cf067539deb395d51d18a302ed
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Apr 21 11:06:04 2026 -0400
+
+    Removed PrimaryGoal OTHER From Chart Dropdown
+    
+    I removed the OTHER option from the combo box on the dashboard since
+    there are no numerical values to use with the chart.
+
+commit d83f50ff13379525f2fedd2c78a7940ffe904f7d
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Apr 21 10:52:29 2026 -0400
+
+    Update FoodLog Request Handler
+    
+    Added the update_foodlog_reqeust_handler module.
+    Updated the database to store foodLogs attached to a username and date
+    Added functionality to search FoodLogs and update them in the database
+    Updated the create account and login authentication request handlers
+    so that when a user is created or logged in a food log for that day is
+    either found from the database or added to the database.
+    Used codex to update the test cases for existing modules and add new
+    testing for update_foodlog_reqeust_handler.
+
+commit 0906f293577e3661d1c98c7acad1d7b516ff6de3
+Merge: a8d704b 4d320ab
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Tue Apr 21 09:05:59 2026 -0400
+
+    Merge pull request #61 from almanzayeni/feature-UpdateFoodLogClient
+    
+    Create client for updating food log
+
+commit 4d320ab315bea41e0a788296cc463e5867cd5130
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Apr 20 21:32:41 2026 -0400
+
+    Create cliente for updating food log
+    
+    Added a handler to update the food log for the user.
+    Added new constant for the handler class.
+    Added tests for the handler class as well.
+
+commit a8d704b86b77a450dba543910d03298b285ca050
+Merge: eb6c4ad b3acc31
+Author: Victor Filpo <vf00004@my.westga.edu>
+Date:   Mon Apr 20 21:05:11 2026 -0400
+
+    Merge pull request #60 from almanzayeni/feature-ClientSideDayOfFood
+    
+    Feature client side day of food
+
+commit b3acc31d23286f6650ec8124a49af1c10e4d32cd
+Merge: 04913c1 eb6c4ad
+Author: Victor Filpo <vf00004@my.westga.edu>
+Date:   Mon Apr 20 21:05:03 2026 -0400
+
+    Merge branch 'main' into feature-ClientSideDayOfFood
+
+commit eb6c4adbf24a1063c14940ac244afd48732f91dc
+Merge: dbdf87b 6899e24
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Mon Apr 20 20:12:47 2026 -0400
+
+    Merge pull request #59 from almanzayeni/feature-EditDietClient
+    
+    Added EditDietGoalsHandler Client
+
+commit dbdf87be35d5ad5ad3075ca325f4ab6e344649f1
+Merge: 012e2d3 9ee6cc0
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Mon Apr 20 20:11:35 2026 -0400
+
+    Merge pull request #56 from almanzayeni/testing-update-VM-tests
+    
+    Update HomeDashboardViewModel tests
+
+commit 04913c1c91bad8dcf27688b6b92d81f82a04f4fd
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Mon Apr 20 17:24:10 2026 -0400
+
+    Added GetDayOfFoodRequestHandler to send daate-based FoodLog requests to server. Integrated request into HomeDashboardPageController. Server-side not yet implemented
+
+commit 205e1aa6aba55486f40b7e57ab093cdf21a3f3b6
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Mon Apr 20 16:06:09 2026 -0400
+
+    Added listener for selected date changes in HomeDashboardPageController. Implemented a loadFoodLog() method in ViewModel to refresh dashboard. Wired dashboard UI to update values on the screen. Currently uses existing FoodLog until server-side implementation is done
+
+commit 6899e246e4ac9f1891ae8c85098611c3a8cf65fd
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 17 13:40:02 2026 -0400
+
+    Added EditDietGoalsHandler Client
+    
+    Added the client side for editing diet goals process.
+    Also added testing so that we reached 100% coverage.
+    Used Codex to generate test cases.
+
+commit 012e2d3532c20d38a520d42932ccadd7f593488e
+Merge: 28239d9 d682ea1
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 17 11:22:51 2026 -0400
+
+    Merge pull request #54 from almanzayeni/feature-HookupSearchPage
+    
+    Feature hookup search page
+
+commit d682ea11a98b19cdd29eceb783cb91487d82c44a
+Merge: c4ef759 28239d9
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Fri Apr 17 11:22:27 2026 -0400
+
+    Merge branch 'main' into feature-HookupSearchPage
+
+commit 9ee6cc0900db141b7bb0aa5a6fb9c565e2e431ed
+Author: vf00004 <vf00004@my.westga.edu>
+Date:   Thu Apr 16 11:12:35 2026 -0400
+
+    Update HomeDashboardViewModel tests
+    
+    - Add new tests for PieChart calculations
+    - Increase converage
+    - GenAI: Wrote missing Javadoc, method header explanation
+
+commit 28239d9daed0fe601e77e8c54379e543b313a3fc
+Merge: 9890bf2 c909fff
+Author: Victor Filpo <vf00004@my.westga.edu>
+Date:   Thu Apr 16 09:46:32 2026 -0400
+
+    Merge pull request #55 from almanzayeni/feature-CalculationModel
+    
+    Feature calculation model
+
+commit c909fff752b82293075a5085b8d3c25f4d842a54
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Wed Apr 15 20:48:46 2026 -0400
+
+    Added implementation for dashboard calculations and the pie chart model. Dashboard will now show the current day's reflection of the data for each primary goal selected
+
+commit 812e9f56b7b093b4baebd30809e4b9ea2f175378
+Author: Emi Collins <ecollin7@my.westga.edu>
+Date:   Wed Apr 15 19:33:51 2026 -0400
+
+    Added DashboardCalculations model class and logic to HomeDashboardPage ViewModel
+
+commit c4ef759abdc739301172b637734bddd8eddabbbb
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Apr 15 15:42:51 2026 -0400
+
+    Add create food button on search page
+    
+    Added the create food option to the search page.
+
+commit 2a18bb28b5151906150771e13572c436835817f7
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Apr 15 15:36:09 2026 -0400
+
+    disable add food
+    
+    Set add food back to how it was
+
+commit 7e2693f39f8ac854afe2b2ae985a9c0ac27d1e42
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Wed Apr 15 15:08:05 2026 -0400
+
+    Add the add food button menu option
+    
+    Allow the user to navigate to the search page
+    through the hamburger menu. It was previously disabled
+    and not visible.
+
+commit a4aff20ce5902112c50553a0d72c0a487f878c63
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Tue Apr 14 08:52:43 2026 -0400
+
+    Add tests
+    
+    Added testing for enum class and testing for new methods
+    created in home dashbaord page.
+
+commit 819fd64fd04866ceede451332baca1793378b5b8
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Apr 13 23:40:48 2026 -0400
+
+    Fix logout for search and dashboard
+    
+    I had a typo in dashboard login instead of Login.
+    Changed navigateToHome to navigateTo that inputs a string
+    to navigate to the preffered fxml page.
+    Also, added logout functionality to the search page.
+    Confimation is asked before a user logs out.
+
+commit 1d86c8a799bc44d032c284edcfba856267fdcb3b
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Apr 13 23:32:11 2026 -0400
+
+    Add back button to search
+    
+    Added a button for the user to return to
+    the dashbaord page in case they made a mistake of adding
+    a food and want to return back.
+
+commit 167faf73b0f7ae6af39331e5105c4aa9694fe2cd
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Apr 13 23:18:21 2026 -0400
+
+    Removed food data base json file
+    
+    Removed file since it will no longer be needed.
+
+commit ce404002cd30b562c19461ba369182e0e20fc0a1
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Apr 13 23:17:17 2026 -0400
+
+    Connect SearchPage ot client search
+    
+    Have the search page read from the database instead of
+    the local json file. Removed FoodDataBase class and it's test.
+    Moved SortOtion into its own enum class.
+
+commit 1b7efaed47d44b81fd20d05e842f174ae9e258b2
+Author: Yeni Almanza <ya00013@my.westga.edu>
+Date:   Mon Apr 13 17:55:37 2026 -0400
+
+    Hookup functionality of add to search
+    
+    Have buttons on the dashbaord page hookup to the search page.
+
+commit 9890bf2d1428979e9219a33d2f52997a9b535fe0
+Merge: a6078d2 6c7aa78
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Mon Apr 13 17:16:26 2026 -0400
+
+    Merge pull request #52 from almanzayeni/feature-SearchRequestClient
+    
+    Feature search request client
+
+commit a6078d288f6a1067fe15f71a249ac1d246c8a475
+Merge: c0597ad 1cedbd2
+Author: Yeni Almanza <127815619+almanzayeni@users.noreply.github.com>
+Date:   Mon Apr 13 17:04:54 2026 -0400
+
+    Merge pull request #53 from almanzayeni/feature-DashboardStatsUI
+    
+    Updated HomeDashboard UI to Have Stat Chart
+
+commit 1cedbd2530da5ad959254386ef7e33455a08f0bd
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Apr 13 11:33:45 2026 -0400
+
+    Updated HomeDashboard UI to Have Stat Chart
+    
+    I updated the HomeDashbardPage.fxml to include a pie chart that will
+    be populated to show the remaining value of the selected goal and
+    a combobox so that the goal displayed can be changed.
+
+commit 6c7aa78382778c8cb16f6ff66312c89b99763a1f
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Apr 13 10:53:11 2026 -0400
+
+    Renamed DietGoals
+    
+    Updated the naming on all testing from Preferences to DietGoals.
+
+commit 55d09fbeb6700549092d602025fe38229b14366d
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Apr 13 10:43:43 2026 -0400
+
+    Search Request Testing & Fix Other Tests
+    
+    I added testing for the SearchRequestHandler class using Codex
+    I also fixed the testing for the AddFoodRequestHandler class
+    I also fixed the testing for the HomeDashboardViewModel class.
+
+commit 5107c0d156465d1228e011f42f1dda1f1954d280
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Mon Apr 13 09:49:43 2026 -0400
+
+    Implemented Search Client & Updated Seach Server
+    
+    I setup the search client side functionality so that it connects to
+    the server and gits a list of food matching the query.
+    I also fixed a small bug in the server side of the search functionaly
+    where it was calling the wrong to_dict() method.
+    I also had Codex update the tests for search_reqeust_handler so that
+    it was using real food items instead of dummy ones.
+
+commit c0597ad9835db2655d058e52addf98a3d9f112fd
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Sat Apr 11 08:48:34 2026 -0400
+
+    Delete old git_log.txt
+    
+    Deleted Old Git log
+
+commit 001a920b818ddf3efd7d5c9fa2c423f78db878fa
+Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
+Date:   Sat Apr 11 08:46:11 2026 -0400
+
+    Added Updated Git Log
+    
+    Updated git log
+
 commit e97a32402c215c899d2a576852fcf603c3881301
 Author: jsmith5721 <161377944+jsmith5721@users.noreply.github.com>
 Date:   Sat Apr 11 08:44:00 2026 -0400
