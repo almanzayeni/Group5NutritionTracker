@@ -2,6 +2,7 @@ package edu.westga.cs3212.group5.nutritiontracker.viewmodel.homedashboardviewmod
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -60,5 +61,20 @@ public class TestCurrentUserProperties {
     @Test
     void testSelectedGoalProperty() {
     	assertEquals(this.vm.getCurrentUser().getDietGoals().getPrimaryGoal(), this.vm.selectedGoalProperty().get());
+    }
+    
+    void testUpdateDietGoalsValid() {
+        DietGoals newGoals = new DietGoals(
+                PrimaryGoal.PROTEIN, 1800, 120, 60, 40, 2000, 200, Collections.emptyList());
+
+        this.vm.updateDietGoals(newGoals);
+
+        assertSame(newGoals, this.vm.getCurrentUser().getDietGoals());
+        assertSame(newGoals, this.vm.userDietGoalsProperty().get());
+    }
+
+    @Test
+    void testUpdateDietGoalsNullThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> this.vm.updateDietGoals(null));
     }
 }

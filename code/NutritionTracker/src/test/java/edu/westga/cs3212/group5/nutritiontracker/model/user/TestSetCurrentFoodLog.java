@@ -37,4 +37,19 @@ public class TestSetCurrentFoodLog {
 
 		assertSame(replacementLog, this.user.getCurrentFoodLog());
 	}
+	
+    @Test
+    void testSetDietGoalsValid() {
+        DietGoals newGoals = new DietGoals(
+                PrimaryGoal.PROTEIN, 1800, 120, 60, 40, 2000, 200, Collections.emptyList());
+
+        this.user.setDietGoals(newGoals);
+
+        assertSame(newGoals, this.user.getDietGoals());
+    }
+
+    @Test
+    void testSetDietGoalsNullThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> this.user.setDietGoals(null));
+    }
 }
