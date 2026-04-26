@@ -1,0 +1,21 @@
+Replace Logout Button
+i want to edit the logout button and replace it with a menu in all places that there is a logout button, this is the structure i want: [ 👤 > ] + Edit Diet Plan + Logout. Edit diet plan will lead user to preferneces.fxml and logout would lead to loginPage.fxml
+
+Looking at your codebase, I can see the logout button pattern used across multiple controllers. I'll create a reusable dropdown menu component using JavaFX's MenuButton that you can drop into SceneBuilder and wire up in each controller.
+Here's the plan:
+1. Replace logoutButton with a MenuButton in each FXML
+2. Update each controller to handle the two menu items
+Let me create the files:Now I'll create all the necessary files. Since this is a JavaFX/SceneBuilder project, I'll provide the FXML changes and controller updates as files:Now let me create the updated versions of each affected FXML and controller. I'll start with the most complex one as a full example:Now the FXML snippet file that covers ALL pages:Now let me create the updated controllers for the remaining files (using the pattern):Here's everything you need:
+Files provided:
+UserMenuMixin.java - Drop this into your view package. It's a utility class with two static methods: logout() (shows a confirmation then goes to LoginPage) and openEditDietPlan() (goes to PreferencesPage, forwarding the viewModel). Both controllers that don't have a viewModel can pass null.
+HomeDashboardPageController.java & SearchPageController.java - Fully rewritten versions with the logoutButton removed and the two @FXML handlers (handleLogout, handleEditDietPlan) added.
+UserMenuButton_FXML_Snippet.fxml - The exact <MenuButton> XML block to paste into SceneBuilder (or hand-edit) for all 6 FXML files, plus inline instructions.
+ControllerPatchGuide.txt - Precise diff-style instructions for the 4 remaining controllers (CreateBaseFoodPageController, CreateCompositeFoodPageController, CreateFoodItemTypeSelectionPageController, CreateMealItemPageController).
+Key things to note:
+* Add <?import javafx.scene.control.MenuButton?> and <?import javafx.scene.control.MenuItem?> to the top of each FXML
+* The onAction="#handleLogout" and onAction="#handleEditDietPlan" on the MenuItem elements wire directly to the @FXML methods - no code wiring in setUpListeners() needed
+* Controllers that use hdViewModel (Create pages) pass that instead of viewModel to UserMenuMixin.openEditDietPlan()
+
+
+
+
