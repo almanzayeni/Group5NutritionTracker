@@ -1,0 +1,279 @@
+Please add test cases to the TestCreateEditDietGoalsRequest and TestHandleEditDietGoalsRequet classes so that they reach 100% branch coverage for the EditDietGoalsHandler class.
+1:08 PM
+
+
+
+48 previous messages
+I’m going to inspect the handler and the two existing test classes first, then I’ll patch the tests to cover the missing branches and run the focused test suite to verify coverage.
+
+
+Ran 2 commands
+Ran Get-ChildItem -Recurse -File | Where-Object { $_.Name -match 'EditDietGoals' -or $_.Name -match 'TestCreateEditDietGoalsRequest|TestHandleEditDietGoalsRequet' } | Select-Object -ExpandProperty FullName
+Ran git status --short
+I found the worktree is already dirty, including an untracked EditDietGoalsHandler area and its test package, so I’m being careful to only extend what’s there. Next I’m reading the handler and current tests to identify the uncovered branches precisely.
+
+
+Ran 4 commands
+Ran rg --files "code/NutritionTracker" | rg "EditDietGoals|TestCreateEditDietGoalsRequest|TestHandleEditDietGoalsRequet"
+Ran Get-Content "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander/TestCreateEditDietGoalsRequest.java"
+Ran Get-Content "code/NutritionTracker/src/main/java/edu/westga/cs3212/group5/nutritiontracker/server/EditDietGoalsHandler.java"
+Ran Get-Content "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander/TestHandleEditDietGoalsRequet.java"
+The handler is straightforward, and the current request-construction test class is still empty. I also hit a filename mismatch on the second test, so I’m locating the exact test file names and then I’ll fill in the missing cases around null/blank inputs, server failure payloads, non-success status, and the success path.
+
+
+Ran 3 commands
+Ran Get-Content "code/NutritionTracker/pom.xml"
+Ran Get-ChildItem "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander" -Force
+Ran Get-ChildItem -Recurse -File "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server" | Where-Object { $_.FullName -like '*editdiet*' } | Select-Object FullName,Name
+I’ve confirmed both target test files are basically stubs, so most of the work here is building the test coverage from scratch rather than tweaking a few assertions. I’m pulling in a couple of similar server-handler tests now so the new tests fit the repo’s existing style and mocking approach.
+
+
+Ran 8 commands
+Ran Get-Content "code/NutritionTracker/src/main/java/edu/westga/cs3212/group5/nutritiontracker/server/ServerClient.java"
+Ran Get-Content "code/NutritionTracker/src/main/java/edu/westga/cs3212/group5/nutritiontracker/model/DietGoals.java"
+Ran Get-Content "code/NutritionTracker/src/main/java/edu/westga/cs3212/group5/nutritiontracker/server/ServerConstants.java"
+Ran Get-ChildItem -Recurse -File "code/NutritionTracker/src/test/java" | Where-Object { $_.Name -match 'Test(Create|Handle).+Request' } | Select-Object -ExpandProperty FullName
+Ran Get-Content "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/addfoodrequesthandler/TestCreateAddFoodRequest.java"
+Ran Get-Content "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/addfoodrequesthandler/TestHandleAddFoodRequest.java"
+Ran Get-Content "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/createaccountrequesthandler/TestCreateCreateAccountRequest.java"
+Ran Get-Content "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/createaccountrequesthandler/TestHandleCreateAccountRequest.java"
+I have enough context to write the tests now. Plan:
+
+Fill TestCreateEditDietGoalsRequest with argument-validation, happy-path JSON, and serialization-failure coverage.
+Fill TestHandleEditDietGoalsRequest with null/blank request, empty response, failure-message, bad-status, server-exception, and success-path coverage.
+Run the focused Maven tests, then, if possible, run coverage for EditDietGoalsHandler specifically and adjust if any branch is still uncovered.
+
+Ran 2 commands
+Ran Get-Content "code/NutritionTracker/src/main/java/edu/westga/cs3212/group5/nutritiontracker/model/PrimaryGoal.java"
+Ran Get-Content "code/NutritionTracker/src/main/java/edu/westga/cs3212/group5/nutritiontracker/server/AddFoodRequestHandler.java"
+I’m at the edit step now. I’m keeping the new tests aligned with the surrounding suite, including static mocking of ServerClient and JsonMapperFactory, so they slot in cleanly without touching production code.
+
+
+Created 2 files, deleted 2 files
+Deleted
+TestCreateEditDietGoalsRequest.java
++0
+-5
+Created
+TestCreateEditDietGoalsRequest.java
++85
+-0
+Deleted
+TestHandleEditDietGoalsRequest.java
++0
+-5
+Created
+TestHandleEditDietGoalsRequest.java
++118
+-0
+The test cases are in place. I’m running the focused Maven test classes now so we can catch any compile or assertion mismatches before I check coverage.
+
+Ran command
+$ & 'C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1.1\plugins\maven\lib\maven3\bin\mvn.cmd' '-Dtest=edu.westga.cs3212.group5.nutritiontracker.server.editdietgoalshander.TestCreateEditDietGoalsRequest,edu.westga.cs3212.group5.nutritiontracker.server.editdietgoalshander.TestHandleEditDietGoalsRequest' test
+
+[ERROR] Could not create local repository at C:\Users\CodexSandboxOffline\.m2\repository -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/LocalRepositoryNotAccessibleException
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/C:/Program%20Files/JetBrains/IntelliJ%20IDEA%202025.3.1.1/plugins/maven/lib/maven3/lib/guice-5.1.0-classes.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+
+Exit code 1
+Maven failed for an environment reason rather than a test failure: the sandbox can’t create/access its local .m2 repository. I’m rerunning the same focused test command with elevated filesystem access so we can get a real test result.
+
+Ran command
+$ & 'C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1.1\plugins\maven\lib\maven3\bin\mvn.cmd' '-Dtest=edu.westga.cs3212.group5.nutritiontracker.server.editdietgoalshander.TestCreateEditDietGoalsRequest,edu.westga.cs3212.group5.nutritiontracker.server.editdietgoalshander.TestHandleEditDietGoalsRequest' test
+
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------< edu.westga.cs3212.group5:nutritiontracker >--------------
+[INFO] Building nutritiontracker 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] 6 problems were encountered while building the effective model for org.openjfx:javafx-controls:jar:19 during dependency collection step for project (use -X to see details)
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ nutritiontracker ---
+[INFO] Copying 10 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ nutritiontracker ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ nutritiontracker ---
+[INFO] skip non existing resourceDirectory D:\Documents\College Docs\Software Engineering II\Project\Group5NutritionTracker\code\NutritionTracker\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ nutritiontracker ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 44 source files with javac [debug target 21] to target\test-classes
+[INFO] /D:/Documents/College Docs/Software Engineering II/Project/Group5NutritionTracker/code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/serverclient/TestClose.java: Some input files use or override a deprecated API.
+[INFO] /D:/Documents/College Docs/Software Engineering II/Project/Group5NutritionTracker/code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/serverclient/TestClose.java: Recompile with -Xlint:deprecation for details.
+[INFO] -------------------------------------------------------------
+[WARNING] COMPILATION WARNING : 
+[INFO] -------------------------------------------------------------
+[WARNING] location of system modules is not set in conjunction with -source 21
+  not setting the location of system modules may lead to class files that cannot run on JDK 21
+    --release 21 is recommended instead of -source 21 -target 21 because it sets the location of system modules automatically
+[INFO] 1 warning
+[INFO] -------------------------------------------------------------
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /D:/Documents/College Docs/Software Engineering II/Project/Group5NutritionTracker/code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander/TestCreateEditDietGoalsRequest.java:[72,60] unreported exception com.fasterxml.jackson.core.JsonProcessingException; must be caught or declared to be thrown
+[INFO] 1 error
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.148 s
+[INFO] Finished at: 2026-04-17T13:11:05-04:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:testCompile (default-testCompile) on project nutritiontracker: Compilation failure
+[ERROR] /D:/Documents/College Docs/Software Engineering II/Project/Group5NutritionTracker/code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander/TestCreateEditDietGoalsRequest.java:[72,60] unreported exception com.fasterxml.jackson.core.JsonProcessingException; must be caught or declared to be thrown
+[ERROR] 
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/C:/Program%20Files/JetBrains/IntelliJ%20IDEA%202025.3.1.1/plugins/maven/lib/maven3/lib/guice-5.1.0-classes.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+
+Exit code 1
+The first test run surfaced a compile issue in the new test itself, not in the handler: the Mockito stub for writeValueAsString needs the test method to declare the checked Jackson exception. I’m making that narrow fix and rerunning immediately.
+
+
+Edited 1 file, ran 1 command
+Edited
+TestCreateEditDietGoalsRequest.java
++1
+-1
+Ran & 'C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1.1\plugins\maven\lib\maven3\bin\mvn.cmd' '-Dtest=edu.westga.cs3212.group5.nutritiontracker.server.editdietgoalshander.TestCreateEditDietGoalsRequest,edu.westga.cs3212.group5.nutritiontracker.server.editdietgoalshander.TestHandleEditDietGoalsRequest' test
+The focused tests are green. I’m doing one more pass with JaCoCo so we can verify the branch-coverage target for EditDietGoalsHandler instead of just inferring it from the cases.
+
+Ran command
+$ & 'C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1.1\plugins\maven\lib\maven3\bin\mvn.cmd' 'org.jacoco:jacoco-maven-plugin:0.8.12:prepare-agent' '-Dtest=edu.westga.cs3212.group5.nutritiontracker.server.editdietgoalshander.TestCreateEditDietGoalsRequest,edu.westga.cs3212.group5.nutritiontracker.server.editdietgoalshander.TestHandleEditDietGoalsRequest' test 'org.jacoco:jacoco-maven-plugin:0.8.12:report
+
+[INFO] Scanning for projects...
+Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/jacoco-maven-plugin/0.8.12/jacoco-maven-plugin-0.8.12.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/jacoco-maven-plugin/0.8.12/jacoco-maven-plugin-0.8.12.pom (4.2 kB at 11 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.build/0.8.12/org.jacoco.build-0.8.12.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.build/0.8.12/org.jacoco.build-0.8.12.pom (43 kB at 1.1 MB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-bom/9.7/asm-bom-9.7.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-bom/9.7/asm-bom-9.7.pom (3.3 kB at 96 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/jacoco-maven-plugin/0.8.12/jacoco-maven-plugin-0.8.12.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/jacoco-maven-plugin/0.8.12/jacoco-maven-plugin-0.8.12.jar (57 kB at 1.6 MB/s)
+[INFO] 
+[INFO] -------------< edu.westga.cs3212.group5:nutritiontracker >--------------
+[INFO] Building nutritiontracker 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] 6 problems were encountered while building the effective model for org.openjfx:javafx-controls:jar:19 during dependency collection step for project (use -X to see details)
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (default-cli) @ nutritiontracker ---
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.0.24/plexus-utils-3.0.24.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/3.0.24/plexus-utils-3.0.24.pom (4.1 kB at 165 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12.pom (3.5 kB at 97 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.core/0.8.12/org.jacoco.core-0.8.12.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.core/0.8.12/org.jacoco.core-0.8.12.pom (2.1 kB at 61 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.7/asm-9.7.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.7/asm-9.7.pom (2.4 kB at 82 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.7/asm-commons-9.7.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.7/asm-commons-9.7.pom (2.8 kB at 93 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.7/asm-tree-9.7.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.7/asm-tree-9.7.pom (2.6 kB at 81 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.report/0.8.12/org.jacoco.report-0.8.12.pom
+              …173768 chars truncated…ngine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:198)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:135)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:135)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:125)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:135)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:122)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:80)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:125)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:135)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:122)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:80)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:125)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:135)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:122)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:80)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:229)
+	at org.junit.platform.launcher.core.DefaultLauncher.lambda$execute$6(DefaultLauncher.java:197)
+	at org.junit.platform.launcher.core.DefaultLauncher.withInterceptedStreams(DefaultLauncher.java:211)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:191)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:128)
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60)
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+
+Success
+JaCoCo finished noisily because it tried to instrument Mockito-generated classes on this JDK, but it may still have produced the project report. I’m checking the generated XML directly for the EditDietGoalsHandler counters instead of trusting the console noise.
+
+
+Ran 4 commands
+Ran if (Test-Path "target/site/jacoco/jacoco.xml") { Select-String -Path "target/site/jacoco/jacoco.xml" -Pattern "EditDietGoalsHandler|BRANCH" | Select-Object -First 40 | ForEach-Object { $_.Line } }
+Ran Test-Path "target/site/jacoco/jacoco.xml"; if ($?) { Get-Item "target/site/jacoco/jacoco.xml" | Select-Object FullName,Length,LastWriteTime }
+Ran $xml = [xml](Get-Content "target/site/jacoco/jacoco.xml"); $methods = ($xml.report.package.class | Where-Object { $_.name -eq 'edu/westga/cs3212/group5/nutritiontracker/server/EditDietGoalsHandler' }).method; foreach ($method in $methods) { "METHOD $($method.name)"; $method.counter | ForEach-Object { ' {0}: missed={1}, covered={2}' -f $_.type, $_.missed, $_.covered } }
+Ran $xml = [xml](Get-Content "target/site/jacoco/jacoco.xml"); $class = $xml.report.package.class | Where-Object { $_.name -eq 'edu/westga/cs3212/group5/nutritiontracker/server/EditDietGoalsHandler' }; $class.counter | ForEach-Object { '{0}: missed={1}, covered={2}' -f $_.type, $_.missed, $_.covered }
+The XML confirms the important part already: both handler methods are at 0 missed / 18 covered branches. I’m adding one tiny constructor test as a cleanup so the class coverage isn’t dragged down by the implicit public constructor, then I’ll rerun the focused suite once more.
+
+
+Edited 1 file, ran 3 commands
+Edited
+TestCreateEditDietGoalsRequest.java
++8
+-0
+Ran & 'C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.1.1\plugins\maven\lib\maven3\bin\mvn.cmd' 'org.jacoco:jacoco-maven-plugin:0.8.12:prepare-agent' '-Dtest=edu.westga.cs3212.group5.nutritiontracker.server.editdietgoalshander.TestCreateEditDietGoalsRequest,edu.westga.cs3212.group5.nutritiontracker.server.editdietgoalshander.TestHandleEditDietGoalsRequest' test 'org.jacoco:jacoco-maven-plugin:0.8.12:report'
+Ran git diff -- "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander/TestCreateEditDietGoalsRequest.java" "code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander/TestHandleEditDietGoalsRequest.java"
+Ran $xml = [xml](Get-Content "target/site/jacoco/jacoco.xml"); $class = $xml.report.package.class | Where-Object { $_.name -eq 'edu/westga/cs3212/group5/nutritiontracker/server/EditDietGoalsHandler' }; $class.counter | ForEach-Object { '{0}: missed={1}, covered={2}' -f $_.type, $_.missed, $_.covered }
+Added the missing coverage tests in TestCreateEditDietGoalsRequest and TestHandleEditDietGoalsRequest. They now cover constructor instantiation, null/blank inputs, null diet goals, valid request JSON, serialization failure, null/blank server responses, failure-message responses, bad status, checked/runtime server exceptions, and the success path.
+
+Verified with focused Maven tests plus JaCoCo. EditDietGoalsHandler now reports BRANCH: missed=0, covered=18, and after the constructor test the class is fully covered across all class counters in jacoco.xml and JaCoCo report. The JaCoCo run does print some noisy JDK instrumentation warnings, but the build and coverage report completed successfully.
+
+5 files changed
++212
+-11
+Undo
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander/TestCreateEditDietGoalsRequest.java
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander/TestCreateEditDietGoalsRequest.java
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander/TestHandleEditDietGoalsRequest.java
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander/TestHandleEditDietGoalsRequest.java
+code/NutritionTracker/src/test/java/edu/westga/cs3212/group5/nutritiontracker/server/editdietgoalshander/TestCreateEditDietGoalsRequest.java
+
+
+
+
