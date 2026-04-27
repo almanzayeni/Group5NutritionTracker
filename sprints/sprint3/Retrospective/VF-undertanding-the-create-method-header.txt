@@ -1,0 +1,105 @@
+this method header looks strange to me, walk me through it
+
+    public static DashboardCalculations create(User user, PrimaryGoal selectedGoal) {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null!");
+        }     if (selectedGoal == null) {
+            throw new IllegalArgumentException("Selected goal cannot be null!");
+        }
+
+        FoodLog log = user.getCurrentFoodLog();
+        double consumedAmount = calculateConsumedAmount(log, selectedGoal);
+        double targetAmount = getTargetAmount(user.getDietGoals(), selectedGoal);
+
+        return new DashboardCalculations(selectedGoal, consumedAmount, targetAmount);
+    }
+
+This is a static factory method — a common alternative to using a constructor directly.
+Normally you'd instantiate an object like new DashboardCalculations(...), but here you call DashboardCalculations.create(user, goal) instead. The method is static because it doesn't belong to any instance — it exists at the class level specifically to produce instances.
+The reason to prefer this pattern over a plain constructor comes down to what you can do before handing back the object:
+
+Validation — the two null checks at the top would be awkward or repetitive in a constructor, and a constructor can't refuse to produce an object as cleanly (it would have to throw mid-construction). Here, you gate entry before anything is built.
+Computation — consumedAmount and targetAmount are derived values. The factory method calls helper methods to calculate them, then passes the results into the private constructor. This keeps the constructor simple and dumb.
+Readable intent — create(user, goal) communicates more clearly than new DashboardCalculations(user, goal) would, especially if the constructor signature would otherwise be confusing.
+
+The constructor being called at the bottom is almost certainly private, which enforces that the only way to get a DashboardCalculations is through this method. That's the full pattern.
+One honest critique: the method name create is pretty generic. Something like forUser or calculate would tell you more about what it's actually doing.
+
+How would I call this method? it exists in the HomeDashboardVM class
+
+Since it's static, you call it on the class directly — no instance needed:
+javaDashboardCalculations calculations = DashboardCalculations.create(user, selectedGoal);
+The fact that it lives inside HomeDashboardVM doesn't change how you call it — static methods belong to the class they're defined in, so it'd actually be:
+javaDashboardCalculations calculations = HomeDashboardVM.create(user, selectedGoal);
+Though honestly, a create method for DashboardCalculations sitting inside HomeDashboardVM is a bit of an odd home for it. It would make more semantic sense on DashboardCalculations itself. Is it possible it was just placed there for convenience during development?You said: in eclipse, how do i see where a test case "hit a line" and got coverage from?in eclipse, how do i see where a test case "hit a line" and got coverage from?Apr 16Claude responded: In Eclipse, this is called EclEmma (or just "Coverage" mode).In Eclipse, this is called EclEmma (or just "Coverage" mode). Here's how to use it:
+
+Right-click your test class → Coverage As → JUnit Test
+After it runs, your source files will be highlighted:
+
+🟢 Green — line was hit
+🔴 Red — line was never hit
+🟡 Yellow — branch was only partially hit (e.g. an if where only one branch was covered)
+
+
+
+To see which specific test hit a line, that's harder — EclEmma doesn't show that out of the box. It only shows aggregate coverage across all tests.
+If you need per-test line attribution, your options are basically:
+
+Run tests individually and check coverage each time — tedious but straightforward
+Add a breakpoint on the line and run in debug mode, which will tell you exactly which test tripped it
+
+EclEmma should come bundled with modern Eclipse — if you don't see "Coverage As" in the right-click menu, you may need to install it via Help → Eclipse Marketplace → search "EclEmma".
+
+where would it tell me which test tripped the breakpoint
+
+When Eclipse hits a breakpoint during a test run, look at the Debug view (usually top-left when it switches to Debug perspective). You'll see a stack trace like:
+Thread [main]
+  YourClass.create(User, PrimaryGoal)  line: 12
+  HomeDashboardVMTest.testSomething()  line: 45   ← this is your test
+  ...JUnit runner frames below...
+The stack trace shows the full call chain, so you can see exactly which test method triggered the execution that landed on your breakpoint.
+If the Debug view isn't visible, you can get to it via Window → Show View → Debug.
+
+provide an example of assertThrows use
+@Test
+void testCreateThrowsWhenUserIsNull() {
+    assertThrows(IllegalArgumentException.class, () -> {
+        DashboardCalculations.create(null, selectedGoal);
+    });
+}
+The first argument is the exception type you expect, the second is a lambda that contains the code you expect to throw it. If the exception isn't thrown, the test fails.
+You can also capture the exception if you want to assert on the message:
+java@Test
+void testCreateThrowsWhenUserIsNull() {
+    IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
+        DashboardCalculations.create(null, selectedGoal);
+    });
+
+    assertEquals("User cannot be null!", ex.getMessage());
+}
+assertThrows is in org.junit.jupiter.api.Assertions — make sure you're on JUnit 5, as JUnit 4 didn't have it (you'd have used @Test(expected = ...) instead).You said: write a javadoc for this methodwrite a javadoc for this method    public static DashboardCalculations create(User user, PrimaryGoal selectedGoal) {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null!");
+        }
+        if (selectedGoal == null) {
+            throw new IllegalArgumentException("Selected goal cannot be null!");
+        }        FoodLog log = user.getCurrentFoodLog();
+        double consumedAmount = calculateConsumedAmount(log, selectedGoal);
+        double targetAmount = getTargetAmount(user.getDietGoals(), selectedGoal);        return new DashboardCalculations(selectedGoal, consumedAmount, targetAmount);
+    }Show moreApr 16Claude responded: A few notes on the choices made:java/**
+ * Creates a {@link DashboardCalculations} instance for the given user and goal.
+ * <p>
+ * Derives consumed and target amounts from the user's current food log and diet
+ * goals, scoped to the specified {@link PrimaryGoal}.
+ *
+ * @param user         the user whose food log and diet goals are used; must not be null
+ * @param selectedGoal the goal to calculate consumption and targets for; must not be null
+ * @return a new {@link DashboardCalculations} populated with the derived values
+ * @throws IllegalArgumentException if {@code user} or {@code selectedGoal} is null
+ */
+public static DashboardCalculations create(User user, PrimaryGoal selectedGoal) {
+A few notes on the choices made:
+
+The @param docs mention the null constraint so callers know upfront without having to read the body
+{@link ...} ties the doc to the actual types, so Eclipse will make them clickable
+The description stays brief — it describes what it does, not how, which is the right level for a public API doc
